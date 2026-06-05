@@ -16,7 +16,7 @@ const GENRE_LABEL = {
   "alt": "Alt/Indie", "uk-jazz": "UK Jazz", "hip-hop": "Hip-Hop",
   "world": "World/Afro/Latin", "soulful-house": "Soulful House",
   "soul-funk": "Soul/Funk", "broken-beat": "Broken Beat",
-  "classical": "Classical/Score", "unknown": "Non classificato",
+  "classical": "Classical/Score", "unknown": "Unclassified",
 };
 
 // sinonimi/parole-chiave -> genere (substring, normalizzati)
@@ -35,25 +35,27 @@ const GENRE_SYNONYMS = {
 };
 
 const MOODS = {
-  rilassato: {
-    kw: ["rilassante", "rilassat", "relax", "chill", "calmo", "calma", "tranquill", "sera", "serata", "notte", "studio", "lettura", "leggere", "soft", "lent", "dormire", "riposo", "cena", "lounge"],
+  relaxed: {
+    kw: ["relax", "chill", "calm", "quiet", "mellow", "soft", "slow", "evening", "night", "study", "studying", "reading", "read", "sleep", "dinner", "lounge", "sunday", "rilassante", "rilassat", "calmo", "tranquill", "sera", "serata", "notte", "lettura", "lent", "dormire", "cena"],
     genres: ["neo-soul", "jazz", "classical", "electronic", "soul-funk"],
   },
-  energico: {
-    kw: ["energic", "carica", "festa", "party", "ballare", "ballo", "dance", "danza", "palestra", "workout", "allenament", "corsa", "running", "mattina", "sveglia", "grinta", "pump", "estate"],
+  energetic: {
+    kw: ["energetic", "energy", "upbeat", "party", "dance", "dancing", "gym", "workout", "running", "morning", "hype", "pump", "summer", "energic", "carica", "festa", "ballare", "ballo", "palestra", "allenament", "corsa", "mattina", "sveglia", "estate"],
     genres: ["soulful-house", "broken-beat", "electronic", "hip-hop", "world"],
   },
   focus: {
-    kw: ["focus", "concentr", "lavoro", "lavorare", "studiare", "produttiv", "deep work", "coding", "programmare"],
+    kw: ["focus", "concentrate", "concentration", "working", "productive", "coding", "deep work", "concentr", "lavoro", "lavorare", "studiare", "produttiv", "programmare"],
     genres: ["jazz", "classical", "electronic"],
   },
   groove: {
-    kw: ["groove", "groovy", "funky", "ritmo", "dancefloor", "club", "warm up", "aperitivo"],
+    kw: ["groove", "groovy", "funky", "rhythm", "dancefloor", "club", "warm up", "warmup", "ritmo", "aperitivo"],
     genres: ["soul-funk", "soulful-house", "broken-beat", "neo-soul"],
   },
 };
 
 const SIZE_WORDS = {
+  "a dozen": 12, "dozen": 12, "handful": 8, "short": 8, "brief": 8, "quick": 8,
+  "long": 30, "lengthy": 30, "huge": 40, "marathon": 40,
   "decina": 10, "quindicina": 15, "ventina": 20, "trentina": 30,
   "poche": 8, "breve": 8, "corta": 8, "cortissima": 6,
   "lunga": 30, "tante": 30, "molte": 30, "maratona": 40,
@@ -88,10 +90,14 @@ function detectGenres(msg) {
 }
 
 const CUES = [
+  "similar to ", "sounds like ", "in the style of ", "stuff like ", "vibe of ", "like ",
   "simile a ", "simili a ", "tipo ", "stile di ", "stile ", "come ",
-  "alla maniera di ", "sound di ", "vibe di ", "ispirat", "alla ", "tipo:",
+  "alla maniera di ", "sound di ", "vibe di ", "ispirat", "tipo:",
 ];
-const CUT_AFTER = [",", " ma ", " pero ", " ma solo ", " solo ", " con ", " senza ", " e poi ", " in stile "];
+const CUT_AFTER = [
+  ",", " but only ", " but ", " only ", " with ", " without ", " and then ",
+  " ma ", " pero ", " ma solo ", " solo ", " con ", " senza ", " e poi ", " in stile ",
+];
 
 const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const wordHit = (name, msg) =>
@@ -150,10 +156,16 @@ function seedFromArtist(msg, graph) {
     .sort((a, b) => b.degree - a.degree)[0] || null;
 }
 
-// priorita: cue ("tipo X") > generi/mood espliciti > artista nudo > nessuno
+// parole che indicano un GENERE, non un artista (per non scambiare "like jazz")
+const GENRE_WORDS = new Set(
+  Object.values(GENRE_SYNONYMS).flat().concat(Object.keys(GENRE_LABEL))
+);
+
+// priority: cue ("like X") > explicit genres/mood > bare artist > none
 function findSeed(msg, graph, { explicit, mood }) {
   const cueQuery = extractCueQuery(msg);
-  if (cueQuery) {
+  // "like jazz" non e' un seed: se la query e' un genere, lascia il ramo generi
+  if (cueQuery && !GENRE_WORDS.has(cueQuery)) {
     const s = seedFromQuery(cueQuery, graph);
     if (s) return s;
   }
@@ -275,10 +287,10 @@ export function buildPlaylist(graph, rawMessage) {
       chosen.push(best.id); chosenSet.add(best.id); note(best);
     }
     chosen = routeOrder(chosen, adj, byId, seed.id);
-    theme = `simile a ${seed.artist}`;
+    theme = `like ${seed.artist}`;
     interpretation =
-      `seed «${seed.title}» — ${seed.artist}` +
-      (target ? ` · filtro ${[...target].map((g) => GENRE_LABEL[g]).join(", ")}` : "");
+      `seed "${seed.title}" — ${seed.artist}` +
+      (target ? ` · filter ${[...target].map((g) => GENRE_LABEL[g]).join(", ")}` : "");
   } else if (target) {
     // ---- selezione per generi/mood: punteggio = match genere + centralita ----
     const pool = graph.nodes.filter(inTarget);
@@ -315,9 +327,9 @@ export function buildPlaylist(graph, rawMessage) {
     const lbls = [...target].map((g) => GENRE_LABEL[g]).join(", ");
     theme = moodName && !explicit.size ? `mood ${moodName}` : lbls;
     interpretation =
-      (explicit.size ? `generi ${lbls}` : `mood ${moodName} → ${lbls}`);
+      (explicit.size ? `genres ${lbls}` : `mood ${moodName} → ${lbls}`);
     if (primaryCount < chosen.length)
-      caveat = ` · solo ${primaryCount} brani col genere primario richiesto, aggiunti affini`;
+      caveat = ` · only ${primaryCount} tracks with the requested primary genre, added related ones`;
   } else {
     // ---- nessun appiglio: mix "scoperta" bilanciato tra le community ----
     const byComm = new Map();
@@ -342,8 +354,8 @@ export function buildPlaylist(graph, rawMessage) {
       }
     }
     chosen = routeOrder(chosen, adj, byId);
-    theme = "mix scoperta";
-    interpretation = "nessun genere/artista riconosciuto → mix tra tutti i cluster";
+    theme = "discovery mix";
+    interpretation = "no genre/artist recognized → a mix across all clusters";
   }
 
   const tracks = tracksOf(chosen, byId);
@@ -358,8 +370,8 @@ export function buildPlaylist(graph, rawMessage) {
     theme,
     interpretation,
     note:
-      `${tracks.length} brani · ${fmtDur(totalSeconds)} — ${interpretation}${caveat}. ` +
-      `I brani sono evidenziati sulla mappa e collegati nell'ordine d'ascolto.`,
+      `${tracks.length} tracks · ${fmtDur(totalSeconds)} — ${interpretation}${caveat}. ` +
+      `The tracks are highlighted on the map and linked in listening order.`,
   };
 }
 

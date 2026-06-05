@@ -5,11 +5,11 @@ const PAPER = "#f4f1ea";
 const MUTED = "#9a938a";
 
 const SUGGESTIONS = [
-  "jazz rilassante, 15 brani",
-  "soulful house per la festa",
-  "tipo Moodymann",
-  "mix neo-soul e uk jazz per la sera",
-  "sorprendimi",
+  "relaxing jazz, 15 tracks",
+  "soulful house for the party",
+  "like Moodymann",
+  "mix neo-soul and uk jazz for the evening",
+  "surprise me",
 ];
 
 export default function Chat({
@@ -42,7 +42,7 @@ export default function Chat({
           boxShadow: "0 6px 20px rgba(0,0,0,0.18)",
         }}
       >
-        ♫ Crea una playlist
+        ♫ Create a playlist
       </button>
     );
   }
@@ -69,13 +69,13 @@ export default function Chat({
         }}
       >
         <span style={{ fontFamily: "'Spectral', serif", fontSize: 15, fontWeight: 500, color: INK }}>
-          ♫ Playlist dal grafo
+          ♫ Playlist from the graph
         </span>
-        <span style={{ fontSize: 11, color: MUTED }}>— descrivi cosa vuoi ascoltare</span>
+        <span style={{ fontSize: 11, color: MUTED }}>— describe what you want to hear</span>
         <span style={{ marginLeft: "auto", display: "flex", gap: 4 }}>
           {hasPlaylist && (
-            <button onClick={onClear} title="Rimuovi evidenziazione" style={iconBtn}>
-              pulisci
+            <button onClick={onClear} title="Remove highlight" style={iconBtn}>
+              clear
             </button>
           )}
           <button onClick={() => setOpen(false)} title="Chiudi" style={iconBtn}>
@@ -88,7 +88,7 @@ export default function Chat({
       <div ref={bodyRef} style={{ maxHeight: "46vh", overflowY: "auto", padding: "12px 14px" }}>
         {messages.length === 0 && (
           <div style={{ fontSize: 12.5, color: MUTED, lineHeight: 1.6 }}>
-            Scrivi per genere, mood, artista o numero di brani. Esempi:
+            Type a genre, mood, artist, or number of tracks. Examples:
           </div>
         )}
         {messages.map((m, i) =>
@@ -130,7 +130,7 @@ export default function Chat({
         <input
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder="es: soul-funk groovy, una decina di brani"
+          placeholder="e.g. groovy soul-funk, 10 tracks"
           style={{
             flex: 1, fontFamily: font, fontSize: 13, color: INK,
             border: `1px solid ${MUTED}`, borderRadius: 6, padding: "8px 10px",
@@ -138,7 +138,7 @@ export default function Chat({
           }}
         />
         <button type="submit" style={{ fontFamily: font, fontSize: 13, fontWeight: 500, color: PAPER, background: INK, border: "none", borderRadius: 6, padding: "0 16px", cursor: "pointer" }}>
-          Genera
+          Generate
         </button>
       </form>
     </div>
@@ -149,7 +149,7 @@ function Assistant({ res, onPick, onExport, genreColor }) {
   if (!res || !res.ok) {
     return (
       <div style={{ margin: "8px 0", fontSize: 13, color: "#c75b4a" }}>
-        Non sono riuscito a costruire una playlist. Prova a indicare un genere, un mood o un artista.
+        I couldn't build a playlist. Try specifying a genre, a mood, or an artist.
       </div>
     );
   }
@@ -162,14 +162,14 @@ function Assistant({ res, onPick, onExport, genreColor }) {
         {onExport && (
           <button
             onClick={() => onExport(res)}
-            title="Esporta i link e crea la playlist (Spotlistr / Spotify)"
+            title="Export the links and create the playlist (Spotlistr / Spotify)"
             style={{
               marginLeft: "auto", fontFamily: "Inter, sans-serif", fontSize: 11.5, fontWeight: 500,
               color: PAPER, background: INK, border: "none", borderRadius: 14,
               padding: "4px 12px", cursor: "pointer", whiteSpace: "nowrap",
             }}
           >
-            ↗ Esporta
+            ↗ Export
           </button>
         )}
       </div>

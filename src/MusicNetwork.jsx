@@ -430,12 +430,12 @@ function MusicNetworkInner() {
       downloadFile(exportFilename(res, "csv"), playlistCsv(res), "text/csv;charset=utf-8");
       const copied = await copyText(links);
       sysMsg(
-        `${res.tracks.length} brani esportati — link Spotify ${
-          copied ? "copiati negli appunti" : "nel CSV scaricato"
-        } e CSV salvato. Incollali in Spotlistr (scheda aperta) per creare la playlist, ` +
-          `oppure incolla i link in una playlist di Spotify desktop.`,
+        `${res.tracks.length} tracks exported — Spotify links ${
+          copied ? "copied to clipboard" : "in the downloaded CSV"
+        } and CSV saved. Paste them into Spotlistr (opened in a new tab) to create the playlist, ` +
+          `or paste the links into a Spotify desktop playlist.`,
         SPOTLISTR_URL,
-        "Apri Spotlistr ↗"
+        "Open Spotlistr ↗"
       );
     },
     [sysMsg]
@@ -506,8 +506,8 @@ function MusicNetworkInner() {
             marginTop: 6,
           }}
         >
-          {meta.unique_tracks} brani · {meta.edges} legami · {orderedGenres.length}{" "}
-          generi · playlist #12–#32
+          {meta.unique_tracks} tracks · {meta.edges} links · {orderedGenres.length}{" "}
+          genres · playlists #12–#32
         </div>
 
         <div style={{ marginTop: 18, display: "flex", gap: 8, pointerEvents: "auto", width: "fit-content" }}>
@@ -515,7 +515,7 @@ function MusicNetworkInner() {
             className="mn-input"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Cerca brano o artista…"
+            placeholder="Search track or artist…"
             style={{
               flex: 1,
               padding: "8px 12px",
@@ -565,7 +565,7 @@ function MusicNetworkInner() {
             marginBottom: 8,
           }}
         >
-          Generi — click per filtrare
+          Genres — click to filter
         </div>
         {orderedGenres.map((g) => {
           const active = activeGenre === g;
@@ -618,9 +618,9 @@ function MusicNetworkInner() {
           lineHeight: 1.6,
         }}
       >
-        Click su un nodo per isolarne i legami · trascina per riposizionare
+        Click a node to isolate its links · drag to reposition
         <br />
-        scroll per zoom · i cluster sono i generi inferiti
+        scroll to zoom · clusters are the inferred genres
       </div>
 
       <div ref={wrapRef} style={{ position: "absolute", inset: 0, zIndex: 2 }}>
@@ -682,9 +682,9 @@ function MusicNetworkInner() {
               lineHeight: 1.7,
             }}
           >
-            Durata {selected.duration} · {selected.degree} legami
+            Duration {selected.duration} · {selected.degree} links
             <br />
-            Playlist {selected.playlists.map((p) => "#" + p).join(", ")}
+            Playlists {selected.playlists.map((p) => "#" + p).join(", ")}
           </div>
           <a
             href={selected.url}
@@ -701,7 +701,7 @@ function MusicNetworkInner() {
               textDecoration: "none",
             }}
           >
-            Apri su Spotify ↗
+            Open in Spotify ↗
           </a>
         </div>
       )}

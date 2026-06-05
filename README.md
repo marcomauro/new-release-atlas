@@ -1,27 +1,29 @@
 # New Release Atlas
 
-Mappa **force-directed** interattiva del mio archivio musicale (New Release
-Playlist). Ogni nodo è un brano; gli archi collegano brani che condividono un
-artista, un genere o una playlist. Il colore del nodo è il **genere primario
-inferito**; una forza radiale separa i generi nello spazio, formando cluster.
+Interactive **force-directed map** of my music archive (New Release Playlists).
+Each node is a track; edges connect tracks that share an artist, a genre, or a
+playlist. Node colour is the **inferred primary genre**; a radial force separates
+the genres in space, forming clusters.
 
-App statica: **Vite + React + D3**, deploy automatico su **GitHub Pages**.
-I dati sono caricati **a runtime** via `fetch` da `graph.json` (non sono inline
-nel bundle).
+Static app: **Vite + React + D3**, with automatic deploy to **GitHub Pages**.
+Data is loaded **at runtime** via `fetch` from `graph.json` (not inlined in the
+bundle).
 
-Stato attuale: **468 brani · 3391 archi · 12 generi** (playlist #12–#32).
+Current state: **468 tracks · 3391 edges · 12 genres** (playlists #12–#32).
+
+Live: https://marcomauro.github.io/new-release-atlas/
 
 ---
 
 ## Stack
 
 - **Vite** (build, dev server) + **React 18** (no TypeScript)
-- **D3** per la simulazione force-directed e lo zoom/pan
-- **GitHub Actions** per build + deploy su Pages
+- **D3** for the force-directed simulation and zoom/pan
+- **GitHub Actions** for build + deploy to Pages
 
 ---
 
-## Setup locale
+## Local setup
 
 ```bash
 npm install
@@ -29,248 +31,248 @@ python3 scripts/build_graph.py --input data/spotify_archive_genres.json --output
 npm run dev
 ```
 
-Apri l'URL che stampa Vite (es. `http://localhost:5173/new-release-atlas/`).
+Open the URL printed by Vite (e.g. `http://localhost:5173/new-release-atlas/`).
 
-> **Importante:** la mappa carica `graph.json` via `fetch`, quindi funziona
-> **solo** servita da un server (dev server o `npm run preview`, oppure Pages in
-> produzione). Aprire il file buildato con doppio click **non** funziona per via
-> della policy CORS sui file locali.
+> **Important:** the map loads `graph.json` via `fetch`, so it only works when
+> served by a server (dev server, `npm run preview`, or Pages in production).
+> Opening the built file by double-clicking **won't** work, because of the CORS
+> policy on local files.
 
-### Build di produzione
-
-```bash
-npm run build      # genera dist/
-npm run preview    # serve dist/ in locale per una verifica realistica
-```
-
----
-
-## Chat → playlist (generazione dal grafo)
-
-In basso nella mappa c'è una chat (**♫ Crea una playlist**): descrivi cosa vuoi
-ascoltare e l'app costruisce una playlist **navigando il grafo**, evidenziando i
-brani scelti e disegnando il percorso d'ascolto che li collega.
-
-**Nessuna AI esterna / nessuna API:** l'interpretazione è un motore a regole
-client-side ([`src/playlist.js`](src/playlist.js)), quindi funziona anche offline
-ed è gratuito e privato. Capisce:
-
-- **generi** ("jazz", "soulful house", "uk jazz", "neo-soul", …)
-- **mood** ("rilassante", "energico per la festa", "focus/concentrazione", "groovy")
-- **artista / brano seed** con un cue: "tipo Moodymann", "simile a Louie Vega"
-  (cerca anche nei titoli, es. i remix)
-- **numero di brani** ("12 brani", "una decina", "lunga")
-
-Esempi: `jazz rilassante di 15 brani` · `soulful house per la festa` ·
-`tipo Moodymann` · `mix neo-soul e uk jazz per la sera` · `sorprendimi`.
-
-Come costruisce la playlist:
-
-- con un **seed**: parte dal brano e cresce per affinità lungo i link più forti
-  (artista condiviso, genere condiviso), opzionalmente filtrando per genere;
-- per **generi/mood**: seleziona per match di genere + centralità (nodi-hub),
-  con diversità d'artista e bilanciamento tra i generi richiesti;
-- l'ordine finale è un percorso "nearest-neighbor" sui link, per un ascolto fluido.
-
-Click su un brano della lista per isolarlo sul grafo (con link a Spotify nel
-pannello di dettaglio). *Upgrade futuro opzionale:* per frasi libere si può
-collegare un LLM tramite una serverless function (la API key non va mai messa nel
-client).
-
-### Esporta su Spotify (senza setup)
-
-Ogni playlist generata ha un pulsante **↗ Esporta** ([`src/export.js`](src/export.js)):
-nessun login, nessuna configurazione. Esportiamo i **link Spotify esatti** dei
-brani (li abbiamo già nel grafo, quindi il match è preciso) e li passiamo a un
-tool che crea la playlist sul tuo account:
-
-- al click i link vengono **copiati negli appunti** e scaricati in **CSV**, e si
-  apre **[Spotlistr](https://www.spotlistr.com/search)** in una nuova scheda;
-- incolla la lista in Spotlistr → login Spotify (lo gestisce lui) → crea la playlist;
-- in alternativa: incolla i link in una playlist di **Spotify desktop**, oppure
-  importa il CSV/TXT con **[Soundiiz](https://soundiiz.com/tutorial/import-text-to-spotify)**.
-
-> **Perché non l'API diretta?** Su un sito statico, per scrivere sul tuo account
-> servirebbe comunque un'app Spotify + login OAuth (e i tool "da testo" pescano
-> dall'intero catalogo, perdendo il senso del tuo archivio). Esportare i link
-> esatti e usare un tool esterno evita ogni setup mantenendo la playlist quella
-> costruita dal **tuo** grafo.
-
----
-
-## Installazione come app (PWA)
-
-L'app è una **Progressive Web App**: può essere installata su desktop e mobile e
-funziona anche **offline** dopo la prima visita.
-
-- **Desktop (Chrome/Edge):** icona "Installa" nella barra degli indirizzi, oppure
-  menu ⋮ → *Installa New Release Atlas*.
-- **iOS (Safari):** Condividi → *Aggiungi alla schermata Home*.
-- **Android (Chrome):** menu ⋮ → *Installa app* / *Aggiungi a schermata Home*.
-
-Dettagli tecnici (via [`vite-plugin-pwa`](https://vite-pwa-org.netlify.app/)):
-
-- **Manifest** generato (`manifest.webmanifest`) con `scope`/`start_url` sotto il
-  `base` `/new-release-atlas/`, `display: standalone`, tema `#2b2724`.
-- **Service worker** (Workbox, `registerType: 'autoUpdate'`) che precacha l'app
-  shell **e `graph.json`** → la mappa è disponibile offline. Si aggiorna da solo a
-  ogni nuovo deploy.
-- **Icone** in `public/`: `pwa-192.png`, `pwa-512.png`, `pwa-maskable-512.png`
-  (maskable per Android), `apple-touch-icon-180.png` e `favicon.svg`.
-
-> L'installazione richiede **HTTPS** (o `localhost`): funziona sul sito Pages e in
-> `npm run preview`, non aprendo i file con doppio click. In `npm run dev` il
-> service worker è disattivato di default.
-
----
-
-## Pipeline dati a due stadi
-
-L'archivio attraversa due script Python prima di diventare la mappa. **Nessuno
-dei due usa le API di Spotify né richiede credenziali.**
-
-```
-data/spotify_archive.json              (archivio GREZZO: tracce, artisti, playlist — fonte di verità, mantenuto a mano)
-        │
-        ▼  scripts/enrich_genres.py     ← aggiunge genres + genre_primary per traccia
-data/spotify_archive_genres.json        (archivio ARRICCHITO)
-        │
-        ▼  scripts/build_graph.py       ← costruisce nodi + archi + cluster (idempotente)
-public/graph.json                       (input della mappa, servito staticamente)
-```
-
-- **`scripts/genre_map.py`** — mappa artista→generi (541 artisti) + funzioni di
-  supporto. È una **dipendenza** di `enrich_genres.py`: devono stare nella stessa
-  cartella `scripts/`.
-- **`scripts/enrich_genres.py`** — stadio 1: classifica ogni traccia per genere.
-- **`scripts/build_graph.py`** — stadio 2: costruisce il grafo. È idempotente,
-  rigenera l'intero grafo dallo stato corrente dell'archivio.
-
-### Come si costruiscono gli archi
-
-- **artista condiviso** → legame forte
-- **genere primario condiviso** → legame medio (kNN sparso)
-- **genere secondario condiviso** → legame leggero
-- **stessa playlist** → legame debole
-
----
-
-## Workflow settimanale
-
-Quando arriva una nuova New Release Playlist:
+### Production build
 
 ```bash
-# 1. Aggiorna l'archivio GREZZO con le nuove tracce (data/spotify_archive.json),
-#    esportando dal tuo sistema di curation.
+npm run build      # generates dist/
+npm run preview    # serves dist/ locally for a realistic check
+```
 
-# 2. Arricchisci con i generi
+---
+
+## Chat → playlist (generated from the graph)
+
+At the bottom of the map there's a chat (**♫ Create a playlist**): describe what
+you want to hear and the app builds a playlist by **traversing the graph**,
+highlighting the chosen tracks and drawing the listening path that connects them.
+
+**No external AI / no API:** the interpretation is a client-side rule engine
+([`src/playlist.js`](src/playlist.js)), so it works offline and is free and
+private. It understands:
+
+- **genres** ("jazz", "soulful house", "uk jazz", "neo-soul", …)
+- **moods** ("relaxing", "energetic for the party", "focus", "groovy")
+- **seed artist / track** with a cue: "like Moodymann", "similar to Louie Vega"
+  (it also searches titles, e.g. remixes)
+- **number of tracks** ("12 tracks", "a dozen", "long")
+
+Examples: `relaxing jazz, 15 tracks` · `soulful house for the party` ·
+`like Moodymann` · `mix neo-soul and uk jazz for the evening` · `surprise me`.
+
+How the playlist is built:
+
+- with a **seed**: it starts from the track and grows by affinity along the
+  strongest links (shared artist, shared genre), optionally filtered by genre;
+- by **genre/mood**: it selects by genre match + centrality (hub nodes), with
+  artist diversity and balancing across the requested genres;
+- the final order is a "nearest-neighbour" path over the links, for a smooth listen.
+
+Click a track in the list to isolate it on the graph (with a Spotify link in the
+detail panel). *Optional future upgrade:* for free-form prompts you could connect
+an LLM via a serverless function (the API key must never live in the client).
+
+### Export to Spotify (no setup)
+
+Every generated playlist has an **↗ Export** button ([`src/export.js`](src/export.js)):
+no login, no configuration. We export the **exact Spotify links** of the tracks
+(we already have them in the graph, so the match is precise) and hand them to a
+tool that creates the playlist on your account:
+
+- on click the links are **copied to the clipboard** and downloaded as **CSV**,
+  and **[Spotlistr](https://www.spotlistr.com/search)** opens in a new tab;
+- paste the list into Spotlistr → Spotify login (it handles it) → it creates the playlist;
+- alternatively: paste the links into a **Spotify desktop** playlist, or import
+  the CSV/TXT with **[Soundiiz](https://soundiiz.com/tutorial/import-text-to-spotify)**.
+
+> **Why not the direct API?** On a static site, writing to your account would
+> still require a Spotify app + OAuth login (and "text-to-playlist" tools pull
+> from the whole catalogue, losing the point of your archive). Exporting the
+> exact links and using an external tool avoids any setup while keeping the
+> playlist the one built from **your** graph.
+
+---
+
+## Install as an app (PWA)
+
+The app is a **Progressive Web App**: it can be installed on desktop and mobile
+and works **offline** after the first visit.
+
+- **Desktop (Chrome/Edge):** the "Install" icon in the address bar, or menu ⋮ →
+  *Install New Release Atlas*.
+- **iOS (Safari):** Share → *Add to Home Screen*.
+- **Android (Chrome):** menu ⋮ → *Install app* / *Add to Home screen*.
+
+Technical details (via [`vite-plugin-pwa`](https://vite-pwa-org.netlify.app/)):
+
+- A generated **manifest** (`manifest.webmanifest`) with `scope`/`start_url`
+  under the `base` `/new-release-atlas/`, `display: standalone`, theme `#2b2724`.
+- A **service worker** (Workbox, `registerType: 'autoUpdate'`) that precaches the
+  app shell **and `graph.json`** → the map is available offline. It updates itself
+  on every new deploy.
+- **Icons** in `public/`: `pwa-192.png`, `pwa-512.png`, `pwa-maskable-512.png`
+  (maskable for Android), `apple-touch-icon-180.png` and `favicon.svg`.
+
+> Installing requires **HTTPS** (or `localhost`): it works on the Pages site and
+> in `npm run preview`, not by opening files via double-click. In `npm run dev`
+> the service worker is disabled by default.
+
+---
+
+## Two-stage data pipeline
+
+The archive goes through two Python scripts before becoming the map. **Neither
+uses the Spotify API or requires credentials.**
+
+```
+data/spotify_archive.json              (RAW archive: tracks, artists, playlists — source of truth, hand-maintained)
+        │
+        ▼  scripts/enrich_genres.py     ← adds genres + genre_primary per track
+data/spotify_archive_genres.json        (ENRICHED archive)
+        │
+        ▼  scripts/build_graph.py       ← builds nodes + edges + clusters (idempotent)
+public/graph.json                       (the map's input, served statically)
+```
+
+- **`scripts/genre_map.py`** — artist→genres map (541 artists) + helper functions.
+  It is a **dependency** of `enrich_genres.py`: they must live in the same
+  `scripts/` folder.
+- **`scripts/enrich_genres.py`** — stage 1: classifies each track by genre.
+- **`scripts/build_graph.py`** — stage 2: builds the graph. It is idempotent and
+  regenerates the whole graph from the archive's current state.
+
+### How the edges are built
+
+- **shared artist** → strong link
+- **shared primary genre** → medium link (sparse kNN)
+- **shared secondary genre** → light link
+- **same playlist** → weak link
+
+---
+
+## Weekly workflow
+
+When a new New Release Playlist arrives:
+
+```bash
+# 1. Update the RAW archive with the new tracks (data/spotify_archive.json),
+#    exporting from your curation system.
+
+# 2. Enrich with genres
 python3 scripts/enrich_genres.py \
     --input data/spotify_archive.json \
     --output data/spotify_archive_genres.json \
     --overrides data/genre_overrides.json \
     --report-missing data/missing_artists.json
 
-# 3. Se lo script segnala artisti non classificati, aggiungili a
-#    data/genre_overrides.json e ri-esegui lo step 2 (vedi sotto).
+# 3. If the script reports unclassified artists, add them to
+#    data/genre_overrides.json and re-run step 2 (see below).
 
-# 4. Rigenera il grafo
+# 4. Regenerate the graph
 python3 scripts/build_graph.py \
     --input data/spotify_archive_genres.json \
     --output public/graph.json
 
-# 5. Commit + push → GitHub Actions ripubblica da solo
+# 5. Commit + push → GitHub Actions republishes by itself
 git add -A && git commit -m "update: New Release #NN" && git push
 ```
 
-> Il workflow CI rigenera comunque `graph.json` dall'archivio arricchito a ogni
-> push, quindi anche se dimentichi lo step 4 la pubblicazione resta coerente.
+> The CI workflow regenerates `graph.json` from the enriched archive on every
+> push anyway, so even if you forget step 4 the published site stays consistent.
 
 ---
 
-## Gestione degli artisti nuovi / sconosciuti
+## Handling new / unknown artists
 
-`enrich_genres.py` classifica gli artisti tramite `genre_map.py`. Per gli
-artisti sconosciuti tenta un'**inferenza dal contesto**: se un artista
-collabora, sulla stessa traccia, con artisti noti, eredita i loro generi (peso
-ridotto). Se non c'è alcun appiglio, l'artista resta `unknown` e viene
-**segnalato** a fine esecuzione.
+`enrich_genres.py` classifies artists via `genre_map.py`. For unknown artists it
+attempts **context inference**: if an artist collaborates, on the same track,
+with known artists, it inherits their genres (reduced weight). It stays `unknown`
+only if there's no anchor at all, and it is **reported** at the end of the run.
 
-Due modi per classificare un artista nuovo:
+Two ways to classify a new artist:
 
-- **rapido** — aggiungilo a `data/genre_overrides.json` (non tocca il codice):
+- **quick** — add it to `data/genre_overrides.json` (no code change):
 
   ```json
   {
-    "Nome Artista": ["genere1", "genere2"],
-    "Altro Artista": ["jazz"]
+    "Artist Name": ["genre1", "genre2"],
+    "Another Artist": ["jazz"]
   }
   ```
 
-- **permanente** — aggiungilo al dizionario `GENRES` in `scripts/genre_map.py`.
+- **permanent** — add it to the `GENRES` dictionary in `scripts/genre_map.py`.
 
-Opzioni utili di `enrich_genres.py`:
+Useful `enrich_genres.py` options:
 
-- `--report-missing data/missing_artists.json` — scrive, per ogni artista
-  rimasto `unknown`, il numero di tracce e i collaboratori noti: utile per
-  classificarlo correttamente.
-- `--fail-on-missing N` — esce con errore se i mancanti superano `N`. Utile in
-  CI per essere avvisati quando una playlist introduce artisti nuovi.
+- `--report-missing data/missing_artists.json` — writes, for each artist left
+  `unknown`, the track count and known collaborators: useful for classifying it.
+- `--fail-on-missing N` — exits with an error if more than `N` remain unclassified.
+  Useful in CI to be alerted when a playlist introduces new artists.
 
-### Tassonomia generi (valori ammessi negli overrides)
+### Genre taxonomy (allowed values in overrides)
 
 ```
 soulful-house · broken-beat · uk-jazz · jazz · neo-soul · soul-funk
 hip-hop · electronic · downtempo · world · alt · classical
 ```
 
-(`unknown` è il fallback, da evitare negli overrides.)
+(`unknown` is the fallback, to be avoided in overrides.)
 
 ---
 
-## Deploy su GitHub Pages
+## Deploy to GitHub Pages
 
-Il deploy è automatico: ad ogni push su `main`, il workflow in
-`.github/workflows/deploy.yml`:
+Deploy is automatic: on every push to `main`, the workflow in
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml):
 
-1. fa il checkout;
-2. installa Python e rigenera `public/graph.json` (`build_graph.py`);
-3. installa Node, esegue `npm ci` e `npm run build`;
-4. pubblica `dist/` su Pages.
+1. checks out the repo;
+2. installs Python and regenerates `public/graph.json` (`build_graph.py`);
+3. installs Node, runs `npm ci` and `npm run build`;
+4. publishes `dist/` to Pages.
 
-### Nota su `base` (critica)
+### Note on `base` (critical)
 
-GitHub Pages serve i project site da `/<nome-repo>/`. In
-[`vite.config.js`](vite.config.js) il campo `base` **deve** coincidere col nome
-esatto del repository:
+GitHub Pages serves project sites from `/<repo-name>/`. In
+[`vite.config.js`](vite.config.js) the `base` field **must** equal the exact
+repository name:
 
 ```js
 base: '/new-release-atlas/',
 ```
 
-Se il repo viene rinominato, aggiorna `base` di conseguenza — altrimenti in
-produzione gli asset non vengono trovati e la pagina resta bianca. Il componente
-usa `import.meta.env.BASE_URL` proprio per leggere `graph.json` dal path
-corretto sia in dev sia in produzione.
+If the repo is renamed, update `base` accordingly — otherwise the assets won't be
+found in production and the page stays blank. The component uses
+`import.meta.env.BASE_URL` precisely to read `graph.json` from the correct path in
+both dev and production.
 
 ---
 
-## Struttura del progetto
+## Project structure
 
 ```
 new-release-atlas/
-├── .github/workflows/deploy.yml      # deploy automatico su GitHub Pages
+├── .github/workflows/deploy.yml      # automatic deploy to GitHub Pages
 ├── data/
-│   ├── spotify_archive.json          # archivio GREZZO (fonte di verità)
-│   ├── spotify_archive_genres.json   # archivio arricchito (input di build_graph)
-│   └── genre_overrides.json          # (opzionale) artista→generi extra
+│   ├── spotify_archive.json          # RAW archive (source of truth)
+│   ├── spotify_archive_genres.json   # enriched archive (input of build_graph)
+│   └── genre_overrides.json          # (optional) extra artist→genres
 ├── public/
-│   └── graph.json                    # GENERATO da build_graph.py
+│   └── graph.json                    # GENERATED by build_graph.py
 ├── scripts/
-│   ├── genre_map.py                  # mappa + API (dipendenza di enrich_genres)
-│   ├── enrich_genres.py              # stadio 1 della pipeline
-│   └── build_graph.py                # stadio 2 della pipeline
+│   ├── genre_map.py                  # map + API (dependency of enrich_genres)
+│   ├── enrich_genres.py              # pipeline stage 1
+│   └── build_graph.py                # pipeline stage 2
 ├── src/
-│   ├── MusicNetwork.jsx              # componente della mappa (D3 force graph)
+│   ├── MusicNetwork.jsx              # the map component (D3 force graph)
+│   ├── Chat.jsx                      # chat panel (prompt → playlist)
+│   ├── playlist.js                   # rule engine: prompt → playlist
+│   ├── export.js                     # export links/CSV → Spotlistr/Spotify
 │   ├── App.jsx
 │   └── main.jsx
 ├── index.html
