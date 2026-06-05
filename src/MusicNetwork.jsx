@@ -203,7 +203,6 @@ function MusicNetworkInner() {
       .selectAll("text")
       .data(nodes)
       .join("text")
-      .text((d) => d.title)
       .attr("font-size", 9)
       .attr("font-family", "'Spectral', Georgia, serif")
       .attr("fill", INK)
@@ -211,6 +210,9 @@ function MusicNetworkInner() {
       .attr("dy", 3)
       .attr("opacity", 0)
       .style("pointer-events", "none");
+    // Etichetta accanto al nodo: titolo + artista (artista in tono attenuato).
+    labels.append("tspan").text((d) => d.title);
+    labels.append("tspan").attr("fill", MUTED).text((d) => " — " + d.artist);
 
     node
       .on("mouseenter", (e, d) => setHovered(d))
