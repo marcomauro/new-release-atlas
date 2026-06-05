@@ -2,6 +2,10 @@ import React, { useRef, useEffect, useState, useMemo, useCallback } from "react"
 import * as d3 from "d3";
 import Chat from "./Chat.jsx";
 import { buildPlaylist } from "./playlist.js";
+import {
+  getClientId, setClientId, getStoredToken, beginAuth,
+  handleRedirectCallback, takePending, createPlaylistOnSpotify, redirectUri,
+} from "./spotify.js";
 
 let GRAPH = null; // populated by loader before MusicNetworkInner mounts
 
@@ -361,13 +365,24 @@ function MusicNetworkInner() {
     if (pts.length) {
       const xs = pts.map((p) => p.x);
       const ys = pts.map((p) => p.y);
-      const pad = 90;
-      const bw = Math.max(60, Math.max(...xs) - Math.min(...xs)) + pad * 2;
-      const bh = Math.max(60, Math.max(...ys) - Math.min(...ys)) + pad * 2;
-      const k = Math.max(0.12, Math.min(2.4, Math.min(dims.w / bw, dims.h / bh)));
-      const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
-      const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
-      const t = d3.zoomIdentity.translate(dims.w / 2, dims.h / 2).scale(k).translate(-cx, -cy);
+      const minX = Math.min(...xs), maxX = Math.max(...xs);
+      const minY = Math.min(...ys), maxY = Math.max(...ys);
+      // Inquadra nell'area utile, lasciando margini per header/legenda (sx, alto)
+      // e per il pannello chat (basso): cosi i nodi non finiscono sotto la UI.
+      const Lm = Math.min(300, dims.w * 0.32);
+      const Rm = 56;
+      const Tm = 130;
+      const Bm = Math.min(260, dims.h * 0.34);
+      const uw = Math.max(120, dims.w - Lm - Rm);
+      const uh = Math.max(120, dims.h - Tm - Bm);
+      const bw = Math.max(60, maxX - minX);
+      const bh = Math.max(60, maxY - minY);
+      const k = Math.max(0.12, Math.min(2.0, Math.min(uw / (bw + 120), uh / (bh + 120))));
+      const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
+      const t = d3.zoomIdentity
+        .translate(Lm + uw / 2, Tm + uh / 2)
+        .scale(k)
+        .translate(-cx, -cy);
       svg.transition().duration(750).call(zoom.transform, t);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -400,6 +415,76 @@ function MusicNetworkInner() {
   }, []);
 
   const clearPlaylist = useCallback(() => setPlaylist(null), []);
+
+  // --- export su Spotify (OAuth PKCE, client-side) ---
+  const sysMsg = useCallback((text, link) => {
+    setMessages((m) => [...m, { role: "system", text, link }]);
+    setChatOpen(true);
+  }, []);
+
+  const runExport = useCallback(
+    async (token, pending) => {
+      try {
+        const out = await createPlaylistOnSpotify(token, pending);
+        sysMsg(`Playlist «${out.name}» creata su Spotify · ${out.added} brani.`, out.url);
+      } catch (e) {
+        sysMsg("Errore nella creazione su Spotify: " + e.message);
+      }
+    },
+    [sysMsg]
+  );
+
+  const handleExport = useCallback(
+    async (res) => {
+      if (!res || !res.ok) return;
+      const pending = {
+        name: `New Release Atlas — ${res.theme}`,
+        description: `Generata da New Release Atlas · ${res.interpretation}.`,
+        trackUrls: res.tracks.map((t) => t.url),
+      };
+      if (!getClientId()) {
+        const id = window.prompt(
+          "Per creare la playlist serve il tuo Spotify Client ID.\n\n" +
+            "1) Vai su developer.spotify.com/dashboard e crea un'app (gratis)\n" +
+            "2) Aggiungi questo Redirect URI ESATTO:\n   " +
+            redirectUri() +
+            "\n3) Incolla qui il Client ID:"
+        );
+        if (!id || !id.trim()) return;
+        setClientId(id.trim());
+      }
+      const token = getStoredToken();
+      if (!token) {
+        sysMsg("Apro il login Spotify…");
+        await beginAuth(getClientId(), pending); // redirect; si riprende al ritorno
+        return;
+      }
+      sysMsg("Creo la playlist su Spotify…");
+      await runExport(token, pending);
+    },
+    [sysMsg, runExport]
+  );
+
+  // al load: se torniamo dal consenso Spotify (?code=...), completa l'export
+  useEffect(() => {
+    const clientId = getClientId();
+    if (!clientId) return;
+    (async () => {
+      const r = await handleRedirectCallback(clientId);
+      if (r.status === "authed") {
+        const pending = takePending();
+        if (pending) {
+          sysMsg("Login Spotify ok, creo la playlist…");
+          await runExport(r.token, pending);
+        } else {
+          sysMsg("Login Spotify completato.");
+        }
+      } else if (r.status === "error") {
+        sysMsg("Login Spotify non riuscito (" + r.error + ").");
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const meta = GRAPH.meta;
   const orderedGenres = GRAPH.genres.filter((g) => genreCounts[g]);
@@ -707,6 +792,7 @@ function MusicNetworkInner() {
         onSubmit={handleChat}
         onClear={clearPlaylist}
         onPick={pickTrack}
+        onExport={handleExport}
         genreColor={gColor}
         hasPlaylist={!!playlist}
       />

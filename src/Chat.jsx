@@ -14,7 +14,7 @@ const SUGGESTIONS = [
 
 export default function Chat({
   open, setOpen, messages, value, onChange, onSubmit, onClear, onPick,
-  genreColor, hasPlaylist,
+  onExport, genreColor, hasPlaylist,
 }) {
   const bodyRef = useRef(null);
   useEffect(() => {
@@ -98,8 +98,18 @@ export default function Chat({
                 {m.text}
               </div>
             </div>
+          ) : m.role === "system" ? (
+            <div key={i} style={{ margin: "8px 0", fontSize: 12, color: MUTED, display: "flex", alignItems: "center", gap: 8 }}>
+              <span>{m.text}</span>
+              {m.link && (
+                <a href={m.link} target="_blank" rel="noopener noreferrer"
+                   style={{ color: PAPER, background: "#1DB954", padding: "4px 10px", borderRadius: 12, textDecoration: "none", fontSize: 11.5, fontWeight: 500, whiteSpace: "nowrap" }}>
+                  Apri su Spotify ↗
+                </a>
+              )}
+            </div>
           ) : (
-            <Assistant key={i} res={m.res} onPick={onPick} genreColor={genreColor} />
+            <Assistant key={i} res={m.res} onPick={onPick} onExport={onExport} genreColor={genreColor} />
           )
         )}
       </div>
@@ -135,7 +145,7 @@ export default function Chat({
   );
 }
 
-function Assistant({ res, onPick, genreColor }) {
+function Assistant({ res, onPick, onExport, genreColor }) {
   if (!res || !res.ok) {
     return (
       <div style={{ margin: "8px 0", fontSize: 13, color: "#c75b4a" }}>
@@ -145,8 +155,23 @@ function Assistant({ res, onPick, genreColor }) {
   }
   return (
     <div style={{ margin: "8px 0 14px" }}>
-      <div style={{ fontFamily: "'Spectral', serif", fontSize: 15, fontWeight: 500, color: INK, textTransform: "capitalize" }}>
-        {res.theme}
+      <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
+        <div style={{ fontFamily: "'Spectral', serif", fontSize: 15, fontWeight: 500, color: INK, textTransform: "capitalize" }}>
+          {res.theme}
+        </div>
+        {onExport && (
+          <button
+            onClick={() => onExport(res)}
+            title="Crea questa playlist sul tuo Spotify"
+            style={{
+              marginLeft: "auto", fontFamily: "Inter, sans-serif", fontSize: 11.5, fontWeight: 500,
+              color: "#fff", background: "#1DB954", border: "none", borderRadius: 14,
+              padding: "4px 12px", cursor: "pointer", whiteSpace: "nowrap",
+            }}
+          >
+            ♫ Salva su Spotify
+          </button>
+        )}
       </div>
       <div style={{ fontSize: 11.5, color: MUTED, margin: "2px 0 8px", lineHeight: 1.5 }}>
         {res.note}

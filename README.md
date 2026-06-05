@@ -77,6 +77,31 @@ pannello di dettaglio). *Upgrade futuro opzionale:* per frasi libere si può
 collegare un LLM tramite una serverless function (la API key non va mai messa nel
 client).
 
+### Salva su Spotify (export)
+
+Ogni playlist generata ha un pulsante **♫ Salva su Spotify** che la crea come
+playlist **reale e riproducibile** sul tuo account. L'autenticazione usa
+**OAuth PKCE** lato browser ([`src/spotify.js`](src/spotify.js)): nessun client
+secret, nessun backend, niente password nel codice.
+
+**Setup una tantum** (serve un Client ID Spotify, gratuito):
+
+1. Vai su [developer.spotify.com/dashboard](https://developer.spotify.com/dashboard)
+   → *Create app*.
+2. In **Redirect URIs** aggiungi **esattamente**:
+   - produzione: `https://marcomauro.github.io/new-release-atlas/`
+   - (per il dev locale, se serve: `http://127.0.0.1:5173/new-release-atlas/`)
+3. Come **API**, seleziona *Web API*. Salva.
+4. Copia il **Client ID**.
+5. Apri il sito, genera una playlist, clicca **Salva su Spotify**: alla prima
+   volta l'app chiede il Client ID (salvato nel browser via `localStorage`), poi
+   apre il login Spotify. Al ritorno la playlist viene creata in automatico e
+   compare il link **Apri su Spotify**.
+
+> Le playlist sono create **private** (scope `playlist-modify-private/public`).
+> Il Client ID è pubblico e non è un segreto; se preferisci cablarlo una volta
+> per tutte, si può impostare `CONFIGURED_CLIENT_ID` in `src/spotify.js`.
+
 ---
 
 ## Installazione come app (PWA)
