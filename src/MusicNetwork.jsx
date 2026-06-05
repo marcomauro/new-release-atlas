@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useMemo, useCallback } from "react";
 import * as d3 from "d3";
 import Chat from "./Chat.jsx";
-import { buildPlaylist } from "./playlist.js";
+import { buildPlaylist, buildFromSeed } from "./playlist.js";
 import {
   SPOTLISTR_URL, playlistLinks, playlistCsv, exportFilename, copyText, downloadFile,
 } from "./export.js";
@@ -351,6 +351,12 @@ function MusicNetworkInner() {
       if (playlistSet) return playlistSet.has(d.id) ? 0.92 : 0;
       return 0;
     });
+
+    // Nascondi il percorso della playlist mentre un nodo e' in focus (dettaglio).
+    if (simRef.current.route) {
+      const showRoute = !focusId && playlistSet && playlistSet.size > 1;
+      simRef.current.route.attr("stroke-opacity", showRoute ? 0.5 : 0);
+    }
   }, [selected, hovered, matchSet, activeGenre, neighbors, playlistSet]);
 
   // Aggiorna il percorso della playlist e inquadra i suoi nodi (solo al cambio).
@@ -411,6 +417,23 @@ function MusicNetworkInner() {
   const pickTrack = useCallback((id) => {
     const n = GRAPH.nodes.find((x) => x.id === id);
     if (n) setSelected(n);
+  }, []);
+
+  // Genera una playlist usando il nodo selezionato come seed, seguendo le
+  // connessioni del grafo. Chiude il dettaglio e mostra il risultato in chat.
+  const generateFromNode = useCallback((node) => {
+    if (!node) return;
+    const res = buildFromSeed(GRAPH, node, 18);
+    setMessages((m) => [
+      ...m,
+      { role: "user", text: `playlist from "${node.title}"` },
+      { role: "assistant", res },
+    ]);
+    setSelected(null);
+    setActiveGenre(null);
+    setQuery("");
+    setChatOpen(true);
+    setPlaylist(res.ok && res.ids.length ? res.ids : null);
   }, []);
 
   const clearPlaylist = useCallback(() => setPlaylist(null), []);
@@ -686,23 +709,38 @@ function MusicNetworkInner() {
             <br />
             Playlists {selected.playlists.map((p) => "#" + p).join(", ")}
           </div>
-          <a
-            href={selected.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: "inline-block",
-              marginTop: 16,
-              fontSize: 12,
-              color: PAPER,
-              background: INK,
-              padding: "7px 14px",
-              borderRadius: 2,
-              textDecoration: "none",
-            }}
-          >
-            Open in Spotify ↗
-          </a>
+          <div style={{ display: "flex", gap: 8, marginTop: 16, flexWrap: "wrap" }}>
+            <a
+              href={selected.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontSize: 12,
+                color: PAPER,
+                background: INK,
+                padding: "7px 14px",
+                borderRadius: 2,
+                textDecoration: "none",
+              }}
+            >
+              Open in Spotify ↗
+            </a>
+            <button
+              onClick={() => generateFromNode(selected)}
+              title="Build a playlist from this track's graph connections"
+              style={{
+                fontSize: 12,
+                color: INK,
+                background: "transparent",
+                border: `1px solid ${INK}`,
+                padding: "7px 14px",
+                borderRadius: 2,
+                cursor: "pointer",
+              }}
+            >
+              ♫ Generate playlist
+            </button>
+          </div>
         </div>
       )}
 

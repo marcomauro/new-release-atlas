@@ -75,8 +75,12 @@ How the playlist is built:
 - the final order is a "nearest-neighbour" path over the links, for a smooth listen.
 
 Click a track in the list to isolate it on the graph (with a Spotify link in the
-detail panel). *Optional future upgrade:* for free-form prompts you could connect
-an LLM via a serverless function (the API key must never live in the client).
+detail panel). You can also **click any node** on the map and hit **Generate
+playlist** in its detail panel: this seeds a playlist from that track and grows it
+along the graph connections (shared artist / genre).
+
+*Optional future upgrade:* for free-form prompts you could connect an LLM via a
+serverless function (the API key must never live in the client).
 
 ### Export to Spotify (no setup)
 

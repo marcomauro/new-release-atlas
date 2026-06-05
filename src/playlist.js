@@ -375,4 +375,59 @@ export function buildPlaylist(graph, rawMessage) {
   };
 }
 
+// Costruisce una playlist usando un NODO come seed, crescendo SOLO lungo le
+// connessioni del grafo (artista/genere/co-playlist condivisi). Usata dal
+// pannello di dettaglio: "Generate playlist" dal brano selezionato.
+export function buildFromSeed(graph, seedNode, size = 18) {
+  if (!seedNode)
+    return { ok: false, ids: [], tracks: [], totalSeconds: 0, totalLabel: "", theme: "", interpretation: "", note: "" };
+
+  const byId = new Map(graph.nodes.map((n) => [n.id, n]));
+  const adj = buildAdjacency(graph);
+  const maxDeg = Math.max(1, ...graph.nodes.map((n) => n.degree));
+  const artistCount = new Map();
+  const canAdd = (n, cap = 2) => (artistCount.get(n.artist) || 0) < cap;
+  const note = (n) => artistCount.set(n.artist, (artistCount.get(n.artist) || 0) + 1);
+
+  const chosenSet = new Set([seedNode.id]);
+  let chosen = [seedNode.id];
+  note(seedNode);
+  while (chosen.length < size) {
+    let best = null, bestScore = -Infinity;
+    for (const cand of graph.nodes) {
+      if (chosenSet.has(cand.id) || !canAdd(cand)) continue;
+      let aff = 0;
+      const links = adj.get(cand.id) || new Map();
+      for (const cid of chosen) aff += links.get(cid) || 0;
+      if (aff <= 0) continue; // segui SOLO le connessioni del grafo
+      const score = aff + 0.04 * (cand.degree / maxDeg) + 0.02 * jitter(cand.id);
+      if (score > bestScore) { bestScore = score; best = cand; }
+    }
+    if (!best) {
+      // se il seed ha pochi legami, completa col suo stesso genere primario
+      best = graph.nodes
+        .filter((n) => !chosenSet.has(n.id) && n.genre === seedNode.genre && canAdd(n))
+        .sort((a, b) => b.degree - a.degree)[0];
+    }
+    if (!best) break;
+    chosen.push(best.id); chosenSet.add(best.id); note(best);
+  }
+  chosen = routeOrder(chosen, adj, byId, seedNode.id);
+
+  const tracks = tracksOf(chosen, byId);
+  const totalSeconds = tracks.reduce((s, t) => s + parseDur(t.duration), 0);
+  return {
+    ok: tracks.length > 0,
+    ids: chosen,
+    tracks,
+    totalSeconds,
+    totalLabel: fmtDur(totalSeconds),
+    theme: seedNode.title,
+    interpretation: `from "${seedNode.title}" — ${seedNode.artist}, via graph connections`,
+    note:
+      `${tracks.length} tracks · ${fmtDur(totalSeconds)} — built from "${seedNode.title}" by ${seedNode.artist}, ` +
+      `following the graph connections (shared artist / genre). Highlighted on the map in listening order.`,
+  };
+}
+
 export { GENRE_LABEL };
