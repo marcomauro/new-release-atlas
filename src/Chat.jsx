@@ -103,8 +103,8 @@ export default function Chat({
               <span>{m.text}</span>
               {m.link && (
                 <a href={m.link} target="_blank" rel="noopener noreferrer"
-                   style={{ color: PAPER, background: "#1DB954", padding: "4px 10px", borderRadius: 12, textDecoration: "none", fontSize: 11.5, fontWeight: 500, whiteSpace: "nowrap" }}>
-                  Apri su Spotify ↗
+                   style={{ color: PAPER, background: INK, padding: "4px 10px", borderRadius: 12, textDecoration: "none", fontSize: 11.5, fontWeight: 500, whiteSpace: "nowrap" }}>
+                  {m.linkLabel || "Apri ↗"}
                 </a>
               )}
             </div>
@@ -162,14 +162,14 @@ function Assistant({ res, onPick, onExport, genreColor }) {
         {onExport && (
           <button
             onClick={() => onExport(res)}
-            title="Crea questa playlist sul tuo Spotify"
+            title="Esporta i link e crea la playlist (Spotlistr / Spotify)"
             style={{
               marginLeft: "auto", fontFamily: "Inter, sans-serif", fontSize: 11.5, fontWeight: 500,
-              color: "#fff", background: "#1DB954", border: "none", borderRadius: 14,
+              color: PAPER, background: INK, border: "none", borderRadius: 14,
               padding: "4px 12px", cursor: "pointer", whiteSpace: "nowrap",
             }}
           >
-            ♫ Salva su Spotify
+            ↗ Esporta
           </button>
         )}
       </div>

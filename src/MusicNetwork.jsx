@@ -3,9 +3,8 @@ import * as d3 from "d3";
 import Chat from "./Chat.jsx";
 import { buildPlaylist } from "./playlist.js";
 import {
-  getClientId, setClientId, getStoredToken, beginAuth,
-  handleRedirectCallback, takePending, createPlaylistOnSpotify, redirectUri,
-} from "./spotify.js";
+  SPOTLISTR_URL, playlistLinks, playlistCsv, exportFilename, copyText, downloadFile,
+} from "./export.js";
 
 let GRAPH = null; // populated by loader before MusicNetworkInner mounts
 
@@ -416,75 +415,31 @@ function MusicNetworkInner() {
 
   const clearPlaylist = useCallback(() => setPlaylist(null), []);
 
-  // --- export su Spotify (OAuth PKCE, client-side) ---
-  const sysMsg = useCallback((text, link) => {
-    setMessages((m) => [...m, { role: "system", text, link }]);
+  // --- export "senza setup": link Spotify esatti + CSV, poi Spotlistr/Spotify ---
+  const sysMsg = useCallback((text, link, linkLabel) => {
+    setMessages((m) => [...m, { role: "system", text, link, linkLabel }]);
     setChatOpen(true);
   }, []);
-
-  const runExport = useCallback(
-    async (token, pending) => {
-      try {
-        const out = await createPlaylistOnSpotify(token, pending);
-        sysMsg(`Playlist «${out.name}» creata su Spotify · ${out.added} brani.`, out.url);
-      } catch (e) {
-        sysMsg("Errore nella creazione su Spotify: " + e.message);
-      }
-    },
-    [sysMsg]
-  );
 
   const handleExport = useCallback(
     async (res) => {
       if (!res || !res.ok) return;
-      const pending = {
-        name: `New Release Atlas — ${res.theme}`,
-        description: `Generata da New Release Atlas · ${res.interpretation}.`,
-        trackUrls: res.tracks.map((t) => t.url),
-      };
-      if (!getClientId()) {
-        const id = window.prompt(
-          "Per creare la playlist serve il tuo Spotify Client ID.\n\n" +
-            "1) Vai su developer.spotify.com/dashboard e crea un'app (gratis)\n" +
-            "2) Aggiungi questo Redirect URI ESATTO:\n   " +
-            redirectUri() +
-            "\n3) Incolla qui il Client ID:"
-        );
-        if (!id || !id.trim()) return;
-        setClientId(id.trim());
-      }
-      const token = getStoredToken();
-      if (!token) {
-        sysMsg("Apro il login Spotify…");
-        await beginAuth(getClientId(), pending); // redirect; si riprende al ritorno
-        return;
-      }
-      sysMsg("Creo la playlist su Spotify…");
-      await runExport(token, pending);
+      // Apri Spotlistr subito: restando nel gesto del click si evita il popup-block.
+      window.open(SPOTLISTR_URL, "_blank", "noopener");
+      const links = playlistLinks(res);
+      downloadFile(exportFilename(res, "csv"), playlistCsv(res), "text/csv;charset=utf-8");
+      const copied = await copyText(links);
+      sysMsg(
+        `${res.tracks.length} brani esportati — link Spotify ${
+          copied ? "copiati negli appunti" : "nel CSV scaricato"
+        } e CSV salvato. Incollali in Spotlistr (scheda aperta) per creare la playlist, ` +
+          `oppure incolla i link in una playlist di Spotify desktop.`,
+        SPOTLISTR_URL,
+        "Apri Spotlistr ↗"
+      );
     },
-    [sysMsg, runExport]
+    [sysMsg]
   );
-
-  // al load: se torniamo dal consenso Spotify (?code=...), completa l'export
-  useEffect(() => {
-    const clientId = getClientId();
-    if (!clientId) return;
-    (async () => {
-      const r = await handleRedirectCallback(clientId);
-      if (r.status === "authed") {
-        const pending = takePending();
-        if (pending) {
-          sysMsg("Login Spotify ok, creo la playlist…");
-          await runExport(r.token, pending);
-        } else {
-          sysMsg("Login Spotify completato.");
-        }
-      } else if (r.status === "error") {
-        sysMsg("Login Spotify non riuscito (" + r.error + ").");
-      }
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const meta = GRAPH.meta;
   const orderedGenres = GRAPH.genres.filter((g) => genreCounts[g]);
