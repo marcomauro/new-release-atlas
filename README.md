@@ -45,6 +45,32 @@ npm run preview    # serve dist/ in locale per una verifica realistica
 
 ---
 
+## Installazione come app (PWA)
+
+L'app è una **Progressive Web App**: può essere installata su desktop e mobile e
+funziona anche **offline** dopo la prima visita.
+
+- **Desktop (Chrome/Edge):** icona "Installa" nella barra degli indirizzi, oppure
+  menu ⋮ → *Installa New Release Atlas*.
+- **iOS (Safari):** Condividi → *Aggiungi alla schermata Home*.
+- **Android (Chrome):** menu ⋮ → *Installa app* / *Aggiungi a schermata Home*.
+
+Dettagli tecnici (via [`vite-plugin-pwa`](https://vite-pwa-org.netlify.app/)):
+
+- **Manifest** generato (`manifest.webmanifest`) con `scope`/`start_url` sotto il
+  `base` `/new-release-atlas/`, `display: standalone`, tema `#2b2724`.
+- **Service worker** (Workbox, `registerType: 'autoUpdate'`) che precacha l'app
+  shell **e `graph.json`** → la mappa è disponibile offline. Si aggiorna da solo a
+  ogni nuovo deploy.
+- **Icone** in `public/`: `pwa-192.png`, `pwa-512.png`, `pwa-maskable-512.png`
+  (maskable per Android), `apple-touch-icon-180.png` e `favicon.svg`.
+
+> L'installazione richiede **HTTPS** (o `localhost`): funziona sul sito Pages e in
+> `npm run preview`, non aprendo i file con doppio click. In `npm run dev` il
+> service worker è disattivato di default.
+
+---
+
 ## Pipeline dati a due stadi
 
 L'archivio attraversa due script Python prima di diventare la mappa. **Nessuno
