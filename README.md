@@ -45,6 +45,40 @@ npm run preview    # serve dist/ in locale per una verifica realistica
 
 ---
 
+## Chat → playlist (generazione dal grafo)
+
+In basso nella mappa c'è una chat (**♫ Crea una playlist**): descrivi cosa vuoi
+ascoltare e l'app costruisce una playlist **navigando il grafo**, evidenziando i
+brani scelti e disegnando il percorso d'ascolto che li collega.
+
+**Nessuna AI esterna / nessuna API:** l'interpretazione è un motore a regole
+client-side ([`src/playlist.js`](src/playlist.js)), quindi funziona anche offline
+ed è gratuito e privato. Capisce:
+
+- **generi** ("jazz", "soulful house", "uk jazz", "neo-soul", …)
+- **mood** ("rilassante", "energico per la festa", "focus/concentrazione", "groovy")
+- **artista / brano seed** con un cue: "tipo Moodymann", "simile a Louie Vega"
+  (cerca anche nei titoli, es. i remix)
+- **numero di brani** ("12 brani", "una decina", "lunga")
+
+Esempi: `jazz rilassante di 15 brani` · `soulful house per la festa` ·
+`tipo Moodymann` · `mix neo-soul e uk jazz per la sera` · `sorprendimi`.
+
+Come costruisce la playlist:
+
+- con un **seed**: parte dal brano e cresce per affinità lungo i link più forti
+  (artista condiviso, genere condiviso), opzionalmente filtrando per genere;
+- per **generi/mood**: seleziona per match di genere + centralità (nodi-hub),
+  con diversità d'artista e bilanciamento tra i generi richiesti;
+- l'ordine finale è un percorso "nearest-neighbor" sui link, per un ascolto fluido.
+
+Click su un brano della lista per isolarlo sul grafo (con link a Spotify nel
+pannello di dettaglio). *Upgrade futuro opzionale:* per frasi libere si può
+collegare un LLM tramite una serverless function (la API key non va mai messa nel
+client).
+
+---
+
 ## Installazione come app (PWA)
 
 L'app è una **Progressive Web App**: può essere installata su desktop e mobile e

@@ -1,5 +1,7 @@
 import React, { useRef, useEffect, useState, useMemo, useCallback } from "react";
 import * as d3 from "d3";
+import Chat from "./Chat.jsx";
+import { buildPlaylist } from "./playlist.js";
 
 let GRAPH = null; // populated by loader before MusicNetworkInner mounts
 
@@ -57,6 +59,14 @@ function MusicNetworkInner() {
   const [activeGenre, setActiveGenre] = useState(null);
   const [dims, setDims] = useState({ w: 800, h: 600 });
 
+  // --- chat / playlist generata dal grafo ---
+  const [playlist, setPlaylist] = useState(null); // array ordinato di id
+  const [messages, setMessages] = useState([]);
+  const [chatInput, setChatInput] = useState("");
+  const [chatOpen, setChatOpen] = useState(false);
+  const routeRef = useRef([]); // datum dei nodi della playlist, per disegnare il percorso
+  const playlistSet = useMemo(() => (playlist ? new Set(playlist) : null), [playlist]);
+
   const neighbors = useMemo(() => {
     const map = new Map();
     GRAPH.nodes.forEach((n) => map.set(n.id, new Set()));
@@ -106,6 +116,7 @@ function MusicNetworkInner() {
 
     const nodes = GRAPH.nodes.map((d) => ({ ...d }));
     const links = GRAPH.links.map((d) => ({ ...d }));
+    const nodesById = new Map(nodes.map((d) => [d.id, d]));
     const g = svg.append("g");
 
     const zoom = d3
@@ -126,6 +137,34 @@ function MusicNetworkInner() {
       .data(links)
       .join("line")
       .attr("stroke-width", (d) => Math.min(2, 0.3 + d.weight * 0.1));
+
+    // Percorso della playlist generata: una linea che collega i brani
+    // nell'ordine d'ascolto. Disegnata sopra i link, sotto i nodi.
+    const route = g
+      .append("path")
+      .attr("fill", "none")
+      .attr("stroke", INK)
+      .attr("stroke-opacity", 0)
+      .attr("stroke-width", 2.2)
+      .attr("stroke-linejoin", "round")
+      .attr("stroke-linecap", "round")
+      .style("pointer-events", "none");
+
+    const drawRoute = () => {
+      const pts = routeRef.current;
+      if (!pts || pts.length < 2) {
+        route.attr("d", null);
+        return;
+      }
+      route.attr(
+        "d",
+        d3
+          .line()
+          .x((d) => d.x)
+          .y((d) => d.y)
+          .curve(d3.curveCatmullRom.alpha(0.5))(pts)
+      );
+    };
 
     const node = g
       .append("g")
@@ -223,9 +262,10 @@ function MusicNetworkInner() {
           .attr("y2", (d) => d.target.y);
         node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
         labels.attr("x", (d) => d.x).attr("y", (d) => d.y);
+        drawRoute();
       });
 
-    simRef.current = { sim, node, link, labels, g, zoom, svg, anchor };
+    simRef.current = { sim, node, link, labels, g, zoom, svg, anchor, route, nodesById, drawRoute };
     return () => sim.stop();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -269,19 +309,21 @@ function MusicNetworkInner() {
       if (matchSet && !matchSet.has(d.id)) return true;
       if (activeGenre && d.genre !== activeGenre) return true;
       if (focusId && d.id !== focusId && !nbr?.has(d.id)) return true;
+      if (!focusId && playlistSet && !playlistSet.has(d.id)) return true;
       return false;
     };
 
     node
       .attr("opacity", (d) => {
         if (focusId && d.id === focusId) return 1;
+        if (!focusId && playlistSet?.has(d.id)) return 1;
         return dim(d) ? 0.08 : 0.96;
       })
       .attr("stroke-width", (d) =>
-        d.id === focusId ? 2.4 : matchSet?.has(d.id) ? 2 : 1.2
+        d.id === focusId || playlistSet?.has(d.id) ? 2.4 : matchSet?.has(d.id) ? 2 : 1.2
       )
       .attr("stroke", (d) =>
-        d.id === focusId || matchSet?.has(d.id) ? INK : PAPER
+        d.id === focusId || matchSet?.has(d.id) || playlistSet?.has(d.id) ? INK : PAPER
       );
 
     link.attr("stroke-opacity", (d) => {
@@ -293,6 +335,7 @@ function MusicNetworkInner() {
         return 0.04;
       }
       if (matchSet) return matchSet.has(s) || matchSet.has(t) ? 0.22 : 0.02;
+      if (playlistSet) return playlistSet.has(s) && playlistSet.has(t) ? 0.15 : 0.02;
       return 0.1;
     });
 
@@ -302,9 +345,33 @@ function MusicNetworkInner() {
         return nbr?.has(d.id) ? 0.8 : 0;
       }
       if (matchSet) return matchSet.has(d.id) ? 1 : 0;
+      if (playlistSet) return playlistSet.has(d.id) ? 0.92 : 0;
       return 0;
     });
-  }, [selected, hovered, matchSet, activeGenre, neighbors]);
+  }, [selected, hovered, matchSet, activeGenre, neighbors, playlistSet]);
+
+  // Aggiorna il percorso della playlist e inquadra i suoi nodi (solo al cambio).
+  useEffect(() => {
+    if (!simRef.current) return;
+    const { nodesById, drawRoute, route, svg, zoom } = simRef.current;
+    const pts = (playlist || []).map((id) => nodesById.get(id)).filter(Boolean);
+    routeRef.current = pts;
+    drawRoute();
+    route.attr("stroke-opacity", pts.length > 1 ? 0.5 : 0);
+    if (pts.length) {
+      const xs = pts.map((p) => p.x);
+      const ys = pts.map((p) => p.y);
+      const pad = 90;
+      const bw = Math.max(60, Math.max(...xs) - Math.min(...xs)) + pad * 2;
+      const bh = Math.max(60, Math.max(...ys) - Math.min(...ys)) + pad * 2;
+      const k = Math.max(0.12, Math.min(2.4, Math.min(dims.w / bw, dims.h / bh)));
+      const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
+      const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+      const t = d3.zoomIdentity.translate(dims.w / 2, dims.h / 2).scale(k).translate(-cx, -cy);
+      svg.transition().duration(750).call(zoom.transform, t);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playlist]);
 
   const resetView = useCallback(() => {
     if (!simRef.current) return;
@@ -313,7 +380,26 @@ function MusicNetworkInner() {
     setSelected(null);
     setQuery("");
     setActiveGenre(null);
+    setPlaylist(null);
   }, []);
+
+  // --- chat: interpreta il messaggio e genera la playlist navigando il grafo ---
+  const handleChat = useCallback((text) => {
+    setChatInput("");
+    const res = buildPlaylist(GRAPH, text);
+    setMessages((m) => [...m, { role: "user", text }, { role: "assistant", res }]);
+    setSelected(null);
+    setActiveGenre(null);
+    setQuery("");
+    setPlaylist(res.ok && res.ids.length ? res.ids : null);
+  }, []);
+
+  const pickTrack = useCallback((id) => {
+    const n = GRAPH.nodes.find((x) => x.id === id);
+    if (n) setSelected(n);
+  }, []);
+
+  const clearPlaylist = useCallback(() => setPlaylist(null), []);
 
   const meta = GRAPH.meta;
   const orderedGenres = GRAPH.genres.filter((g) => genreCounts[g]);
@@ -611,6 +697,19 @@ function MusicNetworkInner() {
           </span>
         </div>
       )}
+
+      <Chat
+        open={chatOpen}
+        setOpen={setChatOpen}
+        messages={messages}
+        value={chatInput}
+        onChange={setChatInput}
+        onSubmit={handleChat}
+        onClear={clearPlaylist}
+        onPick={pickTrack}
+        genreColor={gColor}
+        hasPlaylist={!!playlist}
+      />
     </div>
   );
 }
