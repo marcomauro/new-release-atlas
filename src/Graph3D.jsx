@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import ForceGraph3D from "3d-force-graph";
 import * as THREE from "three";
+import SpriteText from "three-spritetext";
 
 const PAPER = "#f4f1ea";
 const INK = "#2b2724";
@@ -52,6 +53,10 @@ export default function Graph3D({
       .nodeOpacity(0.95)
       .nodeRelSize(4)
       .nodeVal((n) => 0.6 + ((n.degree || 1) / maxDeg) * 6)
+      // Labels live in 3D space next to the node (added on top of the sphere);
+      // which ones are shown is decided reactively in the highlight effect.
+      .nodeThreeObjectExtend(true)
+      .nodeThreeObject(() => false)
       .linkColor(() => INK)
       .linkOpacity(0.12)
       .linkWidth((l) => Math.min(1.4, 0.2 + (l.weight || 1) * 0.04))
@@ -139,15 +144,42 @@ export default function Graph3D({
       return false;
     };
     const visible = (n) => n.id === focusId || !dim(n);
+    const baseVal = (n) => 0.6 + ((n.degree || 1) / state.maxDeg) * 6;
+
+    // Show the "Title — Artist" label near a node under the same conditions as
+    // the 2D map: the focused node + its neighbours, search matches, or the
+    // nodes of an active playlist.
+    const labelVisible = (n) => {
+      if (focusId) return n.id === focusId || !!nbr?.has(n.id);
+      if (matchSet) return matchSet.has(n.id);
+      if (playlistSet) return playlistSet.has(n.id);
+      return false;
+    };
+    const makeLabel = (n) => {
+      if (!labelVisible(n)) return false;
+      const sprite = new SpriteText(`${n.title} — ${n.artist}`);
+      sprite.color = INK;
+      sprite.backgroundColor = "rgba(244,241,234,0.7)";
+      sprite.padding = 1.5;
+      sprite.borderRadius = 2;
+      sprite.fontFace = "Georgia, serif";
+      sprite.textHeight = n.id === focusId ? 5 : 4;
+      sprite.material.depthWrite = false;
+      // Sit the label just above the sphere (radius ≈ cbrt(val) * nodeRelSize).
+      const val = n.id === focusId ? baseVal(n) * 2.4 : playlistSet?.has(n.id) ? baseVal(n) * 1.6 : baseVal(n);
+      sprite.position.set(0, Math.cbrt(val) * 4 + sprite.textHeight, 0);
+      return sprite;
+    };
 
     fg.nodeVisibility((n) => visible(n))
       .nodeVal((n) => {
-        const base = 0.6 + ((n.degree || 1) / state.maxDeg) * 6;
+        const base = baseVal(n);
         if (n.id === focusId) return base * 2.4;
         if (playlistSet?.has(n.id)) return base * 1.6;
         return base;
       })
       .nodeColor((n) => (n.id === focusId ? INK : gColor(n.genre)))
+      .nodeThreeObject(makeLabel)
       .linkVisibility((l) => {
         const s = l.source.id ?? l.source;
         const t = l.target.id ?? l.target;
