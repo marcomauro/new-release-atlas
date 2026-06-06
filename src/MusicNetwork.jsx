@@ -185,6 +185,7 @@ function MusicNetworkInner() {
       .style("opacity", 0)
       .on("click", (e, d) => {
         e.stopPropagation();
+        if (suppressClick) { suppressClick = false; return; }
         if (d.data.type === "track") selectTrack(d.data.track, d);
         else zoomTo(d);
       });
@@ -230,6 +231,7 @@ function MusicNetworkInner() {
     let view;
     let mode = "tree";       // 'tree' | 'net' | 'route'
     let overlay = null;       // {kind:'net'|'route', ...}
+    let suppressClick = false; // true dopo un pan/zoom, per non far scattare il click
 
     const P = (x, y, k) => [(x - view[0]) * k, (y - view[1]) * k];
 
@@ -271,10 +273,7 @@ function MusicNetworkInner() {
     }
 
     function animateTo(v3) {
-      svg.transition().duration(720).tween("zoom", () => {
-        const i = d3.interpolateZoom(view, v3);
-        return (tt) => applyView(i(tt));
-      });
+      svg.transition().duration(720).call(zoom.transform, viewToTransform(v3));
     }
 
     function fitTo(leaves) {
@@ -339,10 +338,8 @@ function MusicNetworkInner() {
       restyleTree();
       mode = "tree";
       focus = d;
-      const transition = svg.transition().duration(720).tween("zoom", () => {
-        const i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2 + 8]);
-        return (tt) => applyView(i(tt));
-      });
+      const transition = svg.transition().duration(720);
+      transition.call(zoom.transform, viewToTransform([focus.x, focus.y, focus.r * 2 + 8]));
       label
         .filter(function (l) { return l.parent === focus || this.style.display === "inline"; })
         .transition(transition)
@@ -388,6 +385,7 @@ function MusicNetworkInner() {
         .style("cursor", "pointer")
         .on("click", (e, m) => {
           e.stopPropagation();
+          if (suppressClick) { suppressClick = false; return; }
           if (m.kind === "nbr") { const nd = dataById.get(m.id); if (nd) selectTrack(nd, m.leaf); }
         })
         .each(function (m) {
@@ -429,7 +427,7 @@ function MusicNetworkInner() {
       gMark.selectAll("circle").data(members, (m) => m.id).join("circle")
         .attr("r", 5).attr("fill", (m) => gcol(m.g)).attr("stroke", INK).attr("stroke-width", 1.2)
         .style("cursor", "pointer")
-        .on("click", (e, m) => { e.stopPropagation(); const nd = dataById.get(m.id); if (nd) selectTrack(nd, m.leaf); })
+        .on("click", (e, m) => { e.stopPropagation(); if (suppressClick) { suppressClick = false; return; } const nd = dataById.get(m.id); if (nd) selectTrack(nd, m.leaf); })
         .each(function (m) {
           d3.select(this).selectAll("title").remove();
           const nd = dataById.get(m.id);
@@ -456,10 +454,34 @@ function MusicNetworkInner() {
       focusLabels();
     }
 
-    applyView([root.x, root.y, root.r * 2 + 8]);
+    // ---- ZOOM & PAN liberi (rotella / pinch / trascinamento) ----
+    // Il sistema di camera dell'atlante e' view = [cx, cy, size]; lo mappiamo
+    // 1:1 su una trasformata d3.zoom (k = DIA/size, t = -[cx,cy]*k) cosi i
+    // gesti dell'utente e i movimenti programmatici (drill-down, fit rete,
+    // percorso) condividono lo stesso stato e non "saltano".
+    const viewToTransform = (v) => {
+      const k = DIA / v[2];
+      return d3.zoomIdentity.translate(-v[0] * k, -v[1] * k).scale(k);
+    };
+    const SIZE_MIN = 24;                 // zoom-in massimo
+    const SIZE_MAX = root.r * 2 + 8;     // intero archivio
+    const zoom = d3.zoom()
+      .scaleExtent([DIA / SIZE_MAX, DIA / SIZE_MIN])
+      .on("start", () => { suppressClick = false; })
+      .on("zoom", (e) => {
+        const t = e.transform;
+        applyView([-t.x / t.k, -t.y / t.k, DIA / t.k]);
+        // Un pan (trascinamento) non deve poi far scattare il click di sfondo.
+        if (e.sourceEvent && /move/.test(e.sourceEvent.type)) suppressClick = true;
+      });
+
+    svg.call(zoom);
+    svg.on("dblclick.zoom", null); // il doppio click non zooma: la nav e' a click singolo
+    svg.call(zoom.transform, viewToTransform([root.x, root.y, root.r * 2 + 8]));
     setBreadcrumb(root);
 
     svg.on("click", () => {
+      if (suppressClick) { suppressClick = false; return; }
       const up = focus.parent || root;
       selIdRef.current = null;
       setSelected(null);
@@ -491,7 +513,7 @@ function MusicNetworkInner() {
       },
     };
 
-    return () => { svg.on("click", null); vizRef.current = null; };
+    return () => { svg.on("click", null).on(".zoom", null); vizRef.current = null; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hierarchy]);
 
@@ -592,7 +614,10 @@ function MusicNetworkInner() {
       }} />
 
       <svg ref={svgRef} width="100%" height="100%" preserveAspectRatio="xMidYMid meet"
-        style={{ position: "absolute", inset: 0, display: "block", zIndex: 2 }} />
+        style={{
+          position: "absolute", inset: 0, display: "block", zIndex: 2,
+          touchAction: "none", cursor: "grab",
+        }} />
 
       {/* TESTATA */}
       <header style={{
