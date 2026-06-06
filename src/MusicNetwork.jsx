@@ -148,6 +148,8 @@ function MusicNetworkInner() {
       .append("g")
       .attr("stroke", INK)
       .attr("stroke-opacity", 0.1)
+      // Links are visual only — never let them intercept pan/drag gestures.
+      .style("pointer-events", "none")
       .selectAll("line")
       .data(links)
       .join("line")
@@ -335,6 +337,15 @@ function MusicNetworkInner() {
         if (focusId && d.id === focusId) return 1;
         if (!focusId && playlistSet?.has(d.id)) return 1;
         return dim(d) ? 0.08 : 0.96;
+      })
+      // Dimmed background nodes must not catch taps/drags: while a node is
+      // focused (or a filter/playlist is active) only the highlighted layer
+      // stays interactive, so a drag over the faded nodes pans/zooms the view
+      // instead of grabbing a node underneath.
+      .style("pointer-events", (d) => {
+        if (focusId && d.id === focusId) return "auto";
+        if (!focusId && playlistSet?.has(d.id)) return "auto";
+        return dim(d) ? "none" : "auto";
       })
       .attr("stroke-width", (d) =>
         d.id === focusId || playlistSet?.has(d.id) ? 2.4 : matchSet?.has(d.id) ? 2 : 1.2
