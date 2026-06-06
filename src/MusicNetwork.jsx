@@ -2,6 +2,10 @@ import React, { useRef, useEffect, useState, useMemo, useCallback } from "react"
 import * as d3 from "d3";
 import Chat from "./Chat.jsx";
 import { buildPlaylist, buildFromSeed } from "./playlist.js";
+
+// 3D view is experimental and pulls in three.js (~1MB): load it on demand so
+// the default 2D map stays light.
+const Graph3D = React.lazy(() => import("./Graph3D.jsx"));
 import {
   SPOTLISTR_URL, playlistLinks, playlistCsv, exportFilename, copyText, downloadFile,
 } from "./export.js";
@@ -65,6 +69,7 @@ function MusicNetworkInner() {
     h: typeof window !== "undefined" ? window.innerHeight : 600,
   }));
   const [legendOpen, setLegendOpen] = useState(false);
+  const [view3d, setView3d] = useState(false); // experimental 3D toggle
 
   // Phone-sized viewport: switch to a single-column, touch-first layout.
   const isMobile = dims.w > 0 && dims.w <= 640;
@@ -419,6 +424,15 @@ function MusicNetworkInner() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playlist]);
 
+  // Pause the 2D force simulation while the 3D view is on (it's hidden), and
+  // give it a nudge when we come back so the layout is live again.
+  useEffect(() => {
+    if (!simRef.current) return;
+    const { sim } = simRef.current;
+    if (view3d) sim.stop();
+    else sim.alpha(0.1).restart();
+  }, [view3d]);
+
   const resetView = useCallback(() => {
     if (!simRef.current) return;
     const { svg, zoom } = simRef.current;
@@ -573,6 +587,7 @@ function MusicNetworkInner() {
             marginTop: isMobile ? 10 : 18,
             display: "flex",
             gap: 8,
+            flexWrap: "wrap",
             pointerEvents: "auto",
             width: isMobile ? "100%" : "fit-content",
           }}
@@ -612,6 +627,23 @@ function MusicNetworkInner() {
               ⦿ Genres
             </button>
           )}
+          <button
+            onClick={() => setView3d((v) => !v)}
+            title="Toggle 2D / 3D view (experimental)"
+            style={{
+              padding: isMobile ? "10px 12px" : "8px 12px",
+              fontSize: 12,
+              fontWeight: 600,
+              background: view3d ? INK : "transparent",
+              border: `1px solid ${view3d ? INK : MUTED}`,
+              borderRadius: 2,
+              color: view3d ? PAPER : INK,
+              cursor: "pointer",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {view3d ? "2D" : "3D"}
+          </button>
           <button
             onClick={resetView}
             style={{
@@ -716,9 +748,19 @@ function MusicNetworkInner() {
           lineHeight: 1.6,
         }}
       >
-        Click a node to isolate its links · drag to reposition
-        <br />
-        scroll to zoom · clusters are the inferred genres
+        {view3d ? (
+          <>
+            3D view (experimental) · drag to rotate · scroll to zoom
+            <br />
+            click a node for details · press 2D to go back
+          </>
+        ) : (
+          <>
+            Click a node to isolate its links · drag to reposition
+            <br />
+            scroll to zoom · clusters are the inferred genres
+          </>
+        )}
       </div>
       )}
 
@@ -738,6 +780,31 @@ function MusicNetworkInner() {
           }}
         />
       </div>
+
+      {/* Experimental 3D view — overlays the 2D map; clicking a node opens the
+          same detail panel. Sits above the map but below the UI overlays. */}
+      {view3d && (
+        <div style={{ position: "absolute", inset: 0, zIndex: 5 }}>
+          <React.Suspense
+            fallback={
+              <div style={{ padding: 40, color: MUTED, fontSize: 13 }}>
+                Loading 3D view…
+              </div>
+            }
+          >
+            <Graph3D
+              graph={GRAPH}
+              gColor={gColor}
+              width={dims.w}
+              height={dims.h}
+              onNodeClick={(n) => {
+                const full = GRAPH.nodes.find((x) => x.id === n.id) || n;
+                setSelected(full);
+              }}
+            />
+          </React.Suspense>
+        </div>
+      )}
 
       {/* Detail panel — a docked card on desktop, a bottom sheet on mobile. */}
       {selected && (

@@ -44,11 +44,24 @@ export default defineConfig({
         // Precarica l'app shell e i dati: graph.json incluso così la mappa
         // funziona anche offline dopo la prima visita.
         globPatterns: ['**/*.{js,css,html,svg,png,ico,json,webmanifest,woff2}'],
+        // La vista 3D (three.js, ~1MB) è sperimentale e caricata on-demand:
+        // fuori dal precache, così non pesa sulla prima visita di tutti.
+        globIgnores: ['**/Graph3D-*.js'],
         navigateFallback: `${base}index.html`,
         cleanupOutdatedCaches: true,
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         // I font Google sono cross-origin: cache-first a runtime.
         runtimeCaching: [
+          {
+            // Il chunk 3D viene messo in cache solo quando lo si apre davvero.
+            urlPattern: ({ url }) => /\/assets\/Graph3D-.*\.js$/.test(url.pathname),
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'graph3d-chunk',
+              expiration: { maxEntries: 2, maxAgeSeconds: 60 * 60 * 24 * 30 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
           {
             urlPattern: ({ url }) => url.origin === 'https://fonts.googleapis.com',
             handler: 'StaleWhileRevalidate',
