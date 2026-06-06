@@ -2,10 +2,23 @@ html,
 body {
   margin: 0;
   height: 100%;
+  /* Stop the page from rubber-banding / bouncing on mobile so the only
+     scroll/zoom that happens is the graph's own gesture handling. */
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  /* Avoid the grey flash on tap and accidental text selection while
+     panning/dragging the map on touch devices. */
+  -webkit-tap-highlight-color: transparent;
 }
 
 #root {
   height: 100vh;
+  /* Dynamic viewport height tracks the mobile address bar so the map
+     isn't clipped behind it. Falls back to 100vh on older browsers. */
+  height: 100dvh;
 }
 
 *,

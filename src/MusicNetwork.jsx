@@ -60,7 +60,15 @@ function MusicNetworkInner() {
   const [hovered, setHovered] = useState(null);
   const [query, setQuery] = useState("");
   const [activeGenre, setActiveGenre] = useState(null);
-  const [dims, setDims] = useState({ w: 800, h: 600 });
+  const [dims, setDims] = useState(() => ({
+    w: typeof window !== "undefined" ? window.innerWidth : 800,
+    h: typeof window !== "undefined" ? window.innerHeight : 600,
+  }));
+  const [legendOpen, setLegendOpen] = useState(false);
+
+  // Phone-sized viewport: switch to a single-column, touch-first layout.
+  const isMobile = dims.w > 0 && dims.w <= 640;
+  const showLegend = !isMobile || legendOpen;
 
   // --- chat / playlist generata dal grafo ---
   const [playlist, setPlaylist] = useState(null); // array ordinato di id
@@ -130,7 +138,11 @@ function MusicNetworkInner() {
     svg.on("dblclick.zoom", null);
 
     const maxDeg = d3.max(nodes, (d) => d.degree) || 1;
-    const rScale = d3.scaleSqrt().domain([1, maxDeg]).range([3, 12]);
+    // Slightly larger nodes on phones so they're easier to tap accurately.
+    const rScale = d3
+      .scaleSqrt()
+      .domain([1, maxDeg])
+      .range(isMobile ? [5, 14] : [3, 12]);
 
     const link = g
       .append("g")
@@ -376,10 +388,11 @@ function MusicNetworkInner() {
       const minY = Math.min(...ys), maxY = Math.max(...ys);
       // Inquadra nell'area utile, lasciando margini per header/legenda (sx, alto)
       // e per il pannello chat (basso): cosi i nodi non finiscono sotto la UI.
-      const Lm = Math.min(300, dims.w * 0.32);
-      const Rm = 56;
-      const Tm = 130;
-      const Bm = Math.min(260, dims.h * 0.34);
+      // Su mobile la UI e' impilata in alto/in basso, quindi i margini cambiano.
+      const Lm = isMobile ? 24 : Math.min(300, dims.w * 0.32);
+      const Rm = isMobile ? 24 : 56;
+      const Tm = isMobile ? 120 : 130;
+      const Bm = isMobile ? Math.min(320, dims.h * 0.42) : Math.min(260, dims.h * 0.34);
       const uw = Math.max(120, dims.w - Lm - Rm);
       const uh = Math.max(120, dims.h - Tm - Bm);
       const bw = Math.max(60, maxX - minX);
@@ -474,7 +487,7 @@ function MusicNetworkInner() {
       style={{
         position: "relative",
         width: "100%",
-        height: "100vh",
+        height: "100dvh",
         background: PAPER,
         fontFamily: "'Inter', system-ui, sans-serif",
         overflow: "hidden",
@@ -487,6 +500,12 @@ function MusicNetworkInner() {
         .mn-input:focus { outline: none; border-color: ${INK}; }
         .mn-chip { transition: all .15s ease; }
         .mn-chip:hover { transform: translateX(2px); }
+        @media (max-width: 640px) {
+          /* 16px keeps iOS Safari from auto-zooming when an input is focused. */
+          .mn-input, .mn-chat input { font-size: 16px !important; }
+          /* No hover translate on touch — taps shouldn't nudge rows. */
+          .mn-chip:hover { transform: none; }
+        }
       `}</style>
 
       <div
@@ -506,17 +525,18 @@ function MusicNetworkInner() {
       <div
         style={{
           position: "absolute",
-          top: 28,
-          left: 32,
+          top: isMobile ? 12 : 28,
+          left: isMobile ? 12 : 32,
+          right: isMobile ? 12 : undefined,
           zIndex: 10,
-          maxWidth: 360,
+          maxWidth: isMobile ? undefined : 360,
           pointerEvents: "none",
         }}
       >
         <div
           style={{
             fontFamily: "'Spectral', serif",
-            fontSize: 30,
+            fontSize: isMobile ? 22 : 30,
             fontWeight: 500,
             letterSpacing: "-0.01em",
             lineHeight: 1.05,
@@ -524,18 +544,28 @@ function MusicNetworkInner() {
         >
           New Release Atlas
         </div>
+        {!isMobile && (
+          <div
+            style={{
+              fontSize: 12,
+              color: MUTED,
+              marginTop: 6,
+            }}
+          >
+            {meta.unique_tracks} tracks · {meta.edges} links · {orderedGenres.length}{" "}
+            genres · playlists #12–#32
+          </div>
+        )}
+
         <div
           style={{
-            fontSize: 12,
-            color: MUTED,
-            marginTop: 6,
+            marginTop: isMobile ? 10 : 18,
+            display: "flex",
+            gap: 8,
+            pointerEvents: "auto",
+            width: isMobile ? "100%" : "fit-content",
           }}
         >
-          {meta.unique_tracks} tracks · {meta.edges} links · {orderedGenres.length}{" "}
-          genres · playlists #12–#32
-        </div>
-
-        <div style={{ marginTop: 18, display: "flex", gap: 8, pointerEvents: "auto", width: "fit-content" }}>
           <input
             className="mn-input"
             value={query}
@@ -543,7 +573,8 @@ function MusicNetworkInner() {
             placeholder="Search track or artist…"
             style={{
               flex: 1,
-              padding: "8px 12px",
+              minWidth: 0,
+              padding: isMobile ? "10px 12px" : "8px 12px",
               fontSize: 13,
               background: "rgba(255,255,255,0.6)",
               border: `1px solid ${MUTED}`,
@@ -552,10 +583,28 @@ function MusicNetworkInner() {
               transition: "border-color 0.2s",
             }}
           />
+          {isMobile && (
+            <button
+              onClick={() => setLegendOpen((v) => !v)}
+              aria-label="Toggle genre filter"
+              style={{
+                padding: "10px 12px",
+                fontSize: 12,
+                background: legendOpen ? "rgba(255,255,255,0.85)" : "transparent",
+                border: `1px solid ${MUTED}`,
+                borderRadius: 2,
+                color: INK,
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+              }}
+            >
+              ⦿ Genres
+            </button>
+          )}
           <button
             onClick={resetView}
             style={{
-              padding: "8px 14px",
+              padding: isMobile ? "10px 14px" : "8px 14px",
               fontSize: 12,
               background: "transparent",
               border: `1px solid ${MUTED}`,
@@ -569,16 +618,27 @@ function MusicNetworkInner() {
         </div>
       </div>
 
-      {/* Genre legend / filter — container is click-through; only rows catch clicks */}
+      {/* Genre legend / filter — container is click-through; only rows catch clicks.
+          On mobile it's a toggleable card so it doesn't bury the map. */}
+      {showLegend && (
       <div
         style={{
           position: "absolute",
-          top: 150,
-          left: 32,
+          top: isMobile ? 92 : 150,
+          left: isMobile ? 12 : 32,
+          right: isMobile ? 12 : undefined,
           zIndex: 10,
-          width: "fit-content",
-          maxWidth: 220,
-          pointerEvents: "none",
+          width: isMobile ? "auto" : "fit-content",
+          maxWidth: isMobile ? undefined : 220,
+          maxHeight: isMobile ? "52dvh" : undefined,
+          overflowY: isMobile ? "auto" : undefined,
+          pointerEvents: isMobile ? "auto" : "none",
+          background: isMobile ? "rgba(255,255,255,0.95)" : "transparent",
+          backdropFilter: isMobile ? "blur(8px)" : undefined,
+          border: isMobile ? `1px solid ${MUTED}` : undefined,
+          borderRadius: isMobile ? 6 : undefined,
+          padding: isMobile ? "10px 12px" : undefined,
+          boxShadow: isMobile ? "0 10px 30px rgba(0,0,0,0.12)" : undefined,
         }}
       >
         <div
@@ -590,7 +650,7 @@ function MusicNetworkInner() {
             marginBottom: 8,
           }}
         >
-          Genres — click to filter
+          Genres — {isMobile ? "tap" : "click"} to filter
         </div>
         {orderedGenres.map((g) => {
           const active = activeGenre === g;
@@ -603,9 +663,9 @@ function MusicNetworkInner() {
                 display: "flex",
                 alignItems: "center",
                 gap: 8,
-                padding: "3px 6px",
+                padding: isMobile ? "8px 8px" : "3px 6px",
                 marginBottom: 1,
-                width: "fit-content",
+                width: isMobile ? "100%" : "fit-content",
                 cursor: "pointer",
                 pointerEvents: "auto",
                 borderRadius: 2,
@@ -623,7 +683,7 @@ function MusicNetworkInner() {
                   border: active ? `1.5px solid ${INK}` : "none",
                 }}
               />
-              <span style={{ fontSize: 12, minWidth: 120 }}>{GENRE_LABEL[g] || g}</span>
+              <span style={{ fontSize: isMobile ? 13 : 12, minWidth: isMobile ? 0 : 120, flex: isMobile ? 1 : undefined }}>{GENRE_LABEL[g] || g}</span>
               <span style={{ fontSize: 11, color: MUTED, marginLeft: "auto" }}>
                 {genreCounts[g]}
               </span>
@@ -631,7 +691,9 @@ function MusicNetworkInner() {
           );
         })}
       </div>
+      )}
 
+      {!isMobile && (
       <div
         style={{
           position: "absolute",
@@ -647,29 +709,68 @@ function MusicNetworkInner() {
         <br />
         scroll to zoom · clusters are the inferred genres
       </div>
+      )}
 
       <div ref={wrapRef} style={{ position: "absolute", inset: 0, zIndex: 2 }}>
-        <svg ref={svgRef} width={dims.w} height={dims.h} />
+        <svg
+          ref={svgRef}
+          width={dims.w}
+          height={dims.h}
+          style={{
+            display: "block",
+            // Let d3-zoom own all touch gestures (pinch to zoom, drag to pan)
+            // instead of the browser scrolling/zooming the page.
+            touchAction: "none",
+            WebkitUserSelect: "none",
+            userSelect: "none",
+            WebkitTapHighlightColor: "transparent",
+          }}
+        />
       </div>
 
-      {/* Detail panel */}
+      {/* Detail panel — a docked card on desktop, a bottom sheet on mobile. */}
       {selected && (
         <div
           style={{
             position: "absolute",
-            top: 28,
-            right: 28,
-            zIndex: 20,
-            width: 280,
-            background: "rgba(255,255,255,0.92)",
-            backdropFilter: "blur(6px)",
+            top: isMobile ? undefined : 28,
+            right: isMobile ? 0 : 28,
+            bottom: isMobile ? 0 : undefined,
+            left: isMobile ? 0 : undefined,
+            zIndex: 40,
+            width: isMobile ? "auto" : 280,
+            maxHeight: isMobile ? "70dvh" : undefined,
+            overflowY: isMobile ? "auto" : undefined,
+            background: "rgba(255,255,255,0.96)",
+            backdropFilter: "blur(8px)",
             border: `1px solid ${MUTED}`,
-            borderRadius: 3,
-            padding: "20px 22px",
-            boxShadow: "0 8px 30px rgba(0,0,0,0.08)",
+            borderRadius: isMobile ? "14px 14px 0 0" : 3,
+            padding: isMobile ? "18px 20px calc(20px + env(safe-area-inset-bottom))" : "20px 22px",
+            boxShadow: isMobile ? "0 -8px 30px rgba(0,0,0,0.16)" : "0 8px 30px rgba(0,0,0,0.08)",
           }}
         >
-          <div style={{ display: "flex", gap: 6, marginBottom: 12, flexWrap: "wrap" }}>
+          <button
+            onClick={() => setSelected(null)}
+            aria-label="Close"
+            style={{
+              position: "absolute",
+              top: 12,
+              right: 12,
+              width: 30,
+              height: 30,
+              lineHeight: "28px",
+              textAlign: "center",
+              fontSize: 15,
+              background: "transparent",
+              border: `1px solid rgba(154,147,138,0.5)`,
+              borderRadius: "50%",
+              color: MUTED,
+              cursor: "pointer",
+            }}
+          >
+            ✕
+          </button>
+          <div style={{ display: "flex", gap: 6, marginBottom: 12, flexWrap: "wrap", paddingRight: 34 }}>
             {selected.genres.map((g) => (
               <span
                 key={g}
@@ -746,7 +847,7 @@ function MusicNetworkInner() {
         </div>
       )}
 
-      {hovered && !selected && (
+      {!isMobile && hovered && !selected && (
         <div
           style={{
             position: "absolute",
