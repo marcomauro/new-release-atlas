@@ -159,6 +159,11 @@ function MusicNetworkInner() {
     svg.selectAll("*").remove();
     svg.attr("viewBox", [-DIA / 2, -DIA / 2, DIA, DIA].join(" "));
 
+    // Le etichette sono in unita' del viewBox (DIA=1040): su smartphone lo
+    // schermo e' stretto e le rimpicciolisce molto, quindi le ingrandiamo (e
+    // un filo anche su desktop) cosi restano leggibili a ogni livello.
+    const fs = (px) => (px * (isMobile ? 1.7 : 1.12)).toFixed(1) + "px";
+
     const descendants = root.descendants();
     const leafById = new Map();
     descendants.forEach((d) => {
@@ -201,7 +206,7 @@ function MusicNetworkInner() {
       )
       .style("font-weight", (d) => (d.data.type === "genre" ? 500 : 400))
       .style("font-size", (d) =>
-        d.data.type === "genre" ? "19px" : d.data.type === "artist" ? "10px" : "8px"
+        d.data.type === "genre" ? fs(19) : d.data.type === "artist" ? fs(10) : fs(8)
       )
       .style("fill-opacity", (d) => (d.parent === root ? 1 : 0))
       .style("display", (d) => (d.parent === root ? "inline" : "none"))
@@ -210,7 +215,7 @@ function MusicNetworkInner() {
         if (d.data.type === "genre") {
           t.append("tspan").attr("x", 0).text(GENRE_LABEL[d.data.name] || d.data.name);
           t.append("tspan").attr("x", 0).attr("dy", "1.15em")
-            .style("font-family", "'IBM Plex Mono', monospace").style("font-size", "9px")
+            .style("font-family", "'IBM Plex Mono', monospace").style("font-size", fs(9))
             .attr("fill", MUTED)
             .text((genreNum[d.data.name] || "") + " · " + (genreCounts[d.data.name] || 0) + " brani");
         } else if (d.data.type === "artist") {
@@ -396,7 +401,7 @@ function MusicNetworkInner() {
 
       gTag.selectAll("text").data([members[0]], (m) => m.id).join("text")
         .attr("text-anchor", "middle").attr("fill", INK)
-        .style("font-family", "'Spectral', Georgia, serif").style("font-size", "14px")
+        .style("font-family", "'Spectral', Georgia, serif").style("font-size", fs(15))
         .style("paint-order", "stroke").style("stroke", PAPER).style("stroke-width", "3px")
         .text(track.title.length > 30 ? track.title.slice(0, 29) + "…" : track.title);
 
@@ -436,7 +441,7 @@ function MusicNetworkInner() {
 
       gTag.selectAll("text").data(members, (m) => m.id).join("text")
         .attr("text-anchor", "middle").attr("fill", INK)
-        .style("font-family", "'IBM Plex Mono', monospace").style("font-size", "9px")
+        .style("font-family", "'IBM Plex Mono', monospace").style("font-size", fs(9))
         .style("paint-order", "stroke").style("stroke", PAPER).style("stroke-width", "2.5px")
         .text((m) => m.idx);
 
@@ -515,7 +520,7 @@ function MusicNetworkInner() {
 
     return () => { svg.on("click", null).on(".zoom", null); vizRef.current = null; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hierarchy]);
+  }, [hierarchy, isMobile]);
 
   useEffect(() => { vizRef.current?.applySearch(query); }, [query]);
 
@@ -740,8 +745,9 @@ function MusicNetworkInner() {
             <span style={{ fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: MUTED }}>
               {genreNum[selected.genre]} · {GENRE_LABEL[selected.genre] || selected.genre}
             </span>
-            <span onClick={() => vizRef.current?.zoomTo(vizRef.current.root)}
-              style={{ marginLeft: "auto", cursor: "pointer", color: MUTED, fontSize: 16 }}>×</span>
+            <span onClick={() => setSelected(null)}
+              title="Chiudi il pannello (la rete resta sulla mappa)"
+              style={{ marginLeft: "auto", cursor: "pointer", color: MUTED, fontSize: isMobile ? 22 : 18, lineHeight: 1, padding: "0 4px" }}>×</span>
           </div>
 
           <div style={{ fontFamily: "'Spectral', Georgia, serif", fontSize: 21, fontWeight: 500, lineHeight: 1.18 }}>
