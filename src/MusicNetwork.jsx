@@ -70,6 +70,7 @@ function MusicNetworkInner() {
   }));
   const [legendOpen, setLegendOpen] = useState(false);
   const [view3d, setView3d] = useState(false); // experimental 3D toggle
+  const [resetSignal, setResetSignal] = useState(0); // bumps to recenter 3D camera
 
   // Phone-sized viewport: switch to a single-column, touch-first layout.
   const isMobile = dims.w > 0 && dims.w <= 640;
@@ -441,6 +442,7 @@ function MusicNetworkInner() {
     setQuery("");
     setActiveGenre(null);
     setPlaylist(null);
+    setResetSignal((s) => s + 1);
   }, []);
 
   // --- chat: interpreta il messaggio e genera la playlist navigando il grafo ---
@@ -797,7 +799,14 @@ function MusicNetworkInner() {
               gColor={gColor}
               width={dims.w}
               height={dims.h}
-              onNodeClick={(n) => {
+              selected={selected}
+              neighbors={neighbors}
+              matchSet={matchSet}
+              activeGenre={activeGenre}
+              playlistIds={playlist}
+              resetSignal={resetSignal}
+              onSelect={(n) => {
+                if (!n) return setSelected(null);
                 const full = GRAPH.nodes.find((x) => x.id === n.id) || n;
                 setSelected(full);
               }}

@@ -1,13 +1,28 @@
 import React, { useRef, useEffect } from "react";
 import ForceGraph3D from "3d-force-graph";
+import * as THREE from "three";
 
 const PAPER = "#f4f1ea";
 const INK = "#2b2724";
 
 /* Experimental 3D view of the same graph (three.js via 3d-force-graph).
-   Toggled on/off from MusicNetwork; clicking a node propagates the same
-   selection used by the 2D map so the detail panel keeps working. */
-export default function Graph3D({ graph, gColor, width, height, onNodeClick }) {
+   Mirrors the 2D map's behaviours: search, genre filter, focus on a selected
+   node + its neighbours, playlist highlight with an ordered route line, and
+   camera reset. Clicking a node propagates the same selection used by the 2D
+   map so the detail panel keeps working. */
+export default function Graph3D({
+  graph,
+  gColor,
+  width,
+  height,
+  onSelect,
+  selected,
+  neighbors,
+  matchSet,
+  activeGenre,
+  playlistIds,
+  resetSignal,
+}) {
   const mountRef = useRef(null);
   const fgRef = useRef(null);
 
@@ -24,6 +39,7 @@ export default function Graph3D({ graph, gColor, width, height, onNodeClick }) {
       })),
     };
     const maxDeg = data.nodes.reduce((m, n) => Math.max(m, n.degree || 1), 1);
+    const byId = new Map(data.nodes.map((n) => [n.id, n]));
 
     const fg = ForceGraph3D()(mountRef.current)
       .backgroundColor(PAPER)
@@ -46,11 +62,43 @@ export default function Graph3D({ graph, gColor, width, height, onNodeClick }) {
         const dist = 120;
         const hyp = Math.hypot(n.x || 0, n.y || 0, n.z || 0) || 1;
         const r = 1 + dist / hyp;
-        fg.cameraPosition({ x: (n.x || 0) * r, y: (n.y || 0) * r, z: (n.z || 0) * r }, n, 1200);
-        onNodeClick && onNodeClick(n);
-      });
+        fg.cameraPosition({ x: (n.x || 0) * r, y: (n.y || 0) * r, z: (n.z || 0) * r }, n, 1000);
+        onSelect && onSelect(n);
+      })
+      .onBackgroundClick(() => onSelect && onSelect(null));
 
-    fgRef.current = fg;
+    // Ordered playlist route — a single line threaded through the playlist
+    // nodes in listening order, kept in sync with their positions each tick.
+    const routeGeom = new THREE.BufferGeometry();
+    const routeMat = new THREE.LineBasicMaterial({ color: 0x2b2724, transparent: true, opacity: 0.6 });
+    const routeLine = new THREE.Line(routeGeom, routeMat);
+    routeLine.visible = false;
+    routeLine.renderOrder = 1;
+    fg.scene().add(routeLine);
+
+    const state = { fg, byId, routeGeom, routeLine, routeNodes: [], showRoute: false, maxDeg };
+
+    const updateRoute = () => {
+      const ns = state.routeNodes;
+      if (!state.showRoute || !ns || ns.length < 2) {
+        routeLine.visible = false;
+        return;
+      }
+      const pos = new Float32Array(ns.length * 3);
+      ns.forEach((n, i) => {
+        pos[i * 3] = n.x || 0;
+        pos[i * 3 + 1] = n.y || 0;
+        pos[i * 3 + 2] = n.z || 0;
+      });
+      routeGeom.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+      routeGeom.attributes.position.needsUpdate = true;
+      routeGeom.computeBoundingSphere();
+      routeLine.visible = true;
+    };
+    state.updateRoute = updateRoute;
+    fg.onEngineTick(updateRoute);
+
+    fgRef.current = state;
 
     return () => {
       try {
@@ -58,6 +106,8 @@ export default function Graph3D({ graph, gColor, width, height, onNodeClick }) {
       } catch (e) {
         /* ignore teardown races */
       }
+      routeGeom.dispose();
+      routeMat.dispose();
       if (mountRef.current) mountRef.current.innerHTML = "";
       fgRef.current = null;
     };
@@ -66,8 +116,74 @@ export default function Graph3D({ graph, gColor, width, height, onNodeClick }) {
 
   // Keep the renderer sized to its container.
   useEffect(() => {
-    if (fgRef.current) fgRef.current.width(width).height(height);
+    if (fgRef.current) fgRef.current.fg.width(width).height(height);
   }, [width, height]);
+
+  // React to selection / search / genre filter / playlist: re-style the scene
+  // the same way the 2D map dims and highlights. Dimmed nodes are hidden so
+  // the focused subgraph reads clearly in 3D.
+  useEffect(() => {
+    const state = fgRef.current;
+    if (!state) return;
+    const { fg, byId } = state;
+
+    const focusId = selected?.id || null;
+    const nbr = focusId ? neighbors?.get(focusId) : null;
+    const playlistSet = playlistIds && playlistIds.length ? new Set(playlistIds) : null;
+
+    const dim = (n) => {
+      if (matchSet && !matchSet.has(n.id)) return true;
+      if (activeGenre && n.genre !== activeGenre) return true;
+      if (focusId && n.id !== focusId && !nbr?.has(n.id)) return true;
+      if (!focusId && playlistSet && !playlistSet.has(n.id)) return true;
+      return false;
+    };
+    const visible = (n) => n.id === focusId || !dim(n);
+
+    fg.nodeVisibility((n) => visible(n))
+      .nodeVal((n) => {
+        const base = 0.6 + ((n.degree || 1) / state.maxDeg) * 6;
+        if (n.id === focusId) return base * 2.4;
+        if (playlistSet?.has(n.id)) return base * 1.6;
+        return base;
+      })
+      .nodeColor((n) => (n.id === focusId ? INK : gColor(n.genre)))
+      .linkVisibility((l) => {
+        const s = l.source.id ?? l.source;
+        const t = l.target.id ?? l.target;
+        if (focusId) return s === focusId || t === focusId;
+        const sn = byId.get(s);
+        const tn = byId.get(t);
+        return !!sn && !!tn && visible(sn) && visible(tn);
+      });
+
+    // Playlist route: shown only when a playlist is active and no node is
+    // being inspected (mirrors the 2D behaviour).
+    const ordered = (playlistIds || []).map((id) => byId.get(id)).filter(Boolean);
+    state.routeNodes = ordered;
+    state.showRoute = !focusId && ordered.length > 1;
+    state.updateRoute();
+
+    // Frame the playlist when one was just generated.
+    if (!focusId && playlistSet && ordered.length > 1) {
+      try {
+        fg.zoomToFit(700, 40, (n) => playlistSet.has(n.id));
+      } catch (e) {
+        /* positions not ready yet — the next interaction will reframe */
+      }
+    }
+  }, [selected, neighbors, matchSet, activeGenre, playlistIds, gColor]);
+
+  // Reset: recenter the camera on the whole graph.
+  useEffect(() => {
+    const state = fgRef.current;
+    if (!state || !resetSignal) return;
+    try {
+      state.fg.zoomToFit(600, 30);
+    } catch (e) {
+      /* ignore */
+    }
+  }, [resetSignal]);
 
   return (
     <div
