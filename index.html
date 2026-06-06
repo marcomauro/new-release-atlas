@@ -2,7 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <!-- Pinch/zoom is handled by the graph itself (d3-zoom); disabling the
+         browser's own page zoom keeps gestures from fighting each other and
+         prevents iOS from zooming the page when focusing an input. -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
     <title>New Release Atlas</title>
     <meta name="description" content="Interactive force-directed map of my music archive." />
 
