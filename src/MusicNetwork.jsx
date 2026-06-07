@@ -217,9 +217,9 @@ function MusicNetworkInner() {
       .each(function (d) {
         const t = d3.select(this);
         if (d.data.type === "genre") {
-          t.append("tspan").attr("x", 0).text(GENRE_LABEL[d.data.name] || d.data.name);
-          t.append("tspan").attr("x", 0).attr("dy", "1.15em")
-            .style("font-family", "'IBM Plex Mono', monospace").style("font-size", fs(9))
+          t.append("tspan").attr("class", "gname").attr("x", 0).text(GENRE_LABEL[d.data.name] || d.data.name);
+          t.append("tspan").attr("class", "gsub").attr("x", 0).attr("dy", "1.15em")
+            .style("font-family", "'IBM Plex Mono', monospace")
             .attr("fill", MUTED)
             .text((genreNum[d.data.name] || "") + " · " + (genreCounts[d.data.name] || 0) + " brani");
         } else if (d.data.type === "artist") {
@@ -266,21 +266,65 @@ function MusicNetworkInner() {
       gMark.selectAll("circle")
         .attr("cx", (m) => P(m.leaf.x, m.leaf.y, k)[0])
         .attr("cy", (m) => P(m.leaf.x, m.leaf.y, k)[1]);
-      gTag.selectAll("text").attr("transform", (m) => {
-        const p = P(m.leaf.x, m.leaf.y, k);
-        return "translate(" + p[0] + "," + (p[1] - (overlay.kind === "route" ? 9 : 12)) + ")";
+      // Tag della rete/percorso: font in px reali (uguali su mobile/desktop) e
+      // crescita con lo zoom tramite scale(tls).
+      const tls = Math.max(1, Math.min(3.6, k / k0));
+      const ps = pxScale();
+      const basePx = (m) => (m.kind === "sel" ? 16 : m.kind === "route" ? 11 : 10);
+      gTag.selectAll("text")
+        .style("font-size", (m) => basePx(m) / ps + "px")
+        .attr("transform", (m) => {
+          const p = P(m.leaf.x, m.leaf.y, k);
+          const off = m.kind === "sel" ? 13 : m.kind === "route" ? 9 : 10;
+          return "translate(" + p[0] + "," + (p[1] - off) + ") scale(" + tls + ")";
+        });
+    }
+
+    // Scala di rendering reale: il viewBox quadrato DIA viene mappato su
+    // min(larghezza,altezza) in px. Serve a dimensionare i font in PIXEL REALI
+    // (identici su mobile e desktop) anziche' in unita' viewBox.
+    const pxScale = () => {
+      const el = svgRef.current;
+      const r = el && el.getBoundingClientRect();
+      const px = r && Math.min(r.width, r.height);
+      return (px && px / DIA) || Math.min(dims.w, dims.h) / DIA || 0.5;
+    };
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+    // Dimensiona/posiziona le etichette dell'albero: font in px proporzionale
+    // al raggio del cerchio sullo schermo (quindi cresce con lo zoom), con
+    // minimo/massimo leggibili, e titoli troncati alla larghezza disponibile.
+    function sizeLabels(k, v3) {
+      const ps = pxScale();
+      label.each(function (d) {
+        const sel = d3.select(this);
+        const type = d.data.type;
+        const rPx = d.r * k * ps;
+        let fpx;
+        if (type === "genre") fpx = clamp(rPx * 0.16, isMobile ? 13 : 12, isMobile ? 27 : 30);
+        else if (type === "artist") fpx = clamp(rPx * 0.5, 8, 22);
+        else fpx = clamp(rPx * 0.55, 8, 20);
+        const fU = fpx / ps; // px -> unita' viewBox
+        sel.style("font-size", fU + "px")
+          .attr("transform", "translate(" + (d.x - v3[0]) * k + "," + (d.y - v3[1]) * k + ")");
+        if (type === "genre") {
+          sel.select(".gsub").style("font-size", fU * 0.5 + "px");
+        } else {
+          // Tronca per stare grossomodo nello spazio del cerchio (un filo oltre).
+          const budgetPx = Math.max(2.4 * rPx, fpx * 5);
+          const maxC = Math.max(3, Math.floor(budgetPx / (fpx * 0.56)));
+          const nm = d.data.name || "";
+          sel.text(nm.length > maxC ? nm.slice(0, maxC - 1) + "…" : nm);
+        }
       });
     }
 
     function applyView(v3) {
       const k = DIA / v3[2];
       view = v3;
-      // Le etichette crescono con lo zoom: scala il testo (e i suoi tspan) in
-      // base a quanto si e' zoomato oltre la vista piena, con un tetto.
-      const ls = Math.max(1, Math.min(3.6, k / k0));
-      label.attr("transform", (d) => "translate(" + (d.x - v3[0]) * k + "," + (d.y - v3[1]) * k + ") scale(" + ls + ")");
       node.attr("transform", (d) => "translate(" + (d.x - v3[0]) * k + "," + (d.y - v3[1]) * k + ")");
       node.attr("r", (d) => d.r * k);
+      sizeLabels(k, v3);
       drawOverlay();
     }
 
@@ -328,7 +372,7 @@ function MusicNetworkInner() {
 
     function dimBase() {
       node
-        .attr("opacity", (d) => (d.data.type === "genre" ? 1 : d.data.type === "artist" ? 0.4 : 0.1))
+        .attr("opacity", (d) => (d.data.type === "genre" ? 0.55 : d.data.type === "artist" ? 0.14 : 0.06))
         .attr("stroke-width", (d) => (d.data.type === "genre" ? 1.1 : d.data.type === "artist" ? 0.6 : 0.4));
     }
 
@@ -406,11 +450,20 @@ function MusicNetworkInner() {
           d3.select(this).append("title").text(nd ? nd.title + " — " + nd.artist : "");
         });
 
-      gTag.selectAll("text").data([members[0]], (m) => m.id).join("text")
+      // Tag su TUTTI i membri: il brano selezionato (Spectral, grande) e ogni
+      // brano collegato (mono, piu' piccolo). Le dimensioni scalano con lo zoom
+      // tramite il transform in drawOverlay.
+      gTag.selectAll("text").data(members, (m) => m.id).join("text")
         .attr("text-anchor", "middle").attr("fill", INK)
-        .style("font-family", "'Spectral', Georgia, serif").style("font-size", fs(15))
-        .style("paint-order", "stroke").style("stroke", PAPER).style("stroke-width", "3px")
-        .text(track.title.length > 30 ? track.title.slice(0, 29) + "…" : track.title);
+        .style("font-family", (m) => (m.kind === "sel" ? "'Spectral', Georgia, serif" : "'IBM Plex Mono', monospace"))
+        .style("font-weight", (m) => (m.kind === "sel" ? 500 : 400))
+        .style("paint-order", "stroke").style("stroke", PAPER).style("stroke-width", (m) => (m.kind === "sel" ? "3px" : "2px"))
+        .each(function (m) {
+          const nd = dataById.get(m.id);
+          const t = nd ? nd.title : "";
+          const max = m.kind === "sel" ? 30 : 20;
+          d3.select(this).text(t.length > max ? t.slice(0, max - 1) + "…" : t);
+        });
 
       contextLabels();
       focus = selLeaf.parent;
@@ -448,7 +501,7 @@ function MusicNetworkInner() {
 
       gTag.selectAll("text").data(members, (m) => m.id).join("text")
         .attr("text-anchor", "middle").attr("fill", INK)
-        .style("font-family", "'IBM Plex Mono', monospace").style("font-size", fs(9))
+        .style("font-family", "'IBM Plex Mono', monospace")
         .style("paint-order", "stroke").style("stroke", PAPER).style("stroke-width", "2.5px")
         .text((m) => m.idx);
 
