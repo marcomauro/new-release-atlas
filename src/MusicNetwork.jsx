@@ -81,6 +81,21 @@ function clusterForce(keyFn, strength) {
   return force;
 }
 
+// Moto browniano leggerissimo: a ogni tick aggiunge una micro-velocità casuale
+// (ampiezza costante, indipendente da alpha) così la rete "respira" anche da
+// ferma. Salta i nodi fissati (in trascinamento).
+function brownianForce(amp) {
+  let nodes = [];
+  function force() {
+    for (const n of nodes) {
+      if (n.fx == null) n.vx += (Math.random() - 0.5) * amp;
+      if (n.fy == null) n.vy += (Math.random() - 0.5) * amp;
+    }
+  }
+  force.initialize = (n) => { nodes = n; };
+  return force;
+}
+
 function MusicNetworkInner() {
   const svgRef = useRef(null);
   const wrapRef = useRef(null);
@@ -235,7 +250,8 @@ function MusicNetworkInner() {
             d.fy = e.y;
           })
           .on("end", (e, d) => {
-            if (!e.active) sim.alphaTarget(0);
+            // Torna all'idle (non 0): la rete resta viva col moto browniano.
+            if (!e.active) sim.alphaTarget(0.035);
             d.fx = null;
             d.fy = null;
           })
@@ -302,6 +318,7 @@ function MusicNetworkInner() {
       // genere/cluster) si attrae di piu'.
       .force("genreCohesion", clusterForce((n) => n.genre, 0.06))
       .force("artistCohesion", clusterForce((n) => n.genre + "|" + n.artist, 0.5))
+      .force("brownian", brownianForce(0.45))
       .force(
         "collide",
         d3.forceCollide().radius((d) => rScale(d.degree) + 2)
@@ -316,6 +333,11 @@ function MusicNetworkInner() {
         labels.attr("x", (d) => d.x).attr("y", (d) => d.y);
         drawRoute();
       });
+
+    // Tiene la simulazione leggermente "calda" all'infinito: non si ferma mai,
+    // così il moto browniano resta sempre attivo (respiro continuo della rete).
+    const IDLE_ALPHA = 0.035;
+    sim.alphaTarget(IDLE_ALPHA);
 
     simRef.current = { sim, node, link, labels, g, zoom, svg, anchor, route, nodesById, drawRoute };
     return () => sim.stop();
