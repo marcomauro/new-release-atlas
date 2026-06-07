@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState, useMemo, useCallback } from "react";
 import * as d3 from "d3";
 import Chat from "./Chat.jsx";
+import PlayerBar from "./PlayerBar.jsx";
 import { buildPlaylist, buildFromSeed } from "./playlist.js";
 import {
   SPOTLISTR_URL, playlistLinks, playlistCsv, exportFilename, copyText, downloadFile,
@@ -81,21 +82,6 @@ function clusterForce(keyFn, strength) {
   return force;
 }
 
-// Moto browniano leggerissimo: a ogni tick aggiunge una micro-velocità casuale
-// (ampiezza costante, indipendente da alpha) così la rete "respira" anche da
-// ferma. Salta i nodi fissati (in trascinamento).
-function brownianForce(amp) {
-  let nodes = [];
-  function force() {
-    for (const n of nodes) {
-      if (n.fx == null) n.vx += (Math.random() - 0.5) * amp;
-      if (n.fy == null) n.vy += (Math.random() - 0.5) * amp;
-    }
-  }
-  force.initialize = (n) => { nodes = n; };
-  return force;
-}
-
 function MusicNetworkInner() {
   const svgRef = useRef(null);
   const wrapRef = useRef(null);
@@ -121,6 +107,19 @@ function MusicNetworkInner() {
   const [chatOpen, setChatOpen] = useState(false);
   const routeRef = useRef([]); // datum dei nodi della playlist, per disegnare il percorso
   const playlistSet = useMemo(() => (playlist ? new Set(playlist) : null), [playlist]);
+
+  // --- ascolto continuo del percorso (mini-player persistente) ---
+  const [playIndex, setPlayIndex] = useState(0);
+  // ogni nuovo percorso riparte dal primo brano
+  useEffect(() => { setPlayIndex(0); }, [playlist]);
+  const playTracks = useMemo(
+    () =>
+      (playlist || [])
+        .map((id) => GRAPH.nodes.find((n) => n.id === id))
+        .filter(Boolean)
+        .map((n) => ({ id: n.id, title: n.title, artist: n.artist })),
+    [playlist]
+  );
 
   const neighbors = useMemo(() => {
     const map = new Map();
@@ -250,8 +249,7 @@ function MusicNetworkInner() {
             d.fy = e.y;
           })
           .on("end", (e, d) => {
-            // Torna all'idle (non 0): la rete resta viva col moto browniano.
-            if (!e.active) sim.alphaTarget(0.035);
+            if (!e.active) sim.alphaTarget(0);
             d.fx = null;
             d.fy = null;
           })
@@ -318,7 +316,6 @@ function MusicNetworkInner() {
       // genere/cluster) si attrae di piu'.
       .force("genreCohesion", clusterForce((n) => n.genre, 0.06))
       .force("artistCohesion", clusterForce((n) => n.genre + "|" + n.artist, 0.5))
-      .force("brownian", brownianForce(0.45))
       .force(
         "collide",
         d3.forceCollide().radius((d) => rScale(d.degree) + 2)
@@ -333,11 +330,6 @@ function MusicNetworkInner() {
         labels.attr("x", (d) => d.x).attr("y", (d) => d.y);
         drawRoute();
       });
-
-    // Tiene la simulazione leggermente "calda" all'infinito: non si ferma mai,
-    // così il moto browniano resta sempre attivo (respiro continuo della rete).
-    const IDLE_ALPHA = 0.035;
-    sim.alphaTarget(IDLE_ALPHA);
 
     simRef.current = { sim, node, link, labels, g, zoom, svg, anchor, route, nodesById, drawRoute };
     return () => sim.stop();
@@ -912,18 +904,21 @@ function MusicNetworkInner() {
               ♫ Generate playlist
             </button>
           </div>
-          {/* Player Spotify ufficiale: anteprima ~30s per tutti, brano intero
-              per chi è loggato a Spotify Premium nel browser. Nessun setup. */}
-          <iframe
-            title="Spotify player"
-            src={`https://open.spotify.com/embed/track/${selected.id}?utm_source=new-release-atlas`}
-            width="100%"
-            height="80"
-            frameBorder="0"
-            loading="lazy"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            style={{ border: 0, borderRadius: 8, marginTop: 16, display: "block" }}
-          />
+          {/* Player Spotify del singolo brano (anteprima ~30s per tutti, brano
+              intero per Premium loggato). Nascosto se c'è un percorso in
+              ascolto: in quel caso suona il mini-player del percorso (no doppio audio). */}
+          {!playlist && (
+            <iframe
+              title="Spotify player"
+              src={`https://open.spotify.com/embed/track/${selected.id}?utm_source=new-release-atlas`}
+              width="100%"
+              height="80"
+              frameBorder="0"
+              loading="lazy"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              style={{ border: 0, borderRadius: 8, marginTop: 16, display: "block" }}
+            />
+          )}
         </div>
       )}
 
@@ -971,7 +966,19 @@ function MusicNetworkInner() {
         onExport={handleExport}
         genreColor={gColor}
         hasPlaylist={!!playlist}
+        bottomOffset={playTracks.length ? 132 : 0}
       />
+
+      {/* Ascolto continuo del percorso: mini-player persistente che incatena i brani */}
+      {playTracks.length > 0 && (
+        <PlayerBar
+          tracks={playTracks}
+          index={Math.min(playIndex, playTracks.length - 1)}
+          setIndex={setPlayIndex}
+          onClose={clearPlaylist}
+          bottomGap={20}
+        />
+      )}
     </div>
   );
 }

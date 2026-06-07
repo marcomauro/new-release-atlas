@@ -14,7 +14,7 @@ const SUGGESTIONS = [
 
 export default function Chat({
   open, setOpen, messages, value, onChange, onSubmit, onClear, onPick,
-  onExport, genreColor, hasPlaylist,
+  onExport, genreColor, hasPlaylist, bottomOffset = 0,
 }) {
   const bodyRef = useRef(null);
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function Chat({
       <button
         onClick={() => setOpen(true)}
         style={{
-          position: "absolute", bottom: "calc(24px + env(safe-area-inset-bottom))", left: "50%",
+          position: "absolute", bottom: `calc(${24 + bottomOffset}px + env(safe-area-inset-bottom))`, left: "50%",
           transform: "translateX(-50%)", zIndex: 30,
           fontFamily: font, fontSize: 13, fontWeight: 500,
           color: PAPER, background: INK, border: "none",
@@ -51,7 +51,7 @@ export default function Chat({
     <div
       className="mn-chat"
       style={{
-        position: "absolute", bottom: "calc(20px + env(safe-area-inset-bottom))", left: "50%",
+        position: "absolute", bottom: `calc(${20 + bottomOffset}px + env(safe-area-inset-bottom))`, left: "50%",
         transform: "translateX(-50%)", zIndex: 30,
         width: "min(580px, 94vw)",
         fontFamily: font,
