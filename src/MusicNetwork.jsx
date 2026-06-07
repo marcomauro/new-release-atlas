@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useMemo, useCallback } from "react";
 import * as d3 from "d3";
 import Chat from "./Chat.jsx";
-import PlayerBar from "./PlayerBar.jsx";
+import PlayerBar, { preloadSpotifyApi } from "./PlayerBar.jsx";
 import { buildPlaylist, buildFromSeed } from "./playlist.js";
 import {
   SPOTLISTR_URL, playlistLinks, playlistCsv, exportFilename, copyText, downloadFile,
@@ -163,6 +163,10 @@ function MusicNetworkInner() {
     ro.observe(wrapRef.current);
     return () => ro.disconnect();
   }, []);
+
+  // Pre-carica l'API Spotify allo start: così l'autoplay del percorso parte
+  // subito (controller pronto entro la finestra di user-activation del click).
+  useEffect(() => { preloadSpotifyApi(); }, []);
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
