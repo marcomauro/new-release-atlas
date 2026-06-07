@@ -52,6 +52,35 @@ const MUTED = "#9a938a";
 
 const gColor = (g) => GENRE_COLOR[g] || MUTED;
 
+// Forza di coesione "a cluster": ogni tick spinge i nodi che condividono la
+// stessa chiave (es. genere, oppure genere+artista) verso il loro centroide.
+// Usata per compattare i cluster di genere e avvicinare i brani dello stesso
+// autore all'interno del cluster.
+function clusterForce(keyFn, strength) {
+  let groups = [];
+  function force(alpha) {
+    const k = strength * alpha;
+    for (const arr of groups) {
+      if (arr.length < 2) continue;
+      let cx = 0, cy = 0;
+      for (const n of arr) { cx += n.x; cy += n.y; }
+      cx /= arr.length; cy /= arr.length;
+      for (const n of arr) { n.vx += (cx - n.x) * k; n.vy += (cy - n.y) * k; }
+    }
+  }
+  force.initialize = (nodes) => {
+    const m = new Map();
+    for (const n of nodes) {
+      const key = keyFn(n);
+      let a = m.get(key);
+      if (!a) m.set(key, (a = []));
+      a.push(n);
+    }
+    groups = Array.from(m.values());
+  };
+  return force;
+}
+
 function MusicNetworkInner() {
   const svgRef = useRef(null);
   const wrapRef = useRef(null);
@@ -241,7 +270,7 @@ function MusicNetworkInner() {
     // giving spatial separation between genres on top of the link forces.
     const genres = GRAPH.genres;
     const angle = (gi) => (gi / genres.length) * 2 * Math.PI;
-    const radius = Math.min(dims.w, dims.h) * 0.32;
+    const radius = Math.min(dims.w, dims.h) * 0.42;
     const anchor = (genre) => {
       const gi = genres.indexOf(genre);
       return {
@@ -250,6 +279,8 @@ function MusicNetworkInner() {
       };
     };
 
+    const sameGenre = (l) => l.source.genre === l.target.genre;
+
     const sim = d3
       .forceSimulation(nodes)
       .force(
@@ -257,18 +288,20 @@ function MusicNetworkInner() {
         d3
           .forceLink(links)
           .id((d) => d.id)
-          .distance((d) => 55 / (0.4 + d.weight * 0.22))
-          .strength((d) => Math.min(1, d.weight * 0.1))
+          // Stesso genere: legami piu' corti; generi diversi: piu' lunghi.
+          .distance((d) => (55 / (0.4 + d.weight * 0.22)) * (sameGenre(d) ? 0.7 : 1.7))
+          // Stesso genere: attrazione piu' forte; generi diversi: piu' debole.
+          .strength((d) => Math.min(1, d.weight * 0.1) * (sameGenre(d) ? 1.6 : 0.35))
       )
-      .force("charge", d3.forceManyBody().strength(-30))
-      .force(
-        "x",
-        d3.forceX((d) => anchor(d.genre).x).strength(0.06)
-      )
-      .force(
-        "y",
-        d3.forceY((d) => anchor(d.genre).y).strength(0.06)
-      )
+      // Piu' repulsione generale: aiuta a separare i cluster di genere.
+      .force("charge", d3.forceManyBody().strength(-44))
+      // Ancore di genere piu' forti -> stesso genere piu' coeso, generi diversi piu' lontani.
+      .force("x", d3.forceX((d) => anchor(d.genre).x).strength(0.13))
+      .force("y", d3.forceY((d) => anchor(d.genre).y).strength(0.13))
+      // Coesione esplicita: stesso genere si attrae; stesso autore (nello stesso
+      // genere/cluster) si attrae di piu'.
+      .force("genreCohesion", clusterForce((n) => n.genre, 0.06))
+      .force("artistCohesion", clusterForce((n) => n.genre + "|" + n.artist, 0.5))
       .force(
         "collide",
         d3.forceCollide().radius((d) => rScale(d.degree) + 2)
@@ -293,7 +326,7 @@ function MusicNetworkInner() {
     if (!simRef.current) return;
     const { sim } = simRef.current;
     const genres = GRAPH.genres;
-    const radius = Math.min(dims.w, dims.h) * 0.32;
+    const radius = Math.min(dims.w, dims.h) * 0.42;
     const angle = (gi) => (gi / genres.length) * 2 * Math.PI;
     sim
       .force(
@@ -303,7 +336,7 @@ function MusicNetworkInner() {
             const gi = genres.indexOf(d.genre);
             return dims.w / 2 + radius * Math.cos(angle(gi));
           })
-          .strength(0.06)
+          .strength(0.13)
       )
       .force(
         "y",
@@ -312,7 +345,7 @@ function MusicNetworkInner() {
             const gi = genres.indexOf(d.genre);
             return dims.h / 2 + radius * Math.sin(angle(gi));
           })
-          .strength(0.06)
+          .strength(0.13)
       );
     sim.alpha(0.3).restart();
   }, [dims]);
