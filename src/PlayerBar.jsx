@@ -22,6 +22,12 @@ function loadSpotifyApi() {
   return _apiPromise;
 }
 
+// Pre-carica l'API in anticipo: così, quando l'utente avvia un percorso, il
+// controller è pronto nell'istante del click e l'autoplay non viene bloccato.
+export function preloadSpotifyApi() {
+  if (typeof window !== "undefined") loadSpotifyApi();
+}
+
 /* Mini-player persistente per l'ascolto continuo di un PERCORSO.
    Usa l'API iFrame di Spotify: carica il brano corrente, e quando finisce
    (fine brano intero, o fine anteprima ~30s) avanza da solo al successivo.
@@ -74,6 +80,10 @@ export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap 
             if (i < t.length - 1) setIndexRef.current(i + 1);
           }
         });
+        // Autoplay: il player compare a seguito di un click (genera percorso /
+        // seleziona brano), quindi siamo ancora nella finestra di "user
+        // activation" → far partire subito la riproduzione.
+        try { ctrl.play(); } catch (e) { /* eventualmente parte al primo tocco */ }
       });
     });
     return () => {
