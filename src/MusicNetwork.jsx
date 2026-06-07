@@ -197,7 +197,10 @@ function MusicNetworkInner() {
         if (suppressClick) { suppressClick = false; return; }
         if (d.data.type === "track") selectTrack(d.data.track, d);
         else zoomTo(d);
-      });
+      })
+      // Label "a domanda": al passaggio del mouse mostra l'etichetta del cerchio.
+      .on("mouseenter", (e, d) => { if (mode === "tree") { hoveredDatum = d; paintLabels(); } })
+      .on("mouseleave", () => { if (hoveredDatum) { hoveredDatum = null; paintLabels(); } });
 
     // ---- strato etichette ----
     const label = svg.append("g")
@@ -241,6 +244,8 @@ function MusicNetworkInner() {
     let mode = "tree";       // 'tree' | 'net' | 'route'
     let overlay = null;       // {kind:'net'|'route', ...}
     let suppressClick = false; // true dopo un pan/zoom, per non far scattare il click
+    let hoveredDatum = null;   // cerchio sotto il mouse (per la label a domanda)
+    let searchSet = null;      // id dei brani che matchano la ricerca
 
     const P = (x, y, k) => [(x - view[0]) * k, (y - view[1]) * k];
 
@@ -291,28 +296,49 @@ function MusicNetworkInner() {
     };
     const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 
-    // Dimensiona/posiziona le etichette dell'albero: font in px proporzionale
-    // al raggio del cerchio sullo schermo (quindi cresce con lo zoom), con
-    // minimo/massimo leggibili, e titoli troncati alla larghezza disponibile.
-    function sizeLabels(k, v3) {
+    // Modello "a domanda" come nel grafo a gomitolo:
+    //  - i GENERI sono sempre etichettati (ancore della mappa);
+    //  - artisti/brani compaiono solo se: hover (desktop), match di ricerca, o
+    //    cerchio diventato prominente con lo zoom (così funziona anche su mobile);
+    //  - in modalità rete/percorso l'albero resta solo come contesto (generi tenui).
+    // Font in px reali (uguali mobile/desktop), proporzionali al cerchio e allo
+    // zoom, con minimi leggibili e titoli troncati alla larghezza disponibile.
+    function paintLabels() {
+      const k = DIA / view[2];
       const ps = pxScale();
+      const REVEAL = isMobile ? 58 : 44; // raggio px oltre cui un cerchio si auto-etichetta
       label.each(function (d) {
         const sel = d3.select(this);
         const type = d.data.type;
         const rPx = d.r * k * ps;
-        let fpx;
-        if (type === "genre") fpx = clamp(rPx * 0.16, isMobile ? 13 : 12, isMobile ? 27 : 30);
-        else if (type === "artist") fpx = clamp(rPx * 0.5, 8, 22);
-        else fpx = clamp(rPx * 0.55, 8, 20);
-        const fU = fpx / ps; // px -> unita' viewBox
-        sel.style("font-size", fU + "px")
-          .attr("transform", "translate(" + (d.x - v3[0]) * k + "," + (d.y - v3[1]) * k + ")");
+        let show = false, fpx, ctx = false;
+
+        if (type === "genre") {
+          show = true;
+          ctx = mode !== "tree";
+          fpx = clamp(rPx * 0.16, isMobile ? 13 : 12, isMobile ? 27 : 30);
+        } else if (mode === "tree") {
+          const id = d.data.track && d.data.track.id;
+          const hov = d === hoveredDatum;
+          const match = searchSet && type === "track" && id && searchSet.has(id);
+          const prominent = rPx >= REVEAL;
+          show = hov || match || prominent;
+          // su hover/ricerca un cerchio piccolo deve comunque essere leggibile
+          const lo = hov || match ? (isMobile ? 13 : 12) : 8;
+          fpx = clamp(rPx * (type === "artist" ? 0.5 : 0.55), lo, 22);
+        }
+
+        sel.style("display", show ? "inline" : "none");
+        if (!show) return;
+        const fU = fpx / ps;
+        sel.style("fill-opacity", ctx ? 0.5 : 1)
+          .style("font-size", fU + "px")
+          .attr("transform", "translate(" + (d.x - view[0]) * k + "," + (d.y - view[1]) * k + ")");
         if (type === "genre") {
           sel.select(".gsub").style("font-size", fU * 0.5 + "px");
         } else {
-          // Tronca per stare grossomodo nello spazio del cerchio (un filo oltre).
-          const budgetPx = Math.max(2.4 * rPx, fpx * 5);
-          const maxC = Math.max(3, Math.floor(budgetPx / (fpx * 0.56)));
+          const budgetPx = Math.max(2.4 * rPx, fpx * 6);
+          const maxC = Math.max(4, Math.floor(budgetPx / (fpx * 0.56)));
           const nm = d.data.name || "";
           sel.text(nm.length > maxC ? nm.slice(0, maxC - 1) + "…" : nm);
         }
@@ -324,7 +350,7 @@ function MusicNetworkInner() {
       view = v3;
       node.attr("transform", (d) => "translate(" + (d.x - v3[0]) * k + "," + (d.y - v3[1]) * k + ")");
       node.attr("r", (d) => d.r * k);
-      sizeLabels(k, v3);
+      paintLabels();
       drawOverlay();
     }
 
@@ -376,32 +402,14 @@ function MusicNetworkInner() {
         .attr("stroke-width", (d) => (d.data.type === "genre" ? 1.1 : d.data.type === "artist" ? 0.6 : 0.4));
     }
 
-    function contextLabels() {
-      label
-        .style("display", (l) => (l.data.type === "genre" ? "inline" : "none"))
-        .style("fill-opacity", (l) => (l.data.type === "genre" ? 0.55 : 0));
-    }
-
-    function focusLabels() {
-      label
-        .style("display", (l) => (l.parent === focus ? "inline" : "none"))
-        .style("fill-opacity", (l) => (l.parent === focus ? 1 : 0));
-    }
-
     // ---- CLASSIFICAZIONE: drill-down ----
     function zoomTo(d) {
       clearOverlay();
       restyleTree();
       mode = "tree";
       focus = d;
-      const transition = svg.transition().duration(720);
-      transition.call(zoom.transform, viewToTransform([focus.x, focus.y, focus.r * 2 + 8]));
-      label
-        .filter(function (l) { return l.parent === focus || this.style.display === "inline"; })
-        .transition(transition)
-        .style("fill-opacity", (l) => (l.parent === focus ? 1 : 0))
-        .on("start", function (l) { if (l.parent === focus) this.style.display = "inline"; })
-        .on("end", function (l) { if (l.parent !== focus) this.style.display = "none"; });
+      hoveredDatum = null;
+      svg.transition().duration(720).call(zoom.transform, viewToTransform([focus.x, focus.y, focus.r * 2 + 8]));
       setBreadcrumb(focus);
     }
 
@@ -465,7 +473,7 @@ function MusicNetworkInner() {
           d3.select(this).text(t.length > max ? t.slice(0, max - 1) + "…" : t);
         });
 
-      contextLabels();
+      paintLabels();
       focus = selLeaf.parent;
       fitTo(members.map((m) => m.leaf));
       setBreadcrumb(selLeaf);
@@ -505,7 +513,7 @@ function MusicNetworkInner() {
         .style("paint-order", "stroke").style("stroke", PAPER).style("stroke-width", "2.5px")
         .text((m) => m.idx);
 
-      contextLabels();
+      paintLabels();
       fitTo(members.map((m) => m.leaf));
     }
 
@@ -516,7 +524,7 @@ function MusicNetworkInner() {
       clearOverlay();
       restyleTree();
       mode = "tree";
-      focusLabels();
+      paintLabels();
     }
 
     // ---- ZOOM & PAN liberi (rotella / pinch / trascinamento) ----
@@ -571,10 +579,14 @@ function MusicNetworkInner() {
         if (mode !== "tree") return;
         const has = q.trim().length > 0;
         const qq = norm(q);
-        node.filter((d) => d.data.type === "track").attr("opacity", (d) =>
-          !has || norm(d.data.track.title).includes(qq) || norm(d.data.track.artist).includes(qq) ? 1 : 0.1
-        );
+        const matches = (d) => norm(d.data.track.title).includes(qq) || norm(d.data.track.artist).includes(qq);
+        node.filter((d) => d.data.type === "track").attr("opacity", (d) => (!has || matches(d) ? 1 : 0.1));
         node.filter((d) => d.data.type !== "track").attr("opacity", has ? 0.5 : 1);
+        // I match mostrano anche la loro etichetta (label "a domanda").
+        searchSet = has
+          ? new Set(GRAPH.nodes.filter((n) => norm(n.title).includes(qq) || norm(n.artist).includes(qq)).map((n) => n.id))
+          : null;
+        paintLabels();
       },
     };
 
