@@ -6,116 +6,88 @@ import {
   SPOTLISTR_URL, playlistLinks, playlistCsv, exportFilename, copyText, downloadFile,
 } from "./export.js";
 
-/* ================================================================
-   New Release Atlas v3 — CLASSIFICAZIONE + RETE
-   ----------------------------------------------------------------
-   La mappa non e' piu' un force-graph "a gomitolo": e' un atlante a
-   cerchi annidati (circle-packing) che rende esplicita la gerarchia
-        Archivio > Genere > Artista > Brano
-   Ogni genere e' un territorio, dentro stanno gli artisti, e i brani
-   sono i punti-dato (raggio proporzionale a sqrt(degree)).
+let GRAPH = null; // populated by loader before MusicNetworkInner mounts
 
-   Sopra la classificazione vive la RETE: selezionando un brano emergono
-   i suoi legami (artista / genere / co-playlist condivisi) verso gli
-   altri brani dell'archivio; cliccando un brano connesso si naviga di
-   nodo in nodo. La playlist generata dalla chat viene disegnata come
-   PERCORSO D'ASCOLTO ordinato sullo stesso strato.
+/* ----------------------------------------------------------------
+   New Release Atlas v2 — force-directed map by inferred GENRE
+   Nodes = tracks · Edges = shared artist / shared genre / co-playlist
+   Colour = inferred primary genre · interactive legend filter
+   ---------------------------------------------------------------- */
 
-   Dati: caricati a runtime via fetch da graph.json (vedi loader in fondo).
-   ================================================================ */
+// GRAPH is loaded at runtime from /graph.json (see useEffect below)
 
-let GRAPH = null; // popolato dal loader prima del mount di MusicNetworkInner
-
-// Palette editoriale per genere (un colore per genere, tono attenuato).
+// Genre palette — each genre its own hue, editorial / muted.
 const GENRE_COLOR = {
-  "neo-soul": "#c75b4a", "electronic": "#3a7d8c", "jazz": "#d39a3e",
-  "alt": "#8a6d9e", "uk-jazz": "#6b8e5a", "hip-hop": "#b5697e",
-  "world": "#bf8b4a", "soulful-house": "#4f9e9e", "soul-funk": "#9e6b52",
-  "broken-beat": "#7d8c4f", "classical": "#7a8aa0", "unknown": "#b8b0a4",
+  "neo-soul": "#c75b4a",
+  "electronic": "#3a7d8c",
+  "jazz": "#d39a3e",
+  "alt": "#8a6d9e",
+  "uk-jazz": "#6b8e5a",
+  "hip-hop": "#b5697e",
+  "world": "#bf8b4a",
+  "soulful-house": "#4f9e9e",
+  "soul-funk": "#9e6b52",
+  "broken-beat": "#7d8c4f",
+  "classical": "#7a8aa0",
+  "unknown": "#b8b0a4",
 };
 const GENRE_LABEL = {
-  "neo-soul": "Neo-Soul / R&B", "electronic": "Electronic", "jazz": "Jazz",
-  "alt": "Alt / Indie", "uk-jazz": "UK Jazz", "hip-hop": "Hip-Hop",
-  "world": "World / Afro / Latin", "soulful-house": "Soulful House",
-  "soul-funk": "Soul / Funk", "broken-beat": "Broken Beat",
-  "classical": "Classical / Score", "unknown": "Non classificato",
+  "neo-soul": "Neo-Soul / R&B",
+  "electronic": "Electronic",
+  "jazz": "Jazz",
+  "alt": "Alt / Indie",
+  "uk-jazz": "UK Jazz",
+  "hip-hop": "Hip-Hop",
+  "world": "World / Afro / Latin",
+  "soulful-house": "Soulful House",
+  "soul-funk": "Soul / Funk",
+  "broken-beat": "Broken Beat",
+  "classical": "Classical / Score",
+  "unknown": "Unclassified",
 };
 
-const PAPER = "#f4f1ea";
-const PAPER_DK = "#ece7dc";
 const INK = "#2b2724";
+const PAPER = "#f4f1ea";
 const MUTED = "#9a938a";
-const DIA = 1040; // lato del quadrato virtuale di layout
 
-const norm = (s) => (s || "").toLowerCase();
-const gcol = (g) => GENRE_COLOR[g] || MUTED;
-
-// Relazione "umana" tra due brani, per etichettare i legami della rete.
-function relation(a, b) {
-  const aa = a.artists || [a.artist];
-  const ba = b.artists || [b.artist];
-  if (aa.some((x) => ba.includes(x))) return { kind: "artist", label: "stesso artista" };
-  if (a.genre === b.genre) return { kind: "genre", label: GENRE_LABEL[a.genre] || a.genre };
-  const sg = (a.genres || []).find((x) => (b.genres || []).includes(x));
-  if (sg) return { kind: "genre", label: GENRE_LABEL[sg] || sg };
-  return { kind: "playlist", label: "affinità / playlist" };
-}
+const gColor = (g) => GENRE_COLOR[g] || MUTED;
 
 function MusicNetworkInner() {
-  const wrapRef = useRef(null);
   const svgRef = useRef(null);
-  const vizRef = useRef(null);
-  const selIdRef = useRef(null); // id del brano selezionato (per i listener d3)
-
-  const [selected, setSelected] = useState(null); // nodo brano (campi reali del grafo)
-  const [path, setPath] = useState([]);            // breadcrumb
+  const wrapRef = useRef(null);
+  const simRef = useRef(null);
+  const [selected, setSelected] = useState(null);
+  const [hovered, setHovered] = useState(null);
   const [query, setQuery] = useState("");
-  const [indexOpen, setIndexOpen] = useState(false);
-  const [dims, setDims] = useState({ w: 1200, h: 800 });
-  const isMobile = dims.w <= 720;
+  const [activeGenre, setActiveGenre] = useState(null);
+  const [dims, setDims] = useState(() => ({
+    w: typeof window !== "undefined" ? window.innerWidth : 800,
+    h: typeof window !== "undefined" ? window.innerHeight : 600,
+  }));
+  const [legendOpen, setLegendOpen] = useState(false);
 
-  // chat / playlist generata dal grafo
-  const [playlist, setPlaylist] = useState(null);
+  // Phone-sized viewport: switch to a single-column, touch-first layout.
+  const isMobile = dims.w > 0 && dims.w <= 640;
+  const showLegend = !isMobile || legendOpen;
+
+  // --- chat / playlist generata dal grafo ---
+  const [playlist, setPlaylist] = useState(null); // array ordinato di id
   const [messages, setMessages] = useState([]);
   const [chatInput, setChatInput] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
+  const routeRef = useRef([]); // datum dei nodi della playlist, per disegnare il percorso
+  const playlistSet = useMemo(() => (playlist ? new Set(playlist) : null), [playlist]);
 
-  const dataById = useMemo(() => {
-    const m = new Map();
-    GRAPH.nodes.forEach((n) => m.set(n.id, n));
-    return m;
-  }, []);
-
-  // adiacenza: id -> [{id, w}] ordinata per peso decrescente
-  const neighborMap = useMemo(() => {
-    const m = new Map();
-    GRAPH.nodes.forEach((n) => m.set(n.id, []));
+  const neighbors = useMemo(() => {
+    const map = new Map();
+    GRAPH.nodes.forEach((n) => map.set(n.id, new Set()));
     GRAPH.links.forEach((l) => {
       const s = typeof l.source === "object" ? l.source.id : l.source;
       const t = typeof l.target === "object" ? l.target.id : l.target;
-      const w = l.weight || 1;
-      m.get(s)?.push({ id: t, w });
-      m.get(t)?.push({ id: s, w });
+      map.get(s)?.add(t);
+      map.get(t)?.add(s);
     });
-    m.forEach((arr) => arr.sort((x, y) => y.w - x.w));
-    return m;
-  }, []);
-
-  const hierarchy = useMemo(() => {
-    const present = GRAPH.genres.filter((g) => GRAPH.nodes.some((n) => n.genre === g));
-    const byGenre = d3.group(GRAPH.nodes, (n) => n.genre);
-    const children = present.map((g) => {
-      const tracks = byGenre.get(g) || [];
-      const byArtist = d3.group(tracks, (n) => n.artist);
-      const artists = Array.from(byArtist, ([artist, ts]) => ({
-        type: "artist", name: artist, gname: g,
-        children: ts
-          .slice().sort((a, b) => d3.ascending(a.title, b.title))
-          .map((n) => ({ type: "track", name: n.title, gname: g, track: n })),
-      })).sort((a, b) => b.children.length - a.children.length || d3.ascending(a.name, b.name));
-      return { type: "genre", name: g, gname: g, children: artists };
-    });
-    return { type: "root", name: "Archivio", children };
+    return map;
   }, []);
 
   const genreCounts = useMemo(() => {
@@ -123,498 +95,358 @@ function MusicNetworkInner() {
     GRAPH.nodes.forEach((n) => (c[n.genre] = (c[n.genre] || 0) + 1));
     return c;
   }, []);
-  const orderedGenres = useMemo(
-    () => GRAPH.genres.filter((g) => genreCounts[g]), [genreCounts]
-  );
-  const genreNum = useMemo(() => {
-    const m = {};
-    orderedGenres.forEach((g, i) => (m[g] = String(i + 1).padStart(2, "0")));
-    return m;
-  }, [orderedGenres]);
-  const totalArtists = useMemo(() => new Set(GRAPH.nodes.map((n) => n.artist)).size, []);
+
+  const matchSet = useMemo(() => {
+    if (!query.trim()) return null;
+    const q = query.toLowerCase();
+    const s = new Set();
+    GRAPH.nodes.forEach((n) => {
+      if (
+        n.title.toLowerCase().includes(q) ||
+        n.artist.toLowerCase().includes(q) ||
+        n.artists.some((a) => a.toLowerCase().includes(q))
+      )
+        s.add(n.id);
+    });
+    return s;
+  }, [query]);
 
   useEffect(() => {
     if (!wrapRef.current) return;
-    const ro = new ResizeObserver((e) => {
-      const r = e[0].contentRect;
+    const ro = new ResizeObserver((entries) => {
+      const r = entries[0].contentRect;
       setDims({ w: r.width, h: r.height });
     });
     ro.observe(wrapRef.current);
     return () => ro.disconnect();
   }, []);
 
-  // ================================================================
-  //  Costruzione: packing (classificazione) + overlay (rete/percorso)
-  // ================================================================
   useEffect(() => {
-    const root = d3
-      .pack().size([DIA, DIA])
-      .padding((d) => (d.depth === 1 ? 11 : d.depth === 2 ? 3 : 1))(
-      d3.hierarchy(hierarchy)
-        .sum((d) => (d.type === "track" ? 1 + Math.sqrt(d.track.degree || 1) : 0))
-        .sort((a, b) => (b.value || 0) - (a.value || 0))
-    );
-
-    // Zoom "a riposo" (intero archivio): serve a far crescere le etichette in
-    // proporzione a quanto si e' zoomato rispetto alla vista piena.
-    const k0 = DIA / (root.r * 2 + 8);
-
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();
-    svg.attr("viewBox", [-DIA / 2, -DIA / 2, DIA, DIA].join(" "));
 
-    // Le etichette sono in unita' del viewBox (DIA=1040): su smartphone lo
-    // schermo e' stretto e le rimpicciolisce molto, quindi le ingrandiamo (e
-    // un filo anche su desktop) cosi restano leggibili a ogni livello.
-    const fs = (px) => (px * (isMobile ? 1.7 : 1.12)).toFixed(1) + "px";
+    const nodes = GRAPH.nodes.map((d) => ({ ...d }));
+    const links = GRAPH.links.map((d) => ({ ...d }));
+    const nodesById = new Map(nodes.map((d) => [d.id, d]));
+    const g = svg.append("g");
 
-    const descendants = root.descendants();
-    const leafById = new Map();
-    descendants.forEach((d) => {
-      if (d.data.type === "track") leafById.set(d.data.track.id, d);
-    });
+    const zoom = d3
+      .zoom()
+      .scaleExtent([0.12, 6])
+      .on("zoom", (e) => g.attr("transform", e.transform));
+    svg.call(zoom);
+    svg.on("dblclick.zoom", null);
 
-    // ---- strato cerchi (classificazione) ----
-    const node = svg.append("g").selectAll("circle")
-      .data(descendants.slice(1)).join("circle")
-      .attr("data-type", (d) => d.data.type)
-      .attr("fill", (d) =>
-        d.data.type === "track" ? gcol(d.data.gname)
-        : d.data.type === "artist" ? PAPER_DK
-        : d3.color(gcol(d.data.gname)).copy({ opacity: 0.07 })
+    const maxDeg = d3.max(nodes, (d) => d.degree) || 1;
+    // Slightly larger nodes on phones so they're easier to tap accurately.
+    const rScale = d3
+      .scaleSqrt()
+      .domain([1, maxDeg])
+      .range(isMobile ? [5, 14] : [3, 12]);
+
+    const link = g
+      .append("g")
+      .attr("stroke", INK)
+      .attr("stroke-opacity", 0.1)
+      // Links are visual only — never let them intercept pan/drag gestures.
+      .style("pointer-events", "none")
+      .selectAll("line")
+      .data(links)
+      .join("line")
+      .attr("stroke-width", (d) => Math.min(2, 0.3 + d.weight * 0.1));
+
+    // Percorso della playlist generata: una linea che collega i brani
+    // nell'ordine d'ascolto. Disegnata sopra i link, sotto i nodi.
+    const route = g
+      .append("path")
+      .attr("fill", "none")
+      .attr("stroke", INK)
+      .attr("stroke-opacity", 0)
+      .attr("stroke-width", 2.2)
+      .attr("stroke-linejoin", "round")
+      .attr("stroke-linecap", "round")
+      .style("pointer-events", "none");
+
+    const drawRoute = () => {
+      const pts = routeRef.current;
+      if (!pts || pts.length < 2) {
+        route.attr("d", null);
+        return;
+      }
+      route.attr(
+        "d",
+        d3
+          .line()
+          .x((d) => d.x)
+          .y((d) => d.y)
+          .curve(d3.curveCatmullRom.alpha(0.5))(pts)
+      );
+    };
+
+    const node = g
+      .append("g")
+      .selectAll("circle")
+      .data(nodes)
+      .join("circle")
+      .attr("r", (d) => rScale(d.degree))
+      .attr("fill", (d) => gColor(d.genre))
+      .attr("stroke", PAPER)
+      .attr("stroke-width", 1.2)
+      .style("cursor", "pointer")
+      .call(
+        d3
+          .drag()
+          .on("start", (e, d) => {
+            if (!e.active) sim.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+          })
+          .on("drag", (e, d) => {
+            d.fx = e.x;
+            d.fy = e.y;
+          })
+          .on("end", (e, d) => {
+            if (!e.active) sim.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+          })
+      );
+
+    const labels = g
+      .append("g")
+      .selectAll("text")
+      .data(nodes)
+      .join("text")
+      .attr("font-size", 9)
+      .attr("font-family", "'Spectral', Georgia, serif")
+      .attr("fill", INK)
+      .attr("dx", (d) => rScale(d.degree) + 3)
+      .attr("dy", 3)
+      .attr("opacity", 0)
+      .style("pointer-events", "none");
+    // Etichetta accanto al nodo: titolo + artista (artista in tono attenuato).
+    labels.append("tspan").text((d) => d.title);
+    labels.append("tspan").attr("fill", MUTED).text((d) => " — " + d.artist);
+
+    node
+      .on("mouseenter", (e, d) => setHovered(d))
+      .on("mouseleave", () => setHovered(null))
+      .on("click", (e, d) => {
+        setSelected((prev) => (prev && prev.id === d.id ? null : d));
+        e.stopPropagation();
+      });
+    svg.on("click", () => setSelected(null));
+
+    // Genre clustering force — pulls same-genre nodes toward shared anchors,
+    // giving spatial separation between genres on top of the link forces.
+    const genres = GRAPH.genres;
+    const angle = (gi) => (gi / genres.length) * 2 * Math.PI;
+    const radius = Math.min(dims.w, dims.h) * 0.32;
+    const anchor = (genre) => {
+      const gi = genres.indexOf(genre);
+      return {
+        x: dims.w / 2 + radius * Math.cos(angle(gi)),
+        y: dims.h / 2 + radius * Math.sin(angle(gi)),
+      };
+    };
+
+    const sim = d3
+      .forceSimulation(nodes)
+      .force(
+        "link",
+        d3
+          .forceLink(links)
+          .id((d) => d.id)
+          .distance((d) => 55 / (0.4 + d.weight * 0.22))
+          .strength((d) => Math.min(1, d.weight * 0.1))
+      )
+      .force("charge", d3.forceManyBody().strength(-30))
+      .force(
+        "x",
+        d3.forceX((d) => anchor(d.genre).x).strength(0.06)
+      )
+      .force(
+        "y",
+        d3.forceY((d) => anchor(d.genre).y).strength(0.06)
+      )
+      .force(
+        "collide",
+        d3.forceCollide().radius((d) => rScale(d.degree) + 2)
+      )
+      .on("tick", () => {
+        link
+          .attr("x1", (d) => d.source.x)
+          .attr("y1", (d) => d.source.y)
+          .attr("x2", (d) => d.target.x)
+          .attr("y2", (d) => d.target.y);
+        node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
+        labels.attr("x", (d) => d.x).attr("y", (d) => d.y);
+        drawRoute();
+      });
+
+    simRef.current = { sim, node, link, labels, g, zoom, svg, anchor, route, nodesById, drawRoute };
+    return () => sim.stop();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!simRef.current) return;
+    const { sim } = simRef.current;
+    const genres = GRAPH.genres;
+    const radius = Math.min(dims.w, dims.h) * 0.32;
+    const angle = (gi) => (gi / genres.length) * 2 * Math.PI;
+    sim
+      .force(
+        "x",
+        d3
+          .forceX((d) => {
+            const gi = genres.indexOf(d.genre);
+            return dims.w / 2 + radius * Math.cos(angle(gi));
+          })
+          .strength(0.06)
+      )
+      .force(
+        "y",
+        d3
+          .forceY((d) => {
+            const gi = genres.indexOf(d.genre);
+            return dims.h / 2 + radius * Math.sin(angle(gi));
+          })
+          .strength(0.06)
+      );
+    sim.alpha(0.3).restart();
+  }, [dims]);
+
+  useEffect(() => {
+    if (!simRef.current) return;
+    const { node, link, labels } = simRef.current;
+    const focus = selected || hovered;
+    const focusId = focus?.id;
+    const nbr = focusId ? neighbors.get(focusId) : null;
+
+    const dim = (d) => {
+      if (matchSet && !matchSet.has(d.id)) return true;
+      if (activeGenre && d.genre !== activeGenre) return true;
+      if (focusId && d.id !== focusId && !nbr?.has(d.id)) return true;
+      if (!focusId && playlistSet && !playlistSet.has(d.id)) return true;
+      return false;
+    };
+
+    node
+      .attr("opacity", (d) => {
+        if (focusId && d.id === focusId) return 1;
+        if (!focusId && playlistSet?.has(d.id)) return 1;
+        return dim(d) ? 0.08 : 0.96;
+      })
+      // Dimmed background nodes must not catch taps/drags: while a node is
+      // focused (or a filter/playlist is active) only the highlighted layer
+      // stays interactive, so a drag over the faded nodes pans/zooms the view
+      // instead of grabbing a node underneath.
+      .style("pointer-events", (d) => {
+        if (focusId && d.id === focusId) return "auto";
+        if (!focusId && playlistSet?.has(d.id)) return "auto";
+        return dim(d) ? "none" : "auto";
+      })
+      .attr("stroke-width", (d) =>
+        d.id === focusId || playlistSet?.has(d.id) ? 2.4 : matchSet?.has(d.id) ? 2 : 1.2
       )
       .attr("stroke", (d) =>
-        d.data.type === "genre" ? gcol(d.data.gname)
-        : d.data.type === "artist" ? "rgba(43,39,36,0.10)" : PAPER
-      )
-      .attr("stroke-width", (d) =>
-        d.data.type === "genre" ? 1.1 : d.data.type === "artist" ? 0.8 : 0.6
-      )
-      .style("cursor", "pointer")
-      .style("opacity", 0)
-      .on("click", (e, d) => {
-        e.stopPropagation();
-        if (suppressClick) { suppressClick = false; return; }
-        if (d.data.type === "track") selectTrack(d.data.track, d);
-        else zoomTo(d);
-      })
-      // Label "a domanda": al passaggio del mouse mostra l'etichetta del cerchio.
-      .on("mouseenter", (e, d) => { if (mode === "tree") { hoveredDatum = d; paintLabels(); } })
-      .on("mouseleave", () => { if (hoveredDatum) { hoveredDatum = null; paintLabels(); } });
+        d.id === focusId || matchSet?.has(d.id) || playlistSet?.has(d.id) ? INK : PAPER
+      );
 
-    // ---- strato etichette ----
-    const label = svg.append("g")
-      .style("pointer-events", "none")
-      .attr("text-anchor", "middle")
-      .selectAll("text").data(descendants).join("text")
-      .attr("fill", INK)
-      .style("font-family", (d) =>
-        d.data.type === "genre" ? "'Spectral', Georgia, serif" : "'IBM Plex Mono', monospace"
-      )
-      .style("font-weight", (d) => (d.data.type === "genre" ? 500 : 400))
-      .style("font-size", (d) =>
-        d.data.type === "genre" ? fs(19) : d.data.type === "artist" ? fs(10) : fs(8)
-      )
-      .style("fill-opacity", (d) => (d.parent === root ? 1 : 0))
-      .style("display", (d) => (d.parent === root ? "inline" : "none"))
-      .each(function (d) {
-        const t = d3.select(this);
-        if (d.data.type === "genre") {
-          t.append("tspan").attr("class", "gname").attr("x", 0).text(GENRE_LABEL[d.data.name] || d.data.name);
-          t.append("tspan").attr("class", "gsub").attr("x", 0).attr("dy", "1.15em")
-            .style("font-family", "'IBM Plex Mono', monospace")
-            .attr("fill", MUTED)
-            .text((genreNum[d.data.name] || "") + " · " + (genreCounts[d.data.name] || 0) + " brani");
-        } else if (d.data.type === "artist") {
-          t.text(d.data.name.length > 22 ? d.data.name.slice(0, 21) + "…" : d.data.name);
-        } else {
-          t.text(d.data.name.length > 26 ? d.data.name.slice(0, 25) + "…" : d.data.name);
-        }
-      });
-
-    // ---- strato RETE / PERCORSO (archi + marker + numeri), sopra i cerchi ----
-    const gArc = svg.append("g").attr("fill", "none").style("pointer-events", "none");
-    const gMark = svg.append("g");
-    const gTag = svg.append("g").style("pointer-events", "none");
-
-    node.transition().delay((d, i) => Math.min(600, i * 1.1)).duration(500).style("opacity", 1);
-
-    let focus = root;
-    let view;
-    let mode = "tree";       // 'tree' | 'net' | 'route'
-    let overlay = null;       // {kind:'net'|'route', ...}
-    let suppressClick = false; // true dopo un pan/zoom, per non far scattare il click
-    let hoveredDatum = null;   // cerchio sotto il mouse (per la label a domanda)
-    let searchSet = null;      // id dei brani che matchano la ricerca
-
-    const P = (x, y, k) => [(x - view[0]) * k, (y - view[1]) * k];
-
-    function drawOverlay() {
-      if (!overlay) return;
-      const k = DIA / view[2];
-      if (overlay.kind === "net") {
-        gArc.selectAll("path").attr("d", (a) => {
-          const [x1, y1] = P(a.x1, a.y1, k);
-          const [x2, y2] = P(a.x2, a.y2, k);
-          const dx = x2 - x1, dy = y2 - y1, dist = Math.hypot(dx, dy) || 1;
-          const off = Math.min(70, dist * 0.16);
-          const cx = (x1 + x2) / 2 - (dy / dist) * off;
-          const cy = (y1 + y2) / 2 + (dx / dist) * off;
-          return "M" + x1 + "," + y1 + " Q" + cx + "," + cy + " " + x2 + "," + y2;
-        });
-      } else if (overlay.kind === "route") {
-        const line = d3.line()
-          .x((p) => P(p.x, p.y, k)[0]).y((p) => P(p.x, p.y, k)[1])
-          .curve(d3.curveCatmullRom.alpha(0.5));
-        gArc.selectAll("path").attr("d", (d) => line(d));
+    link.attr("stroke-opacity", (d) => {
+      const s = d.source.id ?? d.source;
+      const t = d.target.id ?? d.target;
+      if (focusId) return s === focusId || t === focusId ? 0.5 : 0.02;
+      if (activeGenre) {
+        const ns = GRAPH.nodes;
+        return 0.04;
       }
-      gMark.selectAll("circle")
-        .attr("cx", (m) => P(m.leaf.x, m.leaf.y, k)[0])
-        .attr("cy", (m) => P(m.leaf.x, m.leaf.y, k)[1]);
-      // Tag della rete/percorso: font in px reali (uguali su mobile/desktop) e
-      // crescita con lo zoom tramite scale(tls).
-      const tls = Math.max(1, Math.min(3.6, k / k0));
-      const ps = pxScale();
-      const basePx = (m) => (m.kind === "sel" ? 16 : m.kind === "route" ? 11 : 10);
-      gTag.selectAll("text")
-        .style("font-size", (m) => basePx(m) / ps + "px")
-        .attr("transform", (m) => {
-          const p = P(m.leaf.x, m.leaf.y, k);
-          const off = m.kind === "sel" ? 13 : m.kind === "route" ? 9 : 10;
-          return "translate(" + p[0] + "," + (p[1] - off) + ") scale(" + tls + ")";
-        });
-    }
-
-    // Scala di rendering reale: il viewBox quadrato DIA viene mappato su
-    // min(larghezza,altezza) in px. Serve a dimensionare i font in PIXEL REALI
-    // (identici su mobile e desktop) anziche' in unita' viewBox.
-    const pxScale = () => {
-      const el = svgRef.current;
-      const r = el && el.getBoundingClientRect();
-      const px = r && Math.min(r.width, r.height);
-      return (px && px / DIA) || Math.min(dims.w, dims.h) / DIA || 0.5;
-    };
-    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
-
-    // Modello "a domanda" come nel grafo a gomitolo:
-    //  - i GENERI sono sempre etichettati (ancore della mappa);
-    //  - artisti/brani compaiono solo se: hover (desktop), match di ricerca, o
-    //    cerchio diventato prominente con lo zoom (così funziona anche su mobile);
-    //  - in modalità rete/percorso l'albero resta solo come contesto (generi tenui).
-    // Font in px reali (uguali mobile/desktop), proporzionali al cerchio e allo
-    // zoom, con minimi leggibili e titoli troncati alla larghezza disponibile.
-    function paintLabels() {
-      const k = DIA / view[2];
-      const ps = pxScale();
-      const REVEAL = isMobile ? 58 : 44; // raggio px oltre cui un cerchio si auto-etichetta
-      label.each(function (d) {
-        const sel = d3.select(this);
-        const type = d.data.type;
-        const rPx = d.r * k * ps;
-        let show = false, fpx, ctx = false;
-
-        if (type === "genre") {
-          show = true;
-          ctx = mode !== "tree";
-          fpx = clamp(rPx * 0.16, isMobile ? 13 : 12, isMobile ? 27 : 30);
-        } else if (mode === "tree") {
-          const id = d.data.track && d.data.track.id;
-          const hov = d === hoveredDatum;
-          const match = searchSet && type === "track" && id && searchSet.has(id);
-          const prominent = rPx >= REVEAL;
-          show = hov || match || prominent;
-          // su hover/ricerca un cerchio piccolo deve comunque essere leggibile
-          const lo = hov || match ? (isMobile ? 13 : 12) : 8;
-          fpx = clamp(rPx * (type === "artist" ? 0.5 : 0.55), lo, 22);
-        }
-
-        sel.style("display", show ? "inline" : "none");
-        if (!show) return;
-        const fU = fpx / ps;
-        sel.style("fill-opacity", ctx ? 0.5 : 1)
-          .style("font-size", fU + "px")
-          .attr("transform", "translate(" + (d.x - view[0]) * k + "," + (d.y - view[1]) * k + ")");
-        if (type === "genre") {
-          sel.select(".gsub").style("font-size", fU * 0.5 + "px");
-        } else {
-          const budgetPx = Math.max(2.4 * rPx, fpx * 6);
-          const maxC = Math.max(4, Math.floor(budgetPx / (fpx * 0.56)));
-          const nm = d.data.name || "";
-          sel.text(nm.length > maxC ? nm.slice(0, maxC - 1) + "…" : nm);
-        }
-      });
-    }
-
-    function applyView(v3) {
-      const k = DIA / v3[2];
-      view = v3;
-      node.attr("transform", (d) => "translate(" + (d.x - v3[0]) * k + "," + (d.y - v3[1]) * k + ")");
-      node.attr("r", (d) => d.r * k);
-      paintLabels();
-      drawOverlay();
-    }
-
-    function animateTo(v3) {
-      svg.transition().duration(720).call(zoom.transform, viewToTransform(v3));
-    }
-
-    function fitTo(leaves) {
-      const minX = Math.min(...leaves.map((l) => l.x - l.r));
-      const maxX = Math.max(...leaves.map((l) => l.x + l.r));
-      const minY = Math.min(...leaves.map((l) => l.y - l.r));
-      const maxY = Math.max(...leaves.map((l) => l.y + l.r));
-      const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
-      const size = Math.min(DIA, Math.max(maxX - minX, maxY - minY) * 1.2 + 60);
-      animateTo([cx, cy, size]);
-    }
-
-    function setBreadcrumb(d) {
-      setPath(d.ancestors().reverse().map((a) => ({ type: a.data.type, name: a.data.name, node: a })));
-    }
-
-    function clearOverlay() {
-      gArc.selectAll("path").remove();
-      gMark.selectAll("circle").remove();
-      gTag.selectAll("text").remove();
-      overlay = null;
-    }
-
-    function restyleTree() {
-      node
-        .attr("opacity", 1)
-        .attr("fill", (d) =>
-          d.data.type === "track" ? gcol(d.data.gname)
-          : d.data.type === "artist" ? PAPER_DK
-          : d3.color(gcol(d.data.gname)).copy({ opacity: 0.07 })
-        )
-        .attr("stroke", (d) =>
-          d.data.type === "genre" ? gcol(d.data.gname)
-          : d.data.type === "artist" ? "rgba(43,39,36,0.10)" : PAPER
-        )
-        .attr("stroke-width", (d) =>
-          d.data.type === "genre" ? 1.1 : d.data.type === "artist" ? 0.8 : 0.6
-        );
-    }
-
-    function dimBase() {
-      node
-        .attr("opacity", (d) => (d.data.type === "genre" ? 0.55 : d.data.type === "artist" ? 0.14 : 0.06))
-        .attr("stroke-width", (d) => (d.data.type === "genre" ? 1.1 : d.data.type === "artist" ? 0.6 : 0.4));
-    }
-
-    // ---- CLASSIFICAZIONE: drill-down ----
-    function zoomTo(d) {
-      clearOverlay();
-      restyleTree();
-      mode = "tree";
-      focus = d;
-      hoveredDatum = null;
-      svg.transition().duration(720).call(zoom.transform, viewToTransform([focus.x, focus.y, focus.r * 2 + 8]));
-      setBreadcrumb(focus);
-    }
-
-    // ---- RETE: seleziona un brano, mostra i legami, inquadra il vicinato ----
-    function selectTrack(track, dNode) {
-      const selLeaf = dNode || leafById.get(track.id);
-      if (!selLeaf) return;
-      selIdRef.current = track.id;
-      setSelected(track);
-      setPlaylist(null);
-      mode = "net";
-
-      const nbrs = neighborMap.get(track.id) || [];
-      const members = [{ id: track.id, leaf: selLeaf, kind: "sel", w: Infinity, g: track.genre }];
-      const arcs = [];
-      nbrs.forEach(({ id, w }) => {
-        const lf = leafById.get(id);
-        if (!lf) return;
-        arcs.push({ x1: selLeaf.x, y1: selLeaf.y, x2: lf.x, y2: lf.y, w, gname: lf.data.gname });
-        members.push({ id, leaf: lf, kind: "nbr", w, g: lf.data.gname });
-      });
-      overlay = { kind: "net", members };
-
-      dimBase();
-
-      gArc.selectAll("path").data(arcs).join("path")
-        .attr("stroke", (a) => gcol(a.gname))
-        .attr("stroke-width", (a) => (isMobile ? 1.6 : 1) * (1.6 + Math.min(5, a.w * 0.4)))
-        .attr("stroke-opacity", (a) => 0.5 + Math.min(0.45, a.w * 0.08))
-        .attr("stroke-linecap", "round");
-
-      gMark.selectAll("circle").data(members, (m) => m.id).join("circle")
-        .attr("r", (m) => (m.kind === "sel" ? 7 : 3.6 + Math.min(3.2, m.w * 0.22)))
-        .attr("fill", (m) => gcol(m.g))
-        .attr("stroke", (m) => (m.kind === "sel" ? INK : PAPER))
-        .attr("stroke-width", (m) => (m.kind === "sel" ? 2 : 1))
-        .style("cursor", "pointer")
-        .on("click", (e, m) => {
-          e.stopPropagation();
-          if (suppressClick) { suppressClick = false; return; }
-          if (m.kind === "nbr") { const nd = dataById.get(m.id); if (nd) selectTrack(nd, m.leaf); }
-        })
-        .each(function (m) {
-          d3.select(this).selectAll("title").remove();
-          const nd = dataById.get(m.id);
-          d3.select(this).append("title").text(nd ? nd.title + " — " + nd.artist : "");
-        });
-
-      // Tag su TUTTI i membri: il brano selezionato (Spectral, grande) e ogni
-      // brano collegato (mono, piu' piccolo). Le dimensioni scalano con lo zoom
-      // tramite il transform in drawOverlay.
-      gTag.selectAll("text").data(members, (m) => m.id).join("text")
-        .attr("text-anchor", "middle").attr("fill", INK)
-        .style("font-family", (m) => (m.kind === "sel" ? "'Spectral', Georgia, serif" : "'IBM Plex Mono', monospace"))
-        .style("font-weight", (m) => (m.kind === "sel" ? 500 : 400))
-        .style("paint-order", "stroke").style("stroke", PAPER).style("stroke-width", (m) => (m.kind === "sel" ? "3px" : "2px"))
-        .each(function (m) {
-          const nd = dataById.get(m.id);
-          const t = nd ? nd.title : "";
-          const max = m.kind === "sel" ? 30 : 20;
-          d3.select(this).text(t.length > max ? t.slice(0, max - 1) + "…" : t);
-        });
-
-      paintLabels();
-      focus = selLeaf.parent;
-      fitTo(members.map((m) => m.leaf));
-      setBreadcrumb(selLeaf);
-    }
-
-    // ---- PERCORSO: playlist generata, disegnata in ordine d'ascolto ----
-    function showRoute(ids) {
-      const pts = ids.map((id) => leafById.get(id)).filter(Boolean);
-      if (!pts.length) { exitOverlay(); return; }
-      selIdRef.current = null;
-      setSelected(null);
-      mode = "route";
-      const members = pts.map((lf, i) => ({
-        id: lf.data.track.id, leaf: lf, kind: "route", idx: i + 1, g: lf.data.gname,
-      }));
-      overlay = { kind: "route", members };
-
-      dimBase();
-
-      gArc.selectAll("path").data([pts]).join("path")
-        .attr("stroke", INK).attr("stroke-width", isMobile ? 3.6 : 2.6).attr("stroke-opacity", 0.7)
-        .attr("stroke-linejoin", "round").attr("stroke-linecap", "round").attr("fill", "none");
-
-      gMark.selectAll("circle").data(members, (m) => m.id).join("circle")
-        .attr("r", 5).attr("fill", (m) => gcol(m.g)).attr("stroke", INK).attr("stroke-width", 1.2)
-        .style("cursor", "pointer")
-        .on("click", (e, m) => { e.stopPropagation(); if (suppressClick) { suppressClick = false; return; } const nd = dataById.get(m.id); if (nd) selectTrack(nd, m.leaf); })
-        .each(function (m) {
-          d3.select(this).selectAll("title").remove();
-          const nd = dataById.get(m.id);
-          d3.select(this).append("title").text(nd ? m.idx + ". " + nd.title + " — " + nd.artist : "");
-        });
-
-      gTag.selectAll("text").data(members, (m) => m.id).join("text")
-        .attr("text-anchor", "middle").attr("fill", INK)
-        .style("font-family", "'IBM Plex Mono', monospace")
-        .style("paint-order", "stroke").style("stroke", PAPER).style("stroke-width", "2.5px")
-        .text((m) => m.idx);
-
-      paintLabels();
-      fitTo(members.map((m) => m.leaf));
-    }
-
-    function exitOverlay() {
-      selIdRef.current = null;
-      setSelected(null);
-      setPlaylist(null);
-      clearOverlay();
-      restyleTree();
-      mode = "tree";
-      paintLabels();
-    }
-
-    // ---- ZOOM & PAN liberi (rotella / pinch / trascinamento) ----
-    // Il sistema di camera dell'atlante e' view = [cx, cy, size]; lo mappiamo
-    // 1:1 su una trasformata d3.zoom (k = DIA/size, t = -[cx,cy]*k) cosi i
-    // gesti dell'utente e i movimenti programmatici (drill-down, fit rete,
-    // percorso) condividono lo stesso stato e non "saltano".
-    const viewToTransform = (v) => {
-      const k = DIA / v[2];
-      return d3.zoomIdentity.translate(-v[0] * k, -v[1] * k).scale(k);
-    };
-    const SIZE_MIN = 24;                 // zoom-in massimo
-    const SIZE_MAX = root.r * 2 + 8;     // intero archivio
-    const zoom = d3.zoom()
-      .scaleExtent([DIA / SIZE_MAX, DIA / SIZE_MIN])
-      .on("start", () => { suppressClick = false; })
-      .on("zoom", (e) => {
-        const t = e.transform;
-        applyView([-t.x / t.k, -t.y / t.k, DIA / t.k]);
-        // Un pan (trascinamento) non deve poi far scattare il click di sfondo.
-        if (e.sourceEvent && /move/.test(e.sourceEvent.type)) suppressClick = true;
-      });
-
-    svg.call(zoom);
-    svg.on("dblclick.zoom", null); // il doppio click non zooma: la nav e' a click singolo
-    svg.call(zoom.transform, viewToTransform([root.x, root.y, root.r * 2 + 8]));
-    setBreadcrumb(root);
-
-    svg.on("click", () => {
-      if (suppressClick) { suppressClick = false; return; }
-      const up = focus.parent || root;
-      selIdRef.current = null;
-      setSelected(null);
-      setPlaylist(null);
-      zoomTo(up);
+      if (matchSet) return matchSet.has(s) || matchSet.has(t) ? 0.22 : 0.02;
+      if (playlistSet) return playlistSet.has(s) && playlistSet.has(t) ? 0.15 : 0.02;
+      return 0.1;
     });
 
-    vizRef.current = {
-      root,
-      zoomTo: (d) => { setSelected(null); setPlaylist(null); selIdRef.current = null; zoomTo(d); },
-      jumpGenre: (g) => {
-        const gn = root.children?.find((c) => c.data.name === g);
-        if (gn) { setSelected(null); setPlaylist(null); selIdRef.current = null; zoomTo(gn); }
-      },
-      selectTrack: (id) => {
-        const d = leafById.get(id), nd = dataById.get(id);
-        if (d && nd) selectTrack(nd, d);
-      },
-      showRoute,
-      clearOverlay: () => exitOverlay(),
-      applySearch: (q) => {
-        if (mode !== "tree") return;
-        const has = q.trim().length > 0;
-        const qq = norm(q);
-        const matches = (d) => norm(d.data.track.title).includes(qq) || norm(d.data.track.artist).includes(qq);
-        node.filter((d) => d.data.type === "track").attr("opacity", (d) => (!has || matches(d) ? 1 : 0.1));
-        node.filter((d) => d.data.type !== "track").attr("opacity", has ? 0.5 : 1);
-        // I match mostrano anche la loro etichetta (label "a domanda").
-        searchSet = has
-          ? new Set(GRAPH.nodes.filter((n) => norm(n.title).includes(qq) || norm(n.artist).includes(qq)).map((n) => n.id))
-          : null;
-        paintLabels();
-      },
-    };
+    labels.attr("opacity", (d) => {
+      if (focusId) {
+        if (d.id === focusId) return 1;
+        return nbr?.has(d.id) ? 0.8 : 0;
+      }
+      if (matchSet) return matchSet.has(d.id) ? 1 : 0;
+      if (playlistSet) return playlistSet.has(d.id) ? 0.92 : 0;
+      return 0;
+    });
 
-    return () => { svg.on("click", null).on(".zoom", null); vizRef.current = null; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hierarchy, isMobile]);
+    // Nascondi il percorso della playlist mentre un nodo e' in focus (dettaglio).
+    if (simRef.current.route) {
+      const showRoute = !focusId && playlistSet && playlistSet.size > 1;
+      simRef.current.route.attr("stroke-opacity", showRoute ? 0.5 : 0);
+    }
+  }, [selected, hovered, matchSet, activeGenre, neighbors, playlistSet]);
 
-  useEffect(() => { vizRef.current?.applySearch(query); }, [query]);
-
-  // playlist -> percorso sulla mappa (al cambio)
+  // Aggiorna il percorso della playlist e inquadra i suoi nodi (solo al cambio).
   useEffect(() => {
-    if (!vizRef.current) return;
-    if (playlist && playlist.length) vizRef.current.showRoute(playlist);
+    if (!simRef.current) return;
+    const { nodesById, drawRoute, route, svg, zoom } = simRef.current;
+    const pts = (playlist || []).map((id) => nodesById.get(id)).filter(Boolean);
+    routeRef.current = pts;
+    drawRoute();
+    route.attr("stroke-opacity", pts.length > 1 ? 0.5 : 0);
+    if (pts.length) {
+      const xs = pts.map((p) => p.x);
+      const ys = pts.map((p) => p.y);
+      const minX = Math.min(...xs), maxX = Math.max(...xs);
+      const minY = Math.min(...ys), maxY = Math.max(...ys);
+      // Inquadra nell'area utile, lasciando margini per header/legenda (sx, alto)
+      // e per il pannello chat (basso): cosi i nodi non finiscono sotto la UI.
+      // Su mobile la UI e' impilata in alto/in basso, quindi i margini cambiano.
+      const Lm = isMobile ? 24 : Math.min(300, dims.w * 0.32);
+      const Rm = isMobile ? 24 : 56;
+      const Tm = isMobile ? 120 : 130;
+      const Bm = isMobile ? Math.min(320, dims.h * 0.42) : Math.min(260, dims.h * 0.34);
+      const uw = Math.max(120, dims.w - Lm - Rm);
+      const uh = Math.max(120, dims.h - Tm - Bm);
+      const bw = Math.max(60, maxX - minX);
+      const bh = Math.max(60, maxY - minY);
+      const k = Math.max(0.12, Math.min(2.0, Math.min(uw / (bw + 120), uh / (bh + 120))));
+      const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
+      const t = d3.zoomIdentity
+        .translate(Lm + uw / 2, Tm + uh / 2)
+        .scale(k)
+        .translate(-cx, -cy);
+      svg.transition().duration(750).call(zoom.transform, t);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playlist]);
 
-  const jumpToGenre = useCallback((g) => { vizRef.current?.jumpGenre(g); setIndexOpen(false); }, []);
-  const jumpToCrumb = useCallback((node) => { if (node) vizRef.current?.zoomTo(node); }, []);
-  const pickTrackId = useCallback((id) => { vizRef.current?.selectTrack(id); }, []);
+  const resetView = useCallback(() => {
+    if (!simRef.current) return;
+    const { svg, zoom } = simRef.current;
+    svg.transition().duration(600).call(zoom.transform, d3.zoomIdentity);
+    setSelected(null);
+    setQuery("");
+    setActiveGenre(null);
+    setPlaylist(null);
+  }, []);
 
-  // ---- chat: interpreta il messaggio e genera la playlist navigando il grafo ----
+  // --- chat: interpreta il messaggio e genera la playlist navigando il grafo ---
   const handleChat = useCallback((text) => {
     setChatInput("");
     const res = buildPlaylist(GRAPH, text);
     setMessages((m) => [...m, { role: "user", text }, { role: "assistant", res }]);
+    setSelected(null);
+    setActiveGenre(null);
     setQuery("");
     setPlaylist(res.ok && res.ids.length ? res.ids : null);
   }, []);
 
+  const pickTrack = useCallback((id) => {
+    const n = GRAPH.nodes.find((x) => x.id === id);
+    if (n) setSelected(n);
+  }, []);
+
+  // Genera una playlist usando il nodo selezionato come seed, seguendo le
+  // connessioni del grafo. Chiude il dettaglio e mostra il risultato in chat.
   const generateFromNode = useCallback((node) => {
     if (!node) return;
     const res = buildFromSeed(GRAPH, node, 18);
@@ -623,272 +455,441 @@ function MusicNetworkInner() {
       { role: "user", text: `playlist from "${node.title}"` },
       { role: "assistant", res },
     ]);
+    setSelected(null);
+    setActiveGenre(null);
+    setQuery("");
     setChatOpen(true);
     setPlaylist(res.ok && res.ids.length ? res.ids : null);
   }, []);
 
-  const clearPlaylist = useCallback(() => {
-    setPlaylist(null);
-    vizRef.current?.clearOverlay();
-  }, []);
+  const clearPlaylist = useCallback(() => setPlaylist(null), []);
 
-  // ---- export "senza setup": link Spotify esatti + CSV, poi Spotlistr/Spotify ----
+  // --- export "senza setup": link Spotify esatti + CSV, poi Spotlistr/Spotify ---
   const sysMsg = useCallback((text, link, linkLabel) => {
     setMessages((m) => [...m, { role: "system", text, link, linkLabel }]);
     setChatOpen(true);
   }, []);
 
-  const handleExport = useCallback(async (res) => {
-    if (!res || !res.ok) return;
-    window.open(SPOTLISTR_URL, "_blank", "noopener");
-    const links = playlistLinks(res);
-    downloadFile(exportFilename(res, "csv"), playlistCsv(res), "text/csv;charset=utf-8");
-    const copied = await copyText(links);
-    sysMsg(
-      `${res.tracks.length} tracks exported — Spotify links ${copied ? "copied to clipboard" : "in the downloaded CSV"} and CSV saved. ` +
-        `Paste them into Spotlistr (opened in a new tab) to create the playlist.`,
-      SPOTLISTR_URL, "Open Spotlistr ↗"
-    );
-  }, [sysMsg]);
+  const handleExport = useCallback(
+    async (res) => {
+      if (!res || !res.ok) return;
+      // Apri Spotlistr subito: restando nel gesto del click si evita il popup-block.
+      window.open(SPOTLISTR_URL, "_blank", "noopener");
+      const links = playlistLinks(res);
+      downloadFile(exportFilename(res, "csv"), playlistCsv(res), "text/csv;charset=utf-8");
+      const copied = await copyText(links);
+      sysMsg(
+        `${res.tracks.length} tracks exported — Spotify links ${
+          copied ? "copied to clipboard" : "in the downloaded CSV"
+        } and CSV saved. Paste them into Spotlistr (opened in a new tab) to create the playlist, ` +
+          `or paste the links into a Spotify desktop playlist.`,
+        SPOTLISTR_URL,
+        "Open Spotlistr ↗"
+      );
+    },
+    [sysMsg]
+  );
 
-  // vicini del brano selezionato, per il pannello (navigazione testuale della rete)
-  const neighborRows = useMemo(() => {
-    if (!selected) return [];
-    const arr = neighborMap.get(selected.id) || [];
-    return arr.map(({ id, w }) => {
-      const nd = dataById.get(id);
-      return nd ? { ...nd, w, rel: relation(selected, nd) } : null;
-    }).filter(Boolean);
-  }, [selected, neighborMap, dataById]);
-  const maxW = useMemo(() => neighborRows.reduce((m, r) => Math.max(m, r.w), 1), [neighborRows]);
+  const meta = GRAPH.meta;
+  const orderedGenres = GRAPH.genres.filter((g) => genreCounts[g]);
 
   return (
-    <div ref={wrapRef} style={{
-      position: "relative", width: "100%", height: "100dvh", minHeight: "100vh",
-      background: PAPER, color: INK, overflow: "hidden",
-      fontFamily: "'IBM Plex Mono', ui-monospace, monospace",
-    }}>
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        height: "100dvh",
+        background: PAPER,
+        fontFamily: "'Inter', system-ui, sans-serif",
+        overflow: "hidden",
+        color: INK,
+      }}
+    >
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
-        * { box-sizing: border-box; }
-        .atlas-search::placeholder { color: ${MUTED}; }
-        .atlas-search:focus { outline: none; border-color: ${INK}; }
-        .idx-row { transition: background .14s ease, padding-left .14s ease; }
-        .idx-row:hover { background: rgba(43,39,36,0.05); padding-left: 14px !important; }
-        .crumb:hover { color: ${INK} !important; text-decoration: underline; }
-        .lnk:hover { opacity: .65; }
-        .nbr-row:hover { background: rgba(43,39,36,0.05); }
-        ::selection { background: ${INK}; color: ${PAPER}; }
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-thumb { background: rgba(43,39,36,0.18); border-radius: 4px; }
-        @media (max-width: 720px) { .atlas-search, .mn-chat input { font-size: 16px !important; } }
+        @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,500;1,400&family=Inter:wght@400;500;600&display=swap');
+        .mn-input::placeholder { color: ${MUTED}; }
+        .mn-input:focus { outline: none; border-color: ${INK}; }
+        .mn-chip { transition: all .15s ease; }
+        .mn-chip:hover { transform: translateX(2px); }
+        @media (max-width: 640px) {
+          /* 16px keeps iOS Safari from auto-zooming when an input is focused. */
+          .mn-input, .mn-chat input { font-size: 16px !important; }
+          /* No hover translate on touch — taps shouldn't nudge rows. */
+          .mn-chip:hover { transform: none; }
+        }
       `}</style>
 
-      <div style={{
-        position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.05,
-        backgroundImage: "radial-gradient(circle at 1px 1px, #000 1px, transparent 0)",
-        backgroundSize: "22px 22px", zIndex: 1,
-      }} />
-
-      <svg ref={svgRef} width="100%" height="100%" preserveAspectRatio="xMidYMid meet"
+      <div
         style={{
-          position: "absolute", inset: 0, display: "block", zIndex: 2,
-          touchAction: "none", cursor: "grab",
-        }} />
+          position: "absolute",
+          inset: 0,
+          pointerEvents: "none",
+          opacity: 0.04,
+          backgroundImage:
+            "radial-gradient(circle at 1px 1px, #000 1px, transparent 0)",
+          backgroundSize: "22px 22px",
+          zIndex: 1,
+        }}
+      />
 
-      {/* TESTATA */}
-      <header style={{
-        position: "absolute", top: isMobile ? 14 : 26, left: isMobile ? 14 : 30,
-        right: isMobile ? 14 : undefined, zIndex: 10, pointerEvents: "none",
-      }}>
-        <div style={{
-          fontFamily: "'Spectral', Georgia, serif", fontWeight: 600,
-          fontSize: isMobile ? 22 : 30, letterSpacing: "0.01em", lineHeight: 1.05,
-        }}>New&nbsp;Release&nbsp;Atlas</div>
-        <div style={{
-          fontSize: 10.5, letterSpacing: "0.06em", color: MUTED, marginTop: 5, textTransform: "uppercase",
-        }}>
-          Classificazione &amp; rete · {GRAPH.nodes.length} brani · {totalArtists} artisti · {orderedGenres.length} generi
+      {/* Header — container click-through; inputs re-enable events */}
+      <div
+        style={{
+          position: "absolute",
+          top: isMobile ? 12 : 28,
+          left: isMobile ? 12 : 32,
+          right: isMobile ? 12 : undefined,
+          zIndex: 10,
+          maxWidth: isMobile ? undefined : 360,
+          pointerEvents: "none",
+        }}
+      >
+        <div
+          style={{
+            fontFamily: "'Spectral', serif",
+            fontSize: isMobile ? 22 : 30,
+            fontWeight: 500,
+            letterSpacing: "-0.01em",
+            lineHeight: 1.05,
+          }}
+        >
+          New Release Atlas
         </div>
-        <nav style={{
-          marginTop: 12, fontSize: 11, color: MUTED, pointerEvents: "auto",
-          display: "flex", flexWrap: "wrap", alignItems: "center", gap: 4,
-          maxWidth: isMobile ? "100%" : 340,
-        }}>
-          {path.map((c, i) => (
-            <React.Fragment key={i}>
-              {i > 0 && <span style={{ opacity: 0.5 }}>›</span>}
-              <span className="crumb" onClick={() => jumpToCrumb(c.node)} style={{
-                cursor: "pointer", color: i === path.length - 1 ? INK : MUTED,
-                fontWeight: i === path.length - 1 ? 500 : 400,
-              }}>
-                {c.type === "genre" ? GENRE_LABEL[c.name] || c.name
-                  : c.type === "root" ? "Archivio"
-                  : c.type === "track" ? (c.name.length > 18 ? c.name.slice(0, 17) + "…" : c.name)
-                  : c.name}
-              </span>
-            </React.Fragment>
-          ))}
-        </nav>
-      </header>
-
-      {/* RICERCA */}
-      {!isMobile && (
-        <div style={{ position: "absolute", top: 26, right: 30, zIndex: 10 }}>
-          <input className="atlas-search" value={query} onChange={(e) => setQuery(e.target.value)}
-            placeholder="cerca brano o artista" style={{
-              width: 220, padding: "9px 12px", background: "rgba(255,255,255,0.5)",
-              border: "1px solid rgba(43,39,36,0.2)", borderRadius: 2,
-              fontFamily: "'IBM Plex Mono', monospace", fontSize: 12, color: INK,
-            }} />
-        </div>
-      )}
-
-      {/* INDICE GENERI */}
-      {!isMobile && (
-        <aside style={{
-          position: "absolute", left: 30, bottom: 26, zIndex: 10, width: 250,
-          background: "rgba(244,241,234,0.82)", backdropFilter: "blur(3px)",
-          border: "1px solid rgba(43,39,36,0.12)", borderRadius: 3,
-          padding: "12px 0 8px", maxHeight: "50vh", overflowY: "auto",
-        }}>
-          <div style={{
-            fontSize: 9.5, letterSpacing: "0.14em", textTransform: "uppercase", color: MUTED,
-            padding: "0 14px 8px", borderBottom: "1px solid rgba(43,39,36,0.10)",
-          }}>Indice dei generi</div>
-          {orderedGenres.map((g) => (
-            <div key={g} className="idx-row" onClick={() => jumpToGenre(g)} style={{
-              display: "flex", alignItems: "center", gap: 10, padding: "7px 14px", cursor: "pointer",
-            }}>
-              <span style={{ fontSize: 10, color: MUTED, width: 18 }}>{genreNum[g]}</span>
-              <span style={{ width: 9, height: 9, borderRadius: "50%", background: gcol(g), flexShrink: 0 }} />
-              <span style={{ flex: 1, fontFamily: "'Spectral', Georgia, serif", fontSize: 14 }}>{GENRE_LABEL[g] || g}</span>
-              <span style={{ fontSize: 10, color: MUTED }}>{genreCounts[g]}</span>
-            </div>
-          ))}
-        </aside>
-      )}
-
-      {/* INDICE mobile */}
-      {isMobile && (
-        <>
-          <button onClick={() => setIndexOpen((v) => !v)} style={{
-            position: "absolute", bottom: 70, left: 14, zIndex: 12, padding: "10px 14px",
-            background: INK, color: PAPER, border: "none", borderRadius: 2,
-            fontFamily: "'IBM Plex Mono', monospace", fontSize: 12, letterSpacing: "0.05em",
-          }}>{indexOpen ? "chiudi" : "indice generi"}</button>
-          {indexOpen && (
-            <div style={{
-              position: "absolute", left: 0, right: 0, bottom: 0, zIndex: 11, background: PAPER,
-              borderTop: "1px solid rgba(43,39,36,0.15)", padding: "16px 14px 70px",
-              maxHeight: "70vh", overflowY: "auto",
-            }}>
-              <div style={{ fontSize: 9.5, letterSpacing: "0.14em", textTransform: "uppercase", color: MUTED, marginBottom: 10 }}>
-                Indice dei generi
-              </div>
-              {orderedGenres.map((g) => (
-                <div key={g} onClick={() => jumpToGenre(g)} style={{
-                  display: "flex", alignItems: "center", gap: 10, padding: "10px 4px",
-                  borderBottom: "1px solid rgba(43,39,36,0.07)",
-                }}>
-                  <span style={{ fontSize: 10, color: MUTED, width: 18 }}>{genreNum[g]}</span>
-                  <span style={{ width: 10, height: 10, borderRadius: "50%", background: gcol(g) }} />
-                  <span style={{ flex: 1, fontFamily: "'Spectral', Georgia, serif", fontSize: 15 }}>{GENRE_LABEL[g] || g}</span>
-                  <span style={{ fontSize: 11, color: MUTED }}>{genreCounts[g]}</span>
-                </div>
-              ))}
-            </div>
-          )}
-        </>
-      )}
-
-      {/* PANNELLO DETTAGLIO + RETE */}
-      {selected && (
-        <aside onClick={(e) => e.stopPropagation()} style={{
-          position: "absolute", zIndex: 13,
-          ...(isMobile
-            ? { left: 0, right: 0, bottom: 0, borderTop: "1px solid rgba(43,39,36,0.15)", maxHeight: "60vh" }
-            : { right: 30, top: 96, width: 312, borderRadius: 3, border: "1px solid rgba(43,39,36,0.14)", maxHeight: "calc(100dvh - 130px)" }),
-          background: PAPER, padding: isMobile ? "16px 16px 22px" : "18px 18px 16px",
-          boxShadow: "0 8px 30px rgba(43,39,36,0.12)", display: "flex", flexDirection: "column",
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-            <span style={{ width: 10, height: 10, borderRadius: "50%", background: gcol(selected.genre) }} />
-            <span style={{ fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: MUTED }}>
-              {genreNum[selected.genre]} · {GENRE_LABEL[selected.genre] || selected.genre}
-            </span>
-            <span onClick={() => setSelected(null)}
-              title="Chiudi il pannello (la rete resta sulla mappa)"
-              style={{ marginLeft: "auto", cursor: "pointer", color: MUTED, fontSize: isMobile ? 22 : 18, lineHeight: 1, padding: "0 4px" }}>×</span>
+        {!isMobile && (
+          <div
+            style={{
+              fontSize: 12,
+              color: MUTED,
+              marginTop: 6,
+            }}
+          >
+            {meta.unique_tracks} tracks · {meta.edges} links · {orderedGenres.length}{" "}
+            genres · playlists #12–#32
           </div>
+        )}
 
-          <div style={{ fontFamily: "'Spectral', Georgia, serif", fontSize: 21, fontWeight: 500, lineHeight: 1.18 }}>
+        <div
+          style={{
+            marginTop: isMobile ? 10 : 18,
+            display: "flex",
+            gap: 8,
+            pointerEvents: "auto",
+            width: isMobile ? "100%" : "fit-content",
+          }}
+        >
+          <input
+            className="mn-input"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search track or artist…"
+            style={{
+              flex: 1,
+              minWidth: 0,
+              padding: isMobile ? "10px 12px" : "8px 12px",
+              fontSize: 13,
+              background: "rgba(255,255,255,0.6)",
+              border: `1px solid ${MUTED}`,
+              borderRadius: 2,
+              color: INK,
+              transition: "border-color 0.2s",
+            }}
+          />
+          {isMobile && (
+            <button
+              onClick={() => setLegendOpen((v) => !v)}
+              aria-label="Toggle genre filter"
+              style={{
+                padding: "10px 12px",
+                fontSize: 12,
+                background: legendOpen ? "rgba(255,255,255,0.85)" : "transparent",
+                border: `1px solid ${MUTED}`,
+                borderRadius: 2,
+                color: INK,
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+              }}
+            >
+              ⦿ Genres
+            </button>
+          )}
+          <button
+            onClick={resetView}
+            style={{
+              padding: isMobile ? "10px 14px" : "8px 14px",
+              fontSize: 12,
+              background: "transparent",
+              border: `1px solid ${MUTED}`,
+              borderRadius: 2,
+              color: INK,
+              cursor: "pointer",
+            }}
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+
+      {/* Genre legend / filter — container is click-through; only rows catch clicks.
+          On mobile it's a toggleable card so it doesn't bury the map. */}
+      {showLegend && (
+      <div
+        style={{
+          position: "absolute",
+          top: isMobile ? 92 : 150,
+          left: isMobile ? 12 : 32,
+          right: isMobile ? 12 : undefined,
+          zIndex: 10,
+          width: isMobile ? "auto" : "fit-content",
+          maxWidth: isMobile ? undefined : 220,
+          maxHeight: isMobile ? "52dvh" : undefined,
+          overflowY: isMobile ? "auto" : undefined,
+          pointerEvents: isMobile ? "auto" : "none",
+          background: isMobile ? "rgba(255,255,255,0.95)" : "transparent",
+          backdropFilter: isMobile ? "blur(8px)" : undefined,
+          border: isMobile ? `1px solid ${MUTED}` : undefined,
+          borderRadius: isMobile ? 6 : undefined,
+          padding: isMobile ? "10px 12px" : undefined,
+          boxShadow: isMobile ? "0 10px 30px rgba(0,0,0,0.12)" : undefined,
+        }}
+      >
+        <div
+          style={{
+            fontSize: 10,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            color: MUTED,
+            marginBottom: 8,
+          }}
+        >
+          Genres — {isMobile ? "tap" : "click"} to filter
+        </div>
+        {orderedGenres.map((g) => {
+          const active = activeGenre === g;
+          return (
+            <div
+              key={g}
+              className="mn-chip"
+              onClick={() => setActiveGenre(active ? null : g)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                padding: isMobile ? "8px 8px" : "3px 6px",
+                marginBottom: 1,
+                width: isMobile ? "100%" : "fit-content",
+                cursor: "pointer",
+                pointerEvents: "auto",
+                borderRadius: 2,
+                background: active ? "rgba(255,255,255,0.7)" : "transparent",
+                opacity: activeGenre && !active ? 0.4 : 1,
+              }}
+            >
+              <span
+                style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: "50%",
+                  background: gColor(g),
+                  flexShrink: 0,
+                  border: active ? `1.5px solid ${INK}` : "none",
+                }}
+              />
+              <span style={{ fontSize: isMobile ? 13 : 12, minWidth: isMobile ? 0 : 120, flex: isMobile ? 1 : undefined }}>{GENRE_LABEL[g] || g}</span>
+              <span style={{ fontSize: 11, color: MUTED, marginLeft: "auto" }}>
+                {genreCounts[g]}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+      )}
+
+      {!isMobile && (
+      <div
+        style={{
+          position: "absolute",
+          bottom: 24,
+          left: 32,
+          zIndex: 10,
+          fontSize: 11,
+          color: MUTED,
+          lineHeight: 1.6,
+        }}
+      >
+        Click a node to isolate its links · drag to reposition
+        <br />
+        scroll to zoom · clusters are the inferred genres
+      </div>
+      )}
+
+      <div ref={wrapRef} style={{ position: "absolute", inset: 0, zIndex: 2 }}>
+        <svg
+          ref={svgRef}
+          width={dims.w}
+          height={dims.h}
+          style={{
+            display: "block",
+            // Let d3-zoom own all touch gestures (pinch to zoom, drag to pan)
+            // instead of the browser scrolling/zooming the page.
+            touchAction: "none",
+            WebkitUserSelect: "none",
+            userSelect: "none",
+            WebkitTapHighlightColor: "transparent",
+          }}
+        />
+      </div>
+
+      {/* Detail panel — a docked card on desktop, a bottom sheet on mobile. */}
+      {selected && (
+        <div
+          style={{
+            position: "absolute",
+            top: isMobile ? undefined : 28,
+            right: isMobile ? 0 : 28,
+            bottom: isMobile ? 0 : undefined,
+            left: isMobile ? 0 : undefined,
+            zIndex: 40,
+            width: isMobile ? "auto" : 280,
+            maxHeight: isMobile ? "70dvh" : undefined,
+            overflowY: isMobile ? "auto" : undefined,
+            background: "rgba(255,255,255,0.96)",
+            backdropFilter: "blur(8px)",
+            border: `1px solid ${MUTED}`,
+            borderRadius: isMobile ? "14px 14px 0 0" : 3,
+            padding: isMobile ? "18px 20px calc(20px + env(safe-area-inset-bottom))" : "20px 22px",
+            boxShadow: isMobile ? "0 -8px 30px rgba(0,0,0,0.16)" : "0 8px 30px rgba(0,0,0,0.08)",
+          }}
+        >
+          <button
+            onClick={() => setSelected(null)}
+            aria-label="Close"
+            style={{
+              position: "absolute",
+              top: 12,
+              right: 12,
+              width: 30,
+              height: 30,
+              lineHeight: "28px",
+              textAlign: "center",
+              fontSize: 15,
+              background: "transparent",
+              border: `1px solid rgba(154,147,138,0.5)`,
+              borderRadius: "50%",
+              color: MUTED,
+              cursor: "pointer",
+            }}
+          >
+            ✕
+          </button>
+          <div style={{ display: "flex", gap: 6, marginBottom: 12, flexWrap: "wrap", paddingRight: 34 }}>
+            {selected.genres.map((g) => (
+              <span
+                key={g}
+                style={{
+                  fontSize: 10,
+                  padding: "2px 8px",
+                  borderRadius: 10,
+                  background: gColor(g),
+                  color: "#fff",
+                  letterSpacing: "0.02em",
+                }}
+              >
+                {GENRE_LABEL[g] || g}
+              </span>
+            ))}
+          </div>
+          <div
+            style={{
+              fontFamily: "'Spectral', serif",
+              fontSize: 19,
+              fontWeight: 500,
+              lineHeight: 1.2,
+            }}
+          >
             {selected.title}
           </div>
-          <div style={{ fontSize: 13, marginTop: 4 }}>{selected.artist}</div>
-          <div style={{ fontSize: 11, color: MUTED, marginTop: 8 }}>
-            {selected.duration && <>durata {selected.duration} · </>}{(selected.genres || []).join(" · ")}
+          <div style={{ fontSize: 13, marginTop: 6 }}>
+            {selected.artists.join(", ")}
           </div>
-
-          <div style={{ display: "flex", gap: 14, marginTop: 14, alignItems: "center", flexWrap: "wrap" }}>
-            {selected.url && (
-              <a className="lnk" href={selected.url} target="_blank" rel="noopener noreferrer" style={{
-                fontSize: 12, color: INK, borderBottom: "1px solid " + INK, textDecoration: "none", paddingBottom: 1,
-              }}>Apri su Spotify ↗</a>
-            )}
-            <button onClick={() => generateFromNode(selected)} style={{
-              fontFamily: "'IBM Plex Mono', monospace", fontSize: 11.5, color: PAPER, background: INK,
-              border: "none", borderRadius: 14, padding: "5px 12px", cursor: "pointer",
-            }}>♫ playlist da qui</button>
+          <div
+            style={{
+              fontSize: 11,
+              color: MUTED,
+              marginTop: 14,
+              lineHeight: 1.7,
+            }}
+          >
+            Duration {selected.duration} · {selected.degree} links
+            <br />
+            Playlists {selected.playlists.map((p) => "#" + p).join(", ")}
           </div>
-
-          {/* RETE: brani connessi, navigabili */}
-          {neighborRows.length > 0 && (
-            <div style={{ marginTop: 18, display: "flex", flexDirection: "column", minHeight: 0 }}>
-              <div style={{
-                fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: MUTED, marginBottom: 8,
-                display: "flex", justifyContent: "space-between",
-              }}>
-                <span>Rete · brani connessi</span><span>{neighborRows.length}</span>
-              </div>
-              <div style={{ overflowY: "auto", margin: "0 -6px", paddingRight: 2 }}>
-                {neighborRows.map((r) => (
-                  <div key={r.id} className="nbr-row" onClick={() => pickTrackId(r.id)} style={{
-                    display: "flex", alignItems: "center", gap: 9, padding: "7px 6px", cursor: "pointer", borderRadius: 2,
-                  }}>
-                    <span style={{ width: 7, height: 7, borderRadius: "50%", background: gcol(r.genre), flexShrink: 0 }} />
-                    <span style={{ flex: 1, minWidth: 0 }}>
-                      <span style={{ fontSize: 12.5, display: "block", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        {r.title}
-                      </span>
-                      <span style={{ fontSize: 10, color: MUTED }}>{r.artist} · {r.rel.label}</span>
-                    </span>
-                    <span title={"forza legame " + r.w} style={{
-                      width: 34, height: 3, background: "rgba(43,39,36,0.12)", borderRadius: 2, flexShrink: 0, position: "relative",
-                    }}>
-                      <span style={{
-                        position: "absolute", left: 0, top: 0, bottom: 0, borderRadius: 2,
-                        width: Math.max(8, (r.w / maxW) * 100) + "%", background: gcol(r.genre),
-                      }} />
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </aside>
-      )}
-
-      {!isMobile && !selected && !playlist && (
-        <div style={{
-          position: "absolute", right: 30, bottom: 26, zIndex: 9, fontSize: 10, color: MUTED,
-          textAlign: "right", lineHeight: 1.6, maxWidth: 210, pointerEvents: "none",
-        }}>
-          Clic su un genere per entrare nel territorio · clic su un brano per vederne la rete · clic su un connesso per navigare
+          <div style={{ display: "flex", gap: 8, marginTop: 16, flexWrap: "wrap" }}>
+            <a
+              href={selected.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontSize: 12,
+                color: PAPER,
+                background: INK,
+                padding: "7px 14px",
+                borderRadius: 2,
+                textDecoration: "none",
+              }}
+            >
+              Open in Spotify ↗
+            </a>
+            <button
+              onClick={() => generateFromNode(selected)}
+              title="Build a playlist from this track's graph connections"
+              style={{
+                fontSize: 12,
+                color: INK,
+                background: "transparent",
+                border: `1px solid ${INK}`,
+                padding: "7px 14px",
+                borderRadius: 2,
+                cursor: "pointer",
+              }}
+            >
+              ♫ Generate playlist
+            </button>
+          </div>
         </div>
       )}
 
-      {/* CHAT -> playlist generata dal grafo */}
+      {!isMobile && hovered && !selected && (
+        <div
+          style={{
+            position: "absolute",
+            bottom: 24,
+            right: 28,
+            zIndex: 15,
+            background: "rgba(43,39,36,0.92)",
+            color: PAPER,
+            padding: "8px 14px",
+            borderRadius: 2,
+            fontSize: 12,
+            maxWidth: 260,
+          }}
+        >
+          <span style={{ fontFamily: "'Spectral', serif", fontWeight: 500 }}>
+            {hovered.title}
+          </span>
+          <span style={{ opacity: 0.7 }}> — {hovered.artist}</span>
+          <span
+            style={{
+              display: "block",
+              marginTop: 2,
+              fontSize: 10,
+              color: gColor(hovered.genre),
+            }}
+          >
+            ● {GENRE_LABEL[hovered.genre] || hovered.genre}
+          </span>
+        </div>
+      )}
+
       <Chat
         open={chatOpen}
         setOpen={setChatOpen}
@@ -897,37 +898,44 @@ function MusicNetworkInner() {
         onChange={setChatInput}
         onSubmit={handleChat}
         onClear={clearPlaylist}
-        onPick={pickTrackId}
+        onPick={pickTrack}
         onExport={handleExport}
-        genreColor={gcol}
+        genreColor={gColor}
         hasPlaylist={!!playlist}
       />
     </div>
   );
 }
 
-export default function MusicNetwork() {
-  const [ready, setReady] = useState(GRAPH !== null);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
+export default function MusicNetwork() {
+  const [ready, setReady] = React.useState(GRAPH !== null);
+  const [error, setError] = React.useState(null);
+
+  React.useEffect(() => {
     if (GRAPH !== null) return;
     fetch(import.meta.env.BASE_URL + "graph.json")
-      .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-      .then((data) => { GRAPH = data; setReady(true); })
+      .then((r) => {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then((data) => {
+        GRAPH = data;
+        setReady(true);
+      })
       .catch((e) => setError(e.message));
   }, []);
 
   if (error)
     return (
-      <div style={{ padding: 40, fontFamily: "'IBM Plex Mono', monospace", color: "#c75b4a" }}>
+      <div style={{ padding: 40, fontFamily: "Inter, sans-serif", color: "#c75b4a" }}>
         Errore nel caricamento di graph.json: {error}
       </div>
     );
   if (!ready)
     return (
-      <div style={{ padding: 40, fontFamily: "'IBM Plex Mono', monospace", color: "#9a938a" }}>
-        Caricamento dell'atlante…
+      <div style={{ padding: 40, fontFamily: "Inter, sans-serif", color: "#9a938a" }}>
+        Caricamento della mappa…
       </div>
     );
   return <MusicNetworkInner />;
