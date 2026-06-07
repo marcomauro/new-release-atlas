@@ -266,9 +266,12 @@ function MusicNetworkInner() {
       gMark.selectAll("circle")
         .attr("cx", (m) => P(m.leaf.x, m.leaf.y, k)[0])
         .attr("cy", (m) => P(m.leaf.x, m.leaf.y, k)[1]);
+      // Le tag della rete/percorso scalano con lo zoom come le altre etichette.
+      const tls = Math.max(1, Math.min(3.6, k / k0));
       gTag.selectAll("text").attr("transform", (m) => {
         const p = P(m.leaf.x, m.leaf.y, k);
-        return "translate(" + p[0] + "," + (p[1] - (overlay.kind === "route" ? 9 : 12)) + ")";
+        const off = m.kind === "sel" ? 13 : m.kind === "route" ? 9 : 10;
+        return "translate(" + p[0] + "," + (p[1] - off) + ") scale(" + tls + ")";
       });
     }
 
@@ -328,7 +331,7 @@ function MusicNetworkInner() {
 
     function dimBase() {
       node
-        .attr("opacity", (d) => (d.data.type === "genre" ? 1 : d.data.type === "artist" ? 0.4 : 0.1))
+        .attr("opacity", (d) => (d.data.type === "genre" ? 0.55 : d.data.type === "artist" ? 0.14 : 0.06))
         .attr("stroke-width", (d) => (d.data.type === "genre" ? 1.1 : d.data.type === "artist" ? 0.6 : 0.4));
     }
 
@@ -406,11 +409,21 @@ function MusicNetworkInner() {
           d3.select(this).append("title").text(nd ? nd.title + " — " + nd.artist : "");
         });
 
-      gTag.selectAll("text").data([members[0]], (m) => m.id).join("text")
+      // Tag su TUTTI i membri: il brano selezionato (Spectral, grande) e ogni
+      // brano collegato (mono, piu' piccolo). Le dimensioni scalano con lo zoom
+      // tramite il transform in drawOverlay.
+      gTag.selectAll("text").data(members, (m) => m.id).join("text")
         .attr("text-anchor", "middle").attr("fill", INK)
-        .style("font-family", "'Spectral', Georgia, serif").style("font-size", fs(15))
-        .style("paint-order", "stroke").style("stroke", PAPER).style("stroke-width", "3px")
-        .text(track.title.length > 30 ? track.title.slice(0, 29) + "…" : track.title);
+        .style("font-family", (m) => (m.kind === "sel" ? "'Spectral', Georgia, serif" : "'IBM Plex Mono', monospace"))
+        .style("font-weight", (m) => (m.kind === "sel" ? 500 : 400))
+        .style("font-size", (m) => (m.kind === "sel" ? fs(15) : fs(8.5)))
+        .style("paint-order", "stroke").style("stroke", PAPER).style("stroke-width", (m) => (m.kind === "sel" ? "3px" : "2px"))
+        .each(function (m) {
+          const nd = dataById.get(m.id);
+          const t = nd ? nd.title : "";
+          const max = m.kind === "sel" ? 30 : 20;
+          d3.select(this).text(t.length > max ? t.slice(0, max - 1) + "…" : t);
+        });
 
       contextLabels();
       focus = selLeaf.parent;
