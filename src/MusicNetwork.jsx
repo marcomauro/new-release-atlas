@@ -910,6 +910,18 @@ function MusicNetworkInner() {
               ♫ Generate playlist
             </button>
           </div>
+          {/* Player Spotify ufficiale: anteprima ~30s per tutti, brano intero
+              per chi è loggato a Spotify Premium nel browser. Nessun setup. */}
+          <iframe
+            title="Spotify player"
+            src={`https://open.spotify.com/embed/track/${selected.id}?utm_source=new-release-atlas`}
+            width="100%"
+            height="80"
+            frameBorder="0"
+            loading="lazy"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            style={{ border: 0, borderRadius: 8, marginTop: 16, display: "block" }}
+          />
         </div>
       )}
 
