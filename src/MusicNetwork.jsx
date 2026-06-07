@@ -155,6 +155,10 @@ function MusicNetworkInner() {
         .sort((a, b) => (b.value || 0) - (a.value || 0))
     );
 
+    // Zoom "a riposo" (intero archivio): serve a far crescere le etichette in
+    // proporzione a quanto si e' zoomato rispetto alla vista piena.
+    const k0 = DIA / (root.r * 2 + 8);
+
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();
     svg.attr("viewBox", [-DIA / 2, -DIA / 2, DIA, DIA].join(" "));
@@ -271,7 +275,10 @@ function MusicNetworkInner() {
     function applyView(v3) {
       const k = DIA / v3[2];
       view = v3;
-      label.attr("transform", (d) => "translate(" + (d.x - v3[0]) * k + "," + (d.y - v3[1]) * k + ")");
+      // Le etichette crescono con lo zoom: scala il testo (e i suoi tspan) in
+      // base a quanto si e' zoomato oltre la vista piena, con un tetto.
+      const ls = Math.max(1, Math.min(3.6, k / k0));
+      label.attr("transform", (d) => "translate(" + (d.x - v3[0]) * k + "," + (d.y - v3[1]) * k + ") scale(" + ls + ")");
       node.attr("transform", (d) => "translate(" + (d.x - v3[0]) * k + "," + (d.y - v3[1]) * k + ")");
       node.attr("r", (d) => d.r * k);
       drawOverlay();
@@ -378,8 +385,8 @@ function MusicNetworkInner() {
 
       gArc.selectAll("path").data(arcs).join("path")
         .attr("stroke", (a) => gcol(a.gname))
-        .attr("stroke-width", (a) => 0.5 + Math.min(2.4, a.w * 0.18))
-        .attr("stroke-opacity", (a) => 0.2 + Math.min(0.55, a.w * 0.06))
+        .attr("stroke-width", (a) => (isMobile ? 1.6 : 1) * (1.6 + Math.min(5, a.w * 0.4)))
+        .attr("stroke-opacity", (a) => 0.5 + Math.min(0.45, a.w * 0.08))
         .attr("stroke-linecap", "round");
 
       gMark.selectAll("circle").data(members, (m) => m.id).join("circle")
@@ -426,7 +433,7 @@ function MusicNetworkInner() {
       dimBase();
 
       gArc.selectAll("path").data([pts]).join("path")
-        .attr("stroke", INK).attr("stroke-width", 1.6).attr("stroke-opacity", 0.5)
+        .attr("stroke", INK).attr("stroke-width", isMobile ? 3.6 : 2.6).attr("stroke-opacity", 0.7)
         .attr("stroke-linejoin", "round").attr("stroke-linecap", "round").attr("fill", "none");
 
       gMark.selectAll("circle").data(members, (m) => m.id).join("circle")
