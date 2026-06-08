@@ -1,9 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
+import {
+  spotifyPlay, spotifyPause, spotifyResume, spotifyDevices, spotifyTransfer,
+  spotifyCurrentlyPlaying,
+} from "./spotifyConnect.js";
 
 const INK = "#2b2724";
+const PAPER = "#f4f1ea";
 const MUTED = "#9a938a";
+const GREEN = "#1db954";
 
-// Carica una sola volta l'API iFrame ufficiale di Spotify.
+// Carica una sola volta l'API iFrame ufficiale di Spotify (per l'embed 30s).
 let _api = null;
 let _apiPromise = null;
 function loadSpotifyApi() {
@@ -22,21 +28,142 @@ function loadSpotifyApi() {
   return _apiPromise;
 }
 
-// Pre-carica l'API in anticipo: così, quando l'utente avvia un percorso, il
-// controller è pronto nell'istante del click e l'autoplay non viene bloccato.
 export function preloadSpotifyApi() {
   if (typeof window !== "undefined") loadSpotifyApi();
 }
 
-/* Mini-player persistente per l'ascolto continuo di un PERCORSO.
-   Usa l'API iFrame di Spotify: carica il brano corrente, e quando finisce
-   (fine brano intero, o fine anteprima ~30s) avanza da solo al successivo.
-   Prev/Next manuali sempre disponibili. */
-export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap = 0 }) {
-  const hostRef = useRef(null); // div che l'API trasforma in iframe
+/* Mini-player persistente del PERCORSO.
+   - Modalità CONNECT (utente loggato a Spotify Premium): pilota il device
+     dell'utente via Web API → brani INTERI in sequenza (anche su mobile).
+   - Modalità EMBED (non loggato): l'embed ufficiale, anteprima ~30s, con
+     pulsante opt-in "Ascolta intero" per attivare il Connect. */
+export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap = 0, connected, onLogin }) {
+  if (connected) {
+    return (
+      <ConnectPlayer
+        tracks={tracks} index={index} setIndex={setIndex} onClose={onClose} bottomGap={bottomGap}
+      />
+    );
+  }
+  return (
+    <EmbedPlayer
+      tracks={tracks} index={index} setIndex={setIndex} onClose={onClose} bottomGap={bottomGap} onLogin={onLogin}
+    />
+  );
+}
+
+// ---------------------------------------------------------------------------
+//  CONNECT: full track sul device dell'utente (Premium)
+// ---------------------------------------------------------------------------
+function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap }) {
+  const uris = useMemo(() => tracks.map((t) => `spotify:track:${t.id}`), [tracks]);
+  const [paused, setPaused] = useState(false);
+  const [liveIdx, setLiveIdx] = useState(index);
+  const [msg, setMsg] = useState("");
+
+  const playFrom = useCallback(
+    async (pos) => {
+      setMsg("");
+      try {
+        await spotifyPlay(uris, pos);
+        setPaused(false);
+      } catch (e) {
+        if (e.status === 404 || e.reason === "NO_ACTIVE_DEVICE") {
+          // prova ad attivare un device già noto (es. app aperta di recente)
+          try {
+            const devs = await spotifyDevices();
+            if (devs.length) {
+              await spotifyTransfer(devs[0].id, false);
+              await spotifyPlay(uris, pos, devs[0].id);
+              setPaused(false);
+              return;
+            }
+          } catch (e2) { /* fallthrough */ }
+          setMsg("Apri Spotify (telefono o desktop), avvia un brano un istante, poi premi ⟳.");
+        } else if (e.status === 403) {
+          setMsg("La riproduzione completa richiede Spotify Premium.");
+        } else if (e.status === 401) {
+          setMsg("Sessione Spotify scaduta — riconnetti.");
+        } else {
+          setMsg("Impossibile avviare la riproduzione su Spotify.");
+        }
+      }
+    },
+    [uris]
+  );
+
+  // (Ri)avvia quando cambia il brano comandato o il percorso.
+  useEffect(() => {
+    playFrom(index);
+    setLiveIdx(index);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [index, uris]);
+
+  // Poll leggero per allineare l'indice mostrato a ciò che suona davvero.
+  useEffect(() => {
+    let stop = false;
+    const tick = async () => {
+      try {
+        const c = await spotifyCurrentlyPlaying();
+        if (stop || !c) return;
+        if (c.item && c.item.uri) {
+          const i = uris.indexOf(c.item.uri);
+          if (i >= 0) setLiveIdx(i);
+        }
+        setPaused(!c.is_playing);
+      } catch (e) { /* noop */ }
+    };
+    const id = setInterval(tick, 5000);
+    tick();
+    return () => { stop = true; clearInterval(id); };
+  }, [uris]);
+
+  const toggle = async () => {
+    try {
+      if (paused) { await spotifyResume(); setPaused(false); }
+      else { await spotifyPause(); setPaused(true); }
+    } catch (e) { /* noop */ }
+  };
+
+  const shown = Math.min(Math.max(liveIdx, 0), tracks.length - 1);
+  const cur = tracks[shown];
+  const many = tracks.length > 1;
+  if (!cur) return null;
+
+  return (
+    <Shell bottomGap={bottomGap}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 12px" }}>
+        <span title="Riproduzione su Spotify" style={{ color: GREEN, fontSize: 11, fontWeight: 600, whiteSpace: "nowrap" }}>● Spotify</span>
+        {many && <button onClick={() => setIndex(Math.max(0, shown - 1))} disabled={shown === 0} title="Precedente" style={navBtn}>‹</button>}
+        <button onClick={toggle} title={paused ? "Riprendi" : "Pausa"} style={navBtn}>{paused ? "▶" : "❚❚"}</button>
+        {many && <button onClick={() => setIndex(Math.min(tracks.length - 1, shown + 1))} disabled={shown === tracks.length - 1} title="Successivo" style={navBtn}>›</button>}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 12.5, color: INK, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+            {cur.title}<span style={{ color: MUTED }}> — {cur.artist}</span>
+          </div>
+          <div style={{ fontSize: 10.5, color: MUTED, marginTop: 1 }}>
+            brano intero{many ? ` · percorso ${shown + 1}/${tracks.length}` : ""}
+          </div>
+        </div>
+        <button onClick={onClose} title="Chiudi player" style={navBtn}>✕</button>
+      </div>
+      {msg && (
+        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 10px", fontSize: 11, color: "#9a5b3a" }}>
+          <span style={{ flex: 1 }}>{msg}</span>
+          <button onClick={() => playFrom(shown)} title="Riprova" style={navBtn}>⟳</button>
+        </div>
+      )}
+    </Shell>
+  );
+}
+
+// ---------------------------------------------------------------------------
+//  EMBED: anteprima ~30s + opt-in "Ascolta intero"
+// ---------------------------------------------------------------------------
+function EmbedPlayer({ tracks, index, setIndex, onClose, bottomGap, onLogin }) {
+  const hostRef = useRef(null);
   const ctrlRef = useRef(null);
   const advancingRef = useRef(false);
-  // ref aggiornati per l'uso dentro i listener (che vivono oltre i render)
   const tracksRef = useRef(tracks);
   const idxRef = useRef(index);
   const setIndexRef = useRef(setIndex);
@@ -47,30 +174,20 @@ export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap 
   const cur = tracks[index];
   const many = tracks.length > 1;
 
-  // Crea il controller una sola volta e aggancia l'auto-avanzamento.
   useEffect(() => {
     let cancelled = false;
     const first = tracksRef.current[idxRef.current];
     loadSpotifyApi().then((API) => {
       if (cancelled || !hostRef.current || ctrlRef.current) return;
-      const opts = {
-        uri: first ? `spotify:track:${first.id}` : undefined,
-        width: "100%",
-        height: 80,
-      };
+      const opts = { uri: first ? `spotify:track:${first.id}` : undefined, width: "100%", height: 80 };
       API.createController(hostRef.current, opts, (ctrl) => {
-        if (cancelled) {
-          try { ctrl.destroy(); } catch (e) { /* noop */ }
-          return;
-        }
+        if (cancelled) { try { ctrl.destroy(); } catch (e) { /* noop */ } return; }
         ctrlRef.current = ctrl;
         ctrl.addListener("playback_update", (e) => {
           const d = e && e.data;
           if (!d) return;
           const pos = d.position || 0;
           const dur = d.duration || 0;
-          // fine brano intero (frazione, robusta all'unita') oppure fine
-          // anteprima ~30s (solo se la durata e' quella del brano intero in ms)
           const nearEnd = dur > 0 && pos > 0 && pos / dur >= 0.985;
           const previewEnd = dur > 45000 && pos >= 29000 && d.isPaused;
           if ((nearEnd || previewEnd) && !advancingRef.current) {
@@ -80,10 +197,7 @@ export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap 
             if (i < t.length - 1) setIndexRef.current(i + 1);
           }
         });
-        // Autoplay: il player compare a seguito di un click (genera percorso /
-        // seleziona brano), quindi siamo ancora nella finestra di "user
-        // activation" → far partire subito la riproduzione.
-        try { ctrl.play(); } catch (e) { /* eventualmente parte al primo tocco */ }
+        try { ctrl.play(); } catch (e) { /* il primo play puo' richiedere il gesto */ }
       });
     });
     return () => {
@@ -94,21 +208,41 @@ export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Al cambio di brano: carica il nuovo e prova a riprodurlo.
   useEffect(() => {
     advancingRef.current = false;
     const ctrl = ctrlRef.current;
     if (ctrl && cur) {
-      try {
-        ctrl.loadUri(`spotify:track:${cur.id}`);
-        ctrl.play();
-      } catch (e) { /* il primo play puo' richiedere il gesto utente */ }
+      try { ctrl.loadUri(`spotify:track:${cur.id}`); ctrl.play(); } catch (e) { /* noop */ }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index, cur && cur.id]);
 
   if (!cur) return null;
 
+  return (
+    <Shell bottomGap={bottomGap}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 10px" }}>
+        {many && <button onClick={() => setIndex(Math.max(0, index - 1))} disabled={index === 0} title="Precedente" style={navBtn}>‹</button>}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 12.5, color: INK, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+            {cur.title}<span style={{ color: MUTED }}> — {cur.artist}</span>
+          </div>
+          {many && <div style={{ fontSize: 10.5, color: MUTED, marginTop: 1 }}>percorso · {index + 1}/{tracks.length}</div>}
+        </div>
+        {many && <button onClick={() => setIndex(Math.min(tracks.length - 1, index + 1))} disabled={index === tracks.length - 1} title="Successivo" style={navBtn}>›</button>}
+        <button onClick={onClose} title="Chiudi player" style={navBtn}>✕</button>
+      </div>
+      <div ref={hostRef} style={{ width: "100%" }} />
+      {onLogin && (
+        <button onClick={onLogin} title="Riproduci i brani interi (richiede Spotify Premium)" style={fullBtn}>
+          ♫ Ascolta intero · Spotify Premium
+        </button>
+      )}
+    </Shell>
+  );
+}
+
+function Shell({ children, bottomGap }) {
   return (
     <div
       style={{
@@ -127,33 +261,7 @@ export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap 
         fontFamily: "Inter, system-ui, sans-serif",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 10px" }}>
-        {many && (
-          <button onClick={() => setIndex(Math.max(0, index - 1))} disabled={index === 0} title="Precedente" style={navBtn}>
-            ‹
-          </button>
-        )}
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: 12.5, color: INK, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-            {cur.title}
-            <span style={{ color: MUTED }}> — {cur.artist}</span>
-          </div>
-          {many && (
-            <div style={{ fontSize: 10.5, color: MUTED, marginTop: 1 }}>
-              percorso · {index + 1}/{tracks.length}
-            </div>
-          )}
-        </div>
-        {many && (
-          <button onClick={() => setIndex(Math.min(tracks.length - 1, index + 1))} disabled={index === tracks.length - 1} title="Successivo" style={navBtn}>
-            ›
-          </button>
-        )}
-        <button onClick={onClose} title="Chiudi player" style={navBtn}>
-          ✕
-        </button>
-      </div>
-      <div ref={hostRef} style={{ width: "100%" }} />
+      {children}
     </div>
   );
 }
@@ -167,5 +275,17 @@ const navBtn = {
   border: `1px solid rgba(154,147,138,0.5)`,
   borderRadius: 6,
   padding: "5px 9px",
+  cursor: "pointer",
+};
+const fullBtn = {
+  display: "block",
+  width: "100%",
+  fontFamily: "Inter, sans-serif",
+  fontSize: 12,
+  fontWeight: 600,
+  color: PAPER,
+  background: GREEN,
+  border: "none",
+  padding: "9px 12px",
   cursor: "pointer",
 };

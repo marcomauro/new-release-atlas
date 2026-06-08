@@ -2,6 +2,9 @@ import React, { useRef, useEffect, useState, useMemo, useCallback } from "react"
 import * as d3 from "d3";
 import Chat from "./Chat.jsx";
 import PlayerBar, { preloadSpotifyApi } from "./PlayerBar.jsx";
+import {
+  completeSpotifyAuthIfNeeded, isSpotifyLoggedIn, loginSpotify, setPendingPlay, takePendingPlay,
+} from "./spotifyConnect.js";
 import { buildPlaylist, buildFromSeed } from "./playlist.js";
 import {
   SPOTLISTR_URL, playlistLinks, playlistCsv, exportFilename, copyText, downloadFile,
@@ -120,6 +123,24 @@ function MusicNetworkInner() {
         .map((n) => ({ id: n.id, title: n.title, artist: n.artist })),
     [playlist]
   );
+
+  // --- Spotify Connect (full-track opt-in) ---
+  const [spotifyConnected, setSpotifyConnected] = useState(() => isSpotifyLoggedIn());
+  useEffect(() => {
+    let done = false;
+    completeSpotifyAuthIfNeeded().then((ok) => {
+      if (done || !ok) return;
+      setSpotifyConnected(true);
+      // riprende il percorso che stava ascoltando prima del login
+      const pending = takePendingPlay();
+      if (pending && pending.length) setPlaylist(pending);
+    });
+    return () => { done = true; };
+  }, []);
+  const handleSpotifyLogin = useCallback(() => {
+    setPendingPlay(playlist || []);
+    loginSpotify();
+  }, [playlist]);
 
   const neighbors = useMemo(() => {
     const map = new Map();
@@ -981,6 +1002,8 @@ function MusicNetworkInner() {
           setIndex={setPlayIndex}
           onClose={clearPlaylist}
           bottomGap={20}
+          connected={spotifyConnected}
+          onLogin={handleSpotifyLogin}
         />
       )}
     </div>
