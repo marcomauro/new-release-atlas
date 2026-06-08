@@ -1004,6 +1004,7 @@ function MusicNetworkInner() {
           bottomGap={20}
           connected={spotifyConnected}
           onLogin={handleSpotifyLogin}
+          isMobile={isMobile}
         />
       )}
     </div>

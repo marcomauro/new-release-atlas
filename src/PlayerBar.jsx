@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import {
-  spotifyPlay, spotifyPause, spotifyResume, spotifyDevices, spotifyTransfer,
-  spotifyCurrentlyPlaying,
+  spotifyPlay, spotifyPause, spotifyResume, spotifyDevices, spotifyCurrentlyPlaying,
 } from "./spotifyConnect.js";
 
 const INK = "#2b2724";
@@ -37,11 +36,11 @@ export function preloadSpotifyApi() {
      dell'utente via Web API → brani INTERI in sequenza (anche su mobile).
    - Modalità EMBED (non loggato): l'embed ufficiale, anteprima ~30s, con
      pulsante opt-in "Ascolta intero" per attivare il Connect. */
-export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap = 0, connected, onLogin }) {
+export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap = 0, connected, onLogin, isMobile }) {
   if (connected) {
     return (
       <ConnectPlayer
-        tracks={tracks} index={index} setIndex={setIndex} onClose={onClose} bottomGap={bottomGap}
+        tracks={tracks} index={index} setIndex={setIndex} onClose={onClose} bottomGap={bottomGap} isMobile={isMobile}
       />
     );
   }
@@ -55,31 +54,60 @@ export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap 
 // ---------------------------------------------------------------------------
 //  CONNECT: full track sul device dell'utente (Premium)
 // ---------------------------------------------------------------------------
-function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap }) {
+function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile }) {
   const uris = useMemo(() => tracks.map((t) => `spotify:track:${t.id}`), [tracks]);
   const [paused, setPaused] = useState(false);
   const [liveIdx, setLiveIdx] = useState(index);
   const [msg, setMsg] = useState("");
+  const [devices, setDevices] = useState([]);
+  const [deviceId, setDeviceId] = useState(null);
+  const pickedRef = useRef(false); // l'utente ha scelto un device a mano?
+
+  const refreshDevices = useCallback(async () => {
+    try {
+      const ds = await spotifyDevices();
+      setDevices(ds);
+      return ds;
+    } catch (e) {
+      return [];
+    }
+  }, []);
+
+  // Scelta iniziale del device: su mobile preferisci lo Smartphone, altrimenti
+  // il device attivo, altrimenti il primo disponibile.
+  useEffect(() => {
+    (async () => {
+      const ds = await refreshDevices();
+      if (!ds.length || pickedRef.current) return;
+      const phone = ds.find((d) => d.type === "Smartphone");
+      const active = ds.find((d) => d.is_active);
+      const chosen = (isMobile && phone) || active || ds[0];
+      setDeviceId(chosen.id);
+    })();
+  }, [refreshDevices, isMobile]);
 
   const playFrom = useCallback(
     async (pos) => {
       setMsg("");
       try {
-        await spotifyPlay(uris, pos);
+        await spotifyPlay(uris, pos, deviceId || undefined);
         setPaused(false);
       } catch (e) {
         if (e.status === 404 || e.reason === "NO_ACTIVE_DEVICE") {
-          // prova ad attivare un device già noto (es. app aperta di recente)
-          try {
-            const devs = await spotifyDevices();
-            if (devs.length) {
-              await spotifyTransfer(devs[0].id, false);
-              await spotifyPlay(uris, pos, devs[0].id);
+          const ds = await refreshDevices();
+          const target =
+            ds.find((d) => d.id === deviceId) ||
+            (isMobile && ds.find((d) => d.type === "Smartphone")) ||
+            ds[0];
+          if (target) {
+            try {
+              await spotifyPlay(uris, pos, target.id);
+              setDeviceId(target.id);
               setPaused(false);
               return;
-            }
-          } catch (e2) { /* fallthrough */ }
-          setMsg("Apri Spotify (telefono o desktop), avvia un brano un istante, poi premi ⟳.");
+            } catch (e2) { /* fallthrough */ }
+          }
+          setMsg("Apri Spotify sul device e avvia un brano un istante, poi premi ⟳.");
         } else if (e.status === 403) {
           setMsg("La riproduzione completa richiede Spotify Premium.");
         } else if (e.status === 401) {
@@ -89,17 +117,17 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap }) {
         }
       }
     },
-    [uris]
+    [uris, deviceId, isMobile, refreshDevices]
   );
 
-  // (Ri)avvia quando cambia il brano comandato o il percorso.
+  // (Ri)avvia al cambio di brano, percorso o device scelto.
   useEffect(() => {
     playFrom(index);
     setLiveIdx(index);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [index, uris]);
+  }, [index, playFrom]);
 
-  // Poll leggero per allineare l'indice mostrato a ciò che suona davvero.
+  // Poll leggero: allinea indice mostrato + stato play/pausa + device attivo.
   useEffect(() => {
     let stop = false;
     const tick = async () => {
@@ -111,6 +139,7 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap }) {
           if (i >= 0) setLiveIdx(i);
         }
         setPaused(!c.is_playing);
+        if (c.device && c.device.id && !pickedRef.current) setDeviceId(c.device.id);
       } catch (e) { /* noop */ }
     };
     const id = setInterval(tick, 5000);
@@ -123,6 +152,11 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap }) {
       if (paused) { await spotifyResume(); setPaused(false); }
       else { await spotifyPause(); setPaused(true); }
     } catch (e) { /* noop */ }
+  };
+
+  const onPickDevice = (id) => {
+    pickedRef.current = true;
+    setDeviceId(id); // il play effect ritrasferisce e riavvia su quel device
   };
 
   const shown = Math.min(Math.max(liveIdx, 0), tracks.length - 1);
@@ -147,6 +181,29 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap }) {
         </div>
         <button onClick={onClose} title="Chiudi player" style={navBtn}>✕</button>
       </div>
+
+      {/* selettore device "Riproduci su…" */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 10px" }}>
+        <span style={{ fontSize: 11, color: MUTED, whiteSpace: "nowrap" }}>Riproduci su</span>
+        <select
+          value={deviceId || ""}
+          onChange={(e) => onPickDevice(e.target.value)}
+          style={{
+            flex: 1, minWidth: 0, fontFamily: "Inter, sans-serif", fontSize: 12, color: INK,
+            background: "rgba(255,255,255,0.7)", border: `1px solid rgba(154,147,138,0.5)`,
+            borderRadius: 6, padding: "5px 8px",
+          }}
+        >
+          {devices.length === 0 && <option value="">nessun device — apri Spotify</option>}
+          {devices.map((d) => (
+            <option key={d.id} value={d.id}>
+              {d.name}{d.type === "Smartphone" ? " (telefono)" : ""}{d.is_active ? " ·attivo" : ""}
+            </option>
+          ))}
+        </select>
+        <button onClick={refreshDevices} title="Aggiorna device" style={navBtn}>⟳</button>
+      </div>
+
       {msg && (
         <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 10px", fontSize: 11, color: "#9a5b3a" }}>
           <span style={{ flex: 1 }}>{msg}</span>
