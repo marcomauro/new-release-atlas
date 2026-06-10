@@ -5,7 +5,8 @@ import PlayerBar, { preloadSpotifyApi } from "./PlayerBar.jsx";
 import {
   completeSpotifyAuthIfNeeded, isSpotifyLoggedIn, loginSpotify, setPendingPlay, takePendingPlay,
 } from "./spotifyConnect.js";
-import { buildPlaylist, buildFromSeed, DEFAULT_LINK_WEIGHTS } from "./playlist.js";
+import { buildPlaylist, buildFromSeed, DEFAULT_LINK_WEIGHTS, DEFAULT_RANDOMNESS } from "./playlist.js";
+import WeightControls from "./WeightControls.jsx";
 import {
   SPOTLISTR_URL, playlistLinks, playlistCsv, exportFilename, copyText, downloadFile,
 } from "./export.js";
@@ -115,6 +116,7 @@ function MusicNetworkInner() {
   const [weights, setWeights] = useState(
     () => (GRAPH.meta && GRAPH.meta.linkWeights) || DEFAULT_LINK_WEIGHTS
   );
+  const [randomness, setRandomness] = useState(DEFAULT_RANDOMNESS);
   const [weightsOpen, setWeightsOpen] = useState(false);
 
   // --- ascolto continuo del percorso (mini-player persistente) ---
@@ -510,13 +512,13 @@ function MusicNetworkInner() {
   // --- chat: interpreta il messaggio e genera la playlist navigando il grafo ---
   const handleChat = useCallback((text) => {
     setChatInput("");
-    const res = buildPlaylist(GRAPH, text, weights);
+    const res = buildPlaylist(GRAPH, text, weights, randomness);
     setMessages((m) => [...m, { role: "user", text }, { role: "assistant", res }]);
     setSelected(null);
     setActiveGenre(null);
     setQuery("");
     setPlaylist(res.ok && res.ids.length ? res.ids : null);
-  }, [weights]);
+  }, [weights, randomness]);
 
   const pickTrack = useCallback((id) => {
     const n = GRAPH.nodes.find((x) => x.id === id);
@@ -527,7 +529,7 @@ function MusicNetworkInner() {
   // connessioni del grafo. Chiude il dettaglio e mostra il risultato in chat.
   const generateFromNode = useCallback((node) => {
     if (!node) return;
-    const res = buildFromSeed(GRAPH, node, 18, weights);
+    const res = buildFromSeed(GRAPH, node, 18, weights, randomness);
     setMessages((m) => [
       ...m,
       { role: "user", text: `playlist from "${node.title}"` },
@@ -538,7 +540,7 @@ function MusicNetworkInner() {
     setQuery("");
     setChatOpen(true);
     setPlaylist(res.ok && res.ids.length ? res.ids : null);
-  }, [weights]);
+  }, [weights, randomness]);
 
   const clearPlaylist = useCallback(() => setPlaylist(null), []);
 
@@ -947,7 +949,12 @@ function MusicNetworkInner() {
           </div>
 
           {weightsOpen && (
-            <WeightControls weights={weights} setWeights={setWeights} />
+            <div style={{ marginTop: 12 }}>
+              <WeightControls
+                weights={weights} setWeights={setWeights}
+                randomness={randomness} setRandomness={setRandomness}
+              />
+            </div>
           )}
           {/* Player Spotify del singolo brano (anteprima ~30s per tutti, brano
               intero per Premium loggato). Nascosto se c'è un percorso in
@@ -1012,6 +1019,10 @@ function MusicNetworkInner() {
         genreColor={gColor}
         hasPlaylist={!!playlist}
         bottomOffset={playTracks.length ? 132 : 0}
+        weights={weights}
+        setWeights={setWeights}
+        randomness={randomness}
+        setRandomness={setRandomness}
       />
 
       {/* Ascolto continuo del percorso: mini-player persistente che incatena i brani */}
@@ -1027,39 +1038,6 @@ function MusicNetworkInner() {
           isMobile={isMobile}
         />
       )}
-    </div>
-  );
-}
-
-// Slider per i pesi dei legami usati nella costruzione del percorso.
-// Gerarchia di default: genere primario > artista > genere secondario > playlist.
-function WeightControls({ weights, setWeights }) {
-  const rows = [
-    ["primary", "Genere primario"],
-    ["artist", "Artista"],
-    ["secondary", "Genere secondario"],
-    ["playlist", "Stessa playlist"],
-  ];
-  const set = (k, v) => setWeights((w) => ({ ...w, [k]: v }));
-  return (
-    <div style={{ marginTop: 12, padding: "10px 12px", background: "rgba(43,39,36,0.04)", borderRadius: 4 }}>
-      <div style={{ fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: MUTED, marginBottom: 8, display: "flex", justifyContent: "space-between" }}>
-        <span>Pesi dei legami</span>
-        <span onClick={() => setWeights({ ...DEFAULT_LINK_WEIGHTS })} style={{ cursor: "pointer", textDecoration: "underline" }}>ripristina</span>
-      </div>
-      {rows.map(([k, label]) => (
-        <div key={k} style={{ display: "flex", alignItems: "center", gap: 8, margin: "5px 0" }}>
-          <span style={{ fontSize: 11, width: 118 }}>{label}</span>
-          <input
-            type="range" min="0" max="5" step="0.1" value={weights[k] ?? 0}
-            onChange={(e) => set(k, parseFloat(e.target.value))} style={{ flex: 1 }}
-          />
-          <span style={{ fontSize: 11, width: 26, textAlign: "right", color: MUTED }}>{(weights[k] ?? 0).toFixed(1)}</span>
-        </div>
-      ))}
-      <div style={{ fontSize: 10, color: MUTED, marginTop: 6 }}>
-        Premi “♫ Generate playlist” per applicare i pesi.
-      </div>
     </div>
   );
 }

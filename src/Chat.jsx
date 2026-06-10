@@ -1,4 +1,5 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import WeightControls from "./WeightControls.jsx";
 
 const INK = "#2b2724";
 const PAPER = "#f4f1ea";
@@ -15,8 +16,10 @@ const SUGGESTIONS = [
 export default function Chat({
   open, setOpen, messages, value, onChange, onSubmit, onClear, onPick,
   onExport, genreColor, hasPlaylist, bottomOffset = 0,
+  weights, setWeights, randomness, setRandomness,
 }) {
   const bodyRef = useRef(null);
+  const [showWeights, setShowWeights] = useState(false);
   useEffect(() => {
     if (bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
   }, [messages, open]);
@@ -74,6 +77,12 @@ export default function Chat({
         </span>
         <span style={{ fontSize: 11, color: MUTED }}>— describe what you want to hear</span>
         <span style={{ marginLeft: "auto", display: "flex", gap: 4 }}>
+          {setWeights && (
+            <button onClick={() => setShowWeights((v) => !v)} title="Regola i pesi del percorso"
+              style={{ ...iconBtn, background: showWeights ? "rgba(43,39,36,0.08)" : "transparent" }}>
+              ⚖ pesi
+            </button>
+          )}
           {hasPlaylist && (
             <button onClick={onClear} title="Remove highlight" style={iconBtn}>
               clear
@@ -84,6 +93,15 @@ export default function Chat({
           </button>
         </span>
       </div>
+
+      {showWeights && setWeights && (
+        <div style={{ padding: "10px 14px", borderBottom: `1px solid rgba(154,147,138,0.3)` }}>
+          <WeightControls
+            weights={weights} setWeights={setWeights}
+            randomness={randomness} setRandomness={setRandomness}
+          />
+        </div>
+      )}
 
       {/* messaggi */}
       <div ref={bodyRef} style={{ maxHeight: "46vh", overflowY: "auto", padding: "12px 14px" }}>
