@@ -20,3 +20,6 @@ yarn-error.log*
 
 # NB: public/graph.json, data/ e scripts/ NON vanno ignorati:
 # graph.json è l'input servito staticamente, data/ e scripts/ sono la pipeline.
+
+# cache locale di enrich_audio.py (non committare)
+data/.audio_cache.json

@@ -31,9 +31,12 @@ jobs:
           python-version: '3.x'
 
       # Rigenera public/graph.json dall'archivio arricchito.
-      # build_graph.py usa solo la stdlib: nessuna dipendenza pip.
+      # build_graph.py usa solo la stdlib: nessuna dipendenza pip. Senza --input
+      # sceglie da solo l'archivio con audio (spotify_archive_features.json) se
+      # presente, altrimenti quello con i soli generi. enrich_audio.py NON gira
+      # in CI: i dati audio sono committati a parte.
       - name: Generate graph.json
-        run: python scripts/build_graph.py --input data/spotify_archive_genres.json --output public/graph.json
+        run: python scripts/build_graph.py --output public/graph.json
 
       - name: Setup Node
         uses: actions/setup-node@v4
