@@ -348,7 +348,7 @@ function MusicNetworkInner() {
       // Coesione esplicita: stesso genere si attrae; stesso autore (nello stesso
       // genere/cluster) si attrae di piu'.
       .force("genreCohesion", clusterForce((n) => n.genre, 0.06))
-      .force("artistCohesion", clusterForce((n) => n.genre + "|" + n.artist, 0.5))
+      .force("artistCohesion", clusterForce((n) => n.genre + "|" + n.artist, 0.3))
       .force(
         "collide",
         d3.forceCollide().radius((d) => rScale(d.degree) + 2)
