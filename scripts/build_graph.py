@@ -60,6 +60,13 @@ def title_flags(title: str) -> dict:
     return out
 
 
+# Pesi default dei legami, nella gerarchia richiesta:
+#   genere primario condiviso > artista condiviso > genere secondario > stessa playlist
+# I componenti di ogni arco sono salvati separati ("c": [artista, primario,
+# secondario, playlist]) così il front-end puo' ri-pesare al volo.
+DEFAULT_LINK_WEIGHTS = {"primary": 3.0, "artist": 2.0, "secondary": 1.0, "playlist": 0.4}
+
+
 def build(archive: dict, seed: int = 7) -> dict:
     tracks = archive["tracks_flat"]
 
@@ -91,18 +98,19 @@ def build(archive: dict, seed: int = 7) -> dict:
 
     nodes = list(by_id.values())
     rng = random.Random(seed)
-    edges = defaultdict(float)
+    # archi scomposti per CATEGORIA: c = [artista, genere_primario, genere_secondario, playlist]
+    comp = defaultdict(lambda: [0, 0, 0, 0])
 
-    # 1) artista condiviso (forte) ----------------------------------------
+    # 1) artista condiviso ------------------------------------------------
     artist_to = defaultdict(list)
     for n in nodes:
         for a in n["artists"]:
             artist_to[a].append(n["id"])
     for ids in artist_to.values():
         for x, y in combinations(sorted(set(ids)), 2):
-            edges[tuple(sorted((x, y)))] += 3.0
+            comp[tuple(sorted((x, y)))][0] += 1
 
-    # 2) genere primario condiviso (medio, kNN sparso) --------------------
+    # 2) genere primario condiviso (kNN sparso) ---------------------------
     genre_to = defaultdict(list)
     for n in nodes:
         genre_to[n["genre_primary"]].append(n["id"])
@@ -114,18 +122,18 @@ def build(archive: dict, seed: int = 7) -> dict:
         for nid in ids:
             peers = rng.sample([x for x in ids if x != nid], min(k, len(ids) - 1))
             for p in peers:
-                edges[tuple(sorted((nid, p)))] += 1.2
+                comp[tuple(sorted((nid, p)))][1] += 1
 
-    # 3) genere secondario condiviso (leggero) ----------------------------
+    # 3) genere secondario condiviso --------------------------------------
     for n in nodes:
         if len(n["genres"]) < 2:
             continue
         sec = n["genres"][1]
         cand = [x for x in genre_to.get(sec, []) if x != n["id"]]
         for p in rng.sample(cand, min(2, len(cand))):
-            edges[tuple(sorted((n["id"], p)))] += 0.6
+            comp[tuple(sorted((n["id"], p)))][2] += 1
 
-    # 4) stessa playlist (debole, finestra scorrevole) --------------------
+    # 4) stessa playlist (finestra scorrevole) ----------------------------
     pl_to = defaultdict(list)
     for n in nodes:
         for p in n["playlists"]:
@@ -134,14 +142,19 @@ def build(archive: dict, seed: int = 7) -> dict:
         ids = sorted(set(ids))
         for i in range(len(ids)):
             for j in range(i + 1, min(i + 3, len(ids))):
-                edges[tuple(sorted((ids[i], ids[j])))] += 0.3
+                comp[tuple(sorted((ids[i], ids[j])))][3] += 1
+
+    # peso totale di un arco dai componenti, coi pesi default (per layout + degree)
+    W = DEFAULT_LINK_WEIGHTS
+    def edge_weight(c):
+        return c[0] * W["artist"] + c[1] * W["primary"] + c[2] * W["secondary"] + c[3] * W["playlist"]
 
     # --- indice cluster = genere ordinato per frequenza ------------------
     genre_order = [g for g, _ in Counter(n["genre_primary"] for n in nodes).most_common()]
     gidx = {g: i for i, g in enumerate(genre_order)}
 
     deg = defaultdict(int)
-    for (x, y) in edges:
+    for (x, y) in comp:
         deg[x] += 1
         deg[y] += 1
 
@@ -155,7 +168,7 @@ def build(archive: dict, seed: int = 7) -> dict:
     # bridging = frazione degli archi che escono verso un ALTRO genere primario
     genre_of = {n["id"]: n["genre_primary"] for n in nodes}
     cross = defaultdict(int)
-    for (x, y) in edges:
+    for (x, y) in comp:
         if genre_of[x] != genre_of[y]:
             cross[x] += 1
             cross[y] += 1
@@ -191,8 +204,9 @@ def build(archive: dict, seed: int = 7) -> dict:
         **n.get("audio", {}),
     } for n in nodes]
 
-    out_links = [{"source": x, "target": y, "weight": round(w, 2)}
-                 for (x, y), w in edges.items()]
+    # weight = peso default (per layout/back-compat); c = componenti per ri-pesare al volo
+    out_links = [{"source": x, "target": y, "weight": round(edge_weight(c), 2), "c": c}
+                 for (x, y), c in comp.items()]
 
     return {
         "nodes": out_nodes,
@@ -202,6 +216,9 @@ def build(archive: dict, seed: int = 7) -> dict:
             "unique_tracks": len(out_nodes),
             "edges": len(out_links),
             "genres": len(genre_order),
+            # pesi default per categoria; il front-end li usa come valori iniziali
+            # dei controlli "pesi del percorso" e per ricalcolare i legami al volo.
+            "linkWeights": DEFAULT_LINK_WEIGHTS,
         },
     }
 

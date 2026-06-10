@@ -173,15 +173,33 @@ function findSeed(msg, graph, { explicit, mood }) {
   return null;
 }
 
-function buildAdjacency(graph) {
+// Pesi default dei legami (gerarchia: genere primario > artista > genere
+// secondario > stessa playlist). Sovrascrivibili a runtime dall'utente.
+export const DEFAULT_LINK_WEIGHTS = { primary: 3.0, artist: 2.0, secondary: 1.0, playlist: 0.4 };
+
+// peso effettivo di un arco dati i componenti c=[artista,primario,secondario,playlist]
+// e i pesi scelti. Fallback al peso pre-calcolato se mancano i componenti.
+function linkWeight(l, w) {
+  const c = l.c;
+  if (!c) return l.weight || 1;
+  return c[0] * w.artist + c[1] * w.primary + c[2] * w.secondary + c[3] * w.playlist;
+}
+
+function resolveWeights(graph, weights) {
+  return weights || (graph.meta && graph.meta.linkWeights) || DEFAULT_LINK_WEIGHTS;
+}
+
+function buildAdjacency(graph, weights) {
+  const w = resolveWeights(graph, weights);
   const adj = new Map();
   graph.nodes.forEach((n) => adj.set(n.id, new Map()));
   graph.links.forEach((l) => {
     const s = typeof l.source === "object" ? l.source.id : l.source;
     const t = typeof l.target === "object" ? l.target.id : l.target;
-    const w = l.weight || 1;
-    adj.get(s)?.set(t, (adj.get(s).get(t) || 0) + w);
-    adj.get(t)?.set(s, (adj.get(t).get(s) || 0) + w);
+    const val = linkWeight(l, w);
+    if (val <= 0) return; // categoria azzerata dall'utente -> nessun legame
+    adj.get(s)?.set(t, (adj.get(s).get(t) || 0) + val);
+    adj.get(t)?.set(s, (adj.get(t).get(s) || 0) + val);
   });
   return adj;
 }
@@ -240,10 +258,10 @@ function tracksOf(ids, byId) {
   });
 }
 
-export function buildPlaylist(graph, rawMessage) {
+export function buildPlaylist(graph, rawMessage, weights) {
   const msg = norm(rawMessage);
   const byId = new Map(graph.nodes.map((n) => [n.id, n]));
-  const adj = buildAdjacency(graph);
+  const adj = buildAdjacency(graph, weights);
   const size = parseSize(msg);
 
   const { explicit, mood, moodName } = detectGenres(msg);
@@ -378,12 +396,12 @@ export function buildPlaylist(graph, rawMessage) {
 // Costruisce una playlist usando un NODO come seed, crescendo SOLO lungo le
 // connessioni del grafo (artista/genere/co-playlist condivisi). Usata dal
 // pannello di dettaglio: "Generate playlist" dal brano selezionato.
-export function buildFromSeed(graph, seedNode, size = 18) {
+export function buildFromSeed(graph, seedNode, size = 18, weights) {
   if (!seedNode)
     return { ok: false, ids: [], tracks: [], totalSeconds: 0, totalLabel: "", theme: "", interpretation: "", note: "" };
 
   const byId = new Map(graph.nodes.map((n) => [n.id, n]));
-  const adj = buildAdjacency(graph);
+  const adj = buildAdjacency(graph, weights);
   const maxDeg = Math.max(1, ...graph.nodes.map((n) => n.degree));
   const artistCount = new Map();
   const canAdd = (n, cap = 2) => (artistCount.get(n.artist) || 0) < cap;
