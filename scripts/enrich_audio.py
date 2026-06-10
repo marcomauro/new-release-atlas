@@ -67,20 +67,15 @@ def http_json(url, timeout=15):
     return None
 
 
-def from_reccobeats(spotify_id):
-    """Audio-features per Spotify ID. Tollerante a varianti di risposta."""
-    url = "https://api.reccobeats.com/v1/audio-features?ids=" + urllib.parse.quote(spotify_id)
-    data = http_json(url)
-    if not data:
-        return {}
-    items = (
-        data.get("content") if isinstance(data, dict) else None
-    ) or (
-        data.get("audio_features") if isinstance(data, dict) else None
-    ) or (data if isinstance(data, list) else [])
-    if not items:
-        return {}
-    f = items[0] or {}
+_SPID = re.compile(r"/track/([A-Za-z0-9]+)")
+
+
+def _spotify_id_from_href(href):
+    m = _SPID.search(href or "")
+    return m.group(1) if m else None
+
+
+def _parse_features(f):
     out = {}
     tempo = f.get("tempo") or f.get("bpm")
     if tempo:
@@ -95,6 +90,26 @@ def from_reccobeats(spotify_id):
     m = f.get("mode")
     if m is not None:
         out["mode"] = "major" if (m == 1 or m == "major") else "minor"
+    return out
+
+
+def reccobeats_batch(ids, chunk=40):
+    """Audio-features per molti Spotify ID in poche richieste (?ids=a,b,c).
+    Evita il rate-limit. Mappa il risultato per id via href."""
+    out = {}
+    for i in range(0, len(ids), chunk):
+        group = ids[i:i + chunk]
+        url = "https://api.reccobeats.com/v1/audio-features?ids=" + urllib.parse.quote(",".join(group))
+        data = http_json(url)
+        items = (data.get("content") if isinstance(data, dict) else None) or \
+                (data.get("audio_features") if isinstance(data, dict) else None) or \
+                (data if isinstance(data, list) else [])
+        for f in items or []:
+            sid = _spotify_id_from_href(f.get("href", "")) or f.get("id")
+            if sid:
+                out[sid] = _parse_features(f)
+        print(f"  reccobeats {min(i + chunk, len(ids))}/{len(ids)}")
+        time.sleep(1.0)  # gentile con il rate-limit
     return out
 
 
@@ -133,20 +148,13 @@ def from_deezer(title, primary_artist, duration_sec):
     return out
 
 
-def enrich_one(track, sources):
-    rec = {}
-    sid = track["spotify_track_id"]
-    if "reccobeats" in sources:
-        try:
-            rec.update(from_reccobeats(sid))
-        except Exception:
-            pass
-        time.sleep(0.2)
+def enrich_one(track, sources, recc):
+    rec = dict(recc or {})  # features ReccoBeats già pre-scaricate (batch)
     if "deezer" in sources:
         try:
             dz = from_deezer(track["title"], track["primary_artist"], track.get("duration_sec"))
             for k, v in dz.items():
-                rec.setdefault(k, v)  # non sovrascrive i valori di reccobeats
+                rec.setdefault(k, v)  # Deezer riempie solo i buchi (es. year, bpm)
         except Exception:
             pass
         time.sleep(0.2)
@@ -191,8 +199,12 @@ def main():
 
     todo = [i for i in ids if args.refresh or i not in cache]
     print(f"brani: {len(ids)} · da scaricare: {len(todo)} · in cache: {len(ids) - len(todo)}")
+
+    # ReccoBeats: pre-scarica tutte le features in pochi batch (evita rate-limit)
+    recc = reccobeats_batch(todo) if (todo and "reccobeats" in sources) else {}
+
     for n, sid in enumerate(todo, 1):
-        rec = enrich_one(uniq[sid], sources)
+        rec = enrich_one(uniq[sid], sources, recc.get(sid))
         cache[sid] = rec
         if n % 10 == 0 or n == len(todo):
             print(f"  ...{n}/{len(todo)}")
