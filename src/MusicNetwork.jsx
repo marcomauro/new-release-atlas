@@ -442,7 +442,7 @@ function MusicNetworkInner() {
           ? INK
           : PAPER
       );
-    // Alone ciano pulsante sul brano selezionato (vedi @keyframes mnGlow).
+    // Alone ciano statico sul brano selezionato (vedi .mn-node-selected nel CSS).
     node.classed("mn-node-selected", (d) => d.id === selId);
 
     link.attr("stroke-opacity", (d) => {
@@ -602,18 +602,16 @@ function MusicNetworkInner() {
         .mn-input:focus { outline: none; border-color: ${INK}; }
         .mn-chip { transition: all .15s ease; }
         .mn-chip:hover { transform: translateX(2px); }
-        /* Brano selezionato: alone ciano che pulsa (brilla). Il filter e la
-           stroke-width animati non toccano cx/cy/r, quindi non disturbano il layout. */
-        @keyframes mnGlow {
-          0%, 100% { stroke-width: 2.4px; filter: drop-shadow(0 0 2px rgba(31,182,232,0.55)); }
-          50%      { stroke-width: 4.5px; filter: drop-shadow(0 0 11px rgba(31,182,232,1)); }
+        /* Brano selezionato: alone ciano STATICO (niente animazione). Un filter
+           animato su un elemento SVG forza repaint continui dell'intera tela e fa
+           sfarfallare i pannelli con backdrop-filter: il glow fisso viene dipinto
+           una sola volta alla selezione, quindi nessun repaint in loop. */
+        .mn-node-selected {
+          stroke-width: 3.5px;
+          filter: drop-shadow(0 0 9px rgba(31,182,232,0.95));
         }
-        .mn-node-selected { animation: mnGlow 1.15s ease-in-out infinite; }
         /* Percorso della playlist: linea azzurra brillante con leggero bagliore. */
         .mn-route { filter: drop-shadow(0 0 4px rgba(31,182,232,0.7)); }
-        @media (prefers-reduced-motion: reduce) {
-          .mn-node-selected { animation: none; filter: drop-shadow(0 0 8px rgba(31,182,232,0.9)); }
-        }
         @media (max-width: 640px) {
           /* 16px keeps iOS Safari from auto-zooming when an input is focused. */
           .mn-input, .mn-chat input { font-size: 16px !important; }
