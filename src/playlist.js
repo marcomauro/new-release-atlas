@@ -214,14 +214,11 @@ function fmtDur(sec) {
   return `≈ ${Math.floor(min / 60)} h ${min % 60} min`;
 }
 
-// piccolo hash deterministico per un po' di varieta stabile
-const jitter = (id) => {
-  let h = 0;
-  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) % 1000;
-  return h / 1000;
-};
+// Fattore random di default per la varieta' (0 = deterministico, 1 = molto vario).
+export const DEFAULT_RANDOMNESS = 0.4;
 
-// ordina un insieme di id in un "percorso" coerente (nearest-neighbor sui link)
+// ordina un insieme di id in un "percorso" coerente (nearest-neighbor sui link).
+// Regola: mai lo stesso artista in due posizioni consecutive (se evitabile).
 function routeOrder(ids, adj, byId, startId) {
   const remaining = new Set(ids);
   let current = startId && remaining.has(startId)
@@ -232,15 +229,19 @@ function routeOrder(ids, adj, byId, startId) {
     order.push(current);
     remaining.delete(current);
     if (!remaining.size) break;
+    const curArtist = byId.get(current).artist;
     const links = adj.get(current) || new Map();
+    // candidati con artista diverso; solo se non ce ne sono si ammette lo stesso
+    let pool = [...remaining].filter((r) => byId.get(r).artist !== curArtist);
+    if (!pool.length) pool = [...remaining];
     let next = null, bestW = -1;
-    for (const r of remaining) {
+    for (const r of pool) {
       const w = links.get(r) || 0;
       if (w > bestW) { bestW = w; next = r; }
     }
     if (bestW <= 0) {
-      // nessun legame diretto: prendi il piu centrale tra i rimanenti
-      next = [...remaining].sort((a, b) => byId.get(b).degree - byId.get(a).degree)[0];
+      // nessun legame diretto: prendi il piu centrale tra i candidati ammessi
+      next = pool.sort((a, b) => byId.get(b).degree - byId.get(a).degree)[0];
     }
     current = next;
   }
@@ -258,7 +259,7 @@ function tracksOf(ids, byId) {
   });
 }
 
-export function buildPlaylist(graph, rawMessage, weights) {
+export function buildPlaylist(graph, rawMessage, weights, randomness = DEFAULT_RANDOMNESS) {
   const msg = norm(rawMessage);
   const byId = new Map(graph.nodes.map((n) => [n.id, n]));
   const adj = buildAdjacency(graph, weights);
@@ -292,7 +293,7 @@ export function buildPlaylist(graph, rawMessage, weights) {
         const links = adj.get(cand.id) || new Map();
         for (const cid of chosen) aff += links.get(cid) || 0;
         const gb = target ? (target.has(cand.genre) ? 0.8 : inTarget(cand) ? 0.4 : 0) : 0;
-        const score = aff + gb + 0.04 * (cand.degree / maxDeg) + 0.02 * jitter(cand.id);
+        const score = aff + gb + 0.04 * (cand.degree / maxDeg) + randomness * 1.5 * Math.random();
         if (score > bestScore && (aff > 0 || gb > 0)) { bestScore = score; best = cand; }
       }
       if (!best) {
@@ -316,7 +317,7 @@ export function buildPlaylist(graph, rawMessage, weights) {
     const scored = pool
       .map((n) => ({
         n,
-        s: (target.has(n.genre) ? 2 : 1) + (n.degree / maxDeg) + 0.3 * jitter(n.id),
+        s: (target.has(n.genre) ? 2 : 1) + (n.degree / maxDeg) + randomness * 1.5 * Math.random(),
       }))
       .sort((a, b) => b.s - a.s);
     // round-robin per genere richiesto, con diversita d'artista
@@ -356,7 +357,7 @@ export function buildPlaylist(graph, rawMessage, weights) {
       byComm.get(n.community).push(n);
     });
     for (const list of byComm.values())
-      list.sort((a, b) => b.degree - a.degree + (jitter(a.id) - jitter(b.id)));
+      list.sort((a, b) => (b.degree - a.degree) + (Math.random() - Math.random()) * randomness * 8);
     const comms = [...byComm.keys()].sort((a, b) => a - b);
     let progress = true;
     while (chosen.length < size && progress) {
@@ -396,7 +397,7 @@ export function buildPlaylist(graph, rawMessage, weights) {
 // Costruisce una playlist usando un NODO come seed, crescendo SOLO lungo le
 // connessioni del grafo (artista/genere/co-playlist condivisi). Usata dal
 // pannello di dettaglio: "Generate playlist" dal brano selezionato.
-export function buildFromSeed(graph, seedNode, size = 18, weights) {
+export function buildFromSeed(graph, seedNode, size = 18, weights, randomness = DEFAULT_RANDOMNESS) {
   if (!seedNode)
     return { ok: false, ids: [], tracks: [], totalSeconds: 0, totalLabel: "", theme: "", interpretation: "", note: "" };
 
@@ -418,7 +419,7 @@ export function buildFromSeed(graph, seedNode, size = 18, weights) {
       const links = adj.get(cand.id) || new Map();
       for (const cid of chosen) aff += links.get(cid) || 0;
       if (aff <= 0) continue; // segui SOLO le connessioni del grafo
-      const score = aff + 0.04 * (cand.degree / maxDeg) + 0.02 * jitter(cand.id);
+      const score = aff + 0.04 * (cand.degree / maxDeg) + randomness * 1.5 * Math.random();
       if (score > bestScore) { bestScore = score; best = cand; }
     }
     if (!best) {
