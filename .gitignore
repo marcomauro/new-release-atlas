@@ -23,3 +23,7 @@ yarn-error.log*
 
 # cache locale di enrich_audio.py (non committare)
 data/.audio_cache.json
+
+# Python
+__pycache__/
+*.pyc
