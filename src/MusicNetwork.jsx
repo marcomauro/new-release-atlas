@@ -330,6 +330,8 @@ function MusicNetworkInner() {
 
     const sim = d3
       .forceSimulation(nodes)
+      // Piu' attrito: smorza le oscillazioni (riduce il tremolio nei cluster).
+      .velocityDecay(0.55)
       .force(
         "link",
         d3
@@ -337,8 +339,13 @@ function MusicNetworkInner() {
           .id((d) => d.id)
           // Stesso genere: legami piu' corti; generi diversi: piu' lunghi.
           .distance((d) => (55 / (0.4 + d.weight * 0.22)) * (sameGenre(d) ? 0.7 : 1.7))
-          // Stesso genere: attrazione piu' forte; generi diversi: piu' debole.
-          .strength((d) => Math.min(1, d.weight * 0.1) * (sameGenre(d) ? 1.6 : 0.35))
+          // Forza normalizzata per grado (come il default d3): evita molle rigide
+          // sugli hub, causa principale del tremolio. Il peso guida la distanza,
+          // non la rigidita'. Stesso genere un po' piu' coeso.
+          .strength((d) => {
+            const k = 1 / Math.max(1, Math.min(d.source.degree || 1, d.target.degree || 1));
+            return k * (sameGenre(d) ? 1.3 : 0.5);
+          })
       )
       // Piu' repulsione generale: aiuta a separare i cluster di genere.
       .force("charge", d3.forceManyBody().strength(-44))
