@@ -334,8 +334,6 @@ function MusicNetworkInner() {
 
     const sim = d3
       .forceSimulation(nodes)
-      // Piu' attrito: smorza le oscillazioni (riduce il tremolio nei cluster).
-      .velocityDecay(0.55)
       .force(
         "link",
         d3
@@ -343,24 +341,18 @@ function MusicNetworkInner() {
           .id((d) => d.id)
           // Stesso genere: legami piu' corti; generi diversi: piu' lunghi.
           .distance((d) => (55 / (0.4 + d.weight * 0.22)) * (sameGenre(d) ? 0.7 : 1.7))
-          // Forza normalizzata per grado (come il default d3): evita molle rigide
-          // sugli hub, causa principale del tremolio. Il peso guida la distanza,
-          // non la rigidita'. Stesso genere un po' piu' coeso.
-          .strength((d) => {
-            const k = 1 / Math.max(1, Math.min(d.source.degree || 1, d.target.degree || 1));
-            return k * (sameGenre(d) ? 1.3 : 0.5);
-          })
+          // Stesso genere: attrazione piu' forte; generi diversi: piu' debole.
+          .strength((d) => Math.min(1, d.weight * 0.1) * (sameGenre(d) ? 1.6 : 0.35))
       )
       // Piu' repulsione generale: aiuta a separare i cluster di genere.
-      .force("charge", d3.forceManyBody().strength(-52))
-      // Separazione "pulita" affidata alle ANCORE di genere e alla coesione, non
-      // alla rigidita' dei link: cluster netti e ben distanziati senza tremolio.
-      .force("x", d3.forceX((d) => anchor(d.genre).x).strength(0.26))
-      .force("y", d3.forceY((d) => anchor(d.genre).y).strength(0.26))
+      .force("charge", d3.forceManyBody().strength(-44))
+      // Ancore di genere piu' forti -> stesso genere piu' coeso, generi diversi piu' lontani.
+      .force("x", d3.forceX((d) => anchor(d.genre).x).strength(0.13))
+      .force("y", d3.forceY((d) => anchor(d.genre).y).strength(0.13))
       // Coesione esplicita: stesso genere si attrae; stesso autore (nello stesso
       // genere/cluster) si attrae di piu'.
-      .force("genreCohesion", clusterForce((n) => n.genre, 0.13))
-      .force("artistCohesion", clusterForce((n) => n.genre + "|" + n.artist, 0.3))
+      .force("genreCohesion", clusterForce((n) => n.genre, 0.06))
+      .force("artistCohesion", clusterForce((n) => n.genre + "|" + n.artist, 0.5))
       .force(
         "collide",
         d3.forceCollide().radius((d) => rScale(d.degree) + 2)
@@ -395,7 +387,7 @@ function MusicNetworkInner() {
             const gi = genres.indexOf(d.genre);
             return dims.w / 2 + radius * Math.cos(angle(gi));
           })
-          .strength(0.26)
+          .strength(0.13)
       )
       .force(
         "y",
@@ -404,7 +396,7 @@ function MusicNetworkInner() {
             const gi = genres.indexOf(d.genre);
             return dims.h / 2 + radius * Math.sin(angle(gi));
           })
-          .strength(0.26)
+          .strength(0.13)
       );
     sim.alpha(0.3).restart();
   }, [dims]);

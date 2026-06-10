@@ -60,11 +60,12 @@ def title_flags(title: str) -> dict:
     return out
 
 
-# Pesi default dei legami, nella gerarchia richiesta:
-#   genere primario condiviso > artista condiviso > genere secondario > stessa playlist
+# Pesi default dei legami — gerarchia ORIGINALE (quella con cui era stata
+# sviluppata la distribuzione del grafo):
+#   artista condiviso > genere primario > genere secondario > stessa playlist
 # I componenti di ogni arco sono salvati separati ("c": [artista, primario,
 # secondario, playlist]) così il front-end puo' ri-pesare al volo.
-DEFAULT_LINK_WEIGHTS = {"primary": 3.0, "artist": 2.0, "secondary": 1.0, "playlist": 0.4}
+DEFAULT_LINK_WEIGHTS = {"primary": 1.2, "artist": 3.0, "secondary": 0.6, "playlist": 0.3}
 
 
 def build(archive: dict, seed: int = 7) -> dict:
