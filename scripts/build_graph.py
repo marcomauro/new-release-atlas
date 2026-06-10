@@ -22,6 +22,7 @@ Schema di output:
 """
 import argparse
 import json
+import os
 import random
 from collections import defaultdict, Counter
 from itertools import combinations
@@ -45,6 +46,9 @@ def build(archive: dict, seed: int = 7) -> dict:
                 "genres": t.get("genres", ["unknown"]),
                 "genre_primary": t.get("genre_primary", "unknown"),
                 "playlists": set(),
+                # campi audio (presenti solo dopo enrich_audio.py); None se assenti
+                "audio": {k: t[k] for k in ("bpm", "key", "mode", "camelot", "energy", "valence", "year")
+                          if t.get(k) is not None},
             }
         by_id[tid]["playlists"].add(t["playlist_number"])
 
@@ -110,6 +114,8 @@ def build(archive: dict, seed: int = 7) -> dict:
         "genres": n["genres"], "genre": n["genre_primary"],
         "community": gidx[n["genre_primary"]],
         "playlists": sorted(n["playlists"]), "degree": deg[n["id"]],
+        # campi audio inclusi solo quando presenti (degradazione morbida)
+        **n.get("audio", {}),
     } for n in nodes]
 
     out_links = [{"source": x, "target": y, "weight": round(w, 2)}
@@ -129,12 +135,19 @@ def build(archive: dict, seed: int = 7) -> dict:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--input", default="data/spotify_archive_genres.json")
+    # se non specificato: usa l'archivio con audio se esiste, altrimenti i generi
+    ap.add_argument("--input", default=None)
     ap.add_argument("--output", default="public/graph.json")
     ap.add_argument("--seed", type=int, default=7)
     args = ap.parse_args()
 
-    with open(args.input, encoding="utf-8") as f:
+    inp = args.input
+    if inp is None:
+        inp = next((c for c in ("data/spotify_archive_features.json",
+                                "data/spotify_archive_genres.json") if os.path.exists(c)),
+                   "data/spotify_archive_genres.json")
+
+    with open(inp, encoding="utf-8") as f:
         archive = json.load(f)
 
     graph = build(archive, seed=args.seed)
