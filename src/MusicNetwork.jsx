@@ -54,6 +54,9 @@ const GENRE_LABEL = {
 const INK = "#2b2724";
 const PAPER = "#f4f1ea";
 const MUTED = "#9a938a";
+// Accento "attivo": usato sia per l'alone del brano selezionato sia per la
+// linea del percorso. Azzurro brillante -> azzurro = ciò che è attivo/in ascolto.
+const ACCENT = "#1fb6e8";
 
 const gColor = (g) => GENRE_COLOR[g] || MUTED;
 
@@ -235,10 +238,11 @@ function MusicNetworkInner() {
     // nell'ordine d'ascolto. Disegnata sopra i link, sotto i nodi.
     const route = g
       .append("path")
+      .attr("class", "mn-route")
       .attr("fill", "none")
-      .attr("stroke", INK)
+      .attr("stroke", ACCENT)
       .attr("stroke-opacity", 0)
-      .attr("stroke-width", 2.2)
+      .attr("stroke-width", 2.8)
       .attr("stroke-linejoin", "round")
       .attr("stroke-linecap", "round")
       .style("pointer-events", "none");
@@ -348,13 +352,14 @@ function MusicNetworkInner() {
           })
       )
       // Piu' repulsione generale: aiuta a separare i cluster di genere.
-      .force("charge", d3.forceManyBody().strength(-44))
-      // Ancore di genere piu' forti -> stesso genere piu' coeso, generi diversi piu' lontani.
-      .force("x", d3.forceX((d) => anchor(d.genre).x).strength(0.13))
-      .force("y", d3.forceY((d) => anchor(d.genre).y).strength(0.13))
+      .force("charge", d3.forceManyBody().strength(-52))
+      // Separazione "pulita" affidata alle ANCORE di genere e alla coesione, non
+      // alla rigidita' dei link: cluster netti e ben distanziati senza tremolio.
+      .force("x", d3.forceX((d) => anchor(d.genre).x).strength(0.26))
+      .force("y", d3.forceY((d) => anchor(d.genre).y).strength(0.26))
       // Coesione esplicita: stesso genere si attrae; stesso autore (nello stesso
       // genere/cluster) si attrae di piu'.
-      .force("genreCohesion", clusterForce((n) => n.genre, 0.06))
+      .force("genreCohesion", clusterForce((n) => n.genre, 0.13))
       .force("artistCohesion", clusterForce((n) => n.genre + "|" + n.artist, 0.3))
       .force(
         "collide",
@@ -390,7 +395,7 @@ function MusicNetworkInner() {
             const gi = genres.indexOf(d.genre);
             return dims.w / 2 + radius * Math.cos(angle(gi));
           })
-          .strength(0.13)
+          .strength(0.26)
       )
       .force(
         "y",
@@ -399,7 +404,7 @@ function MusicNetworkInner() {
             const gi = genres.indexOf(d.genre);
             return dims.h / 2 + radius * Math.sin(angle(gi));
           })
-          .strength(0.13)
+          .strength(0.26)
       );
     sim.alpha(0.3).restart();
   }, [dims]);
@@ -409,6 +414,7 @@ function MusicNetworkInner() {
     const { node, link, labels } = simRef.current;
     const focus = selected || hovered;
     const focusId = focus?.id;
+    const selId = selected?.id; // solo il brano cliccato pulsa (non l'hover)
     const nbr = focusId ? neighbors.get(focusId) : null;
 
     const dim = (d) => {
@@ -438,8 +444,14 @@ function MusicNetworkInner() {
         d.id === focusId || playlistSet?.has(d.id) ? 2.4 : matchSet?.has(d.id) ? 2 : 1.2
       )
       .attr("stroke", (d) =>
-        d.id === focusId || matchSet?.has(d.id) || playlistSet?.has(d.id) ? INK : PAPER
+        d.id === selId
+          ? ACCENT
+          : d.id === focusId || matchSet?.has(d.id) || playlistSet?.has(d.id)
+          ? INK
+          : PAPER
       );
+    // Alone ciano pulsante sul brano selezionato (vedi @keyframes mnGlow).
+    node.classed("mn-node-selected", (d) => d.id === selId);
 
     link.attr("stroke-opacity", (d) => {
       const s = d.source.id ?? d.source;
@@ -467,7 +479,7 @@ function MusicNetworkInner() {
     // Nascondi il percorso della playlist mentre un nodo e' in focus (dettaglio).
     if (simRef.current.route) {
       const showRoute = !focusId && playlistSet && playlistSet.size > 1;
-      simRef.current.route.attr("stroke-opacity", showRoute ? 0.5 : 0);
+      simRef.current.route.attr("stroke-opacity", showRoute ? 0.92 : 0);
     }
   }, [selected, hovered, matchSet, activeGenre, neighbors, playlistSet]);
 
@@ -478,7 +490,7 @@ function MusicNetworkInner() {
     const pts = (playlist || []).map((id) => nodesById.get(id)).filter(Boolean);
     routeRef.current = pts;
     drawRoute();
-    route.attr("stroke-opacity", pts.length > 1 ? 0.5 : 0);
+    route.attr("stroke-opacity", pts.length > 1 ? 0.92 : 0);
     if (pts.length) {
       const xs = pts.map((p) => p.x);
       const ys = pts.map((p) => p.y);
@@ -598,6 +610,18 @@ function MusicNetworkInner() {
         .mn-input:focus { outline: none; border-color: ${INK}; }
         .mn-chip { transition: all .15s ease; }
         .mn-chip:hover { transform: translateX(2px); }
+        /* Brano selezionato: alone ciano che pulsa (brilla). Il filter e la
+           stroke-width animati non toccano cx/cy/r, quindi non disturbano il layout. */
+        @keyframes mnGlow {
+          0%, 100% { stroke-width: 2.4px; filter: drop-shadow(0 0 2px rgba(31,182,232,0.55)); }
+          50%      { stroke-width: 4.5px; filter: drop-shadow(0 0 11px rgba(31,182,232,1)); }
+        }
+        .mn-node-selected { animation: mnGlow 1.15s ease-in-out infinite; }
+        /* Percorso della playlist: linea azzurra brillante con leggero bagliore. */
+        .mn-route { filter: drop-shadow(0 0 4px rgba(31,182,232,0.7)); }
+        @media (prefers-reduced-motion: reduce) {
+          .mn-node-selected { animation: none; filter: drop-shadow(0 0 8px rgba(31,182,232,0.9)); }
+        }
         @media (max-width: 640px) {
           /* 16px keeps iOS Safari from auto-zooming when an input is focused. */
           .mn-input, .mn-chat input { font-size: 16px !important; }
