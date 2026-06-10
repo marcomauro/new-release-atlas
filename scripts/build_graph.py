@@ -14,18 +14,50 @@ arricchito e rilanciare questo script.
 
 Schema di output:
     {
-      "nodes": [{id,title,artist,artists,url,duration,genres,genre,community,playlists,degree}],
+      "nodes": [{id,title,artist,artists,url,duration,genres,genre,community,playlists,degree,
+                 era,era_norm,genre_count,bridging,artist_track_count,duration_sec,
+                 is_bridge?,is_remix?,remixer?,is_instrumental?,is_live?,is_interlude?,   # derivati (Fase 1)
+                 bpm?,key?,mode?,camelot?,energy?,valence?,year?}],                        # audio (enrich_audio.py)
       "links": [{source,target,weight}],
       "genres": [genre, ...],          # ordinati per frequenza (= indice cluster)
       "meta":   {unique_tracks,edges,genres}
     }
+I campi con "?" sono presenti solo quando veri/disponibili (degradazione morbida).
 """
 import argparse
 import json
 import os
 import random
+import re
 from collections import defaultdict, Counter
 from itertools import combinations
+
+# --- campi derivati dal titolo (deterministici, nessuna rete) -------------
+_RE_REMIX = re.compile(r"\b(remix|rework|re-work|edit|flip|reprise|version)\b", re.I)
+# "(Xyz Remix)" / "[Xyz Rework]" / "- Xyz Remix" -> cattura il remixer "Xyz"
+_RE_REMIXER = re.compile(
+    r"[(\[\-–]\s*([^()\[\]\-–]+?)\s+(?:remix|rework|re-work|edit|flip)\s*[)\]]?\s*$", re.I)
+_RE_INSTR = re.compile(r"\binstrumental\b", re.I)
+_RE_LIVE = re.compile(r"[(\[\-–]\s*live\b|\blive (?:at|in|from)\b", re.I)
+_RE_INTER = re.compile(r"\b(interlude|intro|outro|skit|prelude)\b", re.I)
+
+
+def title_flags(title: str) -> dict:
+    """Flag di 'forma' del brano estratti dal titolo; presenti solo se veri."""
+    t = title or ""
+    out = {}
+    if _RE_REMIX.search(t):
+        out["is_remix"] = True
+        m = _RE_REMIXER.search(t)
+        if m:
+            out["remixer"] = m.group(1).strip()
+    if _RE_INSTR.search(t):
+        out["is_instrumental"] = True
+    if _RE_LIVE.search(t):
+        out["is_live"] = True
+    if _RE_INTER.search(t):
+        out["is_interlude"] = True
+    return out
 
 
 def build(archive: dict, seed: int = 7) -> dict:
@@ -43,6 +75,7 @@ def build(archive: dict, seed: int = 7) -> dict:
                 "primary_artist": t["primary_artist"],
                 "url": t["spotify_url"],
                 "duration": t["duration"],
+                "duration_sec": t.get("duration_sec"),
                 "genres": t.get("genres", ["unknown"]),
                 "genre_primary": t.get("genre_primary", "unknown"),
                 "playlists": set(),
@@ -108,12 +141,48 @@ def build(archive: dict, seed: int = 7) -> dict:
         deg[x] += 1
         deg[y] += 1
 
+    # --- campi derivati (Fase 1): era, ponti tra generi, prominenza ------
+    # era = prima playlist di apparizione (le playlist sono cronologiche);
+    # era_norm normalizza 0..1 sull'intervallo presente nell'archivio.
+    all_pl = [p for n in nodes for p in n["playlists"]]
+    min_pl, max_pl = min(all_pl), max(all_pl)
+    span = max(1, max_pl - min_pl)
+
+    # bridging = frazione degli archi che escono verso un ALTRO genere primario
+    genre_of = {n["id"]: n["genre_primary"] for n in nodes}
+    cross = defaultdict(int)
+    for (x, y) in edges:
+        if genre_of[x] != genre_of[y]:
+            cross[x] += 1
+            cross[y] += 1
+
+    # prominenza artista = numero di brani unici del primary_artist in archivio
+    artist_tracks = Counter(n["primary_artist"] for n in nodes)
+
+    def derived(n):
+        era = min(n["playlists"])
+        d = {
+            "era": era,
+            "era_norm": round((era - min_pl) / span, 3),
+            "genre_count": len(n["genres"]),
+            "bridging": round(cross[n["id"]] / deg[n["id"]], 3) if deg[n["id"]] else 0.0,
+            "artist_track_count": artist_tracks[n["primary_artist"]],
+        }
+        if n.get("duration_sec") is not None:
+            d["duration_sec"] = n["duration_sec"]
+        if len(n["genres"]) >= 2:
+            d["is_bridge"] = True
+        d.update(title_flags(n["title"]))
+        return d
+
     out_nodes = [{
         "id": n["id"], "title": n["title"], "artist": n["primary_artist"],
         "artists": n["artists"], "url": n["url"], "duration": n["duration"],
         "genres": n["genres"], "genre": n["genre_primary"],
         "community": gidx[n["genre_primary"]],
         "playlists": sorted(n["playlists"]), "degree": deg[n["id"]],
+        # campi derivati (era, ponti, forma dal titolo, prominenza)
+        **derived(n),
         # campi audio inclusi solo quando presenti (degradazione morbida)
         **n.get("audio", {}),
     } for n in nodes]
