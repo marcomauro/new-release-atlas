@@ -8,9 +8,13 @@ committato (come per i generi) e build_graph.py lo legge senza rete.
 Pipeline:
     data/spotify_archive_genres.json  --(questo script)-->  data/spotify_archive_features.json
 
-Fonti (gratuite, senza chiavi):
-  - ReccoBeats  : audio-features per Spotify ID (tempo/key/mode/energy/valence)
-  - Deezer      : anno di uscita + bpm di fallback + isrc  (match per durata)
+Fonti:
+  - ReccoBeats  : audio-features per Spotify ID (tempo/key/mode/energy/valence/
+                  danceability/acousticness/instrumentalness/loudness) — gratis
+  - Spotify     : track object base, NON deprecato (year/popularity/isrc al
+                  ~100%, match esatto per ID). Richiede SPOTIFY_CLIENT_ID e
+                  SPOTIFY_CLIENT_SECRET nell'ambiente; senza, viene saltato.
+  - Deezer      : riempi-buchi (year/bpm/isrc/popularity) via ricerca per durata
 Solo libreria standard Python (urllib). Idempotente: cache su disco, le
 ri-esecuzioni scaricano solo i brani mancanti.
 
@@ -35,7 +39,11 @@ OUT_DEFAULT = "data/spotify_archive_features.json"
 CACHE_PATH = "data/.audio_cache.json"
 OVERRIDES_PATH = "data/audio_overrides.json"
 
-AUDIO_FIELDS = ("bpm", "key", "mode", "camelot", "energy", "valence", "year")
+AUDIO_FIELDS = (
+    "bpm", "key", "mode", "camelot", "energy", "valence",
+    "danceability", "acousticness", "instrumentalness", "loudness",
+    "year", "popularity", "isrc",
+)
 
 # Ruota Camelot per il mixaggio armonico (indice = pitch class 0..11, C=0).
 CAMELOT_MAJOR = ["8B", "3B", "10B", "5B", "12B", "7B", "2B", "9B", "4B", "11B", "6B", "1B"]
@@ -80,10 +88,11 @@ def _parse_features(f):
     tempo = f.get("tempo") or f.get("bpm")
     if tempo:
         out["bpm"] = round(float(tempo))
-    if f.get("energy") is not None:
-        out["energy"] = round(float(f["energy"]), 3)
-    if f.get("valence") is not None:
-        out["valence"] = round(float(f["valence"]), 3)
+    for fld in ("energy", "valence", "danceability", "acousticness", "instrumentalness"):
+        if f.get(fld) is not None:
+            out[fld] = round(float(f[fld]), 3)
+    if f.get("loudness") is not None:
+        out["loudness"] = round(float(f["loudness"]), 2)
     k = f.get("key")
     if isinstance(k, int) and 0 <= k <= 11:
         out["key"] = k
@@ -110,6 +119,58 @@ def reccobeats_batch(ids, chunk=40):
                 out[sid] = _parse_features(f)
         print(f"  reccobeats {min(i + chunk, len(ids))}/{len(ids)}")
         time.sleep(1.0)  # gentile con il rate-limit
+    return out
+
+
+def spotify_token():
+    """Client-credentials con SPOTIFY_CLIENT_ID / SPOTIFY_CLIENT_SECRET (env).
+    Ritorna None se le credenziali mancano o il login fallisce."""
+    cid = os.environ.get("SPOTIFY_CLIENT_ID")
+    sec = os.environ.get("SPOTIFY_CLIENT_SECRET")
+    if not cid or not sec:
+        return None
+    body = urllib.parse.urlencode({
+        "grant_type": "client_credentials", "client_id": cid, "client_secret": sec,
+    }).encode()
+    req = urllib.request.Request(
+        "https://accounts.spotify.com/api/token", data=body,
+        headers={"Content-Type": "application/x-www-form-urlencoded"})
+    try:
+        with urllib.request.urlopen(req, timeout=15) as r:
+            return json.loads(r.read().decode()).get("access_token")
+    except Exception:
+        return None
+
+
+def spotify_tracks_batch(ids, token, chunk=50):
+    """Track object base (NON deprecato): year, popularity, isrc per ~tutti."""
+    out = {}
+    for i in range(0, len(ids), chunk):
+        group = ids[i:i + chunk]
+        req = urllib.request.Request(
+            "https://api.spotify.com/v1/tracks?ids=" + ",".join(group),
+            headers={"Authorization": f"Bearer {token}"})
+        try:
+            with urllib.request.urlopen(req, timeout=20) as r:
+                data = json.loads(r.read().decode())
+        except Exception:
+            time.sleep(2)
+            continue
+        for t in data.get("tracks") or []:
+            if not t:
+                continue
+            rec = {}
+            rd = ((t.get("album") or {}).get("release_date")) or ""
+            if len(rd) >= 4 and rd[:4].isdigit():
+                rec["year"] = int(rd[:4])
+            if t.get("popularity") is not None:
+                rec["popularity"] = t["popularity"]
+            isrc = (t.get("external_ids") or {}).get("isrc")
+            if isrc:
+                rec["isrc"] = isrc
+            out[t["id"]] = rec
+        print(f"  spotify {min(i + chunk, len(ids))}/{len(ids)}")
+        time.sleep(0.4)
     return out
 
 
@@ -145,16 +206,24 @@ def from_deezer(title, primary_artist, duration_sec):
         out["bpm"] = round(bpm)
     if det.get("isrc"):
         out["isrc"] = det["isrc"]
+    # rank Deezer (~0..1M) -> scala 0..100 comparabile alla popularity Spotify
+    rank = det.get("rank") or best.get("rank")
+    if rank:
+        out["popularity"] = min(100, round(rank / 10000))
     return out
 
 
-def enrich_one(track, sources, recc):
-    rec = dict(recc or {})  # features ReccoBeats già pre-scaricate (batch)
-    if "deezer" in sources:
+def enrich_one(track, sources, recc, spot):
+    # priorita': ReccoBeats (audio) > Spotify tracks (year/popularity/isrc,
+    # match esatto per ID) > Deezer (riempi-buchi via ricerca per durata)
+    rec = dict(recc or {})
+    for k, v in (spot or {}).items():
+        rec.setdefault(k, v)
+    if "deezer" in sources and ("year" not in rec or "bpm" not in rec):
         try:
             dz = from_deezer(track["title"], track["primary_artist"], track.get("duration_sec"))
             for k, v in dz.items():
-                rec.setdefault(k, v)  # Deezer riempie solo i buchi (es. year, bpm)
+                rec.setdefault(k, v)
         except Exception:
             pass
         time.sleep(0.2)
@@ -174,8 +243,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--in", dest="inp", default=IN_DEFAULT)
     ap.add_argument("--out", dest="out", default=OUT_DEFAULT)
-    ap.add_argument("--sources", default="reccobeats,deezer",
-                    help="fonti separate da virgola: reccobeats,deezer")
+    ap.add_argument("--sources", default="reccobeats,spotify,deezer",
+                    help="fonti separate da virgola: reccobeats,spotify,deezer")
     ap.add_argument("--limit", type=int, default=0, help="processa solo i primi N brani (spike)")
     ap.add_argument("--refresh", action="store_true", help="ignora la cache e riscarica")
     ap.add_argument("--dry-run", action="store_true", help="non riscrive l'archivio (solo cache+report)")
@@ -203,8 +272,18 @@ def main():
     # ReccoBeats: pre-scarica tutte le features in pochi batch (evita rate-limit)
     recc = reccobeats_batch(todo) if (todo and "reccobeats" in sources) else {}
 
+    # Spotify tracks (year/popularity/isrc, match esatto per ID) se ci sono
+    # le credenziali in ambiente: SPOTIFY_CLIENT_ID / SPOTIFY_CLIENT_SECRET
+    spot = {}
+    if todo and "spotify" in sources:
+        tok = spotify_token()
+        if tok:
+            spot = spotify_tracks_batch(todo, tok)
+        else:
+            print("  (spotify: credenziali assenti o login fallito — salto)")
+
     for n, sid in enumerate(todo, 1):
-        rec = enrich_one(uniq[sid], sources, recc.get(sid))
+        rec = enrich_one(uniq[sid], sources, recc.get(sid), spot.get(sid))
         cache[sid] = rec
         if n % 10 == 0 or n == len(todo):
             print(f"  ...{n}/{len(todo)}")

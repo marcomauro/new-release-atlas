@@ -79,9 +79,13 @@ def build(archive: dict, seed: int = 7) -> dict:
                 "genres": t.get("genres", ["unknown"]),
                 "genre_primary": t.get("genre_primary", "unknown"),
                 "playlists": set(),
-                # campi audio (presenti solo dopo enrich_audio.py); None se assenti
-                "audio": {k: t[k] for k in ("bpm", "key", "mode", "camelot", "energy", "valence", "year")
-                          if t.get(k) is not None},
+                # campi audio (presenti solo dopo enrich_audio.py); None se assenti.
+                # isrc resta nell'archivio (identita'), non serve al front-end.
+                "audio": {k: t[k] for k in (
+                    "bpm", "key", "mode", "camelot", "energy", "valence",
+                    "danceability", "acousticness", "instrumentalness", "loudness",
+                    "year", "popularity")
+                    if t.get(k) is not None},
             }
         by_id[tid]["playlists"].add(t["playlist_number"])
 
