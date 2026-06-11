@@ -5,7 +5,7 @@ import PlayerBar, { preloadSpotifyApi } from "./PlayerBar.jsx";
 import {
   completeSpotifyAuthIfNeeded, isSpotifyLoggedIn, loginSpotify, setPendingPlay, takePendingPlay,
 } from "./spotifyConnect.js";
-import { buildPlaylist, buildFromSeed, DEFAULT_LINK_WEIGHTS, DEFAULT_RANDOMNESS } from "./playlist.js";
+import { buildPlaylist, buildFromSeed, DEFAULT_LINK_WEIGHTS, DEFAULT_RANDOMNESS, DEFAULT_MOOD } from "./playlist.js";
 import WeightControls from "./WeightControls.jsx";
 import {
   SPOTLISTR_URL, playlistLinks, playlistCsv, exportFilename, copyText, downloadFile,
@@ -129,6 +129,8 @@ function MusicNetworkInner() {
     () => (GRAPH.meta && GRAPH.meta.linkWeights) || DEFAULT_LINK_WEIGHTS
   );
   const [randomness, setRandomness] = useState(DEFAULT_RANDOMNESS);
+  // mood/atmosfera per la generazione (influence 0 => ignorato, come prima)
+  const [mood, setMood] = useState(() => ({ influence: DEFAULT_MOOD.influence, target: { ...DEFAULT_MOOD.target } }));
   const [weightsOpen, setWeightsOpen] = useState(false);
 
   // --- ascolto continuo del percorso (mini-player persistente) ---
@@ -532,13 +534,13 @@ function MusicNetworkInner() {
   // --- chat: interpreta il messaggio e genera la playlist navigando il grafo ---
   const handleChat = useCallback((text) => {
     setChatInput("");
-    const res = buildPlaylist(GRAPH, text, weights, randomness);
+    const res = buildPlaylist(GRAPH, text, weights, randomness, mood);
     setMessages((m) => [...m, { role: "user", text }, { role: "assistant", res }]);
     setSelected(null);
     setActiveGenre(null);
     setQuery("");
     setPlaylist(res.ok && res.ids.length ? res.ids : null);
-  }, [weights, randomness]);
+  }, [weights, randomness, mood]);
 
   const pickTrack = useCallback((id) => {
     const n = GRAPH.nodes.find((x) => x.id === id);
@@ -549,7 +551,7 @@ function MusicNetworkInner() {
   // connessioni del grafo. Chiude il dettaglio e mostra il risultato in chat.
   const generateFromNode = useCallback((node) => {
     if (!node) return;
-    const res = buildFromSeed(GRAPH, node, 18, weights, randomness);
+    const res = buildFromSeed(GRAPH, node, 18, weights, randomness, mood);
     setMessages((m) => [
       ...m,
       { role: "user", text: `playlist from "${node.title}"` },
@@ -560,7 +562,7 @@ function MusicNetworkInner() {
     setQuery("");
     setChatOpen(true);
     setPlaylist(res.ok && res.ids.length ? res.ids : null);
-  }, [weights, randomness]);
+  }, [weights, randomness, mood]);
 
   const clearPlaylist = useCallback(() => setPlaylist(null), []);
 
@@ -1041,6 +1043,7 @@ function MusicNetworkInner() {
               <WeightControls
                 weights={weights} setWeights={setWeights}
                 randomness={randomness} setRandomness={setRandomness}
+                mood={mood} setMood={setMood}
               />
             </div>
           )}
@@ -1111,6 +1114,8 @@ function MusicNetworkInner() {
         setWeights={setWeights}
         randomness={randomness}
         setRandomness={setRandomness}
+        mood={mood}
+        setMood={setMood}
       />
 
       {/* Ascolto continuo del percorso: mini-player persistente che incatena i brani */}

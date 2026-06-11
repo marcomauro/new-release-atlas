@@ -1,13 +1,21 @@
 import React from "react";
-import { DEFAULT_LINK_WEIGHTS, DEFAULT_RANDOMNESS } from "./playlist.js";
+import { DEFAULT_LINK_WEIGHTS, DEFAULT_RANDOMNESS, DEFAULT_MOOD } from "./playlist.js";
 
 const INK = "#2b2724";
 const MUTED = "#9a938a";
 
-// Slider per i pesi dei legami + fattore di varieta'. Condiviso tra il pannello
-// del brano e la chat. Gerarchia default: genere primario > artista >
+const MOOD_ROWS = [
+  ["energy", "Energia"],
+  ["valence", "Positività"],
+  ["danceability", "Ballabilità"],
+  ["acousticness", "Acustica"],
+  ["instrumentalness", "Strumentale"],
+];
+
+// Slider per i pesi dei legami + varieta' + (opzionale) mood. Condiviso tra il
+// pannello del brano e la chat. Gerarchia default: genere primario > artista >
 // genere secondario > stessa playlist.
-export default function WeightControls({ weights, setWeights, randomness, setRandomness }) {
+export default function WeightControls({ weights, setWeights, randomness, setRandomness, mood, setMood }) {
   const rows = [
     ["primary", "Genere primario"],
     ["artist", "Artista"],
@@ -15,9 +23,12 @@ export default function WeightControls({ weights, setWeights, randomness, setRan
     ["playlist", "Stessa playlist"],
   ];
   const set = (k, v) => setWeights((w) => ({ ...w, [k]: v }));
+  const setInfluence = (v) => setMood((m) => ({ ...m, influence: v }));
+  const setTarget = (k, v) => setMood((m) => ({ ...m, target: { ...m.target, [k]: v } }));
   const reset = () => {
     setWeights({ ...DEFAULT_LINK_WEIGHTS });
     if (setRandomness) setRandomness(DEFAULT_RANDOMNESS);
+    if (setMood) setMood({ influence: DEFAULT_MOOD.influence, target: { ...DEFAULT_MOOD.target } });
   };
   return (
     <div style={{ padding: "10px 12px", background: "rgba(43,39,36,0.04)", borderRadius: 4 }}>
@@ -35,6 +46,24 @@ export default function WeightControls({ weights, setWeights, randomness, setRan
       {setRandomness && (
         <Row label="Varietà (random)" value={randomness ?? 0} min={0} max={1} step={0.05}
              onChange={setRandomness} decimals={2} />
+      )}
+
+      {mood && setMood && (
+        <div style={{ marginTop: 10, borderTop: `1px solid rgba(154,147,138,0.25)`, paddingTop: 8 }}>
+          <div style={{
+            fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: MUTED, marginBottom: 6,
+          }}>
+            Mood / atmosfera
+          </div>
+          <Row label="Influenza mood" value={mood.influence ?? 0} min={0} max={1} step={0.05}
+               onChange={setInfluence} decimals={2} />
+          <div style={{ opacity: mood.influence > 0 ? 1 : 0.4, transition: "opacity .15s" }}>
+            {MOOD_ROWS.map(([k, label]) => (
+              <Row key={k} label={label} value={mood.target?.[k] ?? 0.5} min={0} max={1} step={0.05}
+                   onChange={(v) => setTarget(k, v)} decimals={2} />
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );
