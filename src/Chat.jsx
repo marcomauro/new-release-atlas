@@ -57,6 +57,10 @@ export default function Chat({
         position: "absolute", bottom: `calc(${20 + bottomOffset}px + env(safe-area-inset-bottom))`, left: "50%",
         transform: "translateX(-50%)", zIndex: 30,
         width: "min(580px, 94vw)",
+        // Tetto d'altezza: il pannello (ancorato in basso) non deve mai superare
+        // il viewport, altrimenti l'header con ✕/⚖ esce sopra lo schermo e su
+        // mobile non si riesce più a chiudere i pesi. La lista messaggi si comprime.
+        maxHeight: `calc(100dvh - ${32 + bottomOffset}px - env(safe-area-inset-bottom))`,
         fontFamily: font,
         background: "rgba(255,255,255,0.95)",
         backdropFilter: "blur(8px)",
@@ -68,7 +72,7 @@ export default function Chat({
       {/* header */}
       <div
         style={{
-          display: "flex", alignItems: "center", gap: 8,
+          display: "flex", alignItems: "center", gap: 8, flexShrink: 0,
           padding: "10px 14px", borderBottom: `1px solid rgba(154,147,138,0.3)`,
         }}
       >
@@ -95,7 +99,7 @@ export default function Chat({
       </div>
 
       {showWeights && setWeights && (
-        <div style={{ padding: "10px 14px", borderBottom: `1px solid rgba(154,147,138,0.3)` }}>
+        <div style={{ padding: "10px 14px", borderBottom: `1px solid rgba(154,147,138,0.3)`, flexShrink: 0, maxHeight: "50vh", overflowY: "auto" }}>
           <WeightControls
             weights={weights} setWeights={setWeights}
             randomness={randomness} setRandomness={setRandomness}
@@ -104,7 +108,7 @@ export default function Chat({
       )}
 
       {/* messaggi */}
-      <div ref={bodyRef} style={{ maxHeight: "46vh", overflowY: "auto", padding: "12px 14px" }}>
+      <div ref={bodyRef} style={{ flex: "1 1 auto", minHeight: 0, maxHeight: "46vh", overflowY: "auto", padding: "12px 14px" }}>
         {messages.length === 0 && (
           <div style={{ fontSize: 12.5, color: MUTED, lineHeight: 1.6 }}>
             Type a genre, mood, artist, or number of tracks. Examples:
@@ -135,7 +139,7 @@ export default function Chat({
 
       {/* suggerimenti (solo all'inizio) */}
       {messages.length === 0 && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, padding: "0 14px 10px" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, padding: "0 14px 10px", flexShrink: 0 }}>
           {SUGGESTIONS.map((s) => (
             <button key={s} onClick={() => onSubmit(s)} style={chip}>
               {s}
@@ -145,7 +149,7 @@ export default function Chat({
       )}
 
       {/* input */}
-      <form onSubmit={submit} style={{ display: "flex", gap: 8, padding: "10px 14px", borderTop: `1px solid rgba(154,147,138,0.3)` }}>
+      <form onSubmit={submit} style={{ display: "flex", gap: 8, padding: "10px 14px", borderTop: `1px solid rgba(154,147,138,0.3)`, flexShrink: 0 }}>
         <input
           value={value}
           onChange={(e) => onChange(e.target.value)}
