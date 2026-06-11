@@ -60,6 +60,15 @@ const ACCENT = "#1fb6e8";
 
 const gColor = (g) => GENRE_COLOR[g] || MUTED;
 
+// Parametri di mood (0–1) mostrati come barrette nel pannello dettaglio.
+const MOOD_PARAMS = [
+  ["energy", "Energy"],
+  ["valence", "Valence"],
+  ["danceability", "Danceability"],
+  ["acousticness", "Acousticness"],
+  ["instrumentalness", "Instrumental"],
+];
+
 // Forza di coesione "a cluster": ogni tick spinge i nodi che condividono la
 // stessa chiave (es. genere, oppure genere+artista) verso il loro centroide.
 // Usata per compattare i cluster di genere e avvicinare i brani dello stesso
@@ -923,9 +932,67 @@ function MusicNetworkInner() {
             }}
           >
             Duration {selected.duration} · {selected.degree} links
+            {selected.bpm != null && <> · {selected.bpm} BPM</>}
             <br />
             Playlists {selected.playlists.map((p) => "#" + p).join(", ")}
           </div>
+
+          {/* Atmosfera: mood + parametri (energy/valence/…) + subgenres */}
+          {(selected.mood?.length ||
+            selected.subgenres?.length ||
+            MOOD_PARAMS.some(([k]) => selected[k] != null)) && (
+            <div style={{ marginTop: 16 }}>
+              {selected.mood?.length > 0 && (
+                <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }}>
+                  {selected.mood.map((m) => (
+                    <span
+                      key={m}
+                      style={{
+                        fontSize: 10,
+                        padding: "2px 8px",
+                        borderRadius: 10,
+                        background: "rgba(43,39,36,0.06)",
+                        color: INK,
+                        border: `1px solid rgba(154,147,138,0.45)`,
+                        letterSpacing: "0.02em",
+                      }}
+                    >
+                      {m}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {MOOD_PARAMS.map(([key, label]) =>
+                selected[key] != null ? (
+                  <div key={key} style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 5 }}>
+                    <span
+                      style={{
+                        fontSize: 9.5,
+                        color: MUTED,
+                        width: 104,
+                        whiteSpace: "nowrap",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.04em",
+                      }}
+                    >
+                      {label}
+                    </span>
+                    <div style={{ flex: 1, height: 5, background: "rgba(154,147,138,0.25)", borderRadius: 3, overflow: "hidden" }}>
+                      <div style={{ width: `${Math.round(selected[key] * 100)}%`, height: "100%", background: INK }} />
+                    </div>
+                    <span style={{ fontSize: 10, color: MUTED, width: 22, textAlign: "right" }}>
+                      {Math.round(selected[key] * 100)}
+                    </span>
+                  </div>
+                ) : null
+              )}
+              {selected.subgenres?.length > 0 && (
+                <div style={{ fontSize: 11, color: MUTED, marginTop: 12, lineHeight: 1.5 }}>
+                  {selected.subgenres.join(" · ")}
+                </div>
+              )}
+            </div>
+          )}
           <div style={{ display: "flex", gap: 8, marginTop: 16, flexWrap: "wrap" }}>
             <a
               href={selected.url}
