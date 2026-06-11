@@ -16,7 +16,7 @@ const SUGGESTIONS = [
 export default function Chat({
   open, setOpen, messages, value, onChange, onSubmit, onClear, onPick,
   onExport, genreColor, hasPlaylist, bottomOffset = 0,
-  weights, setWeights, randomness, setRandomness,
+  weights, setWeights, randomness, setRandomness, mood, setMood,
 }) {
   const bodyRef = useRef(null);
   const [showWeights, setShowWeights] = useState(false);
@@ -103,6 +103,7 @@ export default function Chat({
           <WeightControls
             weights={weights} setWeights={setWeights}
             randomness={randomness} setRandomness={setRandomness}
+            mood={mood} setMood={setMood}
           />
         </div>
       )}

@@ -217,6 +217,94 @@ function fmtDur(sec) {
 // Fattore random di default per la varieta' (0 = deterministico, 1 = molto vario).
 export const DEFAULT_RANDOMNESS = 0.4;
 
+// --- Mood / atmosfera ------------------------------------------------------
+// Parametri 0–1 sui nodi (energy/valence/danceability/acousticness/
+// instrumentalness). Guidano la generazione SENZA toccare il grafo: sono un
+// termine di ri-ordinamento (vicinanza a un target), non aggiungono legami.
+export const DEFAULT_MOOD = {
+  influence: 0,
+  target: { energy: 0.5, valence: 0.5, danceability: 0.5, acousticness: 0.5, instrumentalness: 0.5 },
+};
+const MOOD_DIMS = ["energy", "valence", "danceability", "acousticness", "instrumentalness"];
+const MOOD_W = 2.5; // scala del termine mood, comparabile ai pesi dei legami
+
+// parole-chiave (IT/EN) che spingono una dimensione verso alto/basso
+const MOOD_PARAM_CUES = {
+  energy: {
+    hi: ["energetic", "energy", "upbeat", "hype", "pump", "driving", "intens", "energic", "carica", "potente", "spinta", "adrenalin"],
+    lo: ["calm", "chill", "relaxed", "mellow", "gentle", "quiet", "calmo", "tranquill", "rilassant", "morbid", "delicat", "soffuso"],
+  },
+  valence: {
+    hi: ["happy", "uplifting", "bright", "sunny", "joyful", "positive", "feel good", "allegro", "solare", "felice", "positiv", "luminos", "gioios"],
+    lo: ["sad", "melanchol", "dark", "moody", "somber", "wistful", "malinconic", "triste", "cupo", "nostalgic", "tetro", "agrodolce"],
+  },
+  danceability: {
+    hi: ["danc", "groovy", "funky", "ballabil", "ballare", "groove", "danzant", "ritmat"],
+    lo: ["drone", "beatless", "rarefatt", "atmosferic"],
+  },
+  acousticness: {
+    hi: ["acoustic", "unplugged", "acustic", "suoni veri"],
+    lo: ["synth", "sintetic", "digitale"],
+  },
+  instrumentalness: {
+    hi: ["instrumental", "no vocals", "strumental", "senza voce", "senza parole"],
+    lo: ["vocal", "sung", "lyrics", "vocale", "cantat", "parole"],
+  },
+};
+
+function detectMoodParams(msg) {
+  const target = {};
+  let any = false;
+  for (const dim of MOOD_DIMS) {
+    const cue = MOOD_PARAM_CUES[dim];
+    if (cue.hi.some((k) => msg.includes(k))) { target[dim] = 0.85; any = true; }
+    else if (cue.lo.some((k) => msg.includes(k))) { target[dim] = 0.15; any = true; }
+  }
+  return { target, any };
+}
+
+// Il testo (se contiene parole di mood) ha la precedenza sui cursori manuali;
+// altrimenti valgono i cursori. influence 0 => mood ignorato (comportamento base).
+function effectiveMood(manualMood, msg) {
+  const nl = detectMoodParams(msg);
+  if (nl.any) {
+    const target = {};
+    for (const d of MOOD_DIMS) target[d] = nl.target[d] != null ? nl.target[d] : null;
+    return { influence: Math.max(0.6, (manualMood && manualMood.influence) || 0), target };
+  }
+  if (manualMood && manualMood.influence > 0)
+    return { influence: manualMood.influence, target: { ...manualMood.target } };
+  return { influence: 0, target: {} };
+}
+
+// vicinanza 0–1 di un nodo al target di mood (media sulle dimensioni specificate)
+function moodScore(n, mood) {
+  if (!mood || !mood.influence) return 0;
+  let sum = 0, k = 0;
+  for (const d of MOOD_DIMS) {
+    const t = mood.target[d];
+    if (t == null || n[d] == null) continue;
+    sum += 1 - Math.abs(n[d] - t);
+    k++;
+  }
+  return k ? sum / k : 0;
+}
+const moodTerm = (n, mood) => (mood && mood.influence ? MOOD_W * mood.influence * moodScore(n, mood) : 0);
+
+const MOOD_HI = { energy: "energico", valence: "positivo", danceability: "ballabile", acousticness: "acustico", instrumentalness: "strumentale" };
+const MOOD_LO = { energy: "calmo", valence: "malinconico", danceability: "rilassato", acousticness: "elettronico", instrumentalness: "vocale" };
+function moodLabel(mood) {
+  if (!mood || !mood.influence) return "";
+  const parts = [];
+  for (const d of MOOD_DIMS) {
+    const t = mood.target[d];
+    if (t == null) continue;
+    if (t >= 0.6) parts.push(MOOD_HI[d]);
+    else if (t <= 0.4) parts.push(MOOD_LO[d]);
+  }
+  return parts.join(", ");
+}
+
 // ordina un insieme di id in un "percorso" coerente (nearest-neighbor sui link).
 // Regola: mai lo stesso artista in due posizioni consecutive (se evitabile).
 function routeOrder(ids, adj, byId, startId) {
@@ -259,11 +347,13 @@ function tracksOf(ids, byId) {
   });
 }
 
-export function buildPlaylist(graph, rawMessage, weights, randomness = DEFAULT_RANDOMNESS) {
+export function buildPlaylist(graph, rawMessage, weights, randomness = DEFAULT_RANDOMNESS, moodArg) {
   const msg = norm(rawMessage);
   const byId = new Map(graph.nodes.map((n) => [n.id, n]));
   const adj = buildAdjacency(graph, weights);
   const size = parseSize(msg);
+  // mood effettivo: dal testo (parole di mood) o dai cursori manuali
+  const moodCfg = effectiveMood(moodArg, msg);
 
   const { explicit, mood, moodName } = detectGenres(msg);
   const seed = findSeed(msg, graph, { explicit, mood });
@@ -293,7 +383,7 @@ export function buildPlaylist(graph, rawMessage, weights, randomness = DEFAULT_R
         const links = adj.get(cand.id) || new Map();
         for (const cid of chosen) aff += links.get(cid) || 0;
         const gb = target ? (target.has(cand.genre) ? 0.8 : inTarget(cand) ? 0.4 : 0) : 0;
-        const score = aff + gb + 0.04 * (cand.degree / maxDeg) + randomness * 1.5 * Math.random();
+        const score = aff + gb + 0.04 * (cand.degree / maxDeg) + moodTerm(cand, moodCfg) + randomness * 1.5 * Math.random();
         if (score > bestScore && (aff > 0 || gb > 0)) { bestScore = score; best = cand; }
       }
       if (!best) {
@@ -317,7 +407,7 @@ export function buildPlaylist(graph, rawMessage, weights, randomness = DEFAULT_R
     const scored = pool
       .map((n) => ({
         n,
-        s: (target.has(n.genre) ? 2 : 1) + (n.degree / maxDeg) + randomness * 1.5 * Math.random(),
+        s: (target.has(n.genre) ? 2 : 1) + (n.degree / maxDeg) + moodTerm(n, moodCfg) + randomness * 1.5 * Math.random(),
       }))
       .sort((a, b) => b.s - a.s);
     // round-robin per genere richiesto, con diversita d'artista
@@ -356,8 +446,11 @@ export function buildPlaylist(graph, rawMessage, weights, randomness = DEFAULT_R
       if (!byComm.has(n.community)) byComm.set(n.community, []);
       byComm.get(n.community).push(n);
     });
-    for (const list of byComm.values())
-      list.sort((a, b) => (b.degree - a.degree) + (Math.random() - Math.random()) * randomness * 8);
+    const discScore = (n) => n.degree / maxDeg + moodTerm(n, moodCfg) + (Math.random() - Math.random()) * randomness * 3;
+    for (const list of byComm.values()) {
+      const sc = new Map(list.map((n) => [n.id, discScore(n)]));
+      list.sort((a, b) => sc.get(b.id) - sc.get(a.id));
+    }
     const comms = [...byComm.keys()].sort((a, b) => a - b);
     let progress = true;
     while (chosen.length < size && progress) {
@@ -376,6 +469,9 @@ export function buildPlaylist(graph, rawMessage, weights, randomness = DEFAULT_R
     theme = "discovery mix";
     interpretation = "no genre/artist recognized → a mix across all clusters";
   }
+
+  const mlabel = moodLabel(moodCfg);
+  if (mlabel) interpretation += ` · mood: ${mlabel}`;
 
   const tracks = tracksOf(chosen, byId);
   const totalSeconds = tracks.reduce((s, t) => s + parseDur(t.duration), 0);
@@ -397,7 +493,7 @@ export function buildPlaylist(graph, rawMessage, weights, randomness = DEFAULT_R
 // Costruisce una playlist usando un NODO come seed, crescendo SOLO lungo le
 // connessioni del grafo (artista/genere/co-playlist condivisi). Usata dal
 // pannello di dettaglio: "Generate playlist" dal brano selezionato.
-export function buildFromSeed(graph, seedNode, size = 18, weights, randomness = DEFAULT_RANDOMNESS) {
+export function buildFromSeed(graph, seedNode, size = 18, weights, randomness = DEFAULT_RANDOMNESS, mood) {
   if (!seedNode)
     return { ok: false, ids: [], tracks: [], totalSeconds: 0, totalLabel: "", theme: "", interpretation: "", note: "" };
 
@@ -419,7 +515,7 @@ export function buildFromSeed(graph, seedNode, size = 18, weights, randomness = 
       const links = adj.get(cand.id) || new Map();
       for (const cid of chosen) aff += links.get(cid) || 0;
       if (aff <= 0) continue; // segui SOLO le connessioni del grafo
-      const score = aff + 0.04 * (cand.degree / maxDeg) + randomness * 1.5 * Math.random();
+      const score = aff + 0.04 * (cand.degree / maxDeg) + moodTerm(cand, mood) + randomness * 1.5 * Math.random();
       if (score > bestScore) { bestScore = score; best = cand; }
     }
     if (!best) {
@@ -433,6 +529,7 @@ export function buildFromSeed(graph, seedNode, size = 18, weights, randomness = 
   }
   chosen = routeOrder(chosen, adj, byId, seedNode.id);
 
+  const ml = moodLabel(mood);
   const tracks = tracksOf(chosen, byId);
   const totalSeconds = tracks.reduce((s, t) => s + parseDur(t.duration), 0);
   return {
@@ -442,7 +539,7 @@ export function buildFromSeed(graph, seedNode, size = 18, weights, randomness = 
     totalSeconds,
     totalLabel: fmtDur(totalSeconds),
     theme: seedNode.title,
-    interpretation: `from "${seedNode.title}" — ${seedNode.artist}, via graph connections`,
+    interpretation: `from "${seedNode.title}" — ${seedNode.artist}, via graph connections` + (ml ? ` · mood: ${ml}` : ""),
     note:
       `${tracks.length} tracks · ${fmtDur(totalSeconds)} — built from "${seedNode.title}" by ${seedNode.artist}, ` +
       `following the graph connections (shared artist / genre). Highlighted on the map in listening order.`,
