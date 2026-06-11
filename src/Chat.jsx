@@ -14,8 +14,8 @@ const SUGGESTIONS = [
 ];
 
 export default function Chat({
-  open, setOpen, messages, value, onChange, onSubmit, onClear, onPick,
-  onExport, genreColor, hasPlaylist, bottomOffset = 0,
+  open, setOpen, messages, value, onChange, onSubmit, onPick,
+  onExport, genreColor, bottomOffset = 0,
   weights, setWeights, randomness, setRandomness, mood, setMood,
 }) {
   const bodyRef = useRef(null);
@@ -85,11 +85,6 @@ export default function Chat({
             <button onClick={() => setShowWeights((v) => !v)} title="Adjust route weights"
               style={{ ...iconBtn, background: showWeights ? "rgba(43,39,36,0.08)" : "transparent" }}>
               ⚖ weights
-            </button>
-          )}
-          {hasPlaylist && (
-            <button onClick={onClear} title="Remove highlight" style={iconBtn}>
-              clear
             </button>
           )}
           <button onClick={() => setOpen(false)} title="Close" style={iconBtn}>

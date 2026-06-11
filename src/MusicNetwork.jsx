@@ -1168,11 +1168,9 @@ function MusicNetworkInner() {
         value={chatInput}
         onChange={setChatInput}
         onSubmit={handleChat}
-        onClear={clearPlaylist}
         onPick={pickTrack}
         onExport={handleExport}
         genreColor={gColor}
-        hasPlaylist={!!playlist}
         bottomOffset={playTracks.length ? 132 : 0}
         weights={weights}
         setWeights={setWeights}
