@@ -107,13 +107,13 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile }
               return;
             } catch (e2) { /* fallthrough */ }
           }
-          setMsg("Apri Spotify sul device e avvia un brano un istante, poi premi ⟳.");
+          setMsg("Open Spotify on the device and play a track for a moment, then press ⟳.");
         } else if (e.status === 403) {
-          setMsg("La riproduzione completa richiede Spotify Premium.");
+          setMsg("Full playback requires Spotify Premium.");
         } else if (e.status === 401) {
-          setMsg("Sessione Spotify scaduta — riconnetti.");
+          setMsg("Spotify session expired — reconnect.");
         } else {
-          setMsg("Impossibile avviare la riproduzione su Spotify.");
+          setMsg("Couldn't start playback on Spotify.");
         }
       }
     },
@@ -167,24 +167,24 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile }
   return (
     <Shell bottomGap={bottomGap}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 12px" }}>
-        <span title="Riproduzione su Spotify" style={{ color: GREEN, fontSize: 11, fontWeight: 600, whiteSpace: "nowrap" }}>● Spotify</span>
-        {many && <button onClick={() => setIndex(Math.max(0, shown - 1))} disabled={shown === 0} title="Precedente" style={navBtn}>‹</button>}
-        <button onClick={toggle} title={paused ? "Riprendi" : "Pausa"} style={navBtn}>{paused ? "▶" : "❚❚"}</button>
-        {many && <button onClick={() => setIndex(Math.min(tracks.length - 1, shown + 1))} disabled={shown === tracks.length - 1} title="Successivo" style={navBtn}>›</button>}
+        <span title="Playing on Spotify" style={{ color: GREEN, fontSize: 11, fontWeight: 600, whiteSpace: "nowrap" }}>● Spotify</span>
+        {many && <button onClick={() => setIndex(Math.max(0, shown - 1))} disabled={shown === 0} title="Previous" style={navBtn}>‹</button>}
+        <button onClick={toggle} title={paused ? "Resume" : "Pause"} style={navBtn}>{paused ? "▶" : "❚❚"}</button>
+        {many && <button onClick={() => setIndex(Math.min(tracks.length - 1, shown + 1))} disabled={shown === tracks.length - 1} title="Next" style={navBtn}>›</button>}
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontSize: 12.5, color: INK, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
             {cur.title}<span style={{ color: MUTED }}> — {cur.artist}</span>
           </div>
           <div style={{ fontSize: 10.5, color: MUTED, marginTop: 1 }}>
-            brano intero{many ? ` · percorso ${shown + 1}/${tracks.length}` : ""}
+            full track{many ? ` · route ${shown + 1}/${tracks.length}` : ""}
           </div>
         </div>
-        <button onClick={onClose} title="Chiudi player" style={navBtn}>✕</button>
+        <button onClick={onClose} title="Close player" style={navBtn}>✕</button>
       </div>
 
       {/* selettore device "Riproduci su…" */}
       <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 10px" }}>
-        <span style={{ fontSize: 11, color: MUTED, whiteSpace: "nowrap" }}>Riproduci su</span>
+        <span style={{ fontSize: 11, color: MUTED, whiteSpace: "nowrap" }}>Play on</span>
         <select
           value={deviceId || ""}
           onChange={(e) => onPickDevice(e.target.value)}
@@ -194,20 +194,20 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile }
             borderRadius: 6, padding: "5px 8px",
           }}
         >
-          {devices.length === 0 && <option value="">nessun device — apri Spotify</option>}
+          {devices.length === 0 && <option value="">no device — open Spotify</option>}
           {devices.map((d) => (
             <option key={d.id} value={d.id}>
-              {d.name}{d.type === "Smartphone" ? " (telefono)" : ""}{d.is_active ? " ·attivo" : ""}
+              {d.name}{d.type === "Smartphone" ? " (phone)" : ""}{d.is_active ? " ·active" : ""}
             </option>
           ))}
         </select>
-        <button onClick={refreshDevices} title="Aggiorna device" style={navBtn}>⟳</button>
+        <button onClick={refreshDevices} title="Refresh devices" style={navBtn}>⟳</button>
       </div>
 
       {msg && (
         <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 10px", fontSize: 11, color: "#9a5b3a" }}>
           <span style={{ flex: 1 }}>{msg}</span>
-          <button onClick={() => playFrom(shown)} title="Riprova" style={navBtn}>⟳</button>
+          <button onClick={() => playFrom(shown)} title="Retry" style={navBtn}>⟳</button>
         </div>
       )}
     </Shell>
@@ -279,20 +279,20 @@ function EmbedPlayer({ tracks, index, setIndex, onClose, bottomGap, onLogin }) {
   return (
     <Shell bottomGap={bottomGap}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 10px" }}>
-        {many && <button onClick={() => setIndex(Math.max(0, index - 1))} disabled={index === 0} title="Precedente" style={navBtn}>‹</button>}
+        {many && <button onClick={() => setIndex(Math.max(0, index - 1))} disabled={index === 0} title="Previous" style={navBtn}>‹</button>}
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontSize: 12.5, color: INK, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
             {cur.title}<span style={{ color: MUTED }}> — {cur.artist}</span>
           </div>
-          {many && <div style={{ fontSize: 10.5, color: MUTED, marginTop: 1 }}>percorso · {index + 1}/{tracks.length}</div>}
+          {many && <div style={{ fontSize: 10.5, color: MUTED, marginTop: 1 }}>route · {index + 1}/{tracks.length}</div>}
         </div>
-        {many && <button onClick={() => setIndex(Math.min(tracks.length - 1, index + 1))} disabled={index === tracks.length - 1} title="Successivo" style={navBtn}>›</button>}
-        <button onClick={onClose} title="Chiudi player" style={navBtn}>✕</button>
+        {many && <button onClick={() => setIndex(Math.min(tracks.length - 1, index + 1))} disabled={index === tracks.length - 1} title="Next" style={navBtn}>›</button>}
+        <button onClick={onClose} title="Close player" style={navBtn}>✕</button>
       </div>
       <div ref={hostRef} style={{ width: "100%" }} />
       {onLogin && (
-        <button onClick={onLogin} title="Riproduci i brani interi (richiede Spotify Premium)" style={fullBtn}>
-          ♫ Ascolta intero · Spotify Premium
+        <button onClick={onLogin} title="Play full tracks (requires Spotify Premium)" style={fullBtn}>
+          ♫ Listen full · Spotify Premium
         </button>
       )}
     </Shell>

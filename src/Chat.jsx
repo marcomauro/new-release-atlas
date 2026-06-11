@@ -82,9 +82,9 @@ export default function Chat({
         <span style={{ fontSize: 11, color: MUTED }}>— describe what you want to hear</span>
         <span style={{ marginLeft: "auto", display: "flex", gap: 4 }}>
           {setWeights && (
-            <button onClick={() => setShowWeights((v) => !v)} title="Regola i pesi del percorso"
+            <button onClick={() => setShowWeights((v) => !v)} title="Adjust route weights"
               style={{ ...iconBtn, background: showWeights ? "rgba(43,39,36,0.08)" : "transparent" }}>
-              ⚖ pesi
+              ⚖ weights
             </button>
           )}
           {hasPlaylist && (
@@ -92,7 +92,7 @@ export default function Chat({
               clear
             </button>
           )}
-          <button onClick={() => setOpen(false)} title="Chiudi" style={iconBtn}>
+          <button onClick={() => setOpen(false)} title="Close" style={iconBtn}>
             ✕
           </button>
         </span>
@@ -128,7 +128,7 @@ export default function Chat({
               {m.link && (
                 <a href={m.link} target="_blank" rel="noopener noreferrer"
                    style={{ color: PAPER, background: INK, padding: "4px 10px", borderRadius: 12, textDecoration: "none", fontSize: 11.5, fontWeight: 500, whiteSpace: "nowrap" }}>
-                  {m.linkLabel || "Apri ↗"}
+                  {m.linkLabel || "Open ↗"}
                 </a>
               )}
             </div>
