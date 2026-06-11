@@ -76,6 +76,17 @@ def build(archive: dict, seed: int = 7) -> dict:
     for t in tracks:
         tid = t["spotify_track_id"]
         if tid not in by_id:
+            mp = t.get("mood_parameters") or {}
+            audio = {k: t[k] for k in (
+                "bpm", "key", "mode", "camelot", "energy", "valence",
+                "danceability", "acousticness", "instrumentalness", "loudness",
+                "year", "popularity")
+                if t.get(k) is not None}
+            # mood_parameters (archivio arricchito): energy/valence/danceability/
+            # acousticness/instrumentalness sono annidati qui, non top-level.
+            for k in ("energy", "valence", "danceability", "acousticness", "instrumentalness"):
+                if mp.get(k) is not None and k not in audio:
+                    audio[k] = mp[k]
             by_id[tid] = {
                 "id": tid,
                 "title": t["title"],
@@ -87,13 +98,13 @@ def build(archive: dict, seed: int = 7) -> dict:
                 "genres": t.get("genres", ["unknown"]),
                 "genre_primary": t.get("genre_primary", "unknown"),
                 "playlists": set(),
-                # campi audio (presenti solo dopo enrich_audio.py); None se assenti.
+                # campi audio: mood_parameters arricchiti + eventuali audio feature.
                 # isrc resta nell'archivio (identita'), non serve al front-end.
-                "audio": {k: t[k] for k in (
-                    "bpm", "key", "mode", "camelot", "energy", "valence",
-                    "danceability", "acousticness", "instrumentalness", "loudness",
-                    "year", "popularity")
-                    if t.get(k) is not None},
+                "audio": audio,
+                # nuovi descrittori dell'archivio arricchito (soft se assenti)
+                "mood": t.get("mood") or [],
+                "subgenres": t.get("subgenres") or [],
+                "bpm_source": t.get("bpm_source"),
             }
         by_id[tid]["playlists"].add(t["playlist_number"])
 
@@ -201,6 +212,10 @@ def build(archive: dict, seed: int = 7) -> dict:
         "playlists": sorted(n["playlists"]), "degree": deg[n["id"]],
         # campi derivati (era, ponti, forma dal titolo, prominenza)
         **derived(n),
+        # nuovi descrittori (mood/subgenres/bpm_source) inclusi solo se presenti
+        **({"mood": n["mood"]} if n.get("mood") else {}),
+        **({"subgenres": n["subgenres"]} if n.get("subgenres") else {}),
+        **({"bpm_source": n["bpm_source"]} if n.get("bpm_source") else {}),
         # campi audio inclusi solo quando presenti (degradazione morbida)
         **n.get("audio", {}),
     } for n in nodes]
@@ -234,7 +249,8 @@ def main():
 
     inp = args.input
     if inp is None:
-        inp = next((c for c in ("data/spotify_archive_features.json",
+        inp = next((c for c in ("data/spotify_archive_enriched.json",
+                                "data/spotify_archive_features.json",
                                 "data/spotify_archive_genres.json") if os.path.exists(c)),
                    "data/spotify_archive_genres.json")
 
