@@ -132,11 +132,15 @@ function MusicNetworkInner() {
   // mood/atmosfera per la generazione (influence 0 => ignorato, come prima)
   const [mood, setMood] = useState(() => ({ influence: DEFAULT_MOOD.influence, target: { ...DEFAULT_MOOD.target } }));
   const [weightsOpen, setWeightsOpen] = useState(false);
+  // sezione mood/audio del pannello: parte chiusa ad ogni nuova selezione
+  const [moodOpen, setMoodOpen] = useState(false);
 
   // --- ascolto continuo del percorso (mini-player persistente) ---
   const [playIndex, setPlayIndex] = useState(0);
   // ogni nuovo percorso riparte dal primo brano
   useEffect(() => { setPlayIndex(0); }, [playlist]);
+  // ogni nuova selezione apre la scheda con la sezione mood/audio chiusa
+  useEffect(() => { setMoodOpen(false); }, [selected?.id]);
   const playTracks = useMemo(
     () =>
       (playlist || [])
@@ -245,33 +249,36 @@ function MusicNetworkInner() {
       .join("line")
       .attr("stroke-width", (d) => Math.min(2, 0.3 + d.weight * 0.1));
 
-    // Percorso della playlist generata: una linea che collega i brani
-    // nell'ordine d'ascolto. Disegnata sopra i link, sotto i nodi.
+    // Percorso della playlist generata: segmenti che collegano i brani
+    // nell'ordine d'ascolto. Disegnati sopra i link, sotto i nodi. Si
+    // assottigliano e sfumano dal primo all'ultimo brano, così la direzione
+    // del percorso è leggibile a colpo d'occhio.
     const route = g
-      .append("path")
+      .append("g")
       .attr("class", "mn-route")
       .attr("fill", "none")
       .attr("stroke", ACCENT)
-      .attr("stroke-opacity", 0)
-      .attr("stroke-width", 2.8)
-      .attr("stroke-linejoin", "round")
       .attr("stroke-linecap", "round")
       .style("pointer-events", "none");
 
     const drawRoute = () => {
       const pts = routeRef.current;
-      if (!pts || pts.length < 2) {
-        route.attr("d", null);
-        return;
-      }
-      route.attr(
-        "d",
-        d3
-          .line()
-          .x((d) => d.x)
-          .y((d) => d.y)
-          .curve(d3.curveCatmullRom.alpha(0.5))(pts)
-      );
+      const n = pts ? pts.length : 0;
+      const segs = n >= 2 ? d3.range(n - 1) : [];
+      const denom = Math.max(1, n - 2);
+      const seg = route.selectAll("line").data(segs);
+      seg.exit().remove();
+      seg
+        .enter()
+        .append("line")
+        .merge(seg)
+        .attr("x1", (i) => pts[i].x)
+        .attr("y1", (i) => pts[i].y)
+        .attr("x2", (i) => pts[i + 1].x)
+        .attr("y2", (i) => pts[i + 1].y)
+        // primo brano: tratto spesso e marcato → ultimo: sottile e sfumato
+        .attr("stroke-width", (i) => 3.6 - 2.6 * (i / denom))
+        .attr("stroke-opacity", (i) => 0.95 - 0.62 * (i / denom));
     };
 
     const node = g
@@ -419,6 +426,11 @@ function MusicNetworkInner() {
     const focusId = focus?.id;
     const selId = selected?.id; // solo il brano cliccato pulsa (non l'hover)
     const nbr = focusId ? neighbors.get(focusId) : null;
+    // brano attualmente in riproduzione nel percorso (evidenziato sul grafo)
+    const currentId =
+      !focusId && playlistSet && playlist && playlist.length
+        ? playlist[Math.min(playIndex, playlist.length - 1)]
+        : null;
 
     const dim = (d) => {
       if (matchSet && !matchSet.has(d.id)) return true;
@@ -444,17 +456,18 @@ function MusicNetworkInner() {
         return dim(d) ? "none" : "auto";
       })
       .attr("stroke-width", (d) =>
-        d.id === focusId || playlistSet?.has(d.id) ? 2.4 : matchSet?.has(d.id) ? 2 : 1.2
+        d.id === currentId ? 3 : d.id === focusId || playlistSet?.has(d.id) ? 2.4 : matchSet?.has(d.id) ? 2 : 1.2
       )
       .attr("stroke", (d) =>
-        d.id === selId
+        d.id === selId || d.id === currentId
           ? ACCENT
           : d.id === focusId || matchSet?.has(d.id) || playlistSet?.has(d.id)
           ? INK
           : PAPER
       );
-    // Alone ciano statico sul brano selezionato (vedi .mn-node-selected nel CSS).
+    // Alone ciano statico: sul brano selezionato e su quello in riproduzione.
     node.classed("mn-node-selected", (d) => d.id === selId);
+    node.classed("mn-node-playing", (d) => d.id === currentId);
 
     link.attr("stroke-opacity", (d) => {
       const s = d.source.id ?? d.source;
@@ -482,9 +495,9 @@ function MusicNetworkInner() {
     // Nascondi il percorso della playlist mentre un nodo e' in focus (dettaglio).
     if (simRef.current.route) {
       const showRoute = !focusId && playlistSet && playlistSet.size > 1;
-      simRef.current.route.attr("stroke-opacity", showRoute ? 0.92 : 0);
+      simRef.current.route.attr("display", showRoute ? null : "none");
     }
-  }, [selected, hovered, matchSet, activeGenre, neighbors, playlistSet]);
+  }, [selected, hovered, matchSet, activeGenre, neighbors, playlistSet, playlist, playIndex]);
 
   // Aggiorna il percorso della playlist e inquadra i suoi nodi (solo al cambio).
   useEffect(() => {
@@ -493,7 +506,7 @@ function MusicNetworkInner() {
     const pts = (playlist || []).map((id) => nodesById.get(id)).filter(Boolean);
     routeRef.current = pts;
     drawRoute();
-    route.attr("stroke-opacity", pts.length > 1 ? 0.92 : 0);
+    route.attr("display", pts.length > 1 ? null : "none");
     if (pts.length) {
       const xs = pts.map((p) => p.x);
       const ys = pts.map((p) => p.y);
@@ -617,7 +630,7 @@ function MusicNetworkInner() {
            animato su un elemento SVG forza repaint continui dell'intera tela e fa
            sfarfallare i pannelli con backdrop-filter: il glow fisso viene dipinto
            una sola volta alla selezione, quindi nessun repaint in loop. */
-        .mn-node-selected {
+        .mn-node-selected, .mn-node-playing {
           stroke-width: 3.5px;
           filter: drop-shadow(0 0 9px rgba(31,182,232,0.95));
         }
@@ -939,11 +952,24 @@ function MusicNetworkInner() {
             Playlists {selected.playlists.map((p) => "#" + p).join(", ")}
           </div>
 
-          {/* Atmosfera: mood + parametri (energy/valence/…) + subgenres */}
+          {/* Atmosfera: mood + parametri + subgenres — nascosta di default,
+              si apre a richiesta per non affollare la scheda. */}
           {(selected.mood?.length ||
             selected.subgenres?.length ||
             MOOD_PARAMS.some(([k]) => selected[k] != null)) && (
-            <div style={{ marginTop: 16 }}>
+            <div style={{ marginTop: 14 }}>
+              <button
+                onClick={() => setMoodOpen((v) => !v)}
+                style={{
+                  fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase",
+                  color: MUTED, background: "transparent", border: "none",
+                  padding: 0, cursor: "pointer",
+                }}
+              >
+                {moodOpen ? "▾" : "▸"} Mood & audio
+              </button>
+              {moodOpen && (
+              <div style={{ marginTop: 10 }}>
               {selected.mood?.length > 0 && (
                 <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }}>
                   {selected.mood.map((m) => (
@@ -993,48 +1019,52 @@ function MusicNetworkInner() {
                   {selected.subgenres.join(" · ")}
                 </div>
               )}
+              </div>
+              )}
             </div>
           )}
-          <div style={{ display: "flex", gap: 8, marginTop: 16, flexWrap: "wrap" }}>
+          {/* Azioni: su mobile stanno su un'unica riga (etichette compatte). */}
+          <div style={{ display: "flex", gap: isMobile ? 6 : 8, marginTop: 16, flexWrap: isMobile ? "nowrap" : "wrap" }}>
             <a
               href={selected.url}
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                fontSize: 12,
-                color: PAPER,
-                background: INK,
-                padding: "7px 14px",
-                borderRadius: 2,
-                textDecoration: "none",
+                flex: isMobile ? 1 : undefined, minWidth: 0,
+                textAlign: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+                fontSize: 12, color: PAPER, background: INK,
+                padding: isMobile ? "9px 8px" : "7px 14px",
+                borderRadius: 2, textDecoration: "none",
               }}
             >
-              Open in Spotify ↗
+              {isMobile ? "Spotify ↗" : "Open in Spotify ↗"}
             </a>
             <button
               onClick={() => generateFromNode(selected)}
               title="Build a playlist from this track's graph connections"
               style={{
-                fontSize: 12,
-                color: INK,
-                background: "transparent",
+                flex: isMobile ? 1 : undefined, minWidth: 0,
+                whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+                fontSize: 12, color: INK, background: "transparent",
                 border: `1px solid ${INK}`,
-                padding: "7px 14px",
-                borderRadius: 2,
-                cursor: "pointer",
+                padding: isMobile ? "9px 8px" : "7px 14px",
+                borderRadius: 2, cursor: "pointer",
               }}
             >
-              ♫ Generate playlist
+              {isMobile ? "♫ Generate" : "♫ Generate playlist"}
             </button>
             <button
               onClick={() => setWeightsOpen((v) => !v)}
               title="Adjust the link weights used to build the route"
               style={{
+                flex: isMobile ? "0 0 auto" : undefined,
                 fontSize: 12, color: INK, background: weightsOpen ? "rgba(43,39,36,0.08)" : "transparent",
-                border: `1px solid ${MUTED}`, padding: "7px 12px", borderRadius: 2, cursor: "pointer",
+                border: `1px solid ${MUTED}`,
+                padding: isMobile ? "9px 11px" : "7px 12px",
+                borderRadius: 2, cursor: "pointer", whiteSpace: "nowrap",
               }}
             >
-              ⚖ weights
+              {isMobile ? "⚖" : "⚖ weights"}
             </button>
           </div>
 
