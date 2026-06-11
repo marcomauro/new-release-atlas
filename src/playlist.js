@@ -291,8 +291,8 @@ function moodScore(n, mood) {
 }
 const moodTerm = (n, mood) => (mood && mood.influence ? MOOD_W * mood.influence * moodScore(n, mood) : 0);
 
-const MOOD_HI = { energy: "energico", valence: "positivo", danceability: "ballabile", acousticness: "acustico", instrumentalness: "strumentale" };
-const MOOD_LO = { energy: "calmo", valence: "malinconico", danceability: "rilassato", acousticness: "elettronico", instrumentalness: "vocale" };
+const MOOD_HI = { energy: "energetic", valence: "positive", danceability: "danceable", acousticness: "acoustic", instrumentalness: "instrumental" };
+const MOOD_LO = { energy: "calm", valence: "melancholic", danceability: "mellow", acousticness: "electronic", instrumentalness: "vocal" };
 function moodLabel(mood) {
   if (!mood || !mood.influence) return "";
   const parts = [];

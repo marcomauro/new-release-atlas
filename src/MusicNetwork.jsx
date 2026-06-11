@@ -1028,13 +1028,13 @@ function MusicNetworkInner() {
             </button>
             <button
               onClick={() => setWeightsOpen((v) => !v)}
-              title="Regola i pesi dei legami usati per costruire il percorso"
+              title="Adjust the link weights used to build the route"
               style={{
                 fontSize: 12, color: INK, background: weightsOpen ? "rgba(43,39,36,0.08)" : "transparent",
                 border: `1px solid ${MUTED}`, padding: "7px 12px", borderRadius: 2, cursor: "pointer",
               }}
             >
-              ⚖ pesi
+              ⚖ weights
             </button>
           </div>
 
@@ -1157,13 +1157,13 @@ export default function MusicNetwork() {
   if (error)
     return (
       <div style={{ padding: 40, fontFamily: "Inter, sans-serif", color: "#c75b4a" }}>
-        Errore nel caricamento di graph.json: {error}
+        Error loading graph.json: {error}
       </div>
     );
   if (!ready)
     return (
       <div style={{ padding: 40, fontFamily: "Inter, sans-serif", color: "#9a938a" }}>
-        Caricamento della mappa…
+        Loading the map…
       </div>
     );
   return <MusicNetworkInner />;

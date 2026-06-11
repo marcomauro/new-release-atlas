@@ -5,11 +5,11 @@ const INK = "#2b2724";
 const MUTED = "#9a938a";
 
 const MOOD_ROWS = [
-  ["energy", "Energia"],
-  ["valence", "Positività"],
-  ["danceability", "Ballabilità"],
-  ["acousticness", "Acustica"],
-  ["instrumentalness", "Strumentale"],
+  ["energy", "Energy"],
+  ["valence", "Valence"],
+  ["danceability", "Danceability"],
+  ["acousticness", "Acousticness"],
+  ["instrumentalness", "Instrumental"],
 ];
 
 // Slider per i pesi dei legami + varieta' + (opzionale) mood. Condiviso tra il
@@ -17,10 +17,10 @@ const MOOD_ROWS = [
 // genere secondario > stessa playlist.
 export default function WeightControls({ weights, setWeights, randomness, setRandomness, mood, setMood }) {
   const rows = [
-    ["primary", "Genere primario"],
-    ["artist", "Artista"],
-    ["secondary", "Genere secondario"],
-    ["playlist", "Stessa playlist"],
+    ["primary", "Primary genre"],
+    ["artist", "Artist"],
+    ["secondary", "Secondary genre"],
+    ["playlist", "Same playlist"],
   ];
   const set = (k, v) => setWeights((w) => ({ ...w, [k]: v }));
   const setInfluence = (v) => setMood((m) => ({ ...m, influence: v }));
@@ -36,15 +36,15 @@ export default function WeightControls({ weights, setWeights, randomness, setRan
         fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: MUTED,
         marginBottom: 8, display: "flex", justifyContent: "space-between",
       }}>
-        <span>Pesi del percorso</span>
-        <span onClick={reset} style={{ cursor: "pointer", textDecoration: "underline" }}>ripristina</span>
+        <span>Route weights</span>
+        <span onClick={reset} style={{ cursor: "pointer", textDecoration: "underline" }}>reset</span>
       </div>
       {rows.map(([k, label]) => (
         <Row key={k} label={label} value={weights[k] ?? 0} min={0} max={5} step={0.1}
              onChange={(v) => set(k, v)} />
       ))}
       {setRandomness && (
-        <Row label="Varietà (random)" value={randomness ?? 0} min={0} max={1} step={0.05}
+        <Row label="Variety (random)" value={randomness ?? 0} min={0} max={1} step={0.05}
              onChange={setRandomness} decimals={2} />
       )}
 
@@ -53,9 +53,9 @@ export default function WeightControls({ weights, setWeights, randomness, setRan
           <div style={{
             fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: MUTED, marginBottom: 6,
           }}>
-            Mood / atmosfera
+            Mood
           </div>
-          <Row label="Influenza mood" value={mood.influence ?? 0} min={0} max={1} step={0.05}
+          <Row label="Mood influence" value={mood.influence ?? 0} min={0} max={1} step={0.05}
                onChange={setInfluence} decimals={2} />
           <div style={{ opacity: mood.influence > 0 ? 1 : 0.4, transition: "opacity .15s" }}>
             {MOOD_ROWS.map(([k, label]) => (
