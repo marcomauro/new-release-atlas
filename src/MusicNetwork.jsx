@@ -122,6 +122,9 @@ function MusicNetworkInner() {
   const [chatInput, setChatInput] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
   const routeRef = useRef([]); // datum dei nodi della playlist, per disegnare il percorso
+  // fonte dell'ultima playlist generata (testo chat o brano-seed): serve per
+  // rigenerarla con nuovi pesi/mood quando l'utente cambia i parametri.
+  const lastGenRef = useRef(null);
   const playlistSet = useMemo(() => (playlist ? new Set(playlist) : null), [playlist]);
 
   // --- pesi dei legami, regolabili a mano (default dalla pipeline) ---
@@ -552,6 +555,7 @@ function MusicNetworkInner() {
     setSelected(null);
     setActiveGenre(null);
     setQuery("");
+    if (res.ok && res.ids.length) lastGenRef.current = { kind: "chat", text };
     setPlaylist(res.ok && res.ids.length ? res.ids : null);
   }, [weights, randomness, mood]);
 
@@ -574,10 +578,40 @@ function MusicNetworkInner() {
     setActiveGenre(null);
     setQuery("");
     setChatOpen(true);
+    if (res.ok && res.ids.length) lastGenRef.current = { kind: "seed", node, size: 18 };
     setPlaylist(res.ok && res.ids.length ? res.ids : null);
   }, [weights, randomness, mood]);
 
   const clearPlaylist = useCallback(() => setPlaylist(null), []);
+
+  // Se cambio i parametri (pesi / varietà / mood) con una playlist attiva,
+  // rigenero a partire dalla stessa richiesta (testo chat o brano-seed) con i
+  // nuovi valori. Debounce: non ricalcola a ogni scatto dello slider, ma quando
+  // ci si ferma. Aggiorna anche l'ultima risposta in chat per restare coerente.
+  useEffect(() => {
+    const lg = lastGenRef.current;
+    if (!playlist || !lg) return;
+    const t = setTimeout(() => {
+      const res =
+        lg.kind === "seed"
+          ? buildFromSeed(GRAPH, lg.node, lg.size || 18, weights, randomness, mood)
+          : buildPlaylist(GRAPH, lg.text, weights, randomness, mood);
+      if (!res.ok || !res.ids.length) return;
+      setPlaylist(res.ids);
+      setMessages((msgs) => {
+        for (let i = msgs.length - 1; i >= 0; i--) {
+          if (msgs[i].role === "assistant") {
+            const copy = msgs.slice();
+            copy[i] = { ...copy[i], res };
+            return copy;
+          }
+        }
+        return msgs;
+      });
+    }, 400);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [weights, randomness, mood]);
 
   // --- export "senza setup": link Spotify esatti + CSV, poi Spotlistr/Spotify ---
   const sysMsg = useCallback((text, link, linkLabel) => {
