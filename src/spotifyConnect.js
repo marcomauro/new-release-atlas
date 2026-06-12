@@ -4,7 +4,10 @@
 // la nostra app fa da telecomando, l'audio esce dall'app Spotify.
 
 const CLIENT_ID = "90be0fb998cf44b3b3b6560cfd52c5d5";
-const SCOPES = "user-modify-playback-state user-read-playback-state";
+const SCOPES =
+  "user-modify-playback-state user-read-playback-state " +
+  "user-library-read user-library-modify " +
+  "playlist-modify-private playlist-modify-public";
 const REDIRECT_URI =
   typeof window !== "undefined" ? window.location.origin + import.meta.env.BASE_URL : "";
 const TOKEN_URL = "https://accounts.spotify.com/api/token";
@@ -211,4 +214,57 @@ export async function spotifyResume() {
 }
 export async function spotifyCurrentlyPlaying() {
   return apiCall("/me/player/currently-playing");
+}
+
+// Stato completo del player: device, progress_ms, item (con album.images +
+// duration_ms), is_playing, shuffle_state, repeat_state. 204 -> null.
+export async function spotifyState() {
+  return apiCall("/me/player");
+}
+export async function spotifyNext() {
+  return apiCall("/me/player/next", "POST");
+}
+export async function spotifyPrevious() {
+  return apiCall("/me/player/previous", "POST");
+}
+export async function spotifySeek(ms) {
+  return apiCall(`/me/player/seek?position_ms=${Math.max(0, Math.round(ms))}`, "PUT");
+}
+export async function spotifyShuffle(state) {
+  return apiCall(`/me/player/shuffle?state=${state ? "true" : "false"}`, "PUT");
+}
+// state: "off" | "context" | "track"
+export async function spotifyRepeat(state) {
+  return apiCall(`/me/player/repeat?state=${state}`, "PUT");
+}
+
+// ---- libreria / playlist (richiedono gli scope library/playlist) ----
+export async function spotifyTracksSaved(ids) {
+  const d = await apiCall(`/me/tracks/contains?ids=${ids.join(",")}`);
+  return d || [];
+}
+export async function spotifySaveTrack(id) {
+  return apiCall(`/me/tracks?ids=${id}`, "PUT");
+}
+export async function spotifyRemoveTrack(id) {
+  return apiCall(`/me/tracks?ids=${id}`, "DELETE");
+}
+export async function spotifyMe() {
+  return apiCall("/me");
+}
+// Crea una playlist (privata) con l'elenco di URI; ritorna { id, url }.
+export async function spotifyCreatePlaylist(name, uris, description = "") {
+  const me = await spotifyMe();
+  const pl = await apiCall(`/users/${me.id}/playlists`, "POST", {
+    name,
+    public: false,
+    description,
+  });
+  for (let i = 0; i < uris.length; i += 100) {
+    await apiCall(`/playlists/${pl.id}/tracks`, "POST", { uris: uris.slice(i, i + 100) });
+  }
+  return {
+    id: pl.id,
+    url: (pl.external_urls && pl.external_urls.spotify) || `https://open.spotify.com/playlist/${pl.id}`,
+  };
 }
