@@ -262,6 +262,11 @@ playlist]`, so the front-end can re-weight on the fly. The default weights
 
 ## Weekly workflow
 
+> **Adding playlists to the live map → see [`docs/ADDING_PLAYLISTS.md`](docs/ADDING_PLAYLISTS.md).**
+> The map is driven by the AI-enriched archive (`spotify_archive_enriched.json`), so
+> that doc is the current step-by-step. The pipeline below is the **classic
+> genre/audio enrichment** that produces the *fallback* archives.
+
 When a new New Release Playlist arrives:
 
 ```bash
