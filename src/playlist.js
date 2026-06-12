@@ -16,6 +16,7 @@ const GENRE_LABEL = {
   "alt": "Alt/Indie", "uk-jazz": "UK Jazz", "hip-hop": "Hip-Hop",
   "world": "World/Afro/Latin", "soulful-house": "Soulful House",
   "soul-funk": "Soul/Funk", "broken-beat": "Broken Beat",
+  "downtempo": "Downtempo",
   "classical": "Classical/Score", "unknown": "Unclassified",
 };
 
@@ -28,7 +29,8 @@ const GENRE_SYNONYMS = {
   "neo-soul": ["neo soul", "neo-soul", "neosoul", "r&b", "rnb", "rhythm and blues", "future soul"],
   "soul-funk": ["soul funk", "soul-funk", "funk", "disco", "boogie", "soul"],
   "hip-hop": ["hip hop", "hip-hop", "hiphop", "rap", "boom bap", "boom-bap", "trap", "conscious"],
-  "electronic": ["electronic", "elettronica", "elettronico", "techno", "idm", "ambient", "downtempo", "bass", "leftfield", "dub", "house music"],
+  "electronic": ["electronic", "elettronica", "elettronico", "techno", "idm", "ambient", "bass", "leftfield", "dub", "house music"],
+  "downtempo": ["downtempo", "trip-hop", "trip hop", "triphop", "lo-fi", "lofi", "chillout", "chill out"],
   "world": ["world", "afrobeat", "afro", "latin", "latino", "brasil", "brazil", "india", "global", "etnica", "etnico", "cumbia"],
   "alt": ["alternative", "indie", "rock", "art pop", "art-pop", "singer songwriter", "cantautor", "pop"],
   "classical": ["classica", "classical", "classico", "colonna sonora", "soundtrack", "orchestral", "orchestra", "score", "strumentale", "ambientale"],

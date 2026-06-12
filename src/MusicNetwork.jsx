@@ -33,6 +33,7 @@ const GENRE_COLOR = {
   "soulful-house": "#4f9e9e",
   "soul-funk": "#9e6b52",
   "broken-beat": "#7d8c4f",
+  "downtempo": "#5b6b9e",
   "classical": "#7a8aa0",
   "unknown": "#b8b0a4",
 };
@@ -47,6 +48,7 @@ const GENRE_LABEL = {
   "soulful-house": "Soulful House",
   "soul-funk": "Soul / Funk",
   "broken-beat": "Broken Beat",
+  "downtempo": "Downtempo",
   "classical": "Classical / Score",
   "unknown": "Unclassified",
 };
