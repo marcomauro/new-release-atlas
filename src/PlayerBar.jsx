@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import {
-  spotifyPlay, spotifyPause, spotifyResume, spotifyDevices, spotifyCurrentlyPlaying,
+  spotifyPlay, spotifyPause, spotifyResume, spotifyDevices, spotifyState,
+  spotifyNext, spotifyPrevious, spotifySeek, spotifyShuffle, spotifyRepeat,
+  spotifyTracksSaved, spotifySaveTrack, spotifyRemoveTrack, spotifyCreatePlaylist,
 } from "./spotifyConnect.js";
 
 const INK = "#2b2724";
@@ -36,11 +38,12 @@ export function preloadSpotifyApi() {
      dell'utente via Web API → brani INTERI in sequenza (anche su mobile).
    - Modalità EMBED (non loggato): l'embed ufficiale, anteprima ~30s, con
      pulsante opt-in "Ascolta intero" per attivare il Connect. */
-export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap = 0, connected, onLogin, isMobile }) {
+export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap = 0, connected, onLogin, isMobile, onOpenTrack, routeName }) {
   if (connected) {
     return (
       <ConnectPlayer
-        tracks={tracks} index={index} setIndex={setIndex} onClose={onClose} bottomGap={bottomGap} isMobile={isMobile}
+        tracks={tracks} index={index} setIndex={setIndex} onClose={onClose} bottomGap={bottomGap}
+        isMobile={isMobile} onLogin={onLogin} onOpenTrack={onOpenTrack} routeName={routeName}
       />
     );
   }
@@ -54,27 +57,30 @@ export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap 
 // ---------------------------------------------------------------------------
 //  CONNECT: full track sul device dell'utente (Premium)
 // ---------------------------------------------------------------------------
-function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile }) {
+function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, onLogin, onOpenTrack, routeName }) {
   const uris = useMemo(() => tracks.map((t) => `spotify:track:${t.id}`), [tracks]);
   const [paused, setPaused] = useState(false);
   const [liveIdx, setLiveIdx] = useState(index);
   const [msg, setMsg] = useState("");
+  const [reconnect, setReconnect] = useState(false);
   const [devices, setDevices] = useState([]);
   const [deviceId, setDeviceId] = useState(null);
-  const pickedRef = useRef(false); // l'utente ha scelto un device a mano?
+  const [cover, setCover] = useState(null);
+  const [shuffle, setShuffle] = useState(false);
+  const [repeat, setRepeat] = useState("off"); // off | all | one
+  const [saved, setSaved] = useState(false);
+  const [savingPl, setSavingPl] = useState(false);
+  const [prog, setProg] = useState({ pos: 0, dur: 0, at: 0, playing: false });
+  const [, force] = useState(0);
+  const pickedRef = useRef(false);       // l'utente ha scelto un device a mano?
+  const startedForRef = useRef(null);    // ultimo `index` per cui abbiamo (ri)avviato
 
   const refreshDevices = useCallback(async () => {
-    try {
-      const ds = await spotifyDevices();
-      setDevices(ds);
-      return ds;
-    } catch (e) {
-      return [];
-    }
+    try { const ds = await spotifyDevices(); setDevices(ds); return ds; }
+    catch (e) { return []; }
   }, []);
 
-  // Scelta iniziale del device: su mobile preferisci lo Smartphone, altrimenti
-  // il device attivo, altrimenti il primo disponibile.
+  // Scelta iniziale del device: su mobile preferisci lo Smartphone.
   useEffect(() => {
     (async () => {
       const ds = await refreshDevices();
@@ -97,15 +103,10 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile }
           const ds = await refreshDevices();
           const target =
             ds.find((d) => d.id === deviceId) ||
-            (isMobile && ds.find((d) => d.type === "Smartphone")) ||
-            ds[0];
+            (isMobile && ds.find((d) => d.type === "Smartphone")) || ds[0];
           if (target) {
-            try {
-              await spotifyPlay(uris, pos, target.id);
-              setDeviceId(target.id);
-              setPaused(false);
-              return;
-            } catch (e2) { /* fallthrough */ }
+            try { await spotifyPlay(uris, pos, target.id); setDeviceId(target.id); setPaused(false); return; }
+            catch (e2) { /* fallthrough */ }
           }
           setMsg("Open Spotify on the device and play a track for a moment, then press ⟳.");
         } else if (e.status === 403) {
@@ -120,32 +121,65 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile }
     [uris, deviceId, isMobile, refreshDevices]
   );
 
-  // (Ri)avvia al cambio di brano, percorso o device scelto.
+  // (Ri)avvia SOLO quando `index` cambia dall'esterno (nuovo percorso / device);
+  // gli aggiornamenti d'indice che arrivano dal poll passano per startedForRef
+  // e non ritriggerano il replay.
   useEffect(() => {
+    if (index === startedForRef.current) return;
+    startedForRef.current = index;
     playFrom(index);
     setLiveIdx(index);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index, playFrom]);
 
-  // Poll leggero: allinea indice mostrato + stato play/pausa + device attivo.
+  // Poll stato completo: indice live, play/pausa, device, cover, progress,
+  // shuffle/repeat. Propaga l'indice reale al genitore (evidenziazione sulla
+  // mappa) senza far ripartire la riproduzione.
   useEffect(() => {
     let stop = false;
     const tick = async () => {
       try {
-        const c = await spotifyCurrentlyPlaying();
+        const c = await spotifyState();
         if (stop || !c) return;
-        if (c.item && c.item.uri) {
+        if (c.item) {
           const i = uris.indexOf(c.item.uri);
-          if (i >= 0) setLiveIdx(i);
+          if (i >= 0 && i !== startedForRef.current) {
+            startedForRef.current = i;
+            setLiveIdx(i);
+            setIndex(i);
+          } else if (i >= 0) {
+            setLiveIdx(i);
+          }
+          const imgs = (c.item.album && c.item.album.images) || [];
+          setCover(imgs.length ? imgs[imgs.length - 1].url : null);
+          setProg({ pos: c.progress_ms || 0, dur: c.item.duration_ms || 0, at: Date.now(), playing: !!c.is_playing });
         }
         setPaused(!c.is_playing);
+        setShuffle(!!c.shuffle_state);
+        setRepeat(c.repeat_state === "context" ? "all" : c.repeat_state === "track" ? "one" : "off");
         if (c.device && c.device.id && !pickedRef.current) setDeviceId(c.device.id);
       } catch (e) { /* noop */ }
     };
-    const id = setInterval(tick, 5000);
+    const id = setInterval(tick, 3000);
     tick();
     return () => { stop = true; clearInterval(id); };
-  }, [uris]);
+  }, [uris, setIndex]);
+
+  // ticker locale: anima la barra fra un poll e l'altro
+  useEffect(() => {
+    const id = setInterval(() => force((n) => n + 1), 500);
+    return () => clearInterval(id);
+  }, []);
+
+  const shown = Math.min(Math.max(liveIdx, 0), tracks.length - 1);
+  const cur = tracks[shown];
+
+  // stato "salvato" del brano corrente
+  useEffect(() => {
+    if (!cur) return;
+    let stop = false;
+    spotifyTracksSaved([cur.id]).then((r) => { if (!stop) setSaved(!!(r && r[0])); }).catch(() => {});
+    return () => { stop = true; };
+  }, [cur && cur.id]);
 
   const toggle = async () => {
     try {
@@ -153,36 +187,100 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile }
       else { await spotifyPause(); setPaused(true); }
     } catch (e) { /* noop */ }
   };
+  const goPrev = () => { spotifyPrevious().catch(() => {}); };
+  const goNext = () => { spotifyNext().catch(() => {}); };
+  const onPickDevice = (id) => { pickedRef.current = true; setDeviceId(id); };
 
-  const onPickDevice = (id) => {
-    pickedRef.current = true;
-    setDeviceId(id); // il play effect ritrasferisce e riavvia su quel device
+  const toggleShuffle = async () => {
+    const next = !shuffle; setShuffle(next);
+    try { await spotifyShuffle(next); } catch (e) { setShuffle(!next); }
+  };
+  const cycleRepeat = async () => {
+    const nextOf = { off: "all", all: "one", one: "off" };
+    const next = nextOf[repeat];
+    const api = next === "all" ? "context" : next === "one" ? "track" : "off";
+    setRepeat(next);
+    try { await spotifyRepeat(api); } catch (e) { /* noop */ }
   };
 
-  const shown = Math.min(Math.max(liveIdx, 0), tracks.length - 1);
-  const cur = tracks[shown];
+  const scopeError = (e) => e && e.status === 403; // manca lo scope → riconnetti
+  const toggleLike = async () => {
+    if (!cur) return;
+    const want = !saved; setSaved(want);
+    try { want ? await spotifySaveTrack(cur.id) : await spotifyRemoveTrack(cur.id); }
+    catch (e) { setSaved(!want); if (scopeError(e)) { setReconnect(true); setMsg("Reconnect Spotify to enable saving."); } }
+  };
+  const savePlaylist = async () => {
+    if (savingPl || !uris.length) return;
+    setSavingPl(true); setMsg(""); setReconnect(false);
+    try {
+      const name = `New Release Atlas — ${routeName || "mix"}`;
+      const { url } = await spotifyCreatePlaylist(name, uris, "Generated from New Release Atlas.");
+      window.open(url, "_blank", "noopener");
+    } catch (e) {
+      if (scopeError(e)) { setReconnect(true); setMsg("Reconnect Spotify to save playlists."); }
+      else { setMsg("Couldn't save the playlist."); }
+    } finally { setSavingPl(false); }
+  };
+
   const many = tracks.length > 1;
   if (!cur) return null;
 
+  const posDisp = prog.playing ? Math.min(prog.dur, prog.pos + (Date.now() - prog.at)) : prog.pos;
+  const pct = prog.dur > 0 ? Math.min(100, (posDisp / prog.dur) * 100) : 0;
+  const onSeek = (e) => {
+    if (!prog.dur) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const frac = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+    const ms = frac * prog.dur;
+    setProg((p) => ({ ...p, pos: ms, at: Date.now() }));
+    spotifySeek(ms).catch(() => {});
+  };
+
   return (
     <Shell bottomGap={bottomGap}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 12px" }}>
-        <span title="Playing on Spotify" style={{ color: GREEN, fontSize: 11, fontWeight: 600, whiteSpace: "nowrap" }}>● Spotify</span>
-        {many && <button onClick={() => setIndex(Math.max(0, shown - 1))} disabled={shown === 0} title="Previous" style={navBtn}>‹</button>}
-        <button onClick={toggle} title={paused ? "Resume" : "Pause"} style={navBtn}>{paused ? "▶" : "❚❚"}</button>
-        {many && <button onClick={() => setIndex(Math.min(tracks.length - 1, shown + 1))} disabled={shown === tracks.length - 1} title="Next" style={navBtn}>›</button>}
-        <div style={{ flex: 1, minWidth: 0 }}>
+      {/* now playing: copertina + titolo (tap → mostra sulla mappa) + chiudi */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 12px 6px" }}>
+        {cover
+          ? <img src={cover} alt="" width={40} height={40} style={{ borderRadius: 4, flexShrink: 0, objectFit: "cover" }} />
+          : <div style={{ width: 40, height: 40, borderRadius: 4, background: "rgba(154,147,138,0.25)", flexShrink: 0 }} />}
+        <button
+          onClick={() => onOpenTrack && onOpenTrack(cur.id)}
+          title="Show on the map"
+          style={{ flex: 1, minWidth: 0, textAlign: "left", background: "transparent", border: "none", padding: 0, cursor: onOpenTrack ? "pointer" : "default" }}
+        >
           <div style={{ fontSize: 12.5, color: INK, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
             {cur.title}<span style={{ color: MUTED }}> — {cur.artist}</span>
           </div>
           <div style={{ fontSize: 10.5, color: MUTED, marginTop: 1 }}>
-            full track{many ? ` · route ${shown + 1}/${tracks.length}` : ""}
+            <span style={{ color: GREEN, fontWeight: 600 }}>● Spotify</span>{many ? ` · ${shown + 1}/${tracks.length}` : ""}
           </div>
-        </div>
+        </button>
         <button onClick={onClose} title="Close player" style={navBtn}>✕</button>
       </div>
 
-      {/* selettore device "Riproduci su…" */}
+      {/* barra di avanzamento + seek */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 6px" }}>
+        <span style={{ fontSize: 10, color: MUTED, width: 32, textAlign: "right" }}>{fmtTime(posDisp)}</span>
+        <div onClick={onSeek} style={{ flex: 1, height: 6, borderRadius: 3, background: "rgba(154,147,138,0.3)", cursor: "pointer", position: "relative" }}>
+          <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${pct}%`, background: INK, borderRadius: 3 }} />
+        </div>
+        <span style={{ fontSize: 10, color: MUTED, width: 32 }}>{fmtTime(prog.dur)}</span>
+      </div>
+
+      {/* controlli */}
+      <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "0 12px 8px" }}>
+        <button onClick={toggleShuffle} title="Shuffle the route" style={tglBtn(shuffle)}>⇄</button>
+        {many && <button onClick={goPrev} title="Previous" style={navBtn}>‹</button>}
+        <button onClick={toggle} title={paused ? "Resume" : "Pause"} style={navBtn}>{paused ? "▶" : "❚❚"}</button>
+        {many && <button onClick={goNext} title="Next" style={navBtn}>›</button>}
+        <button onClick={cycleRepeat} title={`Repeat: ${repeat}`} style={tglBtn(repeat !== "off")}>{repeat === "one" ? "₁⟲" : "⟲"}</button>
+        <span style={{ flex: 1 }} />
+        <button onClick={toggleLike} title={saved ? "Remove from Liked Songs" : "Save to Liked Songs"} style={tglBtn(saved)}>{saved ? "♥" : "♡"}</button>
+        <button onClick={savePlaylist} disabled={savingPl} title="Save the route as a Spotify playlist" style={navBtn}>{savingPl ? "…" : "＋ playlist"}</button>
+      </div>
+
+      {/* selettore device */}
       <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 10px" }}>
         <span style={{ fontSize: 11, color: MUTED, whiteSpace: "nowrap" }}>Play on</span>
         <select
@@ -207,7 +305,9 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile }
       {msg && (
         <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 10px", fontSize: 11, color: "#9a5b3a" }}>
           <span style={{ flex: 1 }}>{msg}</span>
-          <button onClick={() => playFrom(shown)} title="Retry" style={navBtn}>⟳</button>
+          {reconnect && onLogin
+            ? <button onClick={onLogin} title="Reconnect Spotify" style={navBtn}>Reconnect</button>
+            : <button onClick={() => playFrom(shown)} title="Retry" style={navBtn}>⟳</button>}
         </div>
       )}
     </Shell>
@@ -323,6 +423,11 @@ function Shell({ children, bottomGap }) {
   );
 }
 
+function fmtTime(ms) {
+  const s = Math.max(0, Math.floor((ms || 0) / 1000));
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+}
+
 const navBtn = {
   fontFamily: "Inter, sans-serif",
   fontSize: 14,
@@ -334,6 +439,13 @@ const navBtn = {
   padding: "5px 9px",
   cursor: "pointer",
 };
+// pulsante "toggle": stato attivo = pieno (inchiostro), spento = contorno
+const tglBtn = (active) => ({
+  ...navBtn,
+  color: active ? PAPER : INK,
+  background: active ? INK : "transparent",
+  borderColor: active ? INK : "rgba(154,147,138,0.5)",
+});
 const fullBtn = {
   display: "block",
   width: "100%",

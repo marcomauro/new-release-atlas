@@ -566,6 +566,29 @@ function MusicNetworkInner() {
     if (n) setSelected(n);
   }, []);
 
+  // Dal mini-player: apre il dettaglio del brano e centra il nodo sulla mappa.
+  const onOpenTrack = useCallback((id) => {
+    const n = GRAPH.nodes.find((x) => x.id === id);
+    if (!n) return;
+    setSelected(n);
+    const S = simRef.current;
+    const nd = S && S.nodesById.get(id);
+    if (nd && nd.x != null) {
+      const t = d3.zoomIdentity.translate(dims.w / 2, dims.h / 2).scale(1.5).translate(-nd.x, -nd.y);
+      S.svg.transition().duration(600).call(S.zoom.transform, t);
+    }
+  }, [dims]);
+
+  // Nome di default per "salva il percorso come playlist" (tema dell'ultima
+  // generazione, es. "mood energico" / "like Moodymann").
+  const routeName = useMemo(() => {
+    for (let i = messages.length - 1; i >= 0; i--) {
+      const m = messages[i];
+      if (m.role === "assistant" && m.res && m.res.ok) return m.res.theme;
+    }
+    return null;
+  }, [messages]);
+
   // Genera una playlist usando il nodo selezionato come seed, seguendo le
   // connessioni del grafo. Chiude il dettaglio e mostra il risultato in chat.
   const generateFromNode = useCallback((node) => {
@@ -1193,6 +1216,8 @@ function MusicNetworkInner() {
           connected={spotifyConnected}
           onLogin={handleSpotifyLogin}
           isMobile={isMobile}
+          onOpenTrack={onOpenTrack}
+          routeName={routeName}
         />
       )}
     </div>
