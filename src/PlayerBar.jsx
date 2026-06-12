@@ -3,7 +3,6 @@ import {
   spotifyPlay, spotifyPause, spotifyResume, spotifyDevices, spotifyState,
   spotifyNext, spotifyPrevious, spotifySeek, spotifyShuffle, spotifyRepeat,
   spotifyTracksSaved, spotifySaveTrack, spotifyRemoveTrack, spotifyCreatePlaylist,
-  spotifyGrantedScopes,
 } from "./spotifyConnect.js";
 
 const INK = "#2b2724";
@@ -205,14 +204,12 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
     try { await spotifyRepeat(api); } catch (e) { /* noop */ }
   };
 
-  // messaggio d'errore leggibile (status + motivo Spotify) per capire i fallimenti
+  // messaggio d'errore leggibile: mostra status + il MESSAGGIO reale di Spotify
+  // (e.message/e.reason), che spiega il vero motivo anche quando gli scope ci sono.
   const errMsg = (label, e) => {
-    if (e && e.status === 403) {
-      setReconnect(true);
-      setMsg(`${label}: no permission (403). Granted: ${spotifyGrantedScopes() || "none"}`);
-    } else {
-      setMsg(`${label}: ${(e && e.status) || "error"}${e && (e.reason || e.message) ? " — " + (e.reason || e.message) : ""}`);
-    }
+    const detail = (e && (e.message || e.reason)) || "";
+    if (e && e.status === 401) setReconnect(true); // sessione scaduta → riconnetti
+    setMsg(`${label}: ${(e && e.status) || "error"}${detail ? " — " + detail : ""}`);
   };
   const toggleLike = async () => {
     if (!cur) return;
