@@ -54,6 +54,11 @@ export function isSpotifyLoggedIn() {
 export function logoutSpotify() {
   localStorage.removeItem(LS_TOKENS);
 }
+// Scope effettivamente concessi (dal token). "" se sconosciuti.
+export function spotifyGrantedScopes() {
+  const t = readTokens();
+  return (t && t.scope) || "";
+}
 
 // ---- pending play (sopravvive al redirect di login) ----
 export function setPendingPlay(ids) {
@@ -135,6 +140,7 @@ export async function completeSpotifyAuthIfNeeded() {
       access_token: j.access_token,
       refresh_token: j.refresh_token,
       expires_at: Date.now() + (j.expires_in || 3600) * 1000,
+      scope: j.scope || "",
     });
     localStorage.removeItem(LS_VERIFIER);
     localStorage.removeItem(LS_STATE);
@@ -169,6 +175,7 @@ async function getValidToken() {
       access_token: j.access_token,
       refresh_token: j.refresh_token || t.refresh_token,
       expires_at: Date.now() + (j.expires_in || 3600) * 1000,
+      scope: j.scope || t.scope || "",
     });
     return j.access_token;
   } catch (e) {

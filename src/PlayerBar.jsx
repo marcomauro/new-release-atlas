@@ -3,6 +3,7 @@ import {
   spotifyPlay, spotifyPause, spotifyResume, spotifyDevices, spotifyState,
   spotifyNext, spotifyPrevious, spotifySeek, spotifyShuffle, spotifyRepeat,
   spotifyTracksSaved, spotifySaveTrack, spotifyRemoveTrack, spotifyCreatePlaylist,
+  spotifyGrantedScopes,
 } from "./spotifyConnect.js";
 
 const INK = "#2b2724";
@@ -70,6 +71,7 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
   const [repeat, setRepeat] = useState("off"); // off | all | one
   const [saved, setSaved] = useState(false);
   const [savingPl, setSavingPl] = useState(false);
+  const [savedUrl, setSavedUrl] = useState(null);
   const [prog, setProg] = useState({ pos: 0, dur: 0, at: 0, playing: false });
   const [, force] = useState(0);
   const pickedRef = useRef(false);       // l'utente ha scelto un device a mano?
@@ -203,23 +205,32 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
     try { await spotifyRepeat(api); } catch (e) { /* noop */ }
   };
 
-  const scopeError = (e) => e && e.status === 403; // manca lo scope → riconnetti
+  // messaggio d'errore leggibile (status + motivo Spotify) per capire i fallimenti
+  const errMsg = (label, e) => {
+    if (e && e.status === 403) {
+      setReconnect(true);
+      setMsg(`${label}: no permission (403). Granted: ${spotifyGrantedScopes() || "none"}`);
+    } else {
+      setMsg(`${label}: ${(e && e.status) || "error"}${e && (e.reason || e.message) ? " — " + (e.reason || e.message) : ""}`);
+    }
+  };
   const toggleLike = async () => {
     if (!cur) return;
-    const want = !saved; setSaved(want);
+    const want = !saved; setSaved(want); setMsg(""); setReconnect(false); setSavedUrl(null);
     try { want ? await spotifySaveTrack(cur.id) : await spotifyRemoveTrack(cur.id); }
-    catch (e) { setSaved(!want); if (scopeError(e)) { setReconnect(true); setMsg("Reconnect Spotify to enable saving."); } }
+    catch (e) { setSaved(!want); errMsg(want ? "Save" : "Remove", e); }
   };
   const savePlaylist = async () => {
     if (savingPl || !uris.length) return;
-    setSavingPl(true); setMsg(""); setReconnect(false);
+    setSavingPl(true); setMsg(""); setReconnect(false); setSavedUrl(null);
     try {
       const name = `New Release Atlas — ${routeName || "mix"}`;
       const { url } = await spotifyCreatePlaylist(name, uris, "Generated from New Release Atlas.");
-      window.open(url, "_blank", "noopener");
+      // niente window.open dopo gli await (i browser mobile lo bloccano):
+      // mostro un link tappabile nel pannello.
+      setSavedUrl(url); setMsg("Playlist saved to Spotify.");
     } catch (e) {
-      if (scopeError(e)) { setReconnect(true); setMsg("Reconnect Spotify to save playlists."); }
-      else { setMsg("Couldn't save the playlist."); }
+      errMsg("Playlist", e);
     } finally { setSavingPl(false); }
   };
 
@@ -302,12 +313,15 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
         <button onClick={refreshDevices} title="Refresh devices" style={navBtn}>⟳</button>
       </div>
 
-      {msg && (
-        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 10px", fontSize: 11, color: "#9a5b3a" }}>
-          <span style={{ flex: 1 }}>{msg}</span>
-          {reconnect && onLogin
-            ? <button onClick={onLogin} title="Reconnect Spotify" style={navBtn}>Reconnect</button>
-            : <button onClick={() => playFrom(shown)} title="Retry" style={navBtn}>⟳</button>}
+      {(msg || savedUrl) && (
+        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 10px", fontSize: 11, color: savedUrl ? INK : "#9a5b3a" }}>
+          <span style={{ flex: 1, wordBreak: "break-word" }}>{msg}</span>
+          {savedUrl && (
+            <a href={savedUrl} target="_blank" rel="noopener noreferrer"
+               style={{ ...navBtn, textDecoration: "none", color: PAPER, background: GREEN, borderColor: GREEN }}>Open ↗</a>
+          )}
+          {reconnect && onLogin && <button onClick={onLogin} title="Reconnect Spotify" style={navBtn}>Reconnect</button>}
+          {!savedUrl && !reconnect && <button onClick={() => playFrom(shown)} title="Retry" style={navBtn}>⟳</button>}
         </div>
       )}
     </Shell>
