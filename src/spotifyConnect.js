@@ -85,6 +85,11 @@ export async function loginSpotify() {
     code_challenge: await challenge(verifier),
     scope: SCOPES,
     state,
+    // Forza la schermata di consenso: senza questo, se l'app era gia'
+    // autorizzata con scope piu' ristretti, Spotify ri-rilascia un token con i
+    // SOLI scope vecchi e i nuovi (library/playlist) non vengono mai concessi
+    // -> il "Reconnect" andrebbe in loop. Con show_dialog l'utente ri-approva.
+    show_dialog: "true",
   });
   window.location.href = `${AUTH_URL}?${params.toString()}`;
 }
