@@ -38,18 +38,18 @@ export function preloadSpotifyApi() {
      dell'utente via Web API → brani INTERI in sequenza (anche su mobile).
    - Modalità EMBED (non loggato): l'embed ufficiale, anteprima ~30s, con
      pulsante opt-in "Ascolta intero" per attivare il Connect. */
-export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap = 0, connected, onLogin, isMobile, onOpenTrack, routeName }) {
+export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap = 0, connected, onLogin, isMobile, onOpenTrack, routeName, onHeight }) {
   if (connected) {
     return (
       <ConnectPlayer
         tracks={tracks} index={index} setIndex={setIndex} onClose={onClose} bottomGap={bottomGap}
-        isMobile={isMobile} onLogin={onLogin} onOpenTrack={onOpenTrack} routeName={routeName}
+        isMobile={isMobile} onLogin={onLogin} onOpenTrack={onOpenTrack} routeName={routeName} onHeight={onHeight}
       />
     );
   }
   return (
     <EmbedPlayer
-      tracks={tracks} index={index} setIndex={setIndex} onClose={onClose} bottomGap={bottomGap} onLogin={onLogin}
+      tracks={tracks} index={index} setIndex={setIndex} onClose={onClose} bottomGap={bottomGap} onLogin={onLogin} onHeight={onHeight}
     />
   );
 }
@@ -57,7 +57,7 @@ export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap 
 // ---------------------------------------------------------------------------
 //  CONNECT: full track sul device dell'utente (Premium)
 // ---------------------------------------------------------------------------
-function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, onLogin, onOpenTrack, routeName }) {
+function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, onLogin, onOpenTrack, routeName, onHeight }) {
   const uris = useMemo(() => tracks.map((t) => `spotify:track:${t.id}`), [tracks]);
   const [paused, setPaused] = useState(false);
   const [liveIdx, setLiveIdx] = useState(index);
@@ -246,7 +246,7 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
   };
 
   return (
-    <Shell bottomGap={bottomGap}>
+    <Shell bottomGap={bottomGap} onHeight={onHeight}>
       {/* now playing: copertina + titolo (tap → mostra sulla mappa) + chiudi */}
       <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 12px 6px" }}>
         {cover
@@ -328,7 +328,7 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
 // ---------------------------------------------------------------------------
 //  EMBED: anteprima ~30s + opt-in "Ascolta intero"
 // ---------------------------------------------------------------------------
-function EmbedPlayer({ tracks, index, setIndex, onClose, bottomGap, onLogin }) {
+function EmbedPlayer({ tracks, index, setIndex, onClose, bottomGap, onLogin, onHeight }) {
   const hostRef = useRef(null);
   const ctrlRef = useRef(null);
   const advancingRef = useRef(false);
@@ -388,7 +388,7 @@ function EmbedPlayer({ tracks, index, setIndex, onClose, bottomGap, onLogin }) {
   if (!cur) return null;
 
   return (
-    <Shell bottomGap={bottomGap}>
+    <Shell bottomGap={bottomGap} onHeight={onHeight}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 10px" }}>
         {many && <button onClick={() => setIndex(Math.max(0, index - 1))} disabled={index === 0} title="Previous" style={navBtn}>‹</button>}
         <div style={{ flex: 1, minWidth: 0 }}>
@@ -410,9 +410,19 @@ function EmbedPlayer({ tracks, index, setIndex, onClose, bottomGap, onLogin }) {
   );
 }
 
-function Shell({ children, bottomGap }) {
+function Shell({ children, bottomGap, onHeight }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!ref.current || !onHeight) return;
+    const report = () => onHeight(ref.current ? ref.current.offsetHeight : 0);
+    const ro = new ResizeObserver(report);
+    ro.observe(ref.current);
+    report();
+    return () => { ro.disconnect(); onHeight(0); };
+  }, [onHeight]);
   return (
     <div
+      ref={ref}
       style={{
         position: "absolute",
         left: "50%",

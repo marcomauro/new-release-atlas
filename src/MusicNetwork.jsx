@@ -142,6 +142,8 @@ function MusicNetworkInner() {
 
   // --- ascolto continuo del percorso (mini-player persistente) ---
   const [playIndex, setPlayIndex] = useState(0);
+  // altezza reale del mini-player (per non far finire la scheda brano sotto di esso)
+  const [playerH, setPlayerH] = useState(0);
   // ogni nuovo percorso riparte dal primo brano
   useEffect(() => { setPlayIndex(0); }, [playlist]);
   // ogni nuova selezione apre la scheda con la sezione mood/audio chiusa
@@ -942,7 +944,12 @@ function MusicNetworkInner() {
             backdropFilter: "blur(8px)",
             border: `1px solid ${MUTED}`,
             borderRadius: isMobile ? "14px 14px 0 0" : 3,
-            padding: isMobile ? "18px 20px calc(20px + env(safe-area-inset-bottom))" : "20px 22px",
+            padding: isMobile ? "18px 20px 0" : "20px 22px",
+            // su mobile riserva in fondo lo spazio del player attivo, così i
+            // bottoni/contenuto non finiscono coperti dal mini-player.
+            paddingBottom: isMobile
+              ? `calc(${playTracks.length ? playerH + 36 : 20}px + env(safe-area-inset-bottom))`
+              : undefined,
             boxShadow: isMobile ? "0 -8px 30px rgba(0,0,0,0.16)" : "0 8px 30px rgba(0,0,0,0.08)",
           }}
         >
@@ -1218,6 +1225,7 @@ function MusicNetworkInner() {
           isMobile={isMobile}
           onOpenTrack={onOpenTrack}
           routeName={routeName}
+          onHeight={setPlayerH}
         />
       )}
     </div>
