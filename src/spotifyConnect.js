@@ -4,10 +4,7 @@
 // la nostra app fa da telecomando, l'audio esce dall'app Spotify.
 
 const CLIENT_ID = "90be0fb998cf44b3b3b6560cfd52c5d5";
-const SCOPES =
-  "user-modify-playback-state user-read-playback-state " +
-  "user-library-read user-library-modify " +
-  "playlist-modify-private playlist-modify-public";
+const SCOPES = "user-modify-playback-state user-read-playback-state";
 const REDIRECT_URI =
   typeof window !== "undefined" ? window.location.origin + import.meta.env.BASE_URL : "";
 const TOKEN_URL = "https://accounts.spotify.com/api/token";
@@ -54,11 +51,6 @@ export function isSpotifyLoggedIn() {
 export function logoutSpotify() {
   localStorage.removeItem(LS_TOKENS);
 }
-// Scope effettivamente concessi (dal token). "" se sconosciuti.
-export function spotifyGrantedScopes() {
-  const t = readTokens();
-  return (t && t.scope) || "";
-}
 
 // ---- pending play (sopravvive al redirect di login) ----
 export function setPendingPlay(ids) {
@@ -90,11 +82,6 @@ export async function loginSpotify() {
     code_challenge: await challenge(verifier),
     scope: SCOPES,
     state,
-    // Forza la schermata di consenso: senza questo, se l'app era gia'
-    // autorizzata con scope piu' ristretti, Spotify ri-rilascia un token con i
-    // SOLI scope vecchi e i nuovi (library/playlist) non vengono mai concessi
-    // -> il "Reconnect" andrebbe in loop. Con show_dialog l'utente ri-approva.
-    show_dialog: "true",
   });
   window.location.href = `${AUTH_URL}?${params.toString()}`;
 }
@@ -248,35 +235,4 @@ export async function spotifyShuffle(state) {
 // state: "off" | "context" | "track"
 export async function spotifyRepeat(state) {
   return apiCall(`/me/player/repeat?state=${state}`, "PUT");
-}
-
-// ---- libreria / playlist (richiedono gli scope library/playlist) ----
-export async function spotifyTracksSaved(ids) {
-  const d = await apiCall(`/me/tracks/contains?ids=${ids.join(",")}`);
-  return d || [];
-}
-export async function spotifySaveTrack(id) {
-  return apiCall(`/me/tracks?ids=${id}`, "PUT");
-}
-export async function spotifyRemoveTrack(id) {
-  return apiCall(`/me/tracks?ids=${id}`, "DELETE");
-}
-export async function spotifyMe() {
-  return apiCall("/me");
-}
-// Crea una playlist (privata) con l'elenco di URI; ritorna { id, url }.
-export async function spotifyCreatePlaylist(name, uris, description = "") {
-  const me = await spotifyMe();
-  const pl = await apiCall(`/users/${me.id}/playlists`, "POST", {
-    name,
-    public: false,
-    description,
-  });
-  for (let i = 0; i < uris.length; i += 100) {
-    await apiCall(`/playlists/${pl.id}/tracks`, "POST", { uris: uris.slice(i, i + 100) });
-  }
-  return {
-    id: pl.id,
-    url: (pl.external_urls && pl.external_urls.spotify) || `https://open.spotify.com/playlist/${pl.id}`,
-  };
 }

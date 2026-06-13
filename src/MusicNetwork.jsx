@@ -581,15 +581,6 @@ function MusicNetworkInner() {
     }
   }, [dims]);
 
-  // Nome di default per "salva il percorso come playlist" (tema dell'ultima
-  // generazione, es. "mood energico" / "like Moodymann").
-  const routeName = useMemo(() => {
-    for (let i = messages.length - 1; i >= 0; i--) {
-      const m = messages[i];
-      if (m.role === "assistant" && m.res && m.res.ok) return m.res.theme;
-    }
-    return null;
-  }, [messages]);
 
   // Genera una playlist usando il nodo selezionato come seed, seguendo le
   // connessioni del grafo. Chiude il dettaglio e mostra il risultato in chat.
@@ -1203,7 +1194,7 @@ function MusicNetworkInner() {
         onPick={pickTrack}
         onExport={handleExport}
         genreColor={gColor}
-        bottomOffset={playTracks.length ? 132 : 0}
+        bottomOffset={playTracks.length ? playerH + 16 : 0}
         weights={weights}
         setWeights={setWeights}
         randomness={randomness}
@@ -1224,7 +1215,6 @@ function MusicNetworkInner() {
           onLogin={handleSpotifyLogin}
           isMobile={isMobile}
           onOpenTrack={onOpenTrack}
-          routeName={routeName}
           onHeight={setPlayerH}
         />
       )}

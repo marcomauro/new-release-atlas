@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState, useMemo, useCallback } from "react"
 import {
   spotifyPlay, spotifyPause, spotifyResume, spotifyDevices, spotifyState,
   spotifyNext, spotifyPrevious, spotifySeek, spotifyShuffle, spotifyRepeat,
-  spotifyTracksSaved, spotifySaveTrack, spotifyRemoveTrack, spotifyCreatePlaylist,
 } from "./spotifyConnect.js";
 
 const INK = "#2b2724";
@@ -38,12 +37,12 @@ export function preloadSpotifyApi() {
      dell'utente via Web API → brani INTERI in sequenza (anche su mobile).
    - Modalità EMBED (non loggato): l'embed ufficiale, anteprima ~30s, con
      pulsante opt-in "Ascolta intero" per attivare il Connect. */
-export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap = 0, connected, onLogin, isMobile, onOpenTrack, routeName, onHeight }) {
+export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap = 0, connected, onLogin, isMobile, onOpenTrack, onHeight }) {
   if (connected) {
     return (
       <ConnectPlayer
         tracks={tracks} index={index} setIndex={setIndex} onClose={onClose} bottomGap={bottomGap}
-        isMobile={isMobile} onLogin={onLogin} onOpenTrack={onOpenTrack} routeName={routeName} onHeight={onHeight}
+        isMobile={isMobile} onOpenTrack={onOpenTrack} onHeight={onHeight}
       />
     );
   }
@@ -57,20 +56,16 @@ export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap 
 // ---------------------------------------------------------------------------
 //  CONNECT: full track sul device dell'utente (Premium)
 // ---------------------------------------------------------------------------
-function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, onLogin, onOpenTrack, routeName, onHeight }) {
+function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, onOpenTrack, onHeight }) {
   const uris = useMemo(() => tracks.map((t) => `spotify:track:${t.id}`), [tracks]);
   const [paused, setPaused] = useState(false);
   const [liveIdx, setLiveIdx] = useState(index);
   const [msg, setMsg] = useState("");
-  const [reconnect, setReconnect] = useState(false);
   const [devices, setDevices] = useState([]);
   const [deviceId, setDeviceId] = useState(null);
   const [cover, setCover] = useState(null);
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState("off"); // off | all | one
-  const [saved, setSaved] = useState(false);
-  const [savingPl, setSavingPl] = useState(false);
-  const [savedUrl, setSavedUrl] = useState(null);
   const [prog, setProg] = useState({ pos: 0, dur: 0, at: 0, playing: false });
   const [, force] = useState(0);
   const pickedRef = useRef(false);       // l'utente ha scelto un device a mano?
@@ -174,14 +169,6 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
   const shown = Math.min(Math.max(liveIdx, 0), tracks.length - 1);
   const cur = tracks[shown];
 
-  // stato "salvato" del brano corrente
-  useEffect(() => {
-    if (!cur) return;
-    let stop = false;
-    spotifyTracksSaved([cur.id]).then((r) => { if (!stop) setSaved(!!(r && r[0])); }).catch(() => {});
-    return () => { stop = true; };
-  }, [cur && cur.id]);
-
   const toggle = async () => {
     try {
       if (paused) { await spotifyResume(); setPaused(false); }
@@ -202,33 +189,6 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
     const api = next === "all" ? "context" : next === "one" ? "track" : "off";
     setRepeat(next);
     try { await spotifyRepeat(api); } catch (e) { /* noop */ }
-  };
-
-  // messaggio d'errore leggibile: mostra status + il MESSAGGIO reale di Spotify
-  // (e.message/e.reason), che spiega il vero motivo anche quando gli scope ci sono.
-  const errMsg = (label, e) => {
-    const detail = (e && (e.message || e.reason)) || "";
-    if (e && e.status === 401) setReconnect(true); // sessione scaduta → riconnetti
-    setMsg(`${label}: ${(e && e.status) || "error"}${detail ? " — " + detail : ""}`);
-  };
-  const toggleLike = async () => {
-    if (!cur) return;
-    const want = !saved; setSaved(want); setMsg(""); setReconnect(false); setSavedUrl(null);
-    try { want ? await spotifySaveTrack(cur.id) : await spotifyRemoveTrack(cur.id); }
-    catch (e) { setSaved(!want); errMsg(want ? "Save" : "Remove", e); }
-  };
-  const savePlaylist = async () => {
-    if (savingPl || !uris.length) return;
-    setSavingPl(true); setMsg(""); setReconnect(false); setSavedUrl(null);
-    try {
-      const name = `New Release Atlas — ${routeName || "mix"}`;
-      const { url } = await spotifyCreatePlaylist(name, uris, "Generated from New Release Atlas.");
-      // niente window.open dopo gli await (i browser mobile lo bloccano):
-      // mostro un link tappabile nel pannello.
-      setSavedUrl(url); setMsg("Playlist saved to Spotify.");
-    } catch (e) {
-      errMsg("Playlist", e);
-    } finally { setSavingPl(false); }
   };
 
   const many = tracks.length > 1;
@@ -283,9 +243,6 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
         <button onClick={toggle} title={paused ? "Resume" : "Pause"} style={navBtn}>{paused ? "▶" : "❚❚"}</button>
         {many && <button onClick={goNext} title="Next" style={navBtn}>›</button>}
         <button onClick={cycleRepeat} title={`Repeat: ${repeat}`} style={tglBtn(repeat !== "off")}>{repeat === "one" ? "₁⟲" : "⟲"}</button>
-        <span style={{ flex: 1 }} />
-        <button onClick={toggleLike} title={saved ? "Remove from Liked Songs" : "Save to Liked Songs"} style={tglBtn(saved)}>{saved ? "♥" : "♡"}</button>
-        <button onClick={savePlaylist} disabled={savingPl} title="Save the route as a Spotify playlist" style={navBtn}>{savingPl ? "…" : "＋ playlist"}</button>
       </div>
 
       {/* selettore device */}
@@ -310,15 +267,10 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
         <button onClick={refreshDevices} title="Refresh devices" style={navBtn}>⟳</button>
       </div>
 
-      {(msg || savedUrl) && (
-        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 10px", fontSize: 11, color: savedUrl ? INK : "#9a5b3a" }}>
+      {msg && (
+        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 10px", fontSize: 11, color: "#9a5b3a" }}>
           <span style={{ flex: 1, wordBreak: "break-word" }}>{msg}</span>
-          {savedUrl && (
-            <a href={savedUrl} target="_blank" rel="noopener noreferrer"
-               style={{ ...navBtn, textDecoration: "none", color: PAPER, background: GREEN, borderColor: GREEN }}>Open ↗</a>
-          )}
-          {reconnect && onLogin && <button onClick={onLogin} title="Reconnect Spotify" style={navBtn}>Reconnect</button>}
-          {!savedUrl && !reconnect && <button onClick={() => playFrom(shown)} title="Retry" style={navBtn}>⟳</button>}
+          <button onClick={() => playFrom(shown)} title="Retry" style={navBtn}>⟳</button>
         </div>
       )}
     </Shell>
