@@ -39,10 +39,10 @@ export default function Chat({
         style={{
           position: "absolute", bottom: `calc(${24 + bottomOffset}px + env(safe-area-inset-bottom))`, left: "50%",
           transform: "translateX(-50%)", zIndex: 30,
-          fontFamily: font, fontSize: 12.5, fontWeight: 500,
+          fontFamily: font, fontSize: 13.5, fontWeight: 500,
           color: PAPER, background: INK, border: "none",
-          padding: "8px 14px", borderRadius: 20, cursor: "pointer",
-          boxShadow: "0 4px 16px rgba(0,0,0,0.16)",
+          padding: "10px 20px", borderRadius: 22, cursor: "pointer",
+          boxShadow: "0 5px 18px rgba(0,0,0,0.17)",
         }}
       >
         Playlist
