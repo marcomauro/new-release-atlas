@@ -45,7 +45,7 @@ export default function Chat({
           boxShadow: "0 6px 20px rgba(0,0,0,0.18)",
         }}
       >
-        ♫ Create a playlist
+        ♫ Generate a playlist
       </button>
     );
   }
