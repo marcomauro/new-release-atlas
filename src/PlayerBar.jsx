@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import {
-  spotifyPlay, spotifyPause, spotifyResume, spotifyDevices, spotifyState,
+  spotifyPlay, spotifyPause, spotifyResume, spotifyDevices, spotifyState, spotifyTransfer,
   spotifyNext, spotifyPrevious, spotifySeek, spotifyShuffle, spotifyRepeat,
 } from "./spotifyConnect.js";
 
@@ -69,7 +69,6 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
   const [prog, setProg] = useState({ pos: 0, dur: 0, at: 0, playing: false });
   const [, force] = useState(0);
   const pickedRef = useRef(false);       // l'utente ha scelto un device a mano?
-  const startedForRef = useRef(null);    // ultimo `index` per cui abbiamo (ri)avviato
 
   const refreshDevices = useCallback(async () => {
     try { const ds = await spotifyDevices(); setDevices(ds); return ds; }
@@ -117,15 +116,15 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
     [uris, deviceId, isMobile, refreshDevices]
   );
 
-  // (Ri)avvia SOLO quando `index` cambia dall'esterno (nuovo percorso / device);
-  // gli aggiornamenti d'indice che arrivano dal poll passano per startedForRef
-  // e non ritriggerano il replay.
+  // Ogni attivazione di playlist (generazione / ▶ Play / switch / regen) crea un
+  // NUOVO array di tracce → nuovo `uris`. Quando `uris` cambia, parti SEMPRE dal
+  // brano 0 (riproduzione immediata del primo brano, anche ri-premendo Play).
   useEffect(() => {
-    if (index === startedForRef.current) return;
-    startedForRef.current = index;
-    playFrom(index);
-    setLiveIdx(index);
-  }, [index, playFrom]);
+    setLiveIdx(0);
+    setProg({ pos: 0, dur: 0, at: Date.now(), playing: true });
+    playFrom(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uris]);
 
   // Poll stato completo: indice live, play/pausa, device, cover, progress,
   // shuffle/repeat. Propaga l'indice reale al genitore (evidenziazione sulla
@@ -138,13 +137,7 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
         if (stop || !c) return;
         if (c.item) {
           const i = uris.indexOf(c.item.uri);
-          if (i >= 0 && i !== startedForRef.current) {
-            startedForRef.current = i;
-            setLiveIdx(i);
-            setIndex(i);
-          } else if (i >= 0) {
-            setLiveIdx(i);
-          }
+          if (i >= 0) { setLiveIdx(i); setIndex(i); } // segue l'avanzamento reale (display + mappa)
           const imgs = (c.item.album && c.item.album.images) || [];
           setCover(imgs.length ? imgs[imgs.length - 1].url : null);
           setProg({ pos: c.progress_ms || 0, dur: c.item.duration_ms || 0, at: Date.now(), playing: !!c.is_playing });
@@ -177,7 +170,11 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
   };
   const goPrev = () => { spotifyPrevious().catch(() => {}); };
   const goNext = () => { spotifyNext().catch(() => {}); };
-  const onPickDevice = (id) => { pickedRef.current = true; setDeviceId(id); };
+  const onPickDevice = (id) => {
+    pickedRef.current = true;
+    setDeviceId(id);
+    spotifyTransfer(id, true).catch(() => {}); // sposta la riproduzione corrente (no restart)
+  };
 
   const toggleShuffle = async () => {
     const next = !shuffle; setShuffle(next);
