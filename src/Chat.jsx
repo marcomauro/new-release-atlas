@@ -14,7 +14,7 @@ const SUGGESTIONS = [
 ];
 
 export default function Chat({
-  open, setOpen, messages, value, onChange, onSubmit, onPick,
+  open, setOpen, messages, value, onChange, onSubmit, onPick, onPlay,
   onExport, genreColor, bottomOffset = 0,
   weights, setWeights, randomness, setRandomness, mood, setMood,
 }) {
@@ -128,7 +128,7 @@ export default function Chat({
               )}
             </div>
           ) : (
-            <Assistant key={i} res={m.res} onPick={onPick} onExport={onExport} genreColor={genreColor} />
+            <Assistant key={i} res={m.res} onPick={onPick} onExport={onExport} onPlay={onPlay} genreColor={genreColor} />
           )
         )}
       </div>
@@ -164,7 +164,7 @@ export default function Chat({
   );
 }
 
-function Assistant({ res, onPick, onExport, genreColor }) {
+function Assistant({ res, onPick, onExport, onPlay, genreColor }) {
   if (!res || !res.ok) {
     return (
       <div style={{ margin: "8px 0", fontSize: 13, color: "#c75b4a" }}>
@@ -178,19 +178,34 @@ function Assistant({ res, onPick, onExport, genreColor }) {
         <div style={{ fontFamily: "'Spectral', serif", fontSize: 15, fontWeight: 500, color: INK, textTransform: "capitalize" }}>
           {res.theme}
         </div>
-        {onExport && (
-          <button
-            onClick={() => onExport(res)}
-            title="Export the links and create the playlist (Spotlistr / Spotify)"
-            style={{
-              marginLeft: "auto", fontFamily: "Inter, sans-serif", fontSize: 11.5, fontWeight: 500,
-              color: PAPER, background: INK, border: "none", borderRadius: 14,
-              padding: "4px 12px", cursor: "pointer", whiteSpace: "nowrap",
-            }}
-          >
-            ↗ Export
-          </button>
-        )}
+        <span style={{ marginLeft: "auto", display: "flex", gap: 6, flexShrink: 0 }}>
+          {onPlay && (
+            <button
+              onClick={() => onPlay(res.ids)}
+              title="Show this playlist on the map and play it"
+              style={{
+                fontFamily: "Inter, sans-serif", fontSize: 11.5, fontWeight: 500,
+                color: INK, background: "transparent", border: `1px solid ${INK}`,
+                borderRadius: 14, padding: "4px 12px", cursor: "pointer", whiteSpace: "nowrap",
+              }}
+            >
+              ▶ Play
+            </button>
+          )}
+          {onExport && (
+            <button
+              onClick={() => onExport(res)}
+              title="Export the links and create the playlist (Spotlistr / Spotify)"
+              style={{
+                fontFamily: "Inter, sans-serif", fontSize: 11.5, fontWeight: 500,
+                color: PAPER, background: INK, border: "none", borderRadius: 14,
+                padding: "4px 12px", cursor: "pointer", whiteSpace: "nowrap",
+              }}
+            >
+              ↗ Export
+            </button>
+          )}
+        </span>
       </div>
       <div style={{ fontSize: 11.5, color: MUTED, margin: "2px 0 8px", lineHeight: 1.5 }}>
         {res.note}
@@ -200,7 +215,7 @@ function Assistant({ res, onPick, onExport, genreColor }) {
           <li
             key={t.id}
             onClick={() => onPick(t.id)}
-            title="Mostra sul grafo"
+            title="Show on the map"
             style={{
               display: "flex", alignItems: "center", gap: 8,
               padding: "4px 6px", borderRadius: 4, cursor: "pointer",
