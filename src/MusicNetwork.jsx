@@ -568,6 +568,12 @@ function MusicNetworkInner() {
     if (n) setSelected(n);
   }, []);
 
+  // Ri-attiva una playlist generata (dal tasto "▶ Play" nella chat): rimostra
+  // route + player anche dopo un Reset o la chiusura del player.
+  const onPlayResult = useCallback((ids) => {
+    if (ids && ids.length) setPlaylist([...ids]);
+  }, []);
+
   // Dal mini-player: apre il dettaglio del brano e centra il nodo sulla mappa.
   const onOpenTrack = useCallback((id) => {
     const n = GRAPH.nodes.find((x) => x.id === id);
@@ -1192,6 +1198,7 @@ function MusicNetworkInner() {
         onChange={setChatInput}
         onSubmit={handleChat}
         onPick={pickTrack}
+        onPlay={onPlayResult}
         onExport={handleExport}
         genreColor={gColor}
         bottomOffset={playTracks.length ? playerH + 16 : 0}
