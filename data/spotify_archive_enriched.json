@@ -4,7 +4,7 @@
     "source_account": "Spotify",
     "generated_at": "2026-05-23T12:27:11.266084",
     "description": "Archivio strutturato delle 'New Release Playlist' di Marco Mauro, da consultare via AI per generare playlist tematiche o effettuare analisi.",
-    "playlist_range": "#1 - #35 (35 playlist consecutive)",
+    "playlist_range": "#1 - #36 (35 New Release + 1 compilation tematica)",
     "note_on_gaps": "Nessuno: il dataset copre integralmente le playlist da #12 a #35. Le playlist #12 e dalla #18 in poi si chiamano 'New Release Playlist #N', le #13-#17 'New Release Friday #N'.",
     "schema_per_track": {
       "playlist_number": "int (numero progressivo della playlist di origine)",
@@ -27,69 +27,69 @@
       "bpm": "int | null (null = non verificabile, mai inventato)",
       "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
     },
-    "total_tracks_with_duplicates": 734,
-    "unique_tracks": 726,
-    "unique_artists": 746,
+    "total_tracks_with_duplicates": 817,
+    "unique_tracks": 797,
+    "unique_artists": 786,
     "top_artists": [
       [
         "Louie Vega",
-        20
+        21
       ],
       [
         "Kenny Dope",
-        19
+        20
       ],
       [
         "Brian Jackson",
-        13
+        15
       ],
       [
         "Momoko Gill",
-        13
+        15
       ],
       [
         "Masters At Work",
         13
       ],
       [
+        "Nightmares On Wax",
+        12
+      ],
+      [
         "Fatoumata Diawara",
         11
       ],
       [
-        "Nightmares On Wax",
+        "Charles Webster",
         11
+      ],
+      [
+        "Terrace Martin",
+        11
+      ],
+      [
+        "Nate Smith",
+        11
+      ],
+      [
+        "Matthew Herbert",
+        10
+      ],
+      [
+        "Tame Impala",
+        10
+      ],
+      [
+        "Alfa Mist",
+        9
       ],
       [
         "Koralle",
         9
       ],
       [
-        "Terrace Martin",
+        "Sampha",
         9
-      ],
-      [
-        "Matthew Herbert",
-        8
-      ],
-      [
-        "Charles Webster",
-        8
-      ],
-      [
-        "Riva Starr",
-        8
-      ],
-      [
-        "Fred again..",
-        8
-      ],
-      [
-        "Nate Smith",
-        8
-      ],
-      [
-        "Bilal",
-        7
       ]
     ],
     "genre_inference": {
@@ -182,6 +182,102 @@
           17
         ],
         "note": "cross-range; caratterizzazione dal master"
+      },
+      {
+        "spotify_track_id": "3cTNfXrRPF5LMKZ61dkSJ0",
+        "title": "Taka",
+        "playlists": [
+          17,
+          36
+        ]
+      },
+      {
+        "spotify_track_id": "5ot3orDL0gg1uGrhEoZAjq",
+        "title": "Amore, vedrai - sampled from \"5 bambole per la luna d'agosto\"",
+        "playlists": [
+          7,
+          36
+        ]
+      },
+      {
+        "spotify_track_id": "48qf6rG6ixRciJJ2saRTDn",
+        "title": "Chant Song: Bakoena Ba Nkopane",
+        "playlists": [
+          10,
+          36
+        ]
+      },
+      {
+        "spotify_track_id": "0ACrjHByr2GzPVTxKbDBix",
+        "title": "Gnu Blue",
+        "playlists": [
+          5,
+          36
+        ]
+      },
+      {
+        "spotify_track_id": "7xA1LjXxm8a1XJZx4MnAiR",
+        "title": "OYSTRI (feat. Richard Spaven)",
+        "playlists": [
+          3,
+          36
+        ]
+      },
+      {
+        "spotify_track_id": "7JhdINbQHNrupuZm4YYrxb",
+        "title": "The Look Of Love (feat. T3 & Bilal)",
+        "playlists": [
+          2,
+          36
+        ]
+      },
+      {
+        "spotify_track_id": "4MxzL8jmOxjconLzZGAs9z",
+        "title": "Time Will Tell",
+        "playlists": [
+          7,
+          36
+        ]
+      },
+      {
+        "spotify_track_id": "3xI6Rzk8MVtHuIXeM9TIPD",
+        "title": "The Package",
+        "playlists": [
+          6,
+          36
+        ]
+      },
+      {
+        "spotify_track_id": "0SU1P7VuVWc9BsMv98o7Lf",
+        "title": "Cold Zone",
+        "playlists": [
+          3,
+          36
+        ]
+      },
+      {
+        "spotify_track_id": "4lhOzoYujY5YD3anyw68hp",
+        "title": "Selfish (feat. James Blake)",
+        "playlists": [
+          5,
+          36
+        ]
+      },
+      {
+        "spotify_track_id": "7jRv7OJwFbws3gLdaojyT7",
+        "title": "The Bottle - Dub with Omar",
+        "playlists": [
+          4,
+          36
+        ]
+      },
+      {
+        "spotify_track_id": "7lRSyDFCP7HIL4eIicAg0g",
+        "title": "Here Comes The Sun",
+        "playlists": [
+          9,
+          36
+        ]
       }
     ],
     "false_duplicates_distinct_id": [
@@ -223,7 +319,9 @@
       }
     ],
     "extended_at_35": "2026-06-18T20:37:16.374018",
-    "extension_note_35": "Playlist #35 (19 brani) aggiunta a giugno 2026 con caratterizzazione esperta completa (genres/genre_primary nella tassonomia a 12 macro-generi, subgenres, mood, mood_parameters, bpm null/estimated). Tutti i 19 brani sono nuovi e unici (nessun duplicato cross-playlist per id)."
+    "extension_note_35": "Playlist #35 (19 brani) aggiunta a giugno 2026 con caratterizzazione esperta completa (genres/genre_primary nella tassonomia a 12 macro-generi, subgenres, mood, mood_parameters, bpm null/estimated). Tutti i 19 brani sono nuovi e unici (nessun duplicato cross-playlist per id).",
+    "extended_at_36": "2026-06-18T21:34:10.854768",
+    "extension_note_36": "Playlist #36 '2025 Fav Album Playlist' (compilation tematica, 83 brani) aggiunta a giugno 2026. 71 brani nuovi con caratterizzazione esperta completa; 12 brani gia' presenti nell'archivio riusano la caratterizzazione esistente (duplicati cross-playlist, era = playlist originale). Non e' una 'New Release #N': numerata #36 perche' il grafo usa il numero playlist come era cronologica e per gli archi di co-occorrenza."
   },
   "playlists": [
     {
@@ -28767,6 +28865,3157 @@
             "danceability": 0.75,
             "acousticness": 0.15,
             "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        }
+      ]
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "spotify_url": "https://open.spotify.com/playlist/4L97j3CR3qY62adGJexylI",
+      "track_count": 83,
+      "tracks": [
+        {
+          "position_in_playlist": 1,
+          "title": "Deus Deus",
+          "artists": [
+            "anaiis"
+          ],
+          "primary_artist": "anaiis",
+          "duration": "4:03",
+          "duration_sec": 243,
+          "spotify_track_id": "0Qrm0QyIXutGY2nPJxS3tD",
+          "spotify_uri": "spotify:track:0Qrm0QyIXutGY2nPJxS3tD",
+          "spotify_url": "https://open.spotify.com/track/0Qrm0QyIXutGY2nPJxS3tD",
+          "genres": [
+            "neo-soul",
+            "alt"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "alternative soul",
+            "electronic soul",
+            "vocal"
+          ],
+          "mood": [
+            "ethereal",
+            "introspective",
+            "delicate"
+          ],
+          "mood_parameters": {
+            "energy": 0.4,
+            "valence": 0.45,
+            "danceability": 0.5,
+            "acousticness": 0.4,
+            "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 2,
+          "title": "Not Sharing",
+          "artists": [
+            "Terrace Martin",
+            "Ogi"
+          ],
+          "primary_artist": "Terrace Martin",
+          "duration": "4:13",
+          "duration_sec": 253,
+          "spotify_track_id": "3oGWXOsz8OUmdoL57OlWIL",
+          "spotify_uri": "spotify:track:3oGWXOsz8OUmdoL57OlWIL",
+          "spotify_url": "https://open.spotify.com/track/3oGWXOsz8OUmdoL57OlWIL",
+          "genres": [
+            "neo-soul",
+            "jazz"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "jazz-soul",
+            "r&b",
+            "west coast jazz"
+          ],
+          "mood": [
+            "smooth",
+            "soulful",
+            "warm"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.55,
+            "danceability": 0.6,
+            "acousticness": 0.3,
+            "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 3,
+          "title": "Flood",
+          "artists": [
+            "Little Simz",
+            "Obongjayar",
+            "Moonchild Sanelly"
+          ],
+          "primary_artist": "Little Simz",
+          "duration": "2:48",
+          "duration_sec": 168,
+          "spotify_track_id": "3m9g8ua3M51JvqmS8rh6bS",
+          "spotify_uri": "spotify:track:3m9g8ua3M51JvqmS8rh6bS",
+          "spotify_url": "https://open.spotify.com/track/3m9g8ua3M51JvqmS8rh6bS",
+          "genres": [
+            "hip-hop",
+            "alt"
+          ],
+          "genre_primary": "hip-hop",
+          "subgenres": [
+            "uk hip-hop",
+            "afro",
+            "alternative rap"
+          ],
+          "mood": [
+            "energetic",
+            "defiant",
+            "bold"
+          ],
+          "mood_parameters": {
+            "energy": 0.7,
+            "valence": 0.55,
+            "danceability": 0.7,
+            "acousticness": 0.15,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 4,
+          "title": "Need To Run",
+          "artists": [
+            "Matthew Herbert",
+            "Herbert",
+            "Momoko Gill"
+          ],
+          "primary_artist": "Matthew Herbert",
+          "duration": "4:38",
+          "duration_sec": 278,
+          "spotify_track_id": "1cbAdK5kMjiWcr8UGSx7cj",
+          "spotify_uri": "spotify:track:1cbAdK5kMjiWcr8UGSx7cj",
+          "spotify_url": "https://open.spotify.com/track/1cbAdK5kMjiWcr8UGSx7cj",
+          "genres": [
+            "electronic",
+            "neo-soul"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "electronic",
+            "house",
+            "soul"
+          ],
+          "mood": [
+            "pulsing",
+            "soulful",
+            "hypnotic"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.55,
+            "danceability": 0.7,
+            "acousticness": 0.2,
+            "instrumentalness": 0.4
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 5,
+          "title": "Ocean Steppin'",
+          "artists": [
+            "John Glacier",
+            "Sampha"
+          ],
+          "primary_artist": "John Glacier",
+          "duration": "2:50",
+          "duration_sec": 170,
+          "spotify_track_id": "0dPqoJdDfYM33cDu68Ak9c",
+          "spotify_uri": "spotify:track:0dPqoJdDfYM33cDu68Ak9c",
+          "spotify_url": "https://open.spotify.com/track/0dPqoJdDfYM33cDu68Ak9c",
+          "genres": [
+            "hip-hop",
+            "electronic"
+          ],
+          "genre_primary": "hip-hop",
+          "subgenres": [
+            "uk hip-hop",
+            "experimental",
+            "alternative r&b"
+          ],
+          "mood": [
+            "hazy",
+            "introspective",
+            "atmospheric"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.45,
+            "danceability": 0.6,
+            "acousticness": 0.2,
+            "instrumentalness": 0.3
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 6,
+          "title": "Seagulls",
+          "artists": [
+            "Kelly Moonstone",
+            "MARCO PLUS",
+            "BADBADNOTGOOD"
+          ],
+          "primary_artist": "Kelly Moonstone",
+          "duration": "3:33",
+          "duration_sec": 213,
+          "spotify_track_id": "6U9AeAoKT0qx9QjjH2Dz1r",
+          "spotify_uri": "spotify:track:6U9AeAoKT0qx9QjjH2Dz1r",
+          "spotify_url": "https://open.spotify.com/track/6U9AeAoKT0qx9QjjH2Dz1r",
+          "genres": [
+            "hip-hop",
+            "jazz"
+          ],
+          "genre_primary": "hip-hop",
+          "subgenres": [
+            "jazz rap",
+            "instrumental hip-hop",
+            "lo-fi"
+          ],
+          "mood": [
+            "mellow",
+            "groovy",
+            "cool"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.55,
+            "danceability": 0.65,
+            "acousticness": 0.3,
+            "instrumentalness": 0.3
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 7,
+          "title": "Not In Surrender",
+          "artists": [
+            "Obongjayar"
+          ],
+          "primary_artist": "Obongjayar",
+          "duration": "3:19",
+          "duration_sec": 199,
+          "spotify_track_id": "6De0INF94sPvYzaj7dHASe",
+          "spotify_uri": "spotify:track:6De0INF94sPvYzaj7dHASe",
+          "spotify_url": "https://open.spotify.com/track/6De0INF94sPvYzaj7dHASe",
+          "genres": [
+            "world",
+            "alt"
+          ],
+          "genre_primary": "world",
+          "subgenres": [
+            "afro-fusion",
+            "alternative",
+            "soul"
+          ],
+          "mood": [
+            "defiant",
+            "intense",
+            "uplifting"
+          ],
+          "mood_parameters": {
+            "energy": 0.65,
+            "valence": 0.55,
+            "danceability": 0.6,
+            "acousticness": 0.25,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 8,
+          "title": "Taka",
+          "artists": [
+            "Pino Palladino",
+            "Blake Mills"
+          ],
+          "primary_artist": "Pino Palladino",
+          "duration": "4:19",
+          "duration_sec": 259,
+          "spotify_track_id": "3cTNfXrRPF5LMKZ61dkSJ0",
+          "spotify_uri": "spotify:track:3cTNfXrRPF5LMKZ61dkSJ0",
+          "spotify_url": "https://open.spotify.com/track/3cTNfXrRPF5LMKZ61dkSJ0",
+          "genres": [
+            "jazz",
+            "alt",
+            "neo-soul"
+          ],
+          "genre_primary": "jazz",
+          "subgenres": [
+            "experimental jazz",
+            "art rock",
+            "instrumental"
+          ],
+          "mood": [
+            "hypnotic",
+            "warm",
+            "textural"
+          ],
+          "mood_parameters": {
+            "energy": 0.45,
+            "valence": 0.5,
+            "danceability": 0.55,
+            "acousticness": 0.4,
+            "instrumentalness": 0.85
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 9,
+          "title": "The Spirit",
+          "artists": [
+            "Mark Pritchard",
+            "Thom Yorke"
+          ],
+          "primary_artist": "Mark Pritchard",
+          "duration": "4:56",
+          "duration_sec": 296,
+          "spotify_track_id": "4WnsGUynB9D65tenA7U5gI",
+          "spotify_uri": "spotify:track:4WnsGUynB9D65tenA7U5gI",
+          "spotify_url": "https://open.spotify.com/track/4WnsGUynB9D65tenA7U5gI",
+          "genres": [
+            "electronic",
+            "alt"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "electronic",
+            "art rock",
+            "ambient"
+          ],
+          "mood": [
+            "haunting",
+            "atmospheric",
+            "melancholic"
+          ],
+          "mood_parameters": {
+            "energy": 0.45,
+            "valence": 0.4,
+            "danceability": 0.45,
+            "acousticness": 0.3,
+            "instrumentalness": 0.5
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 10,
+          "title": "Dark Will Fall (feat. Jacob Lusk)",
+          "artists": [
+            "Bonobo",
+            "Jacob Lusk"
+          ],
+          "primary_artist": "Bonobo",
+          "duration": "2:17",
+          "duration_sec": 137,
+          "spotify_track_id": "28EZTT9V9KET0WNRQhrmi1",
+          "spotify_uri": "spotify:track:28EZTT9V9KET0WNRQhrmi1",
+          "spotify_url": "https://open.spotify.com/track/28EZTT9V9KET0WNRQhrmi1",
+          "genres": [
+            "electronic",
+            "downtempo"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "downtempo",
+            "organic house",
+            "gospel-electronic"
+          ],
+          "mood": [
+            "warm",
+            "soulful",
+            "cinematic"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.5,
+            "danceability": 0.6,
+            "acousticness": 0.25,
+            "instrumentalness": 0.4
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 11,
+          "title": "JUKE JOINT",
+          "artists": [
+            "Nate Smith",
+            "Jermaine Holmes",
+            "Charlie Hunter",
+            "DJ Harrison"
+          ],
+          "primary_artist": "Nate Smith",
+          "duration": "3:19",
+          "duration_sec": 199,
+          "spotify_track_id": "787lR5fkcHgOkGWGEP9puW",
+          "spotify_uri": "spotify:track:787lR5fkcHgOkGWGEP9puW",
+          "spotify_url": "https://open.spotify.com/track/787lR5fkcHgOkGWGEP9puW",
+          "genres": [
+            "soul-funk",
+            "jazz"
+          ],
+          "genre_primary": "soul-funk",
+          "subgenres": [
+            "funk",
+            "jazz-funk",
+            "groove"
+          ],
+          "mood": [
+            "groovy",
+            "raw",
+            "energetic"
+          ],
+          "mood_parameters": {
+            "energy": 0.65,
+            "valence": 0.6,
+            "danceability": 0.72,
+            "acousticness": 0.3,
+            "instrumentalness": 0.6
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 12,
+          "title": "Amore, vedrai - sampled from \"5 bambole per la luna d'agosto\"",
+          "artists": [
+            "Cinevox Record",
+            "Gaia Banfi",
+            "Piero Umiliani"
+          ],
+          "primary_artist": "Cinevox Record",
+          "duration": "3:59",
+          "duration_sec": 239,
+          "spotify_track_id": "5ot3orDL0gg1uGrhEoZAjq",
+          "spotify_uri": "spotify:track:5ot3orDL0gg1uGrhEoZAjq",
+          "spotify_url": "https://open.spotify.com/track/5ot3orDL0gg1uGrhEoZAjq",
+          "genres": [
+            "alt",
+            "jazz"
+          ],
+          "genre_primary": "alt",
+          "subgenres": [
+            "pop",
+            "italian indie",
+            "cinematic pop",
+            "library rework"
+          ],
+          "mood": [
+            "nostalgic",
+            "dreamy",
+            "cinematic"
+          ],
+          "mood_parameters": {
+            "energy": 0.45,
+            "valence": 0.52,
+            "danceability": 0.55,
+            "acousticness": 0.5,
+            "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 13,
+          "title": "Hope & Love",
+          "artists": [
+            "The Pocket Queen",
+            "The Royal Flush",
+            "PJ Morton"
+          ],
+          "primary_artist": "The Pocket Queen",
+          "duration": "5:08",
+          "duration_sec": 308,
+          "spotify_track_id": "4PftqsCgbd47nGCS6aq95n",
+          "spotify_uri": "spotify:track:4PftqsCgbd47nGCS6aq95n",
+          "spotify_url": "https://open.spotify.com/track/4PftqsCgbd47nGCS6aq95n",
+          "genres": [
+            "neo-soul",
+            "soul-funk"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "soul",
+            "r&b",
+            "funk"
+          ],
+          "mood": [
+            "uplifting",
+            "warm",
+            "groovy"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.65,
+            "danceability": 0.7,
+            "acousticness": 0.3,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 14,
+          "title": "Big Poe (feat. Sk8brd)",
+          "artists": [
+            "Tyler, The Creator",
+            "Pharrell Williams"
+          ],
+          "primary_artist": "Tyler, The Creator",
+          "duration": "3:02",
+          "duration_sec": 182,
+          "spotify_track_id": "4sLvxpKLvagQ4lZHUpymza",
+          "spotify_uri": "spotify:track:4sLvxpKLvagQ4lZHUpymza",
+          "spotify_url": "https://open.spotify.com/track/4sLvxpKLvagQ4lZHUpymza",
+          "genres": [
+            "hip-hop"
+          ],
+          "genre_primary": "hip-hop",
+          "subgenres": [
+            "hip-hop",
+            "neptunes",
+            "west coast"
+          ],
+          "mood": [
+            "playful",
+            "braggadocio",
+            "bouncy"
+          ],
+          "mood_parameters": {
+            "energy": 0.7,
+            "valence": 0.6,
+            "danceability": 0.75,
+            "acousticness": 0.1,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 15,
+          "title": "Ensalada (feat. Anderson .Paak)",
+          "artists": [
+            "Freddie Gibbs",
+            "The Alchemist",
+            "Anderson .Paak"
+          ],
+          "primary_artist": "Freddie Gibbs",
+          "duration": "3:47",
+          "duration_sec": 227,
+          "spotify_track_id": "06ZX08uRQDK02emdw9mN28",
+          "spotify_uri": "spotify:track:06ZX08uRQDK02emdw9mN28",
+          "spotify_url": "https://open.spotify.com/track/06ZX08uRQDK02emdw9mN28",
+          "genres": [
+            "hip-hop"
+          ],
+          "genre_primary": "hip-hop",
+          "subgenres": [
+            "boom bap",
+            "soul rap",
+            "west coast"
+          ],
+          "mood": [
+            "groovy",
+            "smooth",
+            "confident"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.6,
+            "danceability": 0.7,
+            "acousticness": 0.25,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 16,
+          "title": "One Way Traffic - feat. Yazmin Lacey",
+          "artists": [
+            "Joe Armon-Jones",
+            "Yazmin Lacey"
+          ],
+          "primary_artist": "Joe Armon-Jones",
+          "duration": "7:01",
+          "duration_sec": 421,
+          "spotify_track_id": "5MFBsaB3CwPRUg4909KdA0",
+          "spotify_uri": "spotify:track:5MFBsaB3CwPRUg4909KdA0",
+          "spotify_url": "https://open.spotify.com/track/5MFBsaB3CwPRUg4909KdA0",
+          "genres": [
+            "uk-jazz",
+            "neo-soul"
+          ],
+          "genre_primary": "uk-jazz",
+          "subgenres": [
+            "uk jazz",
+            "broken beat",
+            "soul"
+          ],
+          "mood": [
+            "warm",
+            "soulful",
+            "hypnotic"
+          ],
+          "mood_parameters": {
+            "energy": 0.55,
+            "valence": 0.6,
+            "danceability": 0.65,
+            "acousticness": 0.3,
+            "instrumentalness": 0.4
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 17,
+          "title": "The Move",
+          "artists": [
+            "44th Move",
+            "Alfa Mist",
+            "Richard Spaven",
+            "Quelle Chris"
+          ],
+          "primary_artist": "44th Move",
+          "duration": "3:16",
+          "duration_sec": 196,
+          "spotify_track_id": "7vxLBsIVpEDtXn3dUhYetn",
+          "spotify_uri": "spotify:track:7vxLBsIVpEDtXn3dUhYetn",
+          "spotify_url": "https://open.spotify.com/track/7vxLBsIVpEDtXn3dUhYetn",
+          "genres": [
+            "uk-jazz",
+            "hip-hop"
+          ],
+          "genre_primary": "uk-jazz",
+          "subgenres": [
+            "uk jazz",
+            "jazz rap",
+            "experimental"
+          ],
+          "mood": [
+            "moody",
+            "cerebral",
+            "groovy"
+          ],
+          "mood_parameters": {
+            "energy": 0.55,
+            "valence": 0.45,
+            "danceability": 0.6,
+            "acousticness": 0.3,
+            "instrumentalness": 0.4
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 18,
+          "title": "end of the world",
+          "artists": [
+            "Yaya Bey",
+            "Nigel Hall",
+            "Butcher Brown"
+          ],
+          "primary_artist": "Yaya Bey",
+          "duration": "4:31",
+          "duration_sec": 271,
+          "spotify_track_id": "0ZhJK6Y2HcmNTwYkw8eyfX",
+          "spotify_uri": "spotify:track:0ZhJK6Y2HcmNTwYkw8eyfX",
+          "spotify_url": "https://open.spotify.com/track/0ZhJK6Y2HcmNTwYkw8eyfX",
+          "genres": [
+            "neo-soul",
+            "soul-funk"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "r&b",
+            "soul",
+            "funk"
+          ],
+          "mood": [
+            "breezy",
+            "soulful",
+            "warm"
+          ],
+          "mood_parameters": {
+            "energy": 0.55,
+            "valence": 0.6,
+            "danceability": 0.68,
+            "acousticness": 0.3,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 19,
+          "title": "Loser",
+          "artists": [
+            "Tame Impala"
+          ],
+          "primary_artist": "Tame Impala",
+          "duration": "3:43",
+          "duration_sec": 223,
+          "spotify_track_id": "7bxaFZ1O3cHkgLKMsdC3xR",
+          "spotify_uri": "spotify:track:7bxaFZ1O3cHkgLKMsdC3xR",
+          "spotify_url": "https://open.spotify.com/track/7bxaFZ1O3cHkgLKMsdC3xR",
+          "genres": [
+            "alt",
+            "electronic"
+          ],
+          "genre_primary": "alt",
+          "subgenres": [
+            "psychedelic pop",
+            "synth-pop",
+            "indie"
+          ],
+          "mood": [
+            "dreamy",
+            "groovy",
+            "nostalgic"
+          ],
+          "mood_parameters": {
+            "energy": 0.55,
+            "valence": 0.55,
+            "danceability": 0.6,
+            "acousticness": 0.2,
+            "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 20,
+          "title": "Mood Swings - Mixed",
+          "artists": [
+            "Little Simz"
+          ],
+          "primary_artist": "Little Simz",
+          "duration": "2:23",
+          "duration_sec": 143,
+          "spotify_track_id": "79qDEriNSglmbZC6isY0Jv",
+          "spotify_uri": "spotify:track:79qDEriNSglmbZC6isY0Jv",
+          "spotify_url": "https://open.spotify.com/track/79qDEriNSglmbZC6isY0Jv",
+          "genres": [
+            "hip-hop"
+          ],
+          "genre_primary": "hip-hop",
+          "subgenres": [
+            "uk hip-hop",
+            "alternative rap"
+          ],
+          "mood": [
+            "introspective",
+            "smooth",
+            "reflective"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.5,
+            "danceability": 0.6,
+            "acousticness": 0.2,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 21,
+          "title": "Breathing Underwater (ft. Meshell Ndegeocello)",
+          "artists": [
+            "Robert Glasper",
+            "Meshell Ndegeocello"
+          ],
+          "primary_artist": "Robert Glasper",
+          "duration": "2:15",
+          "duration_sec": 135,
+          "spotify_track_id": "2hsFFzGCu0B0QgJN5Mfvw5",
+          "spotify_uri": "spotify:track:2hsFFzGCu0B0QgJN5Mfvw5",
+          "spotify_url": "https://open.spotify.com/track/2hsFFzGCu0B0QgJN5Mfvw5",
+          "genres": [
+            "neo-soul",
+            "jazz"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "jazz-soul",
+            "r&b",
+            "neo-soul"
+          ],
+          "mood": [
+            "smooth",
+            "intimate",
+            "warm"
+          ],
+          "mood_parameters": {
+            "energy": 0.45,
+            "valence": 0.55,
+            "danceability": 0.55,
+            "acousticness": 0.4,
+            "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 22,
+          "title": "Wear and Tear",
+          "artists": [
+            "Everything Is Recorded",
+            "Sampha",
+            "Florence + The Machine",
+            "Danielle Ponder",
+            "Jah Wobble"
+          ],
+          "primary_artist": "Everything Is Recorded",
+          "duration": "3:09",
+          "duration_sec": 189,
+          "spotify_track_id": "6qSZITcDk6ySzcc6Xt9WSK",
+          "spotify_uri": "spotify:track:6qSZITcDk6ySzcc6Xt9WSK",
+          "spotify_url": "https://open.spotify.com/track/6qSZITcDk6ySzcc6Xt9WSK",
+          "genres": [
+            "electronic",
+            "neo-soul"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "electronic soul",
+            "art pop",
+            "downtempo"
+          ],
+          "mood": [
+            "emotive",
+            "cinematic",
+            "soulful"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.5,
+            "danceability": 0.55,
+            "acousticness": 0.3,
+            "instrumentalness": 0.3
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 23,
+          "title": "Hopes and Dreams - Live From The Royal Albert Hall",
+          "artists": [
+            "Jordan Rakei"
+          ],
+          "primary_artist": "Jordan Rakei",
+          "duration": "4:51",
+          "duration_sec": 291,
+          "spotify_track_id": "35sQnlPNeXWvn4qvPt4Qsq",
+          "spotify_uri": "spotify:track:35sQnlPNeXWvn4qvPt4Qsq",
+          "spotify_url": "https://open.spotify.com/track/35sQnlPNeXWvn4qvPt4Qsq",
+          "genres": [
+            "neo-soul",
+            "jazz"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "soul",
+            "jazz",
+            "live"
+          ],
+          "mood": [
+            "warm",
+            "expansive",
+            "soulful"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.55,
+            "danceability": 0.55,
+            "acousticness": 0.45,
+            "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 24,
+          "title": "What We Are and What We Are Meant to Be",
+          "artists": [
+            "GoGo Penguin"
+          ],
+          "primary_artist": "GoGo Penguin",
+          "duration": "5:37",
+          "duration_sec": 337,
+          "spotify_track_id": "00D0Zf3YGnlveU2CwO7M7D",
+          "spotify_uri": "spotify:track:00D0Zf3YGnlveU2CwO7M7D",
+          "spotify_url": "https://open.spotify.com/track/00D0Zf3YGnlveU2CwO7M7D",
+          "genres": [
+            "jazz",
+            "electronic"
+          ],
+          "genre_primary": "jazz",
+          "subgenres": [
+            "contemporary jazz",
+            "post-jazz",
+            "minimal"
+          ],
+          "mood": [
+            "cinematic",
+            "propulsive",
+            "intricate"
+          ],
+          "mood_parameters": {
+            "energy": 0.55,
+            "valence": 0.5,
+            "danceability": 0.5,
+            "acousticness": 0.4,
+            "instrumentalness": 0.85
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 25,
+          "title": "Chant Song: Bakoena Ba Nkopane",
+          "artists": [
+            "Bokang Ramatlapeng"
+          ],
+          "primary_artist": "Bokang Ramatlapeng",
+          "duration": "4:21",
+          "duration_sec": 261,
+          "spotify_track_id": "48qf6rG6ixRciJJ2saRTDn",
+          "spotify_uri": "spotify:track:48qf6rG6ixRciJJ2saRTDn",
+          "spotify_url": "https://open.spotify.com/track/48qf6rG6ixRciJJ2saRTDn",
+          "genres": [
+            "world"
+          ],
+          "genre_primary": "world",
+          "subgenres": [
+            "world",
+            "south african",
+            "sesotho chant",
+            "folk"
+          ],
+          "mood": [
+            "spiritual",
+            "rooted",
+            "hypnotic"
+          ],
+          "mood_parameters": {
+            "energy": 0.45,
+            "valence": 0.55,
+            "danceability": 0.55,
+            "acousticness": 0.6,
+            "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 26,
+          "title": "Myself (feat. Jorja Smith)",
+          "artists": [
+            "Venna",
+            "Jorja Smith"
+          ],
+          "primary_artist": "Venna",
+          "duration": "2:59",
+          "duration_sec": 179,
+          "spotify_track_id": "7ymllAe6kR6TSmiDXmnOWx",
+          "spotify_uri": "spotify:track:7ymllAe6kR6TSmiDXmnOWx",
+          "spotify_url": "https://open.spotify.com/track/7ymllAe6kR6TSmiDXmnOWx",
+          "genres": [
+            "neo-soul",
+            "uk-jazz"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "uk soul",
+            "jazz",
+            "r&b"
+          ],
+          "mood": [
+            "smooth",
+            "intimate",
+            "warm"
+          ],
+          "mood_parameters": {
+            "energy": 0.45,
+            "valence": 0.55,
+            "danceability": 0.55,
+            "acousticness": 0.4,
+            "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 27,
+          "title": "Gnu Blue",
+          "artists": [
+            "Makaya McCraven",
+            "Theon Cross",
+            "Ben LaMar Gay"
+          ],
+          "primary_artist": "Makaya McCraven",
+          "duration": "4:52",
+          "duration_sec": 292,
+          "spotify_track_id": "0ACrjHByr2GzPVTxKbDBix",
+          "spotify_uri": "spotify:track:0ACrjHByr2GzPVTxKbDBix",
+          "spotify_url": "https://open.spotify.com/track/0ACrjHByr2GzPVTxKbDBix",
+          "genres": [
+            "jazz"
+          ],
+          "genre_primary": "jazz",
+          "subgenres": [
+            "jazz",
+            "contemporary jazz",
+            "beat science",
+            "tuba jazz"
+          ],
+          "mood": [
+            "groovy",
+            "exploratory",
+            "deep"
+          ],
+          "mood_parameters": {
+            "energy": 0.55,
+            "valence": 0.5,
+            "danceability": 0.6,
+            "acousticness": 0.5,
+            "instrumentalness": 0.9
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 28,
+          "title": "OYSTRI (feat. Richard Spaven)",
+          "artists": [
+            "Petter Eldh",
+            "Richard Spaven"
+          ],
+          "primary_artist": "Petter Eldh",
+          "duration": "3:06",
+          "duration_sec": 186,
+          "spotify_track_id": "7xA1LjXxm8a1XJZx4MnAiR",
+          "spotify_uri": "spotify:track:7xA1LjXxm8a1XJZx4MnAiR",
+          "spotify_url": "https://open.spotify.com/track/7xA1LjXxm8a1XJZx4MnAiR",
+          "genres": [
+            "jazz",
+            "electronic"
+          ],
+          "genre_primary": "jazz",
+          "subgenres": [
+            "jazz",
+            "experimental jazz",
+            "broken beat jazz",
+            "contemporary"
+          ],
+          "mood": [
+            "angular",
+            "rhythmic",
+            "exploratory"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.5,
+            "danceability": 0.55,
+            "acousticness": 0.4,
+            "instrumentalness": 0.85
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 29,
+          "title": "Dersen Cafe",
+          "artists": [
+            "Alfa Mist"
+          ],
+          "primary_artist": "Alfa Mist",
+          "duration": "2:04",
+          "duration_sec": 124,
+          "spotify_track_id": "5cztGaBlRWDkJZ9KjIwCDA",
+          "spotify_uri": "spotify:track:5cztGaBlRWDkJZ9KjIwCDA",
+          "spotify_url": "https://open.spotify.com/track/5cztGaBlRWDkJZ9KjIwCDA",
+          "genres": [
+            "uk-jazz"
+          ],
+          "genre_primary": "uk-jazz",
+          "subgenres": [
+            "uk jazz",
+            "jazz-hop",
+            "instrumental"
+          ],
+          "mood": [
+            "contemplative",
+            "mellow",
+            "warm"
+          ],
+          "mood_parameters": {
+            "energy": 0.4,
+            "valence": 0.5,
+            "danceability": 0.5,
+            "acousticness": 0.45,
+            "instrumentalness": 0.7
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 30,
+          "title": "The Look Of Love (feat. T3 & Bilal)",
+          "artists": [
+            "Robert Glasper",
+            "T3",
+            "Bilal"
+          ],
+          "primary_artist": "Robert Glasper",
+          "duration": "3:15",
+          "duration_sec": 195,
+          "spotify_track_id": "7JhdINbQHNrupuZm4YYrxb",
+          "spotify_uri": "spotify:track:7JhdINbQHNrupuZm4YYrxb",
+          "spotify_url": "https://open.spotify.com/track/7JhdINbQHNrupuZm4YYrxb",
+          "genres": [
+            "neo-soul",
+            "jazz"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "r&b",
+            "neo-soul",
+            "jazz-soul",
+            "hip-hop soul"
+          ],
+          "mood": [
+            "smooth",
+            "romantic",
+            "warm"
+          ],
+          "mood_parameters": {
+            "energy": 0.45,
+            "valence": 0.55,
+            "danceability": 0.6,
+            "acousticness": 0.35,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 31,
+          "title": "Oganesson",
+          "artists": [
+            "Tortoise"
+          ],
+          "primary_artist": "Tortoise",
+          "duration": "3:16",
+          "duration_sec": 196,
+          "spotify_track_id": "5kvcdd6qitCHttxm8R9GTS",
+          "spotify_uri": "spotify:track:5kvcdd6qitCHttxm8R9GTS",
+          "spotify_url": "https://open.spotify.com/track/5kvcdd6qitCHttxm8R9GTS",
+          "genres": [
+            "alt",
+            "electronic"
+          ],
+          "genre_primary": "alt",
+          "subgenres": [
+            "post-rock",
+            "math rock",
+            "instrumental"
+          ],
+          "mood": [
+            "cerebral",
+            "intricate",
+            "propulsive"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.5,
+            "danceability": 0.45,
+            "acousticness": 0.35,
+            "instrumentalness": 0.85
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 32,
+          "title": "Rain Down (Feat. Sampha)",
+          "artists": [
+            "Daniel Caesar",
+            "Sampha"
+          ],
+          "primary_artist": "Daniel Caesar",
+          "duration": "3:08",
+          "duration_sec": 188,
+          "spotify_track_id": "4id11n9NlwfCGrvq2Kh1xl",
+          "spotify_uri": "spotify:track:4id11n9NlwfCGrvq2Kh1xl",
+          "spotify_url": "https://open.spotify.com/track/4id11n9NlwfCGrvq2Kh1xl",
+          "genres": [
+            "neo-soul"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "r&b",
+            "alternative r&b",
+            "soul"
+          ],
+          "mood": [
+            "ethereal",
+            "tender",
+            "intimate"
+          ],
+          "mood_parameters": {
+            "energy": 0.4,
+            "valence": 0.5,
+            "danceability": 0.5,
+            "acousticness": 0.45,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 33,
+          "title": "Sweetie",
+          "artists": [
+            "Kokoroko"
+          ],
+          "primary_artist": "Kokoroko",
+          "duration": "4:04",
+          "duration_sec": 244,
+          "spotify_track_id": "78GkeNJsZMwdbPlSMOIho4",
+          "spotify_uri": "spotify:track:78GkeNJsZMwdbPlSMOIho4",
+          "spotify_url": "https://open.spotify.com/track/78GkeNJsZMwdbPlSMOIho4",
+          "genres": [
+            "uk-jazz",
+            "world"
+          ],
+          "genre_primary": "uk-jazz",
+          "subgenres": [
+            "afrobeat",
+            "uk jazz",
+            "highlife"
+          ],
+          "mood": [
+            "sunny",
+            "warm",
+            "groovy"
+          ],
+          "mood_parameters": {
+            "energy": 0.55,
+            "valence": 0.65,
+            "danceability": 0.65,
+            "acousticness": 0.35,
+            "instrumentalness": 0.4
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 34,
+          "title": "Teal Dreams",
+          "artists": [
+            "Yazmin Lacey"
+          ],
+          "primary_artist": "Yazmin Lacey",
+          "duration": "3:15",
+          "duration_sec": 195,
+          "spotify_track_id": "6mMXWQDmEvFDUhaXXvMfCC",
+          "spotify_uri": "spotify:track:6mMXWQDmEvFDUhaXXvMfCC",
+          "spotify_url": "https://open.spotify.com/track/6mMXWQDmEvFDUhaXXvMfCC",
+          "genres": [
+            "neo-soul",
+            "uk-jazz"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "uk soul",
+            "jazz-soul",
+            "vocal"
+          ],
+          "mood": [
+            "dreamy",
+            "warm",
+            "intimate"
+          ],
+          "mood_parameters": {
+            "energy": 0.4,
+            "valence": 0.55,
+            "danceability": 0.5,
+            "acousticness": 0.45,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 35,
+          "title": "Midnight In Saqqara",
+          "artists": [
+            "Arc De Soleil"
+          ],
+          "primary_artist": "Arc De Soleil",
+          "duration": "3:59",
+          "duration_sec": 239,
+          "spotify_track_id": "2Y9nPyKFkYP6xHsj8f2lPo",
+          "spotify_uri": "spotify:track:2Y9nPyKFkYP6xHsj8f2lPo",
+          "spotify_url": "https://open.spotify.com/track/2Y9nPyKFkYP6xHsj8f2lPo",
+          "genres": [
+            "electronic",
+            "downtempo"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "downtempo",
+            "organic house",
+            "world fusion"
+          ],
+          "mood": [
+            "hypnotic",
+            "exotic",
+            "atmospheric"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.5,
+            "danceability": 0.6,
+            "acousticness": 0.3,
+            "instrumentalness": 0.7
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 36,
+          "title": "hopefully",
+          "artists": [
+            "Loyle Carner",
+            "Benjamin Zephaniah"
+          ],
+          "primary_artist": "Loyle Carner",
+          "duration": "2:52",
+          "duration_sec": 172,
+          "spotify_track_id": "0oeHRzQz4LdmLwswRaAffx",
+          "spotify_uri": "spotify:track:0oeHRzQz4LdmLwswRaAffx",
+          "spotify_url": "https://open.spotify.com/track/0oeHRzQz4LdmLwswRaAffx",
+          "genres": [
+            "hip-hop",
+            "jazz"
+          ],
+          "genre_primary": "hip-hop",
+          "subgenres": [
+            "uk hip-hop",
+            "jazz rap",
+            "spoken word"
+          ],
+          "mood": [
+            "warm",
+            "reflective",
+            "tender"
+          ],
+          "mood_parameters": {
+            "energy": 0.45,
+            "valence": 0.5,
+            "danceability": 0.55,
+            "acousticness": 0.35,
+            "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 37,
+          "title": "L.U.",
+          "artists": [
+            "SAULT"
+          ],
+          "primary_artist": "SAULT",
+          "duration": "4:05",
+          "duration_sec": 245,
+          "spotify_track_id": "4tfmvLFrKxbi2JInTOKueu",
+          "spotify_uri": "spotify:track:4tfmvLFrKxbi2JInTOKueu",
+          "spotify_url": "https://open.spotify.com/track/4tfmvLFrKxbi2JInTOKueu",
+          "genres": [
+            "neo-soul",
+            "soul-funk"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "soul",
+            "funk",
+            "afro"
+          ],
+          "mood": [
+            "spiritual",
+            "groovy",
+            "warm"
+          ],
+          "mood_parameters": {
+            "energy": 0.55,
+            "valence": 0.6,
+            "danceability": 0.65,
+            "acousticness": 0.35,
+            "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 38,
+          "title": "1st Place",
+          "artists": [
+            "CARRTOONS",
+            "Rae Khalil"
+          ],
+          "primary_artist": "CARRTOONS",
+          "duration": "2:44",
+          "duration_sec": 164,
+          "spotify_track_id": "31ueAO1V7MPEtI6sjpnT3Y",
+          "spotify_uri": "spotify:track:31ueAO1V7MPEtI6sjpnT3Y",
+          "spotify_url": "https://open.spotify.com/track/31ueAO1V7MPEtI6sjpnT3Y",
+          "genres": [
+            "soul-funk",
+            "hip-hop"
+          ],
+          "genre_primary": "soul-funk",
+          "subgenres": [
+            "funk",
+            "neo-soul",
+            "beat music"
+          ],
+          "mood": [
+            "groovy",
+            "breezy",
+            "warm"
+          ],
+          "mood_parameters": {
+            "energy": 0.55,
+            "valence": 0.62,
+            "danceability": 0.7,
+            "acousticness": 0.3,
+            "instrumentalness": 0.3
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 39,
+          "title": "Consulate Case",
+          "artists": [
+            "Surprise Chef"
+          ],
+          "primary_artist": "Surprise Chef",
+          "duration": "3:27",
+          "duration_sec": 207,
+          "spotify_track_id": "5ZF1kJHFTY8piV6v991niI",
+          "spotify_uri": "spotify:track:5ZF1kJHFTY8piV6v991niI",
+          "spotify_url": "https://open.spotify.com/track/5ZF1kJHFTY8piV6v991niI",
+          "genres": [
+            "soul-funk",
+            "jazz"
+          ],
+          "genre_primary": "soul-funk",
+          "subgenres": [
+            "cinematic soul",
+            "funk",
+            "library"
+          ],
+          "mood": [
+            "cinematic",
+            "mellow",
+            "groovy"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.55,
+            "danceability": 0.6,
+            "acousticness": 0.35,
+            "instrumentalness": 0.85
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 40,
+          "title": "Bang Bien",
+          "artists": [
+            "Nightmares On Wax",
+            "Yasiin Bey",
+            "Mos Def"
+          ],
+          "primary_artist": "Nightmares On Wax",
+          "duration": "4:06",
+          "duration_sec": 246,
+          "spotify_track_id": "4gxRIqjkYFwdzcV88KonkR",
+          "spotify_uri": "spotify:track:4gxRIqjkYFwdzcV88KonkR",
+          "spotify_url": "https://open.spotify.com/track/4gxRIqjkYFwdzcV88KonkR",
+          "genres": [
+            "electronic",
+            "hip-hop"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "trip-hop",
+            "downtempo",
+            "conscious hip-hop"
+          ],
+          "mood": [
+            "hypnotic",
+            "mellow",
+            "global"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.55,
+            "danceability": 0.65,
+            "acousticness": 0.2,
+            "instrumentalness": 0.4
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 41,
+          "title": "Without Comma Enough",
+          "artists": [
+            "Run Logan Run",
+            "BB.JAMES",
+            "Ryan Thrupp"
+          ],
+          "primary_artist": "Run Logan Run",
+          "duration": "3:01",
+          "duration_sec": 181,
+          "spotify_track_id": "3bkS5A2apljT3GpLned89V",
+          "spotify_uri": "spotify:track:3bkS5A2apljT3GpLned89V",
+          "spotify_url": "https://open.spotify.com/track/3bkS5A2apljT3GpLned89V",
+          "genres": [
+            "uk-jazz"
+          ],
+          "genre_primary": "uk-jazz",
+          "subgenres": [
+            "uk jazz",
+            "experimental jazz",
+            "spiritual jazz"
+          ],
+          "mood": [
+            "intense",
+            "raw",
+            "atmospheric"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.45,
+            "danceability": 0.5,
+            "acousticness": 0.3,
+            "instrumentalness": 0.6
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 42,
+          "title": "#bamisforthechildren",
+          "artists": [
+            "Nicholas Payton",
+            "Esperanza Spalding",
+            "Karriem Riggins",
+            "Ivan Neville",
+            "Erica Falls",
+            "Otis McDonald"
+          ],
+          "primary_artist": "Nicholas Payton",
+          "duration": "5:55",
+          "duration_sec": 355,
+          "spotify_track_id": "3oE62jhSKYycX8q6plStD8",
+          "spotify_uri": "spotify:track:3oE62jhSKYycX8q6plStD8",
+          "spotify_url": "https://open.spotify.com/track/3oE62jhSKYycX8q6plStD8",
+          "genres": [
+            "jazz",
+            "soul-funk"
+          ],
+          "genre_primary": "jazz",
+          "subgenres": [
+            "jazz-funk",
+            "spiritual jazz",
+            "soul"
+          ],
+          "mood": [
+            "uplifting",
+            "groovy",
+            "communal"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.6,
+            "danceability": 0.65,
+            "acousticness": 0.35,
+            "instrumentalness": 0.5
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 43,
+          "title": "Time Will Tell",
+          "artists": [
+            "Celeste"
+          ],
+          "primary_artist": "Celeste",
+          "duration": "3:44",
+          "duration_sec": 224,
+          "spotify_track_id": "4MxzL8jmOxjconLzZGAs9z",
+          "spotify_uri": "spotify:track:4MxzL8jmOxjconLzZGAs9z",
+          "spotify_url": "https://open.spotify.com/track/4MxzL8jmOxjconLzZGAs9z",
+          "genres": [
+            "neo-soul"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "soul",
+            "uk soul",
+            "retro soul",
+            "ballad"
+          ],
+          "mood": [
+            "soulful",
+            "elegant",
+            "emotional"
+          ],
+          "mood_parameters": {
+            "energy": 0.4,
+            "valence": 0.45,
+            "danceability": 0.5,
+            "acousticness": 0.5,
+            "instrumentalness": 0.05
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 44,
+          "title": "AUTOMATIC",
+          "artists": [
+            "Nate Smith",
+            "Lalah Hathaway"
+          ],
+          "primary_artist": "Nate Smith",
+          "duration": "4:52",
+          "duration_sec": 292,
+          "spotify_track_id": "6c2o3AnQoZaNCG2hasVTc5",
+          "spotify_uri": "spotify:track:6c2o3AnQoZaNCG2hasVTc5",
+          "spotify_url": "https://open.spotify.com/track/6c2o3AnQoZaNCG2hasVTc5",
+          "genres": [
+            "neo-soul",
+            "jazz"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "r&b",
+            "jazz-funk",
+            "soul"
+          ],
+          "mood": [
+            "smooth",
+            "soulful",
+            "groovy"
+          ],
+          "mood_parameters": {
+            "energy": 0.55,
+            "valence": 0.6,
+            "danceability": 0.65,
+            "acousticness": 0.3,
+            "instrumentalness": 0.3
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 45,
+          "title": "FREEDOM JAZZ DANCE",
+          "artists": [
+            "Kassa Overall"
+          ],
+          "primary_artist": "Kassa Overall",
+          "duration": "3:50",
+          "duration_sec": 230,
+          "spotify_track_id": "57WNlCxlDldnl8LWw6f0Rs",
+          "spotify_uri": "spotify:track:57WNlCxlDldnl8LWw6f0Rs",
+          "spotify_url": "https://open.spotify.com/track/57WNlCxlDldnl8LWw6f0Rs",
+          "genres": [
+            "jazz",
+            "hip-hop"
+          ],
+          "genre_primary": "jazz",
+          "subgenres": [
+            "jazz rap",
+            "experimental jazz",
+            "beat"
+          ],
+          "mood": [
+            "frenetic",
+            "virtuosic",
+            "bold"
+          ],
+          "mood_parameters": {
+            "energy": 0.65,
+            "valence": 0.55,
+            "danceability": 0.6,
+            "acousticness": 0.3,
+            "instrumentalness": 0.5
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 46,
+          "title": "Lifetones",
+          "artists": [
+            "Joe Armon-Jones"
+          ],
+          "primary_artist": "Joe Armon-Jones",
+          "duration": "8:08",
+          "duration_sec": 488,
+          "spotify_track_id": "0gouDswj0R5jne7YUUrlIO",
+          "spotify_uri": "spotify:track:0gouDswj0R5jne7YUUrlIO",
+          "spotify_url": "https://open.spotify.com/track/0gouDswj0R5jne7YUUrlIO",
+          "genres": [
+            "uk-jazz"
+          ],
+          "genre_primary": "uk-jazz",
+          "subgenres": [
+            "uk jazz",
+            "broken beat",
+            "spiritual jazz"
+          ],
+          "mood": [
+            "expansive",
+            "hypnotic",
+            "warm"
+          ],
+          "mood_parameters": {
+            "energy": 0.55,
+            "valence": 0.55,
+            "danceability": 0.6,
+            "acousticness": 0.3,
+            "instrumentalness": 0.7
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 47,
+          "title": "Rain",
+          "artists": [
+            "Charles Webster",
+            "EMAMKAY",
+            "Bokang Ramatlapeng"
+          ],
+          "primary_artist": "Charles Webster",
+          "duration": "5:04",
+          "duration_sec": 304,
+          "spotify_track_id": "7pDcmCQzU7l244a1JCZo25",
+          "spotify_uri": "spotify:track:7pDcmCQzU7l244a1JCZo25",
+          "spotify_url": "https://open.spotify.com/track/7pDcmCQzU7l244a1JCZo25",
+          "genres": [
+            "soulful-house",
+            "electronic"
+          ],
+          "genre_primary": "soulful-house",
+          "subgenres": [
+            "deep house",
+            "soulful house",
+            "electronic"
+          ],
+          "mood": [
+            "deep",
+            "soulful",
+            "hypnotic"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.5,
+            "danceability": 0.72,
+            "acousticness": 0.2,
+            "instrumentalness": 0.4
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 48,
+          "title": "The Package",
+          "artists": [
+            "De La Soul"
+          ],
+          "primary_artist": "De La Soul",
+          "duration": "3:14",
+          "duration_sec": 194,
+          "spotify_track_id": "3xI6Rzk8MVtHuIXeM9TIPD",
+          "spotify_uri": "spotify:track:3xI6Rzk8MVtHuIXeM9TIPD",
+          "spotify_url": "https://open.spotify.com/track/3xI6Rzk8MVtHuIXeM9TIPD",
+          "genres": [
+            "hip-hop"
+          ],
+          "genre_primary": "hip-hop",
+          "subgenres": [
+            "hip-hop",
+            "east coast hip-hop",
+            "jazz rap",
+            "classic"
+          ],
+          "mood": [
+            "playful",
+            "groovy",
+            "nostalgic"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.62,
+            "danceability": 0.72,
+            "acousticness": 0.2,
+            "instrumentalness": 0.0
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 49,
+          "title": "Speak Low",
+          "artists": [
+            "Ife Ogunjobi"
+          ],
+          "primary_artist": "Ife Ogunjobi",
+          "duration": "4:24",
+          "duration_sec": 264,
+          "spotify_track_id": "6J2x6lCEZhYsGGb0OUadEV",
+          "spotify_uri": "spotify:track:6J2x6lCEZhYsGGb0OUadEV",
+          "spotify_url": "https://open.spotify.com/track/6J2x6lCEZhYsGGb0OUadEV",
+          "genres": [
+            "uk-jazz",
+            "jazz"
+          ],
+          "genre_primary": "uk-jazz",
+          "subgenres": [
+            "uk jazz",
+            "contemporary jazz",
+            "soul-jazz"
+          ],
+          "mood": [
+            "warm",
+            "smooth",
+            "soulful"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.55,
+            "danceability": 0.55,
+            "acousticness": 0.4,
+            "instrumentalness": 0.6
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 50,
+          "title": "Racetrack in France",
+          "artists": [
+            "Brian Jackson",
+            "Josh Milan",
+            "J. Ivy",
+            "Moodymann"
+          ],
+          "primary_artist": "Brian Jackson",
+          "duration": "7:09",
+          "duration_sec": 429,
+          "spotify_track_id": "3APPUGU445zp5MGA8bAUzf",
+          "spotify_uri": "spotify:track:3APPUGU445zp5MGA8bAUzf",
+          "spotify_url": "https://open.spotify.com/track/3APPUGU445zp5MGA8bAUzf",
+          "genres": [
+            "soulful-house",
+            "neo-soul"
+          ],
+          "genre_primary": "soulful-house",
+          "subgenres": [
+            "soulful house",
+            "deep house",
+            "spoken soul"
+          ],
+          "mood": [
+            "deep",
+            "soulful",
+            "hypnotic"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.55,
+            "danceability": 0.75,
+            "acousticness": 0.25,
+            "instrumentalness": 0.4
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 51,
+          "title": "Cold Zone",
+          "artists": [
+            "WAYNE SNOW"
+          ],
+          "primary_artist": "WAYNE SNOW",
+          "duration": "3:30",
+          "duration_sec": 210,
+          "spotify_track_id": "0SU1P7VuVWc9BsMv98o7Lf",
+          "spotify_uri": "spotify:track:0SU1P7VuVWc9BsMv98o7Lf",
+          "spotify_url": "https://open.spotify.com/track/0SU1P7VuVWc9BsMv98o7Lf",
+          "genres": [
+            "neo-soul",
+            "electronic"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "r&b",
+            "future soul",
+            "electronic soul",
+            "afro-soul"
+          ],
+          "mood": [
+            "cool",
+            "groovy",
+            "atmospheric"
+          ],
+          "mood_parameters": {
+            "energy": 0.55,
+            "valence": 0.5,
+            "danceability": 0.68,
+            "acousticness": 0.15,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 52,
+          "title": "Moonlight",
+          "artists": [
+            "anaiis"
+          ],
+          "primary_artist": "anaiis",
+          "duration": "3:51",
+          "duration_sec": 231,
+          "spotify_track_id": "2wUnNvShBARNL6a6HwIPr4",
+          "spotify_uri": "spotify:track:2wUnNvShBARNL6a6HwIPr4",
+          "spotify_url": "https://open.spotify.com/track/2wUnNvShBARNL6a6HwIPr4",
+          "genres": [
+            "neo-soul",
+            "alt"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "alternative soul",
+            "electronic soul",
+            "vocal"
+          ],
+          "mood": [
+            "dreamy",
+            "intimate",
+            "ethereal"
+          ],
+          "mood_parameters": {
+            "energy": 0.4,
+            "valence": 0.5,
+            "danceability": 0.5,
+            "acousticness": 0.4,
+            "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 53,
+          "title": "Give Me More",
+          "artists": [
+            "Obongjayar"
+          ],
+          "primary_artist": "Obongjayar",
+          "duration": "3:11",
+          "duration_sec": 191,
+          "spotify_track_id": "3k5z512M1610ILVIzd8zbH",
+          "spotify_uri": "spotify:track:3k5z512M1610ILVIzd8zbH",
+          "spotify_url": "https://open.spotify.com/track/3k5z512M1610ILVIzd8zbH",
+          "genres": [
+            "world",
+            "alt"
+          ],
+          "genre_primary": "world",
+          "subgenres": [
+            "afro-fusion",
+            "alternative",
+            "soul"
+          ],
+          "mood": [
+            "energetic",
+            "defiant",
+            "groovy"
+          ],
+          "mood_parameters": {
+            "energy": 0.65,
+            "valence": 0.6,
+            "danceability": 0.65,
+            "acousticness": 0.25,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 54,
+          "title": "Selfish (feat. James Blake)",
+          "artists": [
+            "Dave",
+            "James Blake"
+          ],
+          "primary_artist": "Dave",
+          "duration": "4:32",
+          "duration_sec": 272,
+          "spotify_track_id": "4lhOzoYujY5YD3anyw68hp",
+          "spotify_uri": "spotify:track:4lhOzoYujY5YD3anyw68hp",
+          "spotify_url": "https://open.spotify.com/track/4lhOzoYujY5YD3anyw68hp",
+          "genres": [
+            "hip-hop",
+            "alt"
+          ],
+          "genre_primary": "hip-hop",
+          "subgenres": [
+            "hip-hop",
+            "uk hip-hop",
+            "art rap",
+            "piano rap"
+          ],
+          "mood": [
+            "introspective",
+            "melancholic",
+            "sparse"
+          ],
+          "mood_parameters": {
+            "energy": 0.45,
+            "valence": 0.38,
+            "danceability": 0.55,
+            "acousticness": 0.4,
+            "instrumentalness": 0.05
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 55,
+          "title": "Valdez",
+          "artists": [
+            "Terrace Martin"
+          ],
+          "primary_artist": "Terrace Martin",
+          "duration": "5:09",
+          "duration_sec": 309,
+          "spotify_track_id": "79S0nPgf2upTHNp6Z15E0v",
+          "spotify_uri": "spotify:track:79S0nPgf2upTHNp6Z15E0v",
+          "spotify_url": "https://open.spotify.com/track/79S0nPgf2upTHNp6Z15E0v",
+          "genres": [
+            "jazz",
+            "neo-soul"
+          ],
+          "genre_primary": "jazz",
+          "subgenres": [
+            "west coast jazz",
+            "jazz-funk",
+            "soul"
+          ],
+          "mood": [
+            "smooth",
+            "soulful",
+            "mellow"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.55,
+            "danceability": 0.6,
+            "acousticness": 0.35,
+            "instrumentalness": 0.5
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 56,
+          "title": "Good Vibes",
+          "artists": [
+            "The Pocket Queen",
+            "The Royal Flush",
+            "Duckwrth"
+          ],
+          "primary_artist": "The Pocket Queen",
+          "duration": "5:09",
+          "duration_sec": 309,
+          "spotify_track_id": "1fwtpKcHSEIpG8AUSH85PU",
+          "spotify_uri": "spotify:track:1fwtpKcHSEIpG8AUSH85PU",
+          "spotify_url": "https://open.spotify.com/track/1fwtpKcHSEIpG8AUSH85PU",
+          "genres": [
+            "neo-soul",
+            "soul-funk"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "soul",
+            "funk",
+            "r&b"
+          ],
+          "mood": [
+            "upbeat",
+            "groovy",
+            "warm"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.65,
+            "danceability": 0.72,
+            "acousticness": 0.3,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 57,
+          "title": "Blue",
+          "artists": [
+            "Little Simz",
+            "Sampha"
+          ],
+          "primary_artist": "Little Simz",
+          "duration": "4:14",
+          "duration_sec": 254,
+          "spotify_track_id": "46PSL97D6XVVMWzalBD7xb",
+          "spotify_uri": "spotify:track:46PSL97D6XVVMWzalBD7xb",
+          "spotify_url": "https://open.spotify.com/track/46PSL97D6XVVMWzalBD7xb",
+          "genres": [
+            "hip-hop",
+            "neo-soul"
+          ],
+          "genre_primary": "hip-hop",
+          "subgenres": [
+            "uk hip-hop",
+            "alternative r&b",
+            "soul"
+          ],
+          "mood": [
+            "reflective",
+            "smooth",
+            "melancholic"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.45,
+            "danceability": 0.6,
+            "acousticness": 0.3,
+            "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 58,
+          "title": "Unconditional Love",
+          "artists": [
+            "Nicholas Payton",
+            "Esperanza Spalding"
+          ],
+          "primary_artist": "Nicholas Payton",
+          "duration": "8:15",
+          "duration_sec": 495,
+          "spotify_track_id": "0QqUHWMLAdlWg7Znj7Il5n",
+          "spotify_uri": "spotify:track:0QqUHWMLAdlWg7Znj7Il5n",
+          "spotify_url": "https://open.spotify.com/track/0QqUHWMLAdlWg7Znj7Il5n",
+          "genres": [
+            "jazz"
+          ],
+          "genre_primary": "jazz",
+          "subgenres": [
+            "contemporary jazz",
+            "spiritual jazz",
+            "post-bop"
+          ],
+          "mood": [
+            "expansive",
+            "romantic",
+            "virtuosic"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.55,
+            "danceability": 0.5,
+            "acousticness": 0.45,
+            "instrumentalness": 0.7
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 59,
+          "title": "Another Place - feat. Greentea Peng & Wu-Lu",
+          "artists": [
+            "Joe Armon-Jones",
+            "Greentea Peng",
+            "Wu-Lu"
+          ],
+          "primary_artist": "Joe Armon-Jones",
+          "duration": "6:24",
+          "duration_sec": 384,
+          "spotify_track_id": "4rXf0AFTHj2aX5n2drMsaJ",
+          "spotify_uri": "spotify:track:4rXf0AFTHj2aX5n2drMsaJ",
+          "spotify_url": "https://open.spotify.com/track/4rXf0AFTHj2aX5n2drMsaJ",
+          "genres": [
+            "uk-jazz",
+            "neo-soul"
+          ],
+          "genre_primary": "uk-jazz",
+          "subgenres": [
+            "uk jazz",
+            "dub",
+            "broken beat"
+          ],
+          "mood": [
+            "hypnotic",
+            "warm",
+            "psychedelic"
+          ],
+          "mood_parameters": {
+            "energy": 0.55,
+            "valence": 0.55,
+            "danceability": 0.65,
+            "acousticness": 0.3,
+            "instrumentalness": 0.4
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 60,
+          "title": "Wind Parade - Live From The Royal Albert Hall",
+          "artists": [
+            "Jordan Rakei"
+          ],
+          "primary_artist": "Jordan Rakei",
+          "duration": "6:09",
+          "duration_sec": 369,
+          "spotify_track_id": "2bdqcgrfVS5JFNSXtWc28v",
+          "spotify_uri": "spotify:track:2bdqcgrfVS5JFNSXtWc28v",
+          "spotify_url": "https://open.spotify.com/track/2bdqcgrfVS5JFNSXtWc28v",
+          "genres": [
+            "neo-soul",
+            "jazz"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "soul",
+            "jazz",
+            "live"
+          ],
+          "mood": [
+            "expansive",
+            "warm",
+            "soulful"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.55,
+            "danceability": 0.55,
+            "acousticness": 0.45,
+            "instrumentalness": 0.3
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 61,
+          "title": "Babystar",
+          "artists": [
+            "Matthew Herbert",
+            "Momoko Gill",
+            "Herbert"
+          ],
+          "primary_artist": "Matthew Herbert",
+          "duration": "5:47",
+          "duration_sec": 347,
+          "spotify_track_id": "3TOxbGdA4QfHF0FmQE9D86",
+          "spotify_uri": "spotify:track:3TOxbGdA4QfHF0FmQE9D86",
+          "spotify_url": "https://open.spotify.com/track/3TOxbGdA4QfHF0FmQE9D86",
+          "genres": [
+            "electronic",
+            "neo-soul"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "electronic",
+            "house",
+            "soul"
+          ],
+          "mood": [
+            "pulsing",
+            "soulful",
+            "hypnotic"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.55,
+            "danceability": 0.7,
+            "acousticness": 0.2,
+            "instrumentalness": 0.4
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 62,
+          "title": "All Time (feat. Tawiah)",
+          "artists": [
+            "Alfa Mist",
+            "Tawiah"
+          ],
+          "primary_artist": "Alfa Mist",
+          "duration": "3:49",
+          "duration_sec": 229,
+          "spotify_track_id": "04R258aYlMB7yPrmXbMdlE",
+          "spotify_uri": "spotify:track:04R258aYlMB7yPrmXbMdlE",
+          "spotify_url": "https://open.spotify.com/track/04R258aYlMB7yPrmXbMdlE",
+          "genres": [
+            "uk-jazz",
+            "neo-soul"
+          ],
+          "genre_primary": "uk-jazz",
+          "subgenres": [
+            "uk jazz",
+            "soul",
+            "jazz-hop"
+          ],
+          "mood": [
+            "warm",
+            "soulful",
+            "mellow"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.55,
+            "danceability": 0.6,
+            "acousticness": 0.35,
+            "instrumentalness": 0.4
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 63,
+          "title": "Dracula",
+          "artists": [
+            "Tame Impala"
+          ],
+          "primary_artist": "Tame Impala",
+          "duration": "3:25",
+          "duration_sec": 205,
+          "spotify_track_id": "1NXbNEAcPvY5G1xvfN57aA",
+          "spotify_uri": "spotify:track:1NXbNEAcPvY5G1xvfN57aA",
+          "spotify_url": "https://open.spotify.com/track/1NXbNEAcPvY5G1xvfN57aA",
+          "genres": [
+            "alt",
+            "electronic"
+          ],
+          "genre_primary": "alt",
+          "subgenres": [
+            "psychedelic pop",
+            "synth-pop",
+            "indie"
+          ],
+          "mood": [
+            "groovy",
+            "dark",
+            "hypnotic"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.5,
+            "danceability": 0.65,
+            "acousticness": 0.2,
+            "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 64,
+          "title": "The Bottle - Dub with Omar",
+          "artists": [
+            "Brian Jackson",
+            "Kenny Dope",
+            "Louie Vega",
+            "Omar"
+          ],
+          "primary_artist": "Brian Jackson",
+          "duration": "7:54",
+          "duration_sec": 474,
+          "spotify_track_id": "7jRv7OJwFbws3gLdaojyT7",
+          "spotify_uri": "spotify:track:7jRv7OJwFbws3gLdaojyT7",
+          "spotify_url": "https://open.spotify.com/track/7jRv7OJwFbws3gLdaojyT7",
+          "genres": [
+            "soulful-house",
+            "soul-funk"
+          ],
+          "genre_primary": "soulful-house",
+          "subgenres": [
+            "house",
+            "soulful house",
+            "dub",
+            "jazz house"
+          ],
+          "mood": [
+            "groovy",
+            "soulful",
+            "club"
+          ],
+          "mood_parameters": {
+            "energy": 0.7,
+            "valence": 0.6,
+            "danceability": 0.8,
+            "acousticness": 0.15,
+            "instrumentalness": 0.5
+          },
+          "bpm": 122,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 65,
+          "title": "Ambery",
+          "artists": [
+            "Fred again..",
+            "Floating Points"
+          ],
+          "primary_artist": "Fred again..",
+          "duration": "7:32",
+          "duration_sec": 452,
+          "spotify_track_id": "5GV52Kgz64yWqm8keYq1E0",
+          "spotify_uri": "spotify:track:5GV52Kgz64yWqm8keYq1E0",
+          "spotify_url": "https://open.spotify.com/track/5GV52Kgz64yWqm8keYq1E0",
+          "genres": [
+            "electronic"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "electronic",
+            "ambient house",
+            "downtempo"
+          ],
+          "mood": [
+            "euphoric",
+            "expansive",
+            "emotional"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.55,
+            "danceability": 0.65,
+            "acousticness": 0.2,
+            "instrumentalness": 0.6
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 66,
+          "title": "Gangsters",
+          "artists": [
+            "Mark Pritchard",
+            "Thom Yorke"
+          ],
+          "primary_artist": "Mark Pritchard",
+          "duration": "3:29",
+          "duration_sec": 209,
+          "spotify_track_id": "4cug7RkMB0SCoYkYrXYN4y",
+          "spotify_uri": "spotify:track:4cug7RkMB0SCoYkYrXYN4y",
+          "spotify_url": "https://open.spotify.com/track/4cug7RkMB0SCoYkYrXYN4y",
+          "genres": [
+            "electronic",
+            "alt"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "electronic",
+            "art rock",
+            "experimental"
+          ],
+          "mood": [
+            "tense",
+            "dark",
+            "propulsive"
+          ],
+          "mood_parameters": {
+            "energy": 0.55,
+            "valence": 0.4,
+            "danceability": 0.55,
+            "acousticness": 0.25,
+            "instrumentalness": 0.5
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 67,
+          "title": "Bakulindele",
+          "artists": [
+            "Charles Webster",
+            "Muzi"
+          ],
+          "primary_artist": "Charles Webster",
+          "duration": "3:30",
+          "duration_sec": 210,
+          "spotify_track_id": "3YLE7pOjfPCPdKF9RInD5D",
+          "spotify_uri": "spotify:track:3YLE7pOjfPCPdKF9RInD5D",
+          "spotify_url": "https://open.spotify.com/track/3YLE7pOjfPCPdKF9RInD5D",
+          "genres": [
+            "soulful-house",
+            "electronic"
+          ],
+          "genre_primary": "soulful-house",
+          "subgenres": [
+            "deep house",
+            "afro house",
+            "soulful house"
+          ],
+          "mood": [
+            "deep",
+            "hypnotic",
+            "warm"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.55,
+            "danceability": 0.75,
+            "acousticness": 0.2,
+            "instrumentalness": 0.5
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 68,
+          "title": "Idea 5 (Call My Name) [feat. LULU.]",
+          "artists": [
+            "Kokoroko",
+            "LULU."
+          ],
+          "primary_artist": "Kokoroko",
+          "duration": "4:51",
+          "duration_sec": 291,
+          "spotify_track_id": "0H9K4Ul9aFjf2RV14K5Xzf",
+          "spotify_uri": "spotify:track:0H9K4Ul9aFjf2RV14K5Xzf",
+          "spotify_url": "https://open.spotify.com/track/0H9K4Ul9aFjf2RV14K5Xzf",
+          "genres": [
+            "uk-jazz",
+            "world"
+          ],
+          "genre_primary": "uk-jazz",
+          "subgenres": [
+            "afrobeat",
+            "uk jazz",
+            "soul"
+          ],
+          "mood": [
+            "warm",
+            "breezy",
+            "groovy"
+          ],
+          "mood_parameters": {
+            "energy": 0.55,
+            "valence": 0.62,
+            "danceability": 0.65,
+            "acousticness": 0.35,
+            "instrumentalness": 0.4
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 69,
+          "title": "Trust - Live From The Royal Albert Hall",
+          "artists": [
+            "Jordan Rakei"
+          ],
+          "primary_artist": "Jordan Rakei",
+          "duration": "7:21",
+          "duration_sec": 441,
+          "spotify_track_id": "2Ew4CFRFzNzakE83tOu0Zl",
+          "spotify_uri": "spotify:track:2Ew4CFRFzNzakE83tOu0Zl",
+          "spotify_url": "https://open.spotify.com/track/2Ew4CFRFzNzakE83tOu0Zl",
+          "genres": [
+            "neo-soul",
+            "jazz"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "soul",
+            "jazz",
+            "live"
+          ],
+          "mood": [
+            "expansive",
+            "soulful",
+            "warm"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.55,
+            "danceability": 0.55,
+            "acousticness": 0.45,
+            "instrumentalness": 0.3
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 70,
+          "title": "BIG FISH",
+          "artists": [
+            "Nate Smith",
+            "säje"
+          ],
+          "primary_artist": "Nate Smith",
+          "duration": "4:54",
+          "duration_sec": 294,
+          "spotify_track_id": "1XAdrLTOitRM4WaUPaaIGF",
+          "spotify_uri": "spotify:track:1XAdrLTOitRM4WaUPaaIGF",
+          "spotify_url": "https://open.spotify.com/track/1XAdrLTOitRM4WaUPaaIGF",
+          "genres": [
+            "jazz",
+            "neo-soul"
+          ],
+          "genre_primary": "jazz",
+          "subgenres": [
+            "jazz-funk",
+            "vocal jazz",
+            "fusion"
+          ],
+          "mood": [
+            "virtuosic",
+            "lush",
+            "groovy"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.6,
+            "danceability": 0.6,
+            "acousticness": 0.35,
+            "instrumentalness": 0.5
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 71,
+          "title": "Eternal Reflections (feat. Yussef Dayes)",
+          "artists": [
+            "Venna",
+            "Yussef Dayes"
+          ],
+          "primary_artist": "Venna",
+          "duration": "4:53",
+          "duration_sec": 293,
+          "spotify_track_id": "1kgPaBdX9AgJzBMDtxjSHm",
+          "spotify_uri": "spotify:track:1kgPaBdX9AgJzBMDtxjSHm",
+          "spotify_url": "https://open.spotify.com/track/1kgPaBdX9AgJzBMDtxjSHm",
+          "genres": [
+            "uk-jazz"
+          ],
+          "genre_primary": "uk-jazz",
+          "subgenres": [
+            "uk jazz",
+            "spiritual jazz",
+            "fusion"
+          ],
+          "mood": [
+            "meditative",
+            "expansive",
+            "soulful"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.55,
+            "danceability": 0.55,
+            "acousticness": 0.35,
+            "instrumentalness": 0.7
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 72,
+          "title": "Free",
+          "artists": [
+            "Little Simz"
+          ],
+          "primary_artist": "Little Simz",
+          "duration": "3:36",
+          "duration_sec": 216,
+          "spotify_track_id": "05n0mwlh1y3cwjGmHnfVjh",
+          "spotify_uri": "spotify:track:05n0mwlh1y3cwjGmHnfVjh",
+          "spotify_url": "https://open.spotify.com/track/05n0mwlh1y3cwjGmHnfVjh",
+          "genres": [
+            "hip-hop"
+          ],
+          "genre_primary": "hip-hop",
+          "subgenres": [
+            "uk hip-hop",
+            "alternative rap"
+          ],
+          "mood": [
+            "energetic",
+            "uplifting",
+            "bold"
+          ],
+          "mood_parameters": {
+            "energy": 0.65,
+            "valence": 0.6,
+            "danceability": 0.7,
+            "acousticness": 0.15,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 73,
+          "title": "Sugar On My Tongue",
+          "artists": [
+            "Tyler, The Creator"
+          ],
+          "primary_artist": "Tyler, The Creator",
+          "duration": "2:33",
+          "duration_sec": 153,
+          "spotify_track_id": "6xV7Be6XEvkSnighmh2Tzj",
+          "spotify_uri": "spotify:track:6xV7Be6XEvkSnighmh2Tzj",
+          "spotify_url": "https://open.spotify.com/track/6xV7Be6XEvkSnighmh2Tzj",
+          "genres": [
+            "hip-hop",
+            "neo-soul"
+          ],
+          "genre_primary": "hip-hop",
+          "subgenres": [
+            "hip-hop",
+            "funk",
+            "neo-soul"
+          ],
+          "mood": [
+            "playful",
+            "sensual",
+            "bouncy"
+          ],
+          "mood_parameters": {
+            "energy": 0.65,
+            "valence": 0.62,
+            "danceability": 0.72,
+            "acousticness": 0.15,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 74,
+          "title": "Sweet Danger",
+          "artists": [
+            "Obongjayar"
+          ],
+          "primary_artist": "Obongjayar",
+          "duration": "2:41",
+          "duration_sec": 161,
+          "spotify_track_id": "4EoOXgvAdjiRzL60dNaLls",
+          "spotify_uri": "spotify:track:4EoOXgvAdjiRzL60dNaLls",
+          "spotify_url": "https://open.spotify.com/track/4EoOXgvAdjiRzL60dNaLls",
+          "genres": [
+            "world",
+            "alt"
+          ],
+          "genre_primary": "world",
+          "subgenres": [
+            "afro-fusion",
+            "alternative",
+            "soul"
+          ],
+          "mood": [
+            "energetic",
+            "defiant",
+            "groovy"
+          ],
+          "mood_parameters": {
+            "energy": 0.65,
+            "valence": 0.55,
+            "danceability": 0.65,
+            "acousticness": 0.25,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 75,
+          "title": "Fearless",
+          "artists": [
+            "WAYNE SNOW"
+          ],
+          "primary_artist": "WAYNE SNOW",
+          "duration": "1:44",
+          "duration_sec": 104,
+          "spotify_track_id": "2hkIQmasSkCEdef3d1VGM0",
+          "spotify_uri": "spotify:track:2hkIQmasSkCEdef3d1VGM0",
+          "spotify_url": "https://open.spotify.com/track/2hkIQmasSkCEdef3d1VGM0",
+          "genres": [
+            "neo-soul",
+            "electronic"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "electronic soul",
+            "afro-soul",
+            "r&b"
+          ],
+          "mood": [
+            "ethereal",
+            "intimate",
+            "delicate"
+          ],
+          "mood_parameters": {
+            "energy": 0.4,
+            "valence": 0.5,
+            "danceability": 0.5,
+            "acousticness": 0.4,
+            "instrumentalness": 0.3
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 76,
+          "title": "SPOTTIEOTTIEDOPALISCIOUS",
+          "artists": [
+            "Kassa Overall"
+          ],
+          "primary_artist": "Kassa Overall",
+          "duration": "5:25",
+          "duration_sec": 325,
+          "spotify_track_id": "1OXGpV0ROXcTMv7Qv4THq0",
+          "spotify_uri": "spotify:track:1OXGpV0ROXcTMv7Qv4THq0",
+          "spotify_url": "https://open.spotify.com/track/1OXGpV0ROXcTMv7Qv4THq0",
+          "genres": [
+            "jazz",
+            "hip-hop"
+          ],
+          "genre_primary": "jazz",
+          "subgenres": [
+            "jazz rap",
+            "experimental jazz",
+            "soul"
+          ],
+          "mood": [
+            "psychedelic",
+            "groovy",
+            "expansive"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.6,
+            "danceability": 0.65,
+            "acousticness": 0.3,
+            "instrumentalness": 0.4
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 77,
+          "title": "Layered Presence",
+          "artists": [
+            "Tortoise"
+          ],
+          "primary_artist": "Tortoise",
+          "duration": "3:08",
+          "duration_sec": 188,
+          "spotify_track_id": "4wSwMOWC3I0WEvts9aReDl",
+          "spotify_uri": "spotify:track:4wSwMOWC3I0WEvts9aReDl",
+          "spotify_url": "https://open.spotify.com/track/4wSwMOWC3I0WEvts9aReDl",
+          "genres": [
+            "alt",
+            "electronic"
+          ],
+          "genre_primary": "alt",
+          "subgenres": [
+            "post-rock",
+            "electronic",
+            "instrumental"
+          ],
+          "mood": [
+            "cerebral",
+            "atmospheric",
+            "intricate"
+          ],
+          "mood_parameters": {
+            "energy": 0.45,
+            "valence": 0.5,
+            "danceability": 0.45,
+            "acousticness": 0.35,
+            "instrumentalness": 0.85
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 78,
+          "title": "The White Cliffs",
+          "artists": [
+            "Mark Pritchard",
+            "Thom Yorke"
+          ],
+          "primary_artist": "Mark Pritchard",
+          "duration": "8:19",
+          "duration_sec": 499,
+          "spotify_track_id": "4alinRAUyITU3nmNWsIpWv",
+          "spotify_uri": "spotify:track:4alinRAUyITU3nmNWsIpWv",
+          "spotify_url": "https://open.spotify.com/track/4alinRAUyITU3nmNWsIpWv",
+          "genres": [
+            "electronic",
+            "alt"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "ambient",
+            "electronic",
+            "art rock"
+          ],
+          "mood": [
+            "haunting",
+            "expansive",
+            "melancholic"
+          ],
+          "mood_parameters": {
+            "energy": 0.4,
+            "valence": 0.4,
+            "danceability": 0.4,
+            "acousticness": 0.35,
+            "instrumentalness": 0.6
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 79,
+          "title": "End Of Summer",
+          "artists": [
+            "Tame Impala"
+          ],
+          "primary_artist": "Tame Impala",
+          "duration": "7:13",
+          "duration_sec": 433,
+          "spotify_track_id": "3McBKxKZLXbE4czUezk5QG",
+          "spotify_uri": "spotify:track:3McBKxKZLXbE4czUezk5QG",
+          "spotify_url": "https://open.spotify.com/track/3McBKxKZLXbE4czUezk5QG",
+          "genres": [
+            "alt",
+            "electronic"
+          ],
+          "genre_primary": "alt",
+          "subgenres": [
+            "psychedelic",
+            "dance",
+            "synth"
+          ],
+          "mood": [
+            "euphoric",
+            "hypnotic",
+            "expansive"
+          ],
+          "mood_parameters": {
+            "energy": 0.65,
+            "valence": 0.55,
+            "danceability": 0.7,
+            "acousticness": 0.15,
+            "instrumentalness": 0.4
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 80,
+          "title": "It’s Always You",
+          "artists": [
+            "Puma Blue"
+          ],
+          "primary_artist": "Puma Blue",
+          "duration": "3:27",
+          "duration_sec": 207,
+          "spotify_track_id": "1BZXzx3Ok1fbF4LwHBx2Yo",
+          "spotify_uri": "spotify:track:1BZXzx3Ok1fbF4LwHBx2Yo",
+          "spotify_url": "https://open.spotify.com/track/1BZXzx3Ok1fbF4LwHBx2Yo",
+          "genres": [
+            "alt",
+            "neo-soul"
+          ],
+          "genre_primary": "alt",
+          "subgenres": [
+            "bedroom soul",
+            "jazz-pop",
+            "dream pop"
+          ],
+          "mood": [
+            "intimate",
+            "nocturnal",
+            "tender"
+          ],
+          "mood_parameters": {
+            "energy": 0.4,
+            "valence": 0.45,
+            "danceability": 0.5,
+            "acousticness": 0.45,
+            "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 81,
+          "title": "The Artist",
+          "artists": [
+            "Charles Webster",
+            "Bokani Dyer"
+          ],
+          "primary_artist": "Charles Webster",
+          "duration": "5:45",
+          "duration_sec": 345,
+          "spotify_track_id": "2jQ8gkyvpCpP7l0j2ui6Wy",
+          "spotify_uri": "spotify:track:2jQ8gkyvpCpP7l0j2ui6Wy",
+          "spotify_url": "https://open.spotify.com/track/2jQ8gkyvpCpP7l0j2ui6Wy",
+          "genres": [
+            "soulful-house",
+            "jazz"
+          ],
+          "genre_primary": "soulful-house",
+          "subgenres": [
+            "deep house",
+            "jazz house",
+            "soulful house"
+          ],
+          "mood": [
+            "deep",
+            "soulful",
+            "hypnotic"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.55,
+            "danceability": 0.72,
+            "acousticness": 0.25,
+            "instrumentalness": 0.5
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 82,
+          "title": "Fly With Me",
+          "artists": [
+            "John Glacier"
+          ],
+          "primary_artist": "John Glacier",
+          "duration": "1:43",
+          "duration_sec": 103,
+          "spotify_track_id": "3cCKPmpA25ijfJU6YNtU7h",
+          "spotify_uri": "spotify:track:3cCKPmpA25ijfJU6YNtU7h",
+          "spotify_url": "https://open.spotify.com/track/3cCKPmpA25ijfJU6YNtU7h",
+          "genres": [
+            "hip-hop",
+            "electronic"
+          ],
+          "genre_primary": "hip-hop",
+          "subgenres": [
+            "uk hip-hop",
+            "experimental",
+            "alternative"
+          ],
+          "mood": [
+            "hazy",
+            "introspective",
+            "atmospheric"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.45,
+            "danceability": 0.6,
+            "acousticness": 0.2,
+            "instrumentalness": 0.3
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 83,
+          "title": "Here Comes The Sun",
+          "artists": [
+            "anaiis"
+          ],
+          "primary_artist": "anaiis",
+          "duration": "4:42",
+          "duration_sec": 282,
+          "spotify_track_id": "7lRSyDFCP7HIL4eIicAg0g",
+          "spotify_uri": "spotify:track:7lRSyDFCP7HIL4eIicAg0g",
+          "spotify_url": "https://open.spotify.com/track/7lRSyDFCP7HIL4eIicAg0g",
+          "genres": [
+            "neo-soul"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "soul",
+            "neo-soul",
+            "cover",
+            "folk soul"
+          ],
+          "mood": [
+            "warm",
+            "hopeful",
+            "serene"
+          ],
+          "mood_parameters": {
+            "energy": 0.45,
+            "valence": 0.6,
+            "danceability": 0.55,
+            "acousticness": 0.5,
+            "instrumentalness": 0.1
           },
           "bpm": null,
           "bpm_source": "estimated"
@@ -59162,6 +62411,3397 @@
         "danceability": 0.75,
         "acousticness": 0.15,
         "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 1,
+      "title": "Deus Deus",
+      "artists": [
+        "anaiis"
+      ],
+      "primary_artist": "anaiis",
+      "duration": "4:03",
+      "duration_sec": 243,
+      "spotify_track_id": "0Qrm0QyIXutGY2nPJxS3tD",
+      "spotify_uri": "spotify:track:0Qrm0QyIXutGY2nPJxS3tD",
+      "spotify_url": "https://open.spotify.com/track/0Qrm0QyIXutGY2nPJxS3tD",
+      "genres": [
+        "neo-soul",
+        "alt"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "alternative soul",
+        "electronic soul",
+        "vocal"
+      ],
+      "mood": [
+        "ethereal",
+        "introspective",
+        "delicate"
+      ],
+      "mood_parameters": {
+        "energy": 0.4,
+        "valence": 0.45,
+        "danceability": 0.5,
+        "acousticness": 0.4,
+        "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 2,
+      "title": "Not Sharing",
+      "artists": [
+        "Terrace Martin",
+        "Ogi"
+      ],
+      "primary_artist": "Terrace Martin",
+      "duration": "4:13",
+      "duration_sec": 253,
+      "spotify_track_id": "3oGWXOsz8OUmdoL57OlWIL",
+      "spotify_uri": "spotify:track:3oGWXOsz8OUmdoL57OlWIL",
+      "spotify_url": "https://open.spotify.com/track/3oGWXOsz8OUmdoL57OlWIL",
+      "genres": [
+        "neo-soul",
+        "jazz"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "jazz-soul",
+        "r&b",
+        "west coast jazz"
+      ],
+      "mood": [
+        "smooth",
+        "soulful",
+        "warm"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.55,
+        "danceability": 0.6,
+        "acousticness": 0.3,
+        "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 3,
+      "title": "Flood",
+      "artists": [
+        "Little Simz",
+        "Obongjayar",
+        "Moonchild Sanelly"
+      ],
+      "primary_artist": "Little Simz",
+      "duration": "2:48",
+      "duration_sec": 168,
+      "spotify_track_id": "3m9g8ua3M51JvqmS8rh6bS",
+      "spotify_uri": "spotify:track:3m9g8ua3M51JvqmS8rh6bS",
+      "spotify_url": "https://open.spotify.com/track/3m9g8ua3M51JvqmS8rh6bS",
+      "genres": [
+        "hip-hop",
+        "alt"
+      ],
+      "genre_primary": "hip-hop",
+      "subgenres": [
+        "uk hip-hop",
+        "afro",
+        "alternative rap"
+      ],
+      "mood": [
+        "energetic",
+        "defiant",
+        "bold"
+      ],
+      "mood_parameters": {
+        "energy": 0.7,
+        "valence": 0.55,
+        "danceability": 0.7,
+        "acousticness": 0.15,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 4,
+      "title": "Need To Run",
+      "artists": [
+        "Matthew Herbert",
+        "Herbert",
+        "Momoko Gill"
+      ],
+      "primary_artist": "Matthew Herbert",
+      "duration": "4:38",
+      "duration_sec": 278,
+      "spotify_track_id": "1cbAdK5kMjiWcr8UGSx7cj",
+      "spotify_uri": "spotify:track:1cbAdK5kMjiWcr8UGSx7cj",
+      "spotify_url": "https://open.spotify.com/track/1cbAdK5kMjiWcr8UGSx7cj",
+      "genres": [
+        "electronic",
+        "neo-soul"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "electronic",
+        "house",
+        "soul"
+      ],
+      "mood": [
+        "pulsing",
+        "soulful",
+        "hypnotic"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.55,
+        "danceability": 0.7,
+        "acousticness": 0.2,
+        "instrumentalness": 0.4
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 5,
+      "title": "Ocean Steppin'",
+      "artists": [
+        "John Glacier",
+        "Sampha"
+      ],
+      "primary_artist": "John Glacier",
+      "duration": "2:50",
+      "duration_sec": 170,
+      "spotify_track_id": "0dPqoJdDfYM33cDu68Ak9c",
+      "spotify_uri": "spotify:track:0dPqoJdDfYM33cDu68Ak9c",
+      "spotify_url": "https://open.spotify.com/track/0dPqoJdDfYM33cDu68Ak9c",
+      "genres": [
+        "hip-hop",
+        "electronic"
+      ],
+      "genre_primary": "hip-hop",
+      "subgenres": [
+        "uk hip-hop",
+        "experimental",
+        "alternative r&b"
+      ],
+      "mood": [
+        "hazy",
+        "introspective",
+        "atmospheric"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.45,
+        "danceability": 0.6,
+        "acousticness": 0.2,
+        "instrumentalness": 0.3
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 6,
+      "title": "Seagulls",
+      "artists": [
+        "Kelly Moonstone",
+        "MARCO PLUS",
+        "BADBADNOTGOOD"
+      ],
+      "primary_artist": "Kelly Moonstone",
+      "duration": "3:33",
+      "duration_sec": 213,
+      "spotify_track_id": "6U9AeAoKT0qx9QjjH2Dz1r",
+      "spotify_uri": "spotify:track:6U9AeAoKT0qx9QjjH2Dz1r",
+      "spotify_url": "https://open.spotify.com/track/6U9AeAoKT0qx9QjjH2Dz1r",
+      "genres": [
+        "hip-hop",
+        "jazz"
+      ],
+      "genre_primary": "hip-hop",
+      "subgenres": [
+        "jazz rap",
+        "instrumental hip-hop",
+        "lo-fi"
+      ],
+      "mood": [
+        "mellow",
+        "groovy",
+        "cool"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.55,
+        "danceability": 0.65,
+        "acousticness": 0.3,
+        "instrumentalness": 0.3
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 7,
+      "title": "Not In Surrender",
+      "artists": [
+        "Obongjayar"
+      ],
+      "primary_artist": "Obongjayar",
+      "duration": "3:19",
+      "duration_sec": 199,
+      "spotify_track_id": "6De0INF94sPvYzaj7dHASe",
+      "spotify_uri": "spotify:track:6De0INF94sPvYzaj7dHASe",
+      "spotify_url": "https://open.spotify.com/track/6De0INF94sPvYzaj7dHASe",
+      "genres": [
+        "world",
+        "alt"
+      ],
+      "genre_primary": "world",
+      "subgenres": [
+        "afro-fusion",
+        "alternative",
+        "soul"
+      ],
+      "mood": [
+        "defiant",
+        "intense",
+        "uplifting"
+      ],
+      "mood_parameters": {
+        "energy": 0.65,
+        "valence": 0.55,
+        "danceability": 0.6,
+        "acousticness": 0.25,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 8,
+      "title": "Taka",
+      "artists": [
+        "Pino Palladino",
+        "Blake Mills"
+      ],
+      "primary_artist": "Pino Palladino",
+      "duration": "4:19",
+      "duration_sec": 259,
+      "spotify_track_id": "3cTNfXrRPF5LMKZ61dkSJ0",
+      "spotify_uri": "spotify:track:3cTNfXrRPF5LMKZ61dkSJ0",
+      "spotify_url": "https://open.spotify.com/track/3cTNfXrRPF5LMKZ61dkSJ0",
+      "genres": [
+        "jazz",
+        "alt",
+        "neo-soul"
+      ],
+      "genre_primary": "jazz",
+      "subgenres": [
+        "experimental jazz",
+        "art rock",
+        "instrumental"
+      ],
+      "mood": [
+        "hypnotic",
+        "warm",
+        "textural"
+      ],
+      "mood_parameters": {
+        "energy": 0.45,
+        "valence": 0.5,
+        "danceability": 0.55,
+        "acousticness": 0.4,
+        "instrumentalness": 0.85
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 9,
+      "title": "The Spirit",
+      "artists": [
+        "Mark Pritchard",
+        "Thom Yorke"
+      ],
+      "primary_artist": "Mark Pritchard",
+      "duration": "4:56",
+      "duration_sec": 296,
+      "spotify_track_id": "4WnsGUynB9D65tenA7U5gI",
+      "spotify_uri": "spotify:track:4WnsGUynB9D65tenA7U5gI",
+      "spotify_url": "https://open.spotify.com/track/4WnsGUynB9D65tenA7U5gI",
+      "genres": [
+        "electronic",
+        "alt"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "electronic",
+        "art rock",
+        "ambient"
+      ],
+      "mood": [
+        "haunting",
+        "atmospheric",
+        "melancholic"
+      ],
+      "mood_parameters": {
+        "energy": 0.45,
+        "valence": 0.4,
+        "danceability": 0.45,
+        "acousticness": 0.3,
+        "instrumentalness": 0.5
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 10,
+      "title": "Dark Will Fall (feat. Jacob Lusk)",
+      "artists": [
+        "Bonobo",
+        "Jacob Lusk"
+      ],
+      "primary_artist": "Bonobo",
+      "duration": "2:17",
+      "duration_sec": 137,
+      "spotify_track_id": "28EZTT9V9KET0WNRQhrmi1",
+      "spotify_uri": "spotify:track:28EZTT9V9KET0WNRQhrmi1",
+      "spotify_url": "https://open.spotify.com/track/28EZTT9V9KET0WNRQhrmi1",
+      "genres": [
+        "electronic",
+        "downtempo"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "downtempo",
+        "organic house",
+        "gospel-electronic"
+      ],
+      "mood": [
+        "warm",
+        "soulful",
+        "cinematic"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.5,
+        "danceability": 0.6,
+        "acousticness": 0.25,
+        "instrumentalness": 0.4
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 11,
+      "title": "JUKE JOINT",
+      "artists": [
+        "Nate Smith",
+        "Jermaine Holmes",
+        "Charlie Hunter",
+        "DJ Harrison"
+      ],
+      "primary_artist": "Nate Smith",
+      "duration": "3:19",
+      "duration_sec": 199,
+      "spotify_track_id": "787lR5fkcHgOkGWGEP9puW",
+      "spotify_uri": "spotify:track:787lR5fkcHgOkGWGEP9puW",
+      "spotify_url": "https://open.spotify.com/track/787lR5fkcHgOkGWGEP9puW",
+      "genres": [
+        "soul-funk",
+        "jazz"
+      ],
+      "genre_primary": "soul-funk",
+      "subgenres": [
+        "funk",
+        "jazz-funk",
+        "groove"
+      ],
+      "mood": [
+        "groovy",
+        "raw",
+        "energetic"
+      ],
+      "mood_parameters": {
+        "energy": 0.65,
+        "valence": 0.6,
+        "danceability": 0.72,
+        "acousticness": 0.3,
+        "instrumentalness": 0.6
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 12,
+      "title": "Amore, vedrai - sampled from \"5 bambole per la luna d'agosto\"",
+      "artists": [
+        "Cinevox Record",
+        "Gaia Banfi",
+        "Piero Umiliani"
+      ],
+      "primary_artist": "Cinevox Record",
+      "duration": "3:59",
+      "duration_sec": 239,
+      "spotify_track_id": "5ot3orDL0gg1uGrhEoZAjq",
+      "spotify_uri": "spotify:track:5ot3orDL0gg1uGrhEoZAjq",
+      "spotify_url": "https://open.spotify.com/track/5ot3orDL0gg1uGrhEoZAjq",
+      "genres": [
+        "alt",
+        "jazz"
+      ],
+      "genre_primary": "alt",
+      "subgenres": [
+        "pop",
+        "italian indie",
+        "cinematic pop",
+        "library rework"
+      ],
+      "mood": [
+        "nostalgic",
+        "dreamy",
+        "cinematic"
+      ],
+      "mood_parameters": {
+        "energy": 0.45,
+        "valence": 0.52,
+        "danceability": 0.55,
+        "acousticness": 0.5,
+        "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 13,
+      "title": "Hope & Love",
+      "artists": [
+        "The Pocket Queen",
+        "The Royal Flush",
+        "PJ Morton"
+      ],
+      "primary_artist": "The Pocket Queen",
+      "duration": "5:08",
+      "duration_sec": 308,
+      "spotify_track_id": "4PftqsCgbd47nGCS6aq95n",
+      "spotify_uri": "spotify:track:4PftqsCgbd47nGCS6aq95n",
+      "spotify_url": "https://open.spotify.com/track/4PftqsCgbd47nGCS6aq95n",
+      "genres": [
+        "neo-soul",
+        "soul-funk"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "soul",
+        "r&b",
+        "funk"
+      ],
+      "mood": [
+        "uplifting",
+        "warm",
+        "groovy"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.65,
+        "danceability": 0.7,
+        "acousticness": 0.3,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 14,
+      "title": "Big Poe (feat. Sk8brd)",
+      "artists": [
+        "Tyler, The Creator",
+        "Pharrell Williams"
+      ],
+      "primary_artist": "Tyler, The Creator",
+      "duration": "3:02",
+      "duration_sec": 182,
+      "spotify_track_id": "4sLvxpKLvagQ4lZHUpymza",
+      "spotify_uri": "spotify:track:4sLvxpKLvagQ4lZHUpymza",
+      "spotify_url": "https://open.spotify.com/track/4sLvxpKLvagQ4lZHUpymza",
+      "genres": [
+        "hip-hop"
+      ],
+      "genre_primary": "hip-hop",
+      "subgenres": [
+        "hip-hop",
+        "neptunes",
+        "west coast"
+      ],
+      "mood": [
+        "playful",
+        "braggadocio",
+        "bouncy"
+      ],
+      "mood_parameters": {
+        "energy": 0.7,
+        "valence": 0.6,
+        "danceability": 0.75,
+        "acousticness": 0.1,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 15,
+      "title": "Ensalada (feat. Anderson .Paak)",
+      "artists": [
+        "Freddie Gibbs",
+        "The Alchemist",
+        "Anderson .Paak"
+      ],
+      "primary_artist": "Freddie Gibbs",
+      "duration": "3:47",
+      "duration_sec": 227,
+      "spotify_track_id": "06ZX08uRQDK02emdw9mN28",
+      "spotify_uri": "spotify:track:06ZX08uRQDK02emdw9mN28",
+      "spotify_url": "https://open.spotify.com/track/06ZX08uRQDK02emdw9mN28",
+      "genres": [
+        "hip-hop"
+      ],
+      "genre_primary": "hip-hop",
+      "subgenres": [
+        "boom bap",
+        "soul rap",
+        "west coast"
+      ],
+      "mood": [
+        "groovy",
+        "smooth",
+        "confident"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.6,
+        "danceability": 0.7,
+        "acousticness": 0.25,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 16,
+      "title": "One Way Traffic - feat. Yazmin Lacey",
+      "artists": [
+        "Joe Armon-Jones",
+        "Yazmin Lacey"
+      ],
+      "primary_artist": "Joe Armon-Jones",
+      "duration": "7:01",
+      "duration_sec": 421,
+      "spotify_track_id": "5MFBsaB3CwPRUg4909KdA0",
+      "spotify_uri": "spotify:track:5MFBsaB3CwPRUg4909KdA0",
+      "spotify_url": "https://open.spotify.com/track/5MFBsaB3CwPRUg4909KdA0",
+      "genres": [
+        "uk-jazz",
+        "neo-soul"
+      ],
+      "genre_primary": "uk-jazz",
+      "subgenres": [
+        "uk jazz",
+        "broken beat",
+        "soul"
+      ],
+      "mood": [
+        "warm",
+        "soulful",
+        "hypnotic"
+      ],
+      "mood_parameters": {
+        "energy": 0.55,
+        "valence": 0.6,
+        "danceability": 0.65,
+        "acousticness": 0.3,
+        "instrumentalness": 0.4
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 17,
+      "title": "The Move",
+      "artists": [
+        "44th Move",
+        "Alfa Mist",
+        "Richard Spaven",
+        "Quelle Chris"
+      ],
+      "primary_artist": "44th Move",
+      "duration": "3:16",
+      "duration_sec": 196,
+      "spotify_track_id": "7vxLBsIVpEDtXn3dUhYetn",
+      "spotify_uri": "spotify:track:7vxLBsIVpEDtXn3dUhYetn",
+      "spotify_url": "https://open.spotify.com/track/7vxLBsIVpEDtXn3dUhYetn",
+      "genres": [
+        "uk-jazz",
+        "hip-hop"
+      ],
+      "genre_primary": "uk-jazz",
+      "subgenres": [
+        "uk jazz",
+        "jazz rap",
+        "experimental"
+      ],
+      "mood": [
+        "moody",
+        "cerebral",
+        "groovy"
+      ],
+      "mood_parameters": {
+        "energy": 0.55,
+        "valence": 0.45,
+        "danceability": 0.6,
+        "acousticness": 0.3,
+        "instrumentalness": 0.4
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 18,
+      "title": "end of the world",
+      "artists": [
+        "Yaya Bey",
+        "Nigel Hall",
+        "Butcher Brown"
+      ],
+      "primary_artist": "Yaya Bey",
+      "duration": "4:31",
+      "duration_sec": 271,
+      "spotify_track_id": "0ZhJK6Y2HcmNTwYkw8eyfX",
+      "spotify_uri": "spotify:track:0ZhJK6Y2HcmNTwYkw8eyfX",
+      "spotify_url": "https://open.spotify.com/track/0ZhJK6Y2HcmNTwYkw8eyfX",
+      "genres": [
+        "neo-soul",
+        "soul-funk"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "r&b",
+        "soul",
+        "funk"
+      ],
+      "mood": [
+        "breezy",
+        "soulful",
+        "warm"
+      ],
+      "mood_parameters": {
+        "energy": 0.55,
+        "valence": 0.6,
+        "danceability": 0.68,
+        "acousticness": 0.3,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 19,
+      "title": "Loser",
+      "artists": [
+        "Tame Impala"
+      ],
+      "primary_artist": "Tame Impala",
+      "duration": "3:43",
+      "duration_sec": 223,
+      "spotify_track_id": "7bxaFZ1O3cHkgLKMsdC3xR",
+      "spotify_uri": "spotify:track:7bxaFZ1O3cHkgLKMsdC3xR",
+      "spotify_url": "https://open.spotify.com/track/7bxaFZ1O3cHkgLKMsdC3xR",
+      "genres": [
+        "alt",
+        "electronic"
+      ],
+      "genre_primary": "alt",
+      "subgenres": [
+        "psychedelic pop",
+        "synth-pop",
+        "indie"
+      ],
+      "mood": [
+        "dreamy",
+        "groovy",
+        "nostalgic"
+      ],
+      "mood_parameters": {
+        "energy": 0.55,
+        "valence": 0.55,
+        "danceability": 0.6,
+        "acousticness": 0.2,
+        "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 20,
+      "title": "Mood Swings - Mixed",
+      "artists": [
+        "Little Simz"
+      ],
+      "primary_artist": "Little Simz",
+      "duration": "2:23",
+      "duration_sec": 143,
+      "spotify_track_id": "79qDEriNSglmbZC6isY0Jv",
+      "spotify_uri": "spotify:track:79qDEriNSglmbZC6isY0Jv",
+      "spotify_url": "https://open.spotify.com/track/79qDEriNSglmbZC6isY0Jv",
+      "genres": [
+        "hip-hop"
+      ],
+      "genre_primary": "hip-hop",
+      "subgenres": [
+        "uk hip-hop",
+        "alternative rap"
+      ],
+      "mood": [
+        "introspective",
+        "smooth",
+        "reflective"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.5,
+        "danceability": 0.6,
+        "acousticness": 0.2,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 21,
+      "title": "Breathing Underwater (ft. Meshell Ndegeocello)",
+      "artists": [
+        "Robert Glasper",
+        "Meshell Ndegeocello"
+      ],
+      "primary_artist": "Robert Glasper",
+      "duration": "2:15",
+      "duration_sec": 135,
+      "spotify_track_id": "2hsFFzGCu0B0QgJN5Mfvw5",
+      "spotify_uri": "spotify:track:2hsFFzGCu0B0QgJN5Mfvw5",
+      "spotify_url": "https://open.spotify.com/track/2hsFFzGCu0B0QgJN5Mfvw5",
+      "genres": [
+        "neo-soul",
+        "jazz"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "jazz-soul",
+        "r&b",
+        "neo-soul"
+      ],
+      "mood": [
+        "smooth",
+        "intimate",
+        "warm"
+      ],
+      "mood_parameters": {
+        "energy": 0.45,
+        "valence": 0.55,
+        "danceability": 0.55,
+        "acousticness": 0.4,
+        "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 22,
+      "title": "Wear and Tear",
+      "artists": [
+        "Everything Is Recorded",
+        "Sampha",
+        "Florence + The Machine",
+        "Danielle Ponder",
+        "Jah Wobble"
+      ],
+      "primary_artist": "Everything Is Recorded",
+      "duration": "3:09",
+      "duration_sec": 189,
+      "spotify_track_id": "6qSZITcDk6ySzcc6Xt9WSK",
+      "spotify_uri": "spotify:track:6qSZITcDk6ySzcc6Xt9WSK",
+      "spotify_url": "https://open.spotify.com/track/6qSZITcDk6ySzcc6Xt9WSK",
+      "genres": [
+        "electronic",
+        "neo-soul"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "electronic soul",
+        "art pop",
+        "downtempo"
+      ],
+      "mood": [
+        "emotive",
+        "cinematic",
+        "soulful"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.5,
+        "danceability": 0.55,
+        "acousticness": 0.3,
+        "instrumentalness": 0.3
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 23,
+      "title": "Hopes and Dreams - Live From The Royal Albert Hall",
+      "artists": [
+        "Jordan Rakei"
+      ],
+      "primary_artist": "Jordan Rakei",
+      "duration": "4:51",
+      "duration_sec": 291,
+      "spotify_track_id": "35sQnlPNeXWvn4qvPt4Qsq",
+      "spotify_uri": "spotify:track:35sQnlPNeXWvn4qvPt4Qsq",
+      "spotify_url": "https://open.spotify.com/track/35sQnlPNeXWvn4qvPt4Qsq",
+      "genres": [
+        "neo-soul",
+        "jazz"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "soul",
+        "jazz",
+        "live"
+      ],
+      "mood": [
+        "warm",
+        "expansive",
+        "soulful"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.55,
+        "danceability": 0.55,
+        "acousticness": 0.45,
+        "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 24,
+      "title": "What We Are and What We Are Meant to Be",
+      "artists": [
+        "GoGo Penguin"
+      ],
+      "primary_artist": "GoGo Penguin",
+      "duration": "5:37",
+      "duration_sec": 337,
+      "spotify_track_id": "00D0Zf3YGnlveU2CwO7M7D",
+      "spotify_uri": "spotify:track:00D0Zf3YGnlveU2CwO7M7D",
+      "spotify_url": "https://open.spotify.com/track/00D0Zf3YGnlveU2CwO7M7D",
+      "genres": [
+        "jazz",
+        "electronic"
+      ],
+      "genre_primary": "jazz",
+      "subgenres": [
+        "contemporary jazz",
+        "post-jazz",
+        "minimal"
+      ],
+      "mood": [
+        "cinematic",
+        "propulsive",
+        "intricate"
+      ],
+      "mood_parameters": {
+        "energy": 0.55,
+        "valence": 0.5,
+        "danceability": 0.5,
+        "acousticness": 0.4,
+        "instrumentalness": 0.85
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 25,
+      "title": "Chant Song: Bakoena Ba Nkopane",
+      "artists": [
+        "Bokang Ramatlapeng"
+      ],
+      "primary_artist": "Bokang Ramatlapeng",
+      "duration": "4:21",
+      "duration_sec": 261,
+      "spotify_track_id": "48qf6rG6ixRciJJ2saRTDn",
+      "spotify_uri": "spotify:track:48qf6rG6ixRciJJ2saRTDn",
+      "spotify_url": "https://open.spotify.com/track/48qf6rG6ixRciJJ2saRTDn",
+      "genres": [
+        "world"
+      ],
+      "genre_primary": "world",
+      "subgenres": [
+        "world",
+        "south african",
+        "sesotho chant",
+        "folk"
+      ],
+      "mood": [
+        "spiritual",
+        "rooted",
+        "hypnotic"
+      ],
+      "mood_parameters": {
+        "energy": 0.45,
+        "valence": 0.55,
+        "danceability": 0.55,
+        "acousticness": 0.6,
+        "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 26,
+      "title": "Myself (feat. Jorja Smith)",
+      "artists": [
+        "Venna",
+        "Jorja Smith"
+      ],
+      "primary_artist": "Venna",
+      "duration": "2:59",
+      "duration_sec": 179,
+      "spotify_track_id": "7ymllAe6kR6TSmiDXmnOWx",
+      "spotify_uri": "spotify:track:7ymllAe6kR6TSmiDXmnOWx",
+      "spotify_url": "https://open.spotify.com/track/7ymllAe6kR6TSmiDXmnOWx",
+      "genres": [
+        "neo-soul",
+        "uk-jazz"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "uk soul",
+        "jazz",
+        "r&b"
+      ],
+      "mood": [
+        "smooth",
+        "intimate",
+        "warm"
+      ],
+      "mood_parameters": {
+        "energy": 0.45,
+        "valence": 0.55,
+        "danceability": 0.55,
+        "acousticness": 0.4,
+        "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 27,
+      "title": "Gnu Blue",
+      "artists": [
+        "Makaya McCraven",
+        "Theon Cross",
+        "Ben LaMar Gay"
+      ],
+      "primary_artist": "Makaya McCraven",
+      "duration": "4:52",
+      "duration_sec": 292,
+      "spotify_track_id": "0ACrjHByr2GzPVTxKbDBix",
+      "spotify_uri": "spotify:track:0ACrjHByr2GzPVTxKbDBix",
+      "spotify_url": "https://open.spotify.com/track/0ACrjHByr2GzPVTxKbDBix",
+      "genres": [
+        "jazz"
+      ],
+      "genre_primary": "jazz",
+      "subgenres": [
+        "jazz",
+        "contemporary jazz",
+        "beat science",
+        "tuba jazz"
+      ],
+      "mood": [
+        "groovy",
+        "exploratory",
+        "deep"
+      ],
+      "mood_parameters": {
+        "energy": 0.55,
+        "valence": 0.5,
+        "danceability": 0.6,
+        "acousticness": 0.5,
+        "instrumentalness": 0.9
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 28,
+      "title": "OYSTRI (feat. Richard Spaven)",
+      "artists": [
+        "Petter Eldh",
+        "Richard Spaven"
+      ],
+      "primary_artist": "Petter Eldh",
+      "duration": "3:06",
+      "duration_sec": 186,
+      "spotify_track_id": "7xA1LjXxm8a1XJZx4MnAiR",
+      "spotify_uri": "spotify:track:7xA1LjXxm8a1XJZx4MnAiR",
+      "spotify_url": "https://open.spotify.com/track/7xA1LjXxm8a1XJZx4MnAiR",
+      "genres": [
+        "jazz",
+        "electronic"
+      ],
+      "genre_primary": "jazz",
+      "subgenres": [
+        "jazz",
+        "experimental jazz",
+        "broken beat jazz",
+        "contemporary"
+      ],
+      "mood": [
+        "angular",
+        "rhythmic",
+        "exploratory"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.5,
+        "danceability": 0.55,
+        "acousticness": 0.4,
+        "instrumentalness": 0.85
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 29,
+      "title": "Dersen Cafe",
+      "artists": [
+        "Alfa Mist"
+      ],
+      "primary_artist": "Alfa Mist",
+      "duration": "2:04",
+      "duration_sec": 124,
+      "spotify_track_id": "5cztGaBlRWDkJZ9KjIwCDA",
+      "spotify_uri": "spotify:track:5cztGaBlRWDkJZ9KjIwCDA",
+      "spotify_url": "https://open.spotify.com/track/5cztGaBlRWDkJZ9KjIwCDA",
+      "genres": [
+        "uk-jazz"
+      ],
+      "genre_primary": "uk-jazz",
+      "subgenres": [
+        "uk jazz",
+        "jazz-hop",
+        "instrumental"
+      ],
+      "mood": [
+        "contemplative",
+        "mellow",
+        "warm"
+      ],
+      "mood_parameters": {
+        "energy": 0.4,
+        "valence": 0.5,
+        "danceability": 0.5,
+        "acousticness": 0.45,
+        "instrumentalness": 0.7
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 30,
+      "title": "The Look Of Love (feat. T3 & Bilal)",
+      "artists": [
+        "Robert Glasper",
+        "T3",
+        "Bilal"
+      ],
+      "primary_artist": "Robert Glasper",
+      "duration": "3:15",
+      "duration_sec": 195,
+      "spotify_track_id": "7JhdINbQHNrupuZm4YYrxb",
+      "spotify_uri": "spotify:track:7JhdINbQHNrupuZm4YYrxb",
+      "spotify_url": "https://open.spotify.com/track/7JhdINbQHNrupuZm4YYrxb",
+      "genres": [
+        "neo-soul",
+        "jazz"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "r&b",
+        "neo-soul",
+        "jazz-soul",
+        "hip-hop soul"
+      ],
+      "mood": [
+        "smooth",
+        "romantic",
+        "warm"
+      ],
+      "mood_parameters": {
+        "energy": 0.45,
+        "valence": 0.55,
+        "danceability": 0.6,
+        "acousticness": 0.35,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 31,
+      "title": "Oganesson",
+      "artists": [
+        "Tortoise"
+      ],
+      "primary_artist": "Tortoise",
+      "duration": "3:16",
+      "duration_sec": 196,
+      "spotify_track_id": "5kvcdd6qitCHttxm8R9GTS",
+      "spotify_uri": "spotify:track:5kvcdd6qitCHttxm8R9GTS",
+      "spotify_url": "https://open.spotify.com/track/5kvcdd6qitCHttxm8R9GTS",
+      "genres": [
+        "alt",
+        "electronic"
+      ],
+      "genre_primary": "alt",
+      "subgenres": [
+        "post-rock",
+        "math rock",
+        "instrumental"
+      ],
+      "mood": [
+        "cerebral",
+        "intricate",
+        "propulsive"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.5,
+        "danceability": 0.45,
+        "acousticness": 0.35,
+        "instrumentalness": 0.85
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 32,
+      "title": "Rain Down (Feat. Sampha)",
+      "artists": [
+        "Daniel Caesar",
+        "Sampha"
+      ],
+      "primary_artist": "Daniel Caesar",
+      "duration": "3:08",
+      "duration_sec": 188,
+      "spotify_track_id": "4id11n9NlwfCGrvq2Kh1xl",
+      "spotify_uri": "spotify:track:4id11n9NlwfCGrvq2Kh1xl",
+      "spotify_url": "https://open.spotify.com/track/4id11n9NlwfCGrvq2Kh1xl",
+      "genres": [
+        "neo-soul"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "r&b",
+        "alternative r&b",
+        "soul"
+      ],
+      "mood": [
+        "ethereal",
+        "tender",
+        "intimate"
+      ],
+      "mood_parameters": {
+        "energy": 0.4,
+        "valence": 0.5,
+        "danceability": 0.5,
+        "acousticness": 0.45,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 33,
+      "title": "Sweetie",
+      "artists": [
+        "Kokoroko"
+      ],
+      "primary_artist": "Kokoroko",
+      "duration": "4:04",
+      "duration_sec": 244,
+      "spotify_track_id": "78GkeNJsZMwdbPlSMOIho4",
+      "spotify_uri": "spotify:track:78GkeNJsZMwdbPlSMOIho4",
+      "spotify_url": "https://open.spotify.com/track/78GkeNJsZMwdbPlSMOIho4",
+      "genres": [
+        "uk-jazz",
+        "world"
+      ],
+      "genre_primary": "uk-jazz",
+      "subgenres": [
+        "afrobeat",
+        "uk jazz",
+        "highlife"
+      ],
+      "mood": [
+        "sunny",
+        "warm",
+        "groovy"
+      ],
+      "mood_parameters": {
+        "energy": 0.55,
+        "valence": 0.65,
+        "danceability": 0.65,
+        "acousticness": 0.35,
+        "instrumentalness": 0.4
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 34,
+      "title": "Teal Dreams",
+      "artists": [
+        "Yazmin Lacey"
+      ],
+      "primary_artist": "Yazmin Lacey",
+      "duration": "3:15",
+      "duration_sec": 195,
+      "spotify_track_id": "6mMXWQDmEvFDUhaXXvMfCC",
+      "spotify_uri": "spotify:track:6mMXWQDmEvFDUhaXXvMfCC",
+      "spotify_url": "https://open.spotify.com/track/6mMXWQDmEvFDUhaXXvMfCC",
+      "genres": [
+        "neo-soul",
+        "uk-jazz"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "uk soul",
+        "jazz-soul",
+        "vocal"
+      ],
+      "mood": [
+        "dreamy",
+        "warm",
+        "intimate"
+      ],
+      "mood_parameters": {
+        "energy": 0.4,
+        "valence": 0.55,
+        "danceability": 0.5,
+        "acousticness": 0.45,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 35,
+      "title": "Midnight In Saqqara",
+      "artists": [
+        "Arc De Soleil"
+      ],
+      "primary_artist": "Arc De Soleil",
+      "duration": "3:59",
+      "duration_sec": 239,
+      "spotify_track_id": "2Y9nPyKFkYP6xHsj8f2lPo",
+      "spotify_uri": "spotify:track:2Y9nPyKFkYP6xHsj8f2lPo",
+      "spotify_url": "https://open.spotify.com/track/2Y9nPyKFkYP6xHsj8f2lPo",
+      "genres": [
+        "electronic",
+        "downtempo"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "downtempo",
+        "organic house",
+        "world fusion"
+      ],
+      "mood": [
+        "hypnotic",
+        "exotic",
+        "atmospheric"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.5,
+        "danceability": 0.6,
+        "acousticness": 0.3,
+        "instrumentalness": 0.7
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 36,
+      "title": "hopefully",
+      "artists": [
+        "Loyle Carner",
+        "Benjamin Zephaniah"
+      ],
+      "primary_artist": "Loyle Carner",
+      "duration": "2:52",
+      "duration_sec": 172,
+      "spotify_track_id": "0oeHRzQz4LdmLwswRaAffx",
+      "spotify_uri": "spotify:track:0oeHRzQz4LdmLwswRaAffx",
+      "spotify_url": "https://open.spotify.com/track/0oeHRzQz4LdmLwswRaAffx",
+      "genres": [
+        "hip-hop",
+        "jazz"
+      ],
+      "genre_primary": "hip-hop",
+      "subgenres": [
+        "uk hip-hop",
+        "jazz rap",
+        "spoken word"
+      ],
+      "mood": [
+        "warm",
+        "reflective",
+        "tender"
+      ],
+      "mood_parameters": {
+        "energy": 0.45,
+        "valence": 0.5,
+        "danceability": 0.55,
+        "acousticness": 0.35,
+        "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 37,
+      "title": "L.U.",
+      "artists": [
+        "SAULT"
+      ],
+      "primary_artist": "SAULT",
+      "duration": "4:05",
+      "duration_sec": 245,
+      "spotify_track_id": "4tfmvLFrKxbi2JInTOKueu",
+      "spotify_uri": "spotify:track:4tfmvLFrKxbi2JInTOKueu",
+      "spotify_url": "https://open.spotify.com/track/4tfmvLFrKxbi2JInTOKueu",
+      "genres": [
+        "neo-soul",
+        "soul-funk"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "soul",
+        "funk",
+        "afro"
+      ],
+      "mood": [
+        "spiritual",
+        "groovy",
+        "warm"
+      ],
+      "mood_parameters": {
+        "energy": 0.55,
+        "valence": 0.6,
+        "danceability": 0.65,
+        "acousticness": 0.35,
+        "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 38,
+      "title": "1st Place",
+      "artists": [
+        "CARRTOONS",
+        "Rae Khalil"
+      ],
+      "primary_artist": "CARRTOONS",
+      "duration": "2:44",
+      "duration_sec": 164,
+      "spotify_track_id": "31ueAO1V7MPEtI6sjpnT3Y",
+      "spotify_uri": "spotify:track:31ueAO1V7MPEtI6sjpnT3Y",
+      "spotify_url": "https://open.spotify.com/track/31ueAO1V7MPEtI6sjpnT3Y",
+      "genres": [
+        "soul-funk",
+        "hip-hop"
+      ],
+      "genre_primary": "soul-funk",
+      "subgenres": [
+        "funk",
+        "neo-soul",
+        "beat music"
+      ],
+      "mood": [
+        "groovy",
+        "breezy",
+        "warm"
+      ],
+      "mood_parameters": {
+        "energy": 0.55,
+        "valence": 0.62,
+        "danceability": 0.7,
+        "acousticness": 0.3,
+        "instrumentalness": 0.3
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 39,
+      "title": "Consulate Case",
+      "artists": [
+        "Surprise Chef"
+      ],
+      "primary_artist": "Surprise Chef",
+      "duration": "3:27",
+      "duration_sec": 207,
+      "spotify_track_id": "5ZF1kJHFTY8piV6v991niI",
+      "spotify_uri": "spotify:track:5ZF1kJHFTY8piV6v991niI",
+      "spotify_url": "https://open.spotify.com/track/5ZF1kJHFTY8piV6v991niI",
+      "genres": [
+        "soul-funk",
+        "jazz"
+      ],
+      "genre_primary": "soul-funk",
+      "subgenres": [
+        "cinematic soul",
+        "funk",
+        "library"
+      ],
+      "mood": [
+        "cinematic",
+        "mellow",
+        "groovy"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.55,
+        "danceability": 0.6,
+        "acousticness": 0.35,
+        "instrumentalness": 0.85
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 40,
+      "title": "Bang Bien",
+      "artists": [
+        "Nightmares On Wax",
+        "Yasiin Bey",
+        "Mos Def"
+      ],
+      "primary_artist": "Nightmares On Wax",
+      "duration": "4:06",
+      "duration_sec": 246,
+      "spotify_track_id": "4gxRIqjkYFwdzcV88KonkR",
+      "spotify_uri": "spotify:track:4gxRIqjkYFwdzcV88KonkR",
+      "spotify_url": "https://open.spotify.com/track/4gxRIqjkYFwdzcV88KonkR",
+      "genres": [
+        "electronic",
+        "hip-hop"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "trip-hop",
+        "downtempo",
+        "conscious hip-hop"
+      ],
+      "mood": [
+        "hypnotic",
+        "mellow",
+        "global"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.55,
+        "danceability": 0.65,
+        "acousticness": 0.2,
+        "instrumentalness": 0.4
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 41,
+      "title": "Without Comma Enough",
+      "artists": [
+        "Run Logan Run",
+        "BB.JAMES",
+        "Ryan Thrupp"
+      ],
+      "primary_artist": "Run Logan Run",
+      "duration": "3:01",
+      "duration_sec": 181,
+      "spotify_track_id": "3bkS5A2apljT3GpLned89V",
+      "spotify_uri": "spotify:track:3bkS5A2apljT3GpLned89V",
+      "spotify_url": "https://open.spotify.com/track/3bkS5A2apljT3GpLned89V",
+      "genres": [
+        "uk-jazz"
+      ],
+      "genre_primary": "uk-jazz",
+      "subgenres": [
+        "uk jazz",
+        "experimental jazz",
+        "spiritual jazz"
+      ],
+      "mood": [
+        "intense",
+        "raw",
+        "atmospheric"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.45,
+        "danceability": 0.5,
+        "acousticness": 0.3,
+        "instrumentalness": 0.6
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 42,
+      "title": "#bamisforthechildren",
+      "artists": [
+        "Nicholas Payton",
+        "Esperanza Spalding",
+        "Karriem Riggins",
+        "Ivan Neville",
+        "Erica Falls",
+        "Otis McDonald"
+      ],
+      "primary_artist": "Nicholas Payton",
+      "duration": "5:55",
+      "duration_sec": 355,
+      "spotify_track_id": "3oE62jhSKYycX8q6plStD8",
+      "spotify_uri": "spotify:track:3oE62jhSKYycX8q6plStD8",
+      "spotify_url": "https://open.spotify.com/track/3oE62jhSKYycX8q6plStD8",
+      "genres": [
+        "jazz",
+        "soul-funk"
+      ],
+      "genre_primary": "jazz",
+      "subgenres": [
+        "jazz-funk",
+        "spiritual jazz",
+        "soul"
+      ],
+      "mood": [
+        "uplifting",
+        "groovy",
+        "communal"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.6,
+        "danceability": 0.65,
+        "acousticness": 0.35,
+        "instrumentalness": 0.5
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 43,
+      "title": "Time Will Tell",
+      "artists": [
+        "Celeste"
+      ],
+      "primary_artist": "Celeste",
+      "duration": "3:44",
+      "duration_sec": 224,
+      "spotify_track_id": "4MxzL8jmOxjconLzZGAs9z",
+      "spotify_uri": "spotify:track:4MxzL8jmOxjconLzZGAs9z",
+      "spotify_url": "https://open.spotify.com/track/4MxzL8jmOxjconLzZGAs9z",
+      "genres": [
+        "neo-soul"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "soul",
+        "uk soul",
+        "retro soul",
+        "ballad"
+      ],
+      "mood": [
+        "soulful",
+        "elegant",
+        "emotional"
+      ],
+      "mood_parameters": {
+        "energy": 0.4,
+        "valence": 0.45,
+        "danceability": 0.5,
+        "acousticness": 0.5,
+        "instrumentalness": 0.05
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 44,
+      "title": "AUTOMATIC",
+      "artists": [
+        "Nate Smith",
+        "Lalah Hathaway"
+      ],
+      "primary_artist": "Nate Smith",
+      "duration": "4:52",
+      "duration_sec": 292,
+      "spotify_track_id": "6c2o3AnQoZaNCG2hasVTc5",
+      "spotify_uri": "spotify:track:6c2o3AnQoZaNCG2hasVTc5",
+      "spotify_url": "https://open.spotify.com/track/6c2o3AnQoZaNCG2hasVTc5",
+      "genres": [
+        "neo-soul",
+        "jazz"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "r&b",
+        "jazz-funk",
+        "soul"
+      ],
+      "mood": [
+        "smooth",
+        "soulful",
+        "groovy"
+      ],
+      "mood_parameters": {
+        "energy": 0.55,
+        "valence": 0.6,
+        "danceability": 0.65,
+        "acousticness": 0.3,
+        "instrumentalness": 0.3
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 45,
+      "title": "FREEDOM JAZZ DANCE",
+      "artists": [
+        "Kassa Overall"
+      ],
+      "primary_artist": "Kassa Overall",
+      "duration": "3:50",
+      "duration_sec": 230,
+      "spotify_track_id": "57WNlCxlDldnl8LWw6f0Rs",
+      "spotify_uri": "spotify:track:57WNlCxlDldnl8LWw6f0Rs",
+      "spotify_url": "https://open.spotify.com/track/57WNlCxlDldnl8LWw6f0Rs",
+      "genres": [
+        "jazz",
+        "hip-hop"
+      ],
+      "genre_primary": "jazz",
+      "subgenres": [
+        "jazz rap",
+        "experimental jazz",
+        "beat"
+      ],
+      "mood": [
+        "frenetic",
+        "virtuosic",
+        "bold"
+      ],
+      "mood_parameters": {
+        "energy": 0.65,
+        "valence": 0.55,
+        "danceability": 0.6,
+        "acousticness": 0.3,
+        "instrumentalness": 0.5
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 46,
+      "title": "Lifetones",
+      "artists": [
+        "Joe Armon-Jones"
+      ],
+      "primary_artist": "Joe Armon-Jones",
+      "duration": "8:08",
+      "duration_sec": 488,
+      "spotify_track_id": "0gouDswj0R5jne7YUUrlIO",
+      "spotify_uri": "spotify:track:0gouDswj0R5jne7YUUrlIO",
+      "spotify_url": "https://open.spotify.com/track/0gouDswj0R5jne7YUUrlIO",
+      "genres": [
+        "uk-jazz"
+      ],
+      "genre_primary": "uk-jazz",
+      "subgenres": [
+        "uk jazz",
+        "broken beat",
+        "spiritual jazz"
+      ],
+      "mood": [
+        "expansive",
+        "hypnotic",
+        "warm"
+      ],
+      "mood_parameters": {
+        "energy": 0.55,
+        "valence": 0.55,
+        "danceability": 0.6,
+        "acousticness": 0.3,
+        "instrumentalness": 0.7
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 47,
+      "title": "Rain",
+      "artists": [
+        "Charles Webster",
+        "EMAMKAY",
+        "Bokang Ramatlapeng"
+      ],
+      "primary_artist": "Charles Webster",
+      "duration": "5:04",
+      "duration_sec": 304,
+      "spotify_track_id": "7pDcmCQzU7l244a1JCZo25",
+      "spotify_uri": "spotify:track:7pDcmCQzU7l244a1JCZo25",
+      "spotify_url": "https://open.spotify.com/track/7pDcmCQzU7l244a1JCZo25",
+      "genres": [
+        "soulful-house",
+        "electronic"
+      ],
+      "genre_primary": "soulful-house",
+      "subgenres": [
+        "deep house",
+        "soulful house",
+        "electronic"
+      ],
+      "mood": [
+        "deep",
+        "soulful",
+        "hypnotic"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.5,
+        "danceability": 0.72,
+        "acousticness": 0.2,
+        "instrumentalness": 0.4
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 48,
+      "title": "The Package",
+      "artists": [
+        "De La Soul"
+      ],
+      "primary_artist": "De La Soul",
+      "duration": "3:14",
+      "duration_sec": 194,
+      "spotify_track_id": "3xI6Rzk8MVtHuIXeM9TIPD",
+      "spotify_uri": "spotify:track:3xI6Rzk8MVtHuIXeM9TIPD",
+      "spotify_url": "https://open.spotify.com/track/3xI6Rzk8MVtHuIXeM9TIPD",
+      "genres": [
+        "hip-hop"
+      ],
+      "genre_primary": "hip-hop",
+      "subgenres": [
+        "hip-hop",
+        "east coast hip-hop",
+        "jazz rap",
+        "classic"
+      ],
+      "mood": [
+        "playful",
+        "groovy",
+        "nostalgic"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.62,
+        "danceability": 0.72,
+        "acousticness": 0.2,
+        "instrumentalness": 0.0
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 49,
+      "title": "Speak Low",
+      "artists": [
+        "Ife Ogunjobi"
+      ],
+      "primary_artist": "Ife Ogunjobi",
+      "duration": "4:24",
+      "duration_sec": 264,
+      "spotify_track_id": "6J2x6lCEZhYsGGb0OUadEV",
+      "spotify_uri": "spotify:track:6J2x6lCEZhYsGGb0OUadEV",
+      "spotify_url": "https://open.spotify.com/track/6J2x6lCEZhYsGGb0OUadEV",
+      "genres": [
+        "uk-jazz",
+        "jazz"
+      ],
+      "genre_primary": "uk-jazz",
+      "subgenres": [
+        "uk jazz",
+        "contemporary jazz",
+        "soul-jazz"
+      ],
+      "mood": [
+        "warm",
+        "smooth",
+        "soulful"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.55,
+        "danceability": 0.55,
+        "acousticness": 0.4,
+        "instrumentalness": 0.6
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 50,
+      "title": "Racetrack in France",
+      "artists": [
+        "Brian Jackson",
+        "Josh Milan",
+        "J. Ivy",
+        "Moodymann"
+      ],
+      "primary_artist": "Brian Jackson",
+      "duration": "7:09",
+      "duration_sec": 429,
+      "spotify_track_id": "3APPUGU445zp5MGA8bAUzf",
+      "spotify_uri": "spotify:track:3APPUGU445zp5MGA8bAUzf",
+      "spotify_url": "https://open.spotify.com/track/3APPUGU445zp5MGA8bAUzf",
+      "genres": [
+        "soulful-house",
+        "neo-soul"
+      ],
+      "genre_primary": "soulful-house",
+      "subgenres": [
+        "soulful house",
+        "deep house",
+        "spoken soul"
+      ],
+      "mood": [
+        "deep",
+        "soulful",
+        "hypnotic"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.55,
+        "danceability": 0.75,
+        "acousticness": 0.25,
+        "instrumentalness": 0.4
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 51,
+      "title": "Cold Zone",
+      "artists": [
+        "WAYNE SNOW"
+      ],
+      "primary_artist": "WAYNE SNOW",
+      "duration": "3:30",
+      "duration_sec": 210,
+      "spotify_track_id": "0SU1P7VuVWc9BsMv98o7Lf",
+      "spotify_uri": "spotify:track:0SU1P7VuVWc9BsMv98o7Lf",
+      "spotify_url": "https://open.spotify.com/track/0SU1P7VuVWc9BsMv98o7Lf",
+      "genres": [
+        "neo-soul",
+        "electronic"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "r&b",
+        "future soul",
+        "electronic soul",
+        "afro-soul"
+      ],
+      "mood": [
+        "cool",
+        "groovy",
+        "atmospheric"
+      ],
+      "mood_parameters": {
+        "energy": 0.55,
+        "valence": 0.5,
+        "danceability": 0.68,
+        "acousticness": 0.15,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 52,
+      "title": "Moonlight",
+      "artists": [
+        "anaiis"
+      ],
+      "primary_artist": "anaiis",
+      "duration": "3:51",
+      "duration_sec": 231,
+      "spotify_track_id": "2wUnNvShBARNL6a6HwIPr4",
+      "spotify_uri": "spotify:track:2wUnNvShBARNL6a6HwIPr4",
+      "spotify_url": "https://open.spotify.com/track/2wUnNvShBARNL6a6HwIPr4",
+      "genres": [
+        "neo-soul",
+        "alt"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "alternative soul",
+        "electronic soul",
+        "vocal"
+      ],
+      "mood": [
+        "dreamy",
+        "intimate",
+        "ethereal"
+      ],
+      "mood_parameters": {
+        "energy": 0.4,
+        "valence": 0.5,
+        "danceability": 0.5,
+        "acousticness": 0.4,
+        "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 53,
+      "title": "Give Me More",
+      "artists": [
+        "Obongjayar"
+      ],
+      "primary_artist": "Obongjayar",
+      "duration": "3:11",
+      "duration_sec": 191,
+      "spotify_track_id": "3k5z512M1610ILVIzd8zbH",
+      "spotify_uri": "spotify:track:3k5z512M1610ILVIzd8zbH",
+      "spotify_url": "https://open.spotify.com/track/3k5z512M1610ILVIzd8zbH",
+      "genres": [
+        "world",
+        "alt"
+      ],
+      "genre_primary": "world",
+      "subgenres": [
+        "afro-fusion",
+        "alternative",
+        "soul"
+      ],
+      "mood": [
+        "energetic",
+        "defiant",
+        "groovy"
+      ],
+      "mood_parameters": {
+        "energy": 0.65,
+        "valence": 0.6,
+        "danceability": 0.65,
+        "acousticness": 0.25,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 54,
+      "title": "Selfish (feat. James Blake)",
+      "artists": [
+        "Dave",
+        "James Blake"
+      ],
+      "primary_artist": "Dave",
+      "duration": "4:32",
+      "duration_sec": 272,
+      "spotify_track_id": "4lhOzoYujY5YD3anyw68hp",
+      "spotify_uri": "spotify:track:4lhOzoYujY5YD3anyw68hp",
+      "spotify_url": "https://open.spotify.com/track/4lhOzoYujY5YD3anyw68hp",
+      "genres": [
+        "hip-hop",
+        "alt"
+      ],
+      "genre_primary": "hip-hop",
+      "subgenres": [
+        "hip-hop",
+        "uk hip-hop",
+        "art rap",
+        "piano rap"
+      ],
+      "mood": [
+        "introspective",
+        "melancholic",
+        "sparse"
+      ],
+      "mood_parameters": {
+        "energy": 0.45,
+        "valence": 0.38,
+        "danceability": 0.55,
+        "acousticness": 0.4,
+        "instrumentalness": 0.05
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 55,
+      "title": "Valdez",
+      "artists": [
+        "Terrace Martin"
+      ],
+      "primary_artist": "Terrace Martin",
+      "duration": "5:09",
+      "duration_sec": 309,
+      "spotify_track_id": "79S0nPgf2upTHNp6Z15E0v",
+      "spotify_uri": "spotify:track:79S0nPgf2upTHNp6Z15E0v",
+      "spotify_url": "https://open.spotify.com/track/79S0nPgf2upTHNp6Z15E0v",
+      "genres": [
+        "jazz",
+        "neo-soul"
+      ],
+      "genre_primary": "jazz",
+      "subgenres": [
+        "west coast jazz",
+        "jazz-funk",
+        "soul"
+      ],
+      "mood": [
+        "smooth",
+        "soulful",
+        "mellow"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.55,
+        "danceability": 0.6,
+        "acousticness": 0.35,
+        "instrumentalness": 0.5
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 56,
+      "title": "Good Vibes",
+      "artists": [
+        "The Pocket Queen",
+        "The Royal Flush",
+        "Duckwrth"
+      ],
+      "primary_artist": "The Pocket Queen",
+      "duration": "5:09",
+      "duration_sec": 309,
+      "spotify_track_id": "1fwtpKcHSEIpG8AUSH85PU",
+      "spotify_uri": "spotify:track:1fwtpKcHSEIpG8AUSH85PU",
+      "spotify_url": "https://open.spotify.com/track/1fwtpKcHSEIpG8AUSH85PU",
+      "genres": [
+        "neo-soul",
+        "soul-funk"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "soul",
+        "funk",
+        "r&b"
+      ],
+      "mood": [
+        "upbeat",
+        "groovy",
+        "warm"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.65,
+        "danceability": 0.72,
+        "acousticness": 0.3,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 57,
+      "title": "Blue",
+      "artists": [
+        "Little Simz",
+        "Sampha"
+      ],
+      "primary_artist": "Little Simz",
+      "duration": "4:14",
+      "duration_sec": 254,
+      "spotify_track_id": "46PSL97D6XVVMWzalBD7xb",
+      "spotify_uri": "spotify:track:46PSL97D6XVVMWzalBD7xb",
+      "spotify_url": "https://open.spotify.com/track/46PSL97D6XVVMWzalBD7xb",
+      "genres": [
+        "hip-hop",
+        "neo-soul"
+      ],
+      "genre_primary": "hip-hop",
+      "subgenres": [
+        "uk hip-hop",
+        "alternative r&b",
+        "soul"
+      ],
+      "mood": [
+        "reflective",
+        "smooth",
+        "melancholic"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.45,
+        "danceability": 0.6,
+        "acousticness": 0.3,
+        "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 58,
+      "title": "Unconditional Love",
+      "artists": [
+        "Nicholas Payton",
+        "Esperanza Spalding"
+      ],
+      "primary_artist": "Nicholas Payton",
+      "duration": "8:15",
+      "duration_sec": 495,
+      "spotify_track_id": "0QqUHWMLAdlWg7Znj7Il5n",
+      "spotify_uri": "spotify:track:0QqUHWMLAdlWg7Znj7Il5n",
+      "spotify_url": "https://open.spotify.com/track/0QqUHWMLAdlWg7Znj7Il5n",
+      "genres": [
+        "jazz"
+      ],
+      "genre_primary": "jazz",
+      "subgenres": [
+        "contemporary jazz",
+        "spiritual jazz",
+        "post-bop"
+      ],
+      "mood": [
+        "expansive",
+        "romantic",
+        "virtuosic"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.55,
+        "danceability": 0.5,
+        "acousticness": 0.45,
+        "instrumentalness": 0.7
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 59,
+      "title": "Another Place - feat. Greentea Peng & Wu-Lu",
+      "artists": [
+        "Joe Armon-Jones",
+        "Greentea Peng",
+        "Wu-Lu"
+      ],
+      "primary_artist": "Joe Armon-Jones",
+      "duration": "6:24",
+      "duration_sec": 384,
+      "spotify_track_id": "4rXf0AFTHj2aX5n2drMsaJ",
+      "spotify_uri": "spotify:track:4rXf0AFTHj2aX5n2drMsaJ",
+      "spotify_url": "https://open.spotify.com/track/4rXf0AFTHj2aX5n2drMsaJ",
+      "genres": [
+        "uk-jazz",
+        "neo-soul"
+      ],
+      "genre_primary": "uk-jazz",
+      "subgenres": [
+        "uk jazz",
+        "dub",
+        "broken beat"
+      ],
+      "mood": [
+        "hypnotic",
+        "warm",
+        "psychedelic"
+      ],
+      "mood_parameters": {
+        "energy": 0.55,
+        "valence": 0.55,
+        "danceability": 0.65,
+        "acousticness": 0.3,
+        "instrumentalness": 0.4
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 60,
+      "title": "Wind Parade - Live From The Royal Albert Hall",
+      "artists": [
+        "Jordan Rakei"
+      ],
+      "primary_artist": "Jordan Rakei",
+      "duration": "6:09",
+      "duration_sec": 369,
+      "spotify_track_id": "2bdqcgrfVS5JFNSXtWc28v",
+      "spotify_uri": "spotify:track:2bdqcgrfVS5JFNSXtWc28v",
+      "spotify_url": "https://open.spotify.com/track/2bdqcgrfVS5JFNSXtWc28v",
+      "genres": [
+        "neo-soul",
+        "jazz"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "soul",
+        "jazz",
+        "live"
+      ],
+      "mood": [
+        "expansive",
+        "warm",
+        "soulful"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.55,
+        "danceability": 0.55,
+        "acousticness": 0.45,
+        "instrumentalness": 0.3
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 61,
+      "title": "Babystar",
+      "artists": [
+        "Matthew Herbert",
+        "Momoko Gill",
+        "Herbert"
+      ],
+      "primary_artist": "Matthew Herbert",
+      "duration": "5:47",
+      "duration_sec": 347,
+      "spotify_track_id": "3TOxbGdA4QfHF0FmQE9D86",
+      "spotify_uri": "spotify:track:3TOxbGdA4QfHF0FmQE9D86",
+      "spotify_url": "https://open.spotify.com/track/3TOxbGdA4QfHF0FmQE9D86",
+      "genres": [
+        "electronic",
+        "neo-soul"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "electronic",
+        "house",
+        "soul"
+      ],
+      "mood": [
+        "pulsing",
+        "soulful",
+        "hypnotic"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.55,
+        "danceability": 0.7,
+        "acousticness": 0.2,
+        "instrumentalness": 0.4
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 62,
+      "title": "All Time (feat. Tawiah)",
+      "artists": [
+        "Alfa Mist",
+        "Tawiah"
+      ],
+      "primary_artist": "Alfa Mist",
+      "duration": "3:49",
+      "duration_sec": 229,
+      "spotify_track_id": "04R258aYlMB7yPrmXbMdlE",
+      "spotify_uri": "spotify:track:04R258aYlMB7yPrmXbMdlE",
+      "spotify_url": "https://open.spotify.com/track/04R258aYlMB7yPrmXbMdlE",
+      "genres": [
+        "uk-jazz",
+        "neo-soul"
+      ],
+      "genre_primary": "uk-jazz",
+      "subgenres": [
+        "uk jazz",
+        "soul",
+        "jazz-hop"
+      ],
+      "mood": [
+        "warm",
+        "soulful",
+        "mellow"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.55,
+        "danceability": 0.6,
+        "acousticness": 0.35,
+        "instrumentalness": 0.4
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 63,
+      "title": "Dracula",
+      "artists": [
+        "Tame Impala"
+      ],
+      "primary_artist": "Tame Impala",
+      "duration": "3:25",
+      "duration_sec": 205,
+      "spotify_track_id": "1NXbNEAcPvY5G1xvfN57aA",
+      "spotify_uri": "spotify:track:1NXbNEAcPvY5G1xvfN57aA",
+      "spotify_url": "https://open.spotify.com/track/1NXbNEAcPvY5G1xvfN57aA",
+      "genres": [
+        "alt",
+        "electronic"
+      ],
+      "genre_primary": "alt",
+      "subgenres": [
+        "psychedelic pop",
+        "synth-pop",
+        "indie"
+      ],
+      "mood": [
+        "groovy",
+        "dark",
+        "hypnotic"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.5,
+        "danceability": 0.65,
+        "acousticness": 0.2,
+        "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 64,
+      "title": "The Bottle - Dub with Omar",
+      "artists": [
+        "Brian Jackson",
+        "Kenny Dope",
+        "Louie Vega",
+        "Omar"
+      ],
+      "primary_artist": "Brian Jackson",
+      "duration": "7:54",
+      "duration_sec": 474,
+      "spotify_track_id": "7jRv7OJwFbws3gLdaojyT7",
+      "spotify_uri": "spotify:track:7jRv7OJwFbws3gLdaojyT7",
+      "spotify_url": "https://open.spotify.com/track/7jRv7OJwFbws3gLdaojyT7",
+      "genres": [
+        "soulful-house",
+        "soul-funk"
+      ],
+      "genre_primary": "soulful-house",
+      "subgenres": [
+        "house",
+        "soulful house",
+        "dub",
+        "jazz house"
+      ],
+      "mood": [
+        "groovy",
+        "soulful",
+        "club"
+      ],
+      "mood_parameters": {
+        "energy": 0.7,
+        "valence": 0.6,
+        "danceability": 0.8,
+        "acousticness": 0.15,
+        "instrumentalness": 0.5
+      },
+      "bpm": 122,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 65,
+      "title": "Ambery",
+      "artists": [
+        "Fred again..",
+        "Floating Points"
+      ],
+      "primary_artist": "Fred again..",
+      "duration": "7:32",
+      "duration_sec": 452,
+      "spotify_track_id": "5GV52Kgz64yWqm8keYq1E0",
+      "spotify_uri": "spotify:track:5GV52Kgz64yWqm8keYq1E0",
+      "spotify_url": "https://open.spotify.com/track/5GV52Kgz64yWqm8keYq1E0",
+      "genres": [
+        "electronic"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "electronic",
+        "ambient house",
+        "downtempo"
+      ],
+      "mood": [
+        "euphoric",
+        "expansive",
+        "emotional"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.55,
+        "danceability": 0.65,
+        "acousticness": 0.2,
+        "instrumentalness": 0.6
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 66,
+      "title": "Gangsters",
+      "artists": [
+        "Mark Pritchard",
+        "Thom Yorke"
+      ],
+      "primary_artist": "Mark Pritchard",
+      "duration": "3:29",
+      "duration_sec": 209,
+      "spotify_track_id": "4cug7RkMB0SCoYkYrXYN4y",
+      "spotify_uri": "spotify:track:4cug7RkMB0SCoYkYrXYN4y",
+      "spotify_url": "https://open.spotify.com/track/4cug7RkMB0SCoYkYrXYN4y",
+      "genres": [
+        "electronic",
+        "alt"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "electronic",
+        "art rock",
+        "experimental"
+      ],
+      "mood": [
+        "tense",
+        "dark",
+        "propulsive"
+      ],
+      "mood_parameters": {
+        "energy": 0.55,
+        "valence": 0.4,
+        "danceability": 0.55,
+        "acousticness": 0.25,
+        "instrumentalness": 0.5
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 67,
+      "title": "Bakulindele",
+      "artists": [
+        "Charles Webster",
+        "Muzi"
+      ],
+      "primary_artist": "Charles Webster",
+      "duration": "3:30",
+      "duration_sec": 210,
+      "spotify_track_id": "3YLE7pOjfPCPdKF9RInD5D",
+      "spotify_uri": "spotify:track:3YLE7pOjfPCPdKF9RInD5D",
+      "spotify_url": "https://open.spotify.com/track/3YLE7pOjfPCPdKF9RInD5D",
+      "genres": [
+        "soulful-house",
+        "electronic"
+      ],
+      "genre_primary": "soulful-house",
+      "subgenres": [
+        "deep house",
+        "afro house",
+        "soulful house"
+      ],
+      "mood": [
+        "deep",
+        "hypnotic",
+        "warm"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.55,
+        "danceability": 0.75,
+        "acousticness": 0.2,
+        "instrumentalness": 0.5
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 68,
+      "title": "Idea 5 (Call My Name) [feat. LULU.]",
+      "artists": [
+        "Kokoroko",
+        "LULU."
+      ],
+      "primary_artist": "Kokoroko",
+      "duration": "4:51",
+      "duration_sec": 291,
+      "spotify_track_id": "0H9K4Ul9aFjf2RV14K5Xzf",
+      "spotify_uri": "spotify:track:0H9K4Ul9aFjf2RV14K5Xzf",
+      "spotify_url": "https://open.spotify.com/track/0H9K4Ul9aFjf2RV14K5Xzf",
+      "genres": [
+        "uk-jazz",
+        "world"
+      ],
+      "genre_primary": "uk-jazz",
+      "subgenres": [
+        "afrobeat",
+        "uk jazz",
+        "soul"
+      ],
+      "mood": [
+        "warm",
+        "breezy",
+        "groovy"
+      ],
+      "mood_parameters": {
+        "energy": 0.55,
+        "valence": 0.62,
+        "danceability": 0.65,
+        "acousticness": 0.35,
+        "instrumentalness": 0.4
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 69,
+      "title": "Trust - Live From The Royal Albert Hall",
+      "artists": [
+        "Jordan Rakei"
+      ],
+      "primary_artist": "Jordan Rakei",
+      "duration": "7:21",
+      "duration_sec": 441,
+      "spotify_track_id": "2Ew4CFRFzNzakE83tOu0Zl",
+      "spotify_uri": "spotify:track:2Ew4CFRFzNzakE83tOu0Zl",
+      "spotify_url": "https://open.spotify.com/track/2Ew4CFRFzNzakE83tOu0Zl",
+      "genres": [
+        "neo-soul",
+        "jazz"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "soul",
+        "jazz",
+        "live"
+      ],
+      "mood": [
+        "expansive",
+        "soulful",
+        "warm"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.55,
+        "danceability": 0.55,
+        "acousticness": 0.45,
+        "instrumentalness": 0.3
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 70,
+      "title": "BIG FISH",
+      "artists": [
+        "Nate Smith",
+        "säje"
+      ],
+      "primary_artist": "Nate Smith",
+      "duration": "4:54",
+      "duration_sec": 294,
+      "spotify_track_id": "1XAdrLTOitRM4WaUPaaIGF",
+      "spotify_uri": "spotify:track:1XAdrLTOitRM4WaUPaaIGF",
+      "spotify_url": "https://open.spotify.com/track/1XAdrLTOitRM4WaUPaaIGF",
+      "genres": [
+        "jazz",
+        "neo-soul"
+      ],
+      "genre_primary": "jazz",
+      "subgenres": [
+        "jazz-funk",
+        "vocal jazz",
+        "fusion"
+      ],
+      "mood": [
+        "virtuosic",
+        "lush",
+        "groovy"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.6,
+        "danceability": 0.6,
+        "acousticness": 0.35,
+        "instrumentalness": 0.5
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 71,
+      "title": "Eternal Reflections (feat. Yussef Dayes)",
+      "artists": [
+        "Venna",
+        "Yussef Dayes"
+      ],
+      "primary_artist": "Venna",
+      "duration": "4:53",
+      "duration_sec": 293,
+      "spotify_track_id": "1kgPaBdX9AgJzBMDtxjSHm",
+      "spotify_uri": "spotify:track:1kgPaBdX9AgJzBMDtxjSHm",
+      "spotify_url": "https://open.spotify.com/track/1kgPaBdX9AgJzBMDtxjSHm",
+      "genres": [
+        "uk-jazz"
+      ],
+      "genre_primary": "uk-jazz",
+      "subgenres": [
+        "uk jazz",
+        "spiritual jazz",
+        "fusion"
+      ],
+      "mood": [
+        "meditative",
+        "expansive",
+        "soulful"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.55,
+        "danceability": 0.55,
+        "acousticness": 0.35,
+        "instrumentalness": 0.7
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 72,
+      "title": "Free",
+      "artists": [
+        "Little Simz"
+      ],
+      "primary_artist": "Little Simz",
+      "duration": "3:36",
+      "duration_sec": 216,
+      "spotify_track_id": "05n0mwlh1y3cwjGmHnfVjh",
+      "spotify_uri": "spotify:track:05n0mwlh1y3cwjGmHnfVjh",
+      "spotify_url": "https://open.spotify.com/track/05n0mwlh1y3cwjGmHnfVjh",
+      "genres": [
+        "hip-hop"
+      ],
+      "genre_primary": "hip-hop",
+      "subgenres": [
+        "uk hip-hop",
+        "alternative rap"
+      ],
+      "mood": [
+        "energetic",
+        "uplifting",
+        "bold"
+      ],
+      "mood_parameters": {
+        "energy": 0.65,
+        "valence": 0.6,
+        "danceability": 0.7,
+        "acousticness": 0.15,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 73,
+      "title": "Sugar On My Tongue",
+      "artists": [
+        "Tyler, The Creator"
+      ],
+      "primary_artist": "Tyler, The Creator",
+      "duration": "2:33",
+      "duration_sec": 153,
+      "spotify_track_id": "6xV7Be6XEvkSnighmh2Tzj",
+      "spotify_uri": "spotify:track:6xV7Be6XEvkSnighmh2Tzj",
+      "spotify_url": "https://open.spotify.com/track/6xV7Be6XEvkSnighmh2Tzj",
+      "genres": [
+        "hip-hop",
+        "neo-soul"
+      ],
+      "genre_primary": "hip-hop",
+      "subgenres": [
+        "hip-hop",
+        "funk",
+        "neo-soul"
+      ],
+      "mood": [
+        "playful",
+        "sensual",
+        "bouncy"
+      ],
+      "mood_parameters": {
+        "energy": 0.65,
+        "valence": 0.62,
+        "danceability": 0.72,
+        "acousticness": 0.15,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 74,
+      "title": "Sweet Danger",
+      "artists": [
+        "Obongjayar"
+      ],
+      "primary_artist": "Obongjayar",
+      "duration": "2:41",
+      "duration_sec": 161,
+      "spotify_track_id": "4EoOXgvAdjiRzL60dNaLls",
+      "spotify_uri": "spotify:track:4EoOXgvAdjiRzL60dNaLls",
+      "spotify_url": "https://open.spotify.com/track/4EoOXgvAdjiRzL60dNaLls",
+      "genres": [
+        "world",
+        "alt"
+      ],
+      "genre_primary": "world",
+      "subgenres": [
+        "afro-fusion",
+        "alternative",
+        "soul"
+      ],
+      "mood": [
+        "energetic",
+        "defiant",
+        "groovy"
+      ],
+      "mood_parameters": {
+        "energy": 0.65,
+        "valence": 0.55,
+        "danceability": 0.65,
+        "acousticness": 0.25,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 75,
+      "title": "Fearless",
+      "artists": [
+        "WAYNE SNOW"
+      ],
+      "primary_artist": "WAYNE SNOW",
+      "duration": "1:44",
+      "duration_sec": 104,
+      "spotify_track_id": "2hkIQmasSkCEdef3d1VGM0",
+      "spotify_uri": "spotify:track:2hkIQmasSkCEdef3d1VGM0",
+      "spotify_url": "https://open.spotify.com/track/2hkIQmasSkCEdef3d1VGM0",
+      "genres": [
+        "neo-soul",
+        "electronic"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "electronic soul",
+        "afro-soul",
+        "r&b"
+      ],
+      "mood": [
+        "ethereal",
+        "intimate",
+        "delicate"
+      ],
+      "mood_parameters": {
+        "energy": 0.4,
+        "valence": 0.5,
+        "danceability": 0.5,
+        "acousticness": 0.4,
+        "instrumentalness": 0.3
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 76,
+      "title": "SPOTTIEOTTIEDOPALISCIOUS",
+      "artists": [
+        "Kassa Overall"
+      ],
+      "primary_artist": "Kassa Overall",
+      "duration": "5:25",
+      "duration_sec": 325,
+      "spotify_track_id": "1OXGpV0ROXcTMv7Qv4THq0",
+      "spotify_uri": "spotify:track:1OXGpV0ROXcTMv7Qv4THq0",
+      "spotify_url": "https://open.spotify.com/track/1OXGpV0ROXcTMv7Qv4THq0",
+      "genres": [
+        "jazz",
+        "hip-hop"
+      ],
+      "genre_primary": "jazz",
+      "subgenres": [
+        "jazz rap",
+        "experimental jazz",
+        "soul"
+      ],
+      "mood": [
+        "psychedelic",
+        "groovy",
+        "expansive"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.6,
+        "danceability": 0.65,
+        "acousticness": 0.3,
+        "instrumentalness": 0.4
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 77,
+      "title": "Layered Presence",
+      "artists": [
+        "Tortoise"
+      ],
+      "primary_artist": "Tortoise",
+      "duration": "3:08",
+      "duration_sec": 188,
+      "spotify_track_id": "4wSwMOWC3I0WEvts9aReDl",
+      "spotify_uri": "spotify:track:4wSwMOWC3I0WEvts9aReDl",
+      "spotify_url": "https://open.spotify.com/track/4wSwMOWC3I0WEvts9aReDl",
+      "genres": [
+        "alt",
+        "electronic"
+      ],
+      "genre_primary": "alt",
+      "subgenres": [
+        "post-rock",
+        "electronic",
+        "instrumental"
+      ],
+      "mood": [
+        "cerebral",
+        "atmospheric",
+        "intricate"
+      ],
+      "mood_parameters": {
+        "energy": 0.45,
+        "valence": 0.5,
+        "danceability": 0.45,
+        "acousticness": 0.35,
+        "instrumentalness": 0.85
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 78,
+      "title": "The White Cliffs",
+      "artists": [
+        "Mark Pritchard",
+        "Thom Yorke"
+      ],
+      "primary_artist": "Mark Pritchard",
+      "duration": "8:19",
+      "duration_sec": 499,
+      "spotify_track_id": "4alinRAUyITU3nmNWsIpWv",
+      "spotify_uri": "spotify:track:4alinRAUyITU3nmNWsIpWv",
+      "spotify_url": "https://open.spotify.com/track/4alinRAUyITU3nmNWsIpWv",
+      "genres": [
+        "electronic",
+        "alt"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "ambient",
+        "electronic",
+        "art rock"
+      ],
+      "mood": [
+        "haunting",
+        "expansive",
+        "melancholic"
+      ],
+      "mood_parameters": {
+        "energy": 0.4,
+        "valence": 0.4,
+        "danceability": 0.4,
+        "acousticness": 0.35,
+        "instrumentalness": 0.6
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 79,
+      "title": "End Of Summer",
+      "artists": [
+        "Tame Impala"
+      ],
+      "primary_artist": "Tame Impala",
+      "duration": "7:13",
+      "duration_sec": 433,
+      "spotify_track_id": "3McBKxKZLXbE4czUezk5QG",
+      "spotify_uri": "spotify:track:3McBKxKZLXbE4czUezk5QG",
+      "spotify_url": "https://open.spotify.com/track/3McBKxKZLXbE4czUezk5QG",
+      "genres": [
+        "alt",
+        "electronic"
+      ],
+      "genre_primary": "alt",
+      "subgenres": [
+        "psychedelic",
+        "dance",
+        "synth"
+      ],
+      "mood": [
+        "euphoric",
+        "hypnotic",
+        "expansive"
+      ],
+      "mood_parameters": {
+        "energy": 0.65,
+        "valence": 0.55,
+        "danceability": 0.7,
+        "acousticness": 0.15,
+        "instrumentalness": 0.4
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 80,
+      "title": "It’s Always You",
+      "artists": [
+        "Puma Blue"
+      ],
+      "primary_artist": "Puma Blue",
+      "duration": "3:27",
+      "duration_sec": 207,
+      "spotify_track_id": "1BZXzx3Ok1fbF4LwHBx2Yo",
+      "spotify_uri": "spotify:track:1BZXzx3Ok1fbF4LwHBx2Yo",
+      "spotify_url": "https://open.spotify.com/track/1BZXzx3Ok1fbF4LwHBx2Yo",
+      "genres": [
+        "alt",
+        "neo-soul"
+      ],
+      "genre_primary": "alt",
+      "subgenres": [
+        "bedroom soul",
+        "jazz-pop",
+        "dream pop"
+      ],
+      "mood": [
+        "intimate",
+        "nocturnal",
+        "tender"
+      ],
+      "mood_parameters": {
+        "energy": 0.4,
+        "valence": 0.45,
+        "danceability": 0.5,
+        "acousticness": 0.45,
+        "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 81,
+      "title": "The Artist",
+      "artists": [
+        "Charles Webster",
+        "Bokani Dyer"
+      ],
+      "primary_artist": "Charles Webster",
+      "duration": "5:45",
+      "duration_sec": 345,
+      "spotify_track_id": "2jQ8gkyvpCpP7l0j2ui6Wy",
+      "spotify_uri": "spotify:track:2jQ8gkyvpCpP7l0j2ui6Wy",
+      "spotify_url": "https://open.spotify.com/track/2jQ8gkyvpCpP7l0j2ui6Wy",
+      "genres": [
+        "soulful-house",
+        "jazz"
+      ],
+      "genre_primary": "soulful-house",
+      "subgenres": [
+        "deep house",
+        "jazz house",
+        "soulful house"
+      ],
+      "mood": [
+        "deep",
+        "soulful",
+        "hypnotic"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.55,
+        "danceability": 0.72,
+        "acousticness": 0.25,
+        "instrumentalness": 0.5
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 82,
+      "title": "Fly With Me",
+      "artists": [
+        "John Glacier"
+      ],
+      "primary_artist": "John Glacier",
+      "duration": "1:43",
+      "duration_sec": 103,
+      "spotify_track_id": "3cCKPmpA25ijfJU6YNtU7h",
+      "spotify_uri": "spotify:track:3cCKPmpA25ijfJU6YNtU7h",
+      "spotify_url": "https://open.spotify.com/track/3cCKPmpA25ijfJU6YNtU7h",
+      "genres": [
+        "hip-hop",
+        "electronic"
+      ],
+      "genre_primary": "hip-hop",
+      "subgenres": [
+        "uk hip-hop",
+        "experimental",
+        "alternative"
+      ],
+      "mood": [
+        "hazy",
+        "introspective",
+        "atmospheric"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.45,
+        "danceability": 0.6,
+        "acousticness": 0.2,
+        "instrumentalness": 0.3
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "2025 Fav Album Playlist",
+      "playlist_id": "4L97j3CR3qY62adGJexylI",
+      "position_in_playlist": 83,
+      "title": "Here Comes The Sun",
+      "artists": [
+        "anaiis"
+      ],
+      "primary_artist": "anaiis",
+      "duration": "4:42",
+      "duration_sec": 282,
+      "spotify_track_id": "7lRSyDFCP7HIL4eIicAg0g",
+      "spotify_uri": "spotify:track:7lRSyDFCP7HIL4eIicAg0g",
+      "spotify_url": "https://open.spotify.com/track/7lRSyDFCP7HIL4eIicAg0g",
+      "genres": [
+        "neo-soul"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "soul",
+        "neo-soul",
+        "cover",
+        "folk soul"
+      ],
+      "mood": [
+        "warm",
+        "hopeful",
+        "serene"
+      ],
+      "mood_parameters": {
+        "energy": 0.45,
+        "valence": 0.6,
+        "danceability": 0.55,
+        "acousticness": 0.5,
+        "instrumentalness": 0.1
       },
       "bpm": null,
       "bpm_source": "estimated"
