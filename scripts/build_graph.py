@@ -68,6 +68,23 @@ def title_flags(title: str) -> dict:
 DEFAULT_LINK_WEIGHTS = {"primary": 1.2, "artist": 3.0, "secondary": 0.6, "playlist": 0.3}
 
 
+_RE_ISODATE = re.compile(r"\b(\d{4}-\d{2}-\d{2})")
+
+
+def latest_update(archive: dict) -> str:
+    """Data (YYYY-MM-DD) dell'ultimo aggiornamento dei brani: la più recente fra
+    i timestamp ISO nel metadata dell'archivio (generated_at / enriched_at /
+    extended_at* / merged_at ...). Riflette quando i brani sono stati toccati."""
+    meta = archive.get("metadata", {})
+    dates = []
+    for v in meta.values():
+        if isinstance(v, str):
+            m = _RE_ISODATE.search(v)
+            if m:
+                dates.append(m.group(1))
+    return max(dates) if dates else ""
+
+
 def build(archive: dict, seed: int = 7) -> dict:
     tracks = archive["tracks_flat"]
 
@@ -224,6 +241,11 @@ def build(archive: dict, seed: int = 7) -> dict:
     out_links = [{"source": x, "target": y, "weight": round(edge_weight(c), 2), "c": c}
                  for (x, y), c in comp.items()]
 
+    # --- info per il sottotitolo (numero playlist, range, ultimo aggiornamento) ---
+    pl_numbers = sorted({p for n in nodes for p in n["playlists"]})
+    n_playlists = len(archive.get("playlists", [])) or len(pl_numbers)
+    playlist_range = f"#{pl_numbers[0]}–#{pl_numbers[-1]}" if pl_numbers else ""
+
     return {
         "nodes": out_nodes,
         "links": out_links,
@@ -232,6 +254,10 @@ def build(archive: dict, seed: int = 7) -> dict:
             "unique_tracks": len(out_nodes),
             "edges": len(out_links),
             "genres": len(genre_order),
+            # info playlist + data ultimo aggiornamento per il sottotitolo del front-end
+            "playlists": n_playlists,
+            "playlist_range": playlist_range,
+            "updated": latest_update(archive),
             # pesi default per categoria; il front-end li usa come valori iniziali
             # dei controlli "pesi del percorso" e per ricalcolare i legami al volo.
             "linkWeights": DEFAULT_LINK_WEIGHTS,
