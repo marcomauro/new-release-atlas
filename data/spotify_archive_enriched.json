@@ -4,8 +4,8 @@
     "source_account": "Spotify",
     "generated_at": "2026-05-23T12:27:11.266084",
     "description": "Archivio strutturato delle 'New Release Playlist' di Marco Mauro, da consultare via AI per generare playlist tematiche o effettuare analisi.",
-    "playlist_range": "#1 - #34 (34 playlist consecutive)",
-    "note_on_gaps": "Nessuno: il dataset copre integralmente le playlist da #12 a #34. Le playlist #12 e dalla #18 in poi si chiamano 'New Release Playlist #N', le #13-#17 'New Release Friday #N'.",
+    "playlist_range": "#1 - #35 (35 playlist consecutive)",
+    "note_on_gaps": "Nessuno: il dataset copre integralmente le playlist da #12 a #35. Le playlist #12 e dalla #18 in poi si chiamano 'New Release Playlist #N', le #13-#17 'New Release Friday #N'.",
     "schema_per_track": {
       "playlist_number": "int (numero progressivo della playlist di origine)",
       "playlist_name": "string",
@@ -27,9 +27,9 @@
       "bpm": "int | null (null = non verificabile, mai inventato)",
       "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
     },
-    "total_tracks_with_duplicates": 715,
-    "unique_tracks": 707,
-    "unique_artists": 731,
+    "total_tracks_with_duplicates": 734,
+    "unique_tracks": 726,
+    "unique_artists": 746,
     "top_artists": [
       [
         "Louie Vega",
@@ -37,7 +37,7 @@
       ],
       [
         "Kenny Dope",
-        18
+        19
       ],
       [
         "Brian Jackson",
@@ -52,12 +52,12 @@
         13
       ],
       [
-        "Nightmares On Wax",
+        "Fatoumata Diawara",
         11
       ],
       [
-        "Fatoumata Diawara",
-        10
+        "Nightmares On Wax",
+        11
       ],
       [
         "Koralle",
@@ -80,15 +80,15 @@
         8
       ],
       [
+        "Fred again..",
+        8
+      ],
+      [
+        "Nate Smith",
+        8
+      ],
+      [
         "Bilal",
-        7
-      ],
-      [
-        "Jorja Smith",
-        7
-      ],
-      [
-        "Tame Impala",
         7
       ]
     ],
@@ -221,7 +221,9 @@
         },
         "note": "ID diverso rispetto a un brano omonimo nel master"
       }
-    ]
+    ],
+    "extended_at_35": "2026-06-18T20:37:16.374018",
+    "extension_note_35": "Playlist #35 (19 brani) aggiunta a giugno 2026 con caratterizzazione esperta completa (genres/genre_primary nella tassonomia a 12 macro-generi, subgenres, mood, mood_parameters, bpm null/estimated). Tutti i 19 brani sono nuovi e unici (nessun duplicato cross-playlist per id)."
   },
   "playlists": [
     {
@@ -28042,6 +28044,729 @@
             "danceability": 0.35,
             "acousticness": 0.75,
             "instrumentalness": 0.3
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        }
+      ]
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "spotify_url": "https://open.spotify.com/playlist/14vvxFCXnMFGZOC4j0fdmX",
+      "track_count": 19,
+      "tracks": [
+        {
+          "position_in_playlist": 1,
+          "title": "Me and You",
+          "artists": [
+            "Bonobo"
+          ],
+          "primary_artist": "Bonobo",
+          "duration": "3:49",
+          "duration_sec": 229,
+          "spotify_track_id": "3K3yAN6QVsLNM3tNkn8zuo",
+          "spotify_uri": "spotify:track:3K3yAN6QVsLNM3tNkn8zuo",
+          "spotify_url": "https://open.spotify.com/track/3K3yAN6QVsLNM3tNkn8zuo",
+          "genres": [
+            "electronic",
+            "downtempo"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "downtempo",
+            "organic electronica",
+            "trip-hop"
+          ],
+          "mood": [
+            "warm",
+            "hypnotic",
+            "melodic"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.55,
+            "danceability": 0.62,
+            "acousticness": 0.25,
+            "instrumentalness": 0.7
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 2,
+          "title": "Sweetest Season",
+          "artists": [
+            "Yazmin Lacey"
+          ],
+          "primary_artist": "Yazmin Lacey",
+          "duration": "2:51",
+          "duration_sec": 171,
+          "spotify_track_id": "2UKYhq5GAjhmFwBk7uwRGG",
+          "spotify_uri": "spotify:track:2UKYhq5GAjhmFwBk7uwRGG",
+          "spotify_url": "https://open.spotify.com/track/2UKYhq5GAjhmFwBk7uwRGG",
+          "genres": [
+            "neo-soul",
+            "uk-jazz"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "uk soul",
+            "jazz-soul",
+            "vocal soul"
+          ],
+          "mood": [
+            "warm",
+            "intimate",
+            "soulful"
+          ],
+          "mood_parameters": {
+            "energy": 0.4,
+            "valence": 0.55,
+            "danceability": 0.52,
+            "acousticness": 0.45,
+            "instrumentalness": 0.05
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 3,
+          "title": "Blessing",
+          "artists": [
+            "Marla Kether",
+            "Mez"
+          ],
+          "primary_artist": "Marla Kether",
+          "duration": "3:54",
+          "duration_sec": 234,
+          "spotify_track_id": "0yNFPaMseUjuSCR4Mb49cC",
+          "spotify_uri": "spotify:track:0yNFPaMseUjuSCR4Mb49cC",
+          "spotify_url": "https://open.spotify.com/track/0yNFPaMseUjuSCR4Mb49cC",
+          "genres": [
+            "uk-jazz",
+            "broken-beat"
+          ],
+          "genre_primary": "uk-jazz",
+          "subgenres": [
+            "uk jazz",
+            "broken beat",
+            "jazz-funk"
+          ],
+          "mood": [
+            "groovy",
+            "vibrant",
+            "soulful"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.62,
+            "danceability": 0.7,
+            "acousticness": 0.3,
+            "instrumentalness": 0.4
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 4,
+          "title": "Let Me Go",
+          "artists": [
+            "Baby Rose"
+          ],
+          "primary_artist": "Baby Rose",
+          "duration": "3:09",
+          "duration_sec": 189,
+          "spotify_track_id": "0Bw0kB0fDnAS8IKks0S8Qu",
+          "spotify_uri": "spotify:track:0Bw0kB0fDnAS8IKks0S8Qu",
+          "spotify_url": "https://open.spotify.com/track/0Bw0kB0fDnAS8IKks0S8Qu",
+          "genres": [
+            "neo-soul"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "r&b",
+            "soul",
+            "alternative r&b"
+          ],
+          "mood": [
+            "melancholic",
+            "intense",
+            "emotive"
+          ],
+          "mood_parameters": {
+            "energy": 0.45,
+            "valence": 0.35,
+            "danceability": 0.5,
+            "acousticness": 0.4,
+            "instrumentalness": 0.0
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 5,
+          "title": "Seva",
+          "artists": [
+            "OPEN Project",
+            "anaiis"
+          ],
+          "primary_artist": "OPEN Project",
+          "duration": "3:14",
+          "duration_sec": 194,
+          "spotify_track_id": "1SJhMJwJ0srXKAjIpEQZfp",
+          "spotify_uri": "spotify:track:1SJhMJwJ0srXKAjIpEQZfp",
+          "spotify_url": "https://open.spotify.com/track/1SJhMJwJ0srXKAjIpEQZfp",
+          "genres": [
+            "neo-soul",
+            "electronic"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "alternative soul",
+            "electronic soul",
+            "downtempo"
+          ],
+          "mood": [
+            "ethereal",
+            "introspective",
+            "delicate"
+          ],
+          "mood_parameters": {
+            "energy": 0.4,
+            "valence": 0.48,
+            "danceability": 0.5,
+            "acousticness": 0.4,
+            "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 6,
+          "title": "PEARL",
+          "artists": [
+            "Nate Smith",
+            "Kiefer",
+            "CARRTOONS",
+            "Kenny Beats"
+          ],
+          "primary_artist": "Nate Smith",
+          "duration": "3:51",
+          "duration_sec": 231,
+          "spotify_track_id": "33E2bU4xRVvjuc6Y4dtk5k",
+          "spotify_uri": "spotify:track:33E2bU4xRVvjuc6Y4dtk5k",
+          "spotify_url": "https://open.spotify.com/track/33E2bU4xRVvjuc6Y4dtk5k",
+          "genres": [
+            "jazz",
+            "soul-funk"
+          ],
+          "genre_primary": "jazz",
+          "subgenres": [
+            "jazz-funk",
+            "beat music",
+            "instrumental hip-hop"
+          ],
+          "mood": [
+            "groovy",
+            "playful",
+            "virtuosic"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.65,
+            "danceability": 0.72,
+            "acousticness": 0.3,
+            "instrumentalness": 0.85
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 7,
+          "title": "July",
+          "artists": [
+            "Plumm"
+          ],
+          "primary_artist": "Plumm",
+          "duration": "3:54",
+          "duration_sec": 234,
+          "spotify_track_id": "54ozoKC6nyMWhgw8YFQoH9",
+          "spotify_uri": "spotify:track:54ozoKC6nyMWhgw8YFQoH9",
+          "spotify_url": "https://open.spotify.com/track/54ozoKC6nyMWhgw8YFQoH9",
+          "genres": [
+            "electronic",
+            "alt"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "indie electronic",
+            "dream pop",
+            "downtempo"
+          ],
+          "mood": [
+            "dreamy",
+            "melancholic",
+            "atmospheric"
+          ],
+          "mood_parameters": {
+            "energy": 0.42,
+            "valence": 0.45,
+            "danceability": 0.5,
+            "acousticness": 0.3,
+            "instrumentalness": 0.3
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 8,
+          "title": "Massa",
+          "artists": [
+            "Fatoumata Diawara"
+          ],
+          "primary_artist": "Fatoumata Diawara",
+          "duration": "3:46",
+          "duration_sec": 226,
+          "spotify_track_id": "07e5OdYVfaBRCtVpXUKMrc",
+          "spotify_uri": "spotify:track:07e5OdYVfaBRCtVpXUKMrc",
+          "spotify_url": "https://open.spotify.com/track/07e5OdYVfaBRCtVpXUKMrc",
+          "genres": [
+            "world"
+          ],
+          "genre_primary": "world",
+          "subgenres": [
+            "wassoulou",
+            "afro-folk",
+            "malian"
+          ],
+          "mood": [
+            "warm",
+            "soulful",
+            "uplifting"
+          ],
+          "mood_parameters": {
+            "energy": 0.55,
+            "valence": 0.62,
+            "danceability": 0.6,
+            "acousticness": 0.5,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 9,
+          "title": "Spirit Of Place",
+          "artists": [
+            "Fink"
+          ],
+          "primary_artist": "Fink",
+          "duration": "4:27",
+          "duration_sec": 267,
+          "spotify_track_id": "6fvSl0bsJDf3zeDxN3jFqC",
+          "spotify_uri": "spotify:track:6fvSl0bsJDf3zeDxN3jFqC",
+          "spotify_url": "https://open.spotify.com/track/6fvSl0bsJDf3zeDxN3jFqC",
+          "genres": [
+            "alt",
+            "downtempo"
+          ],
+          "genre_primary": "alt",
+          "subgenres": [
+            "folk",
+            "downtempo",
+            "acoustic"
+          ],
+          "mood": [
+            "contemplative",
+            "warm",
+            "melancholic"
+          ],
+          "mood_parameters": {
+            "energy": 0.35,
+            "valence": 0.45,
+            "danceability": 0.38,
+            "acousticness": 0.65,
+            "instrumentalness": 0.3
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 10,
+          "title": "XOXO",
+          "artists": [
+            "Aaron Childs"
+          ],
+          "primary_artist": "Aaron Childs",
+          "duration": "2:17",
+          "duration_sec": 137,
+          "spotify_track_id": "4eJR2tqZ1gakKJo9cdWeFu",
+          "spotify_uri": "spotify:track:4eJR2tqZ1gakKJo9cdWeFu",
+          "spotify_url": "https://open.spotify.com/track/4eJR2tqZ1gakKJo9cdWeFu",
+          "genres": [
+            "neo-soul"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "r&b",
+            "contemporary soul",
+            "jazz-soul"
+          ],
+          "mood": [
+            "smooth",
+            "warm",
+            "intimate"
+          ],
+          "mood_parameters": {
+            "energy": 0.45,
+            "valence": 0.55,
+            "danceability": 0.55,
+            "acousticness": 0.35,
+            "instrumentalness": 0.05
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 11,
+          "title": "That's All I Ask - HAAi Remix / Edit",
+          "artists": [
+            "Nina Simone",
+            "HAAi"
+          ],
+          "primary_artist": "Nina Simone",
+          "duration": "4:18",
+          "duration_sec": 258,
+          "spotify_track_id": "40qN3XgBBaq3AtD4a6ArJc",
+          "spotify_uri": "spotify:track:40qN3XgBBaq3AtD4a6ArJc",
+          "spotify_url": "https://open.spotify.com/track/40qN3XgBBaq3AtD4a6ArJc",
+          "genres": [
+            "electronic",
+            "soul-funk"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "remix",
+            "breakbeat",
+            "electronic"
+          ],
+          "mood": [
+            "hypnotic",
+            "soulful",
+            "driving"
+          ],
+          "mood_parameters": {
+            "energy": 0.65,
+            "valence": 0.55,
+            "danceability": 0.7,
+            "acousticness": 0.15,
+            "instrumentalness": 0.5
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 12,
+          "title": "Sweetie (IZCO Remix)",
+          "artists": [
+            "Kokoroko",
+            "IZCO"
+          ],
+          "primary_artist": "Kokoroko",
+          "duration": "4:28",
+          "duration_sec": 268,
+          "spotify_track_id": "4layZoqukXPJf6K1XMmbMr",
+          "spotify_uri": "spotify:track:4layZoqukXPJf6K1XMmbMr",
+          "spotify_url": "https://open.spotify.com/track/4layZoqukXPJf6K1XMmbMr",
+          "genres": [
+            "world",
+            "soulful-house"
+          ],
+          "genre_primary": "world",
+          "subgenres": [
+            "afrobeat",
+            "afro-house",
+            "remix"
+          ],
+          "mood": [
+            "groovy",
+            "sunny",
+            "danceable"
+          ],
+          "mood_parameters": {
+            "energy": 0.65,
+            "valence": 0.68,
+            "danceability": 0.75,
+            "acousticness": 0.2,
+            "instrumentalness": 0.5
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 13,
+          "title": "Berlin-orbit 4",
+          "artists": [
+            "Nils Petter Molvær",
+            "alva noto"
+          ],
+          "primary_artist": "Nils Petter Molvær",
+          "duration": "9:07",
+          "duration_sec": 547,
+          "spotify_track_id": "6XPrRywSWoUrfbZskQFGm8",
+          "spotify_uri": "spotify:track:6XPrRywSWoUrfbZskQFGm8",
+          "spotify_url": "https://open.spotify.com/track/6XPrRywSWoUrfbZskQFGm8",
+          "genres": [
+            "electronic",
+            "jazz"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "nu jazz",
+            "ambient",
+            "glitch",
+            "electronic jazz"
+          ],
+          "mood": [
+            "cinematic",
+            "expansive",
+            "cerebral"
+          ],
+          "mood_parameters": {
+            "energy": 0.4,
+            "valence": 0.42,
+            "danceability": 0.3,
+            "acousticness": 0.25,
+            "instrumentalness": 0.9
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 14,
+          "title": "What's Real",
+          "artists": [
+            "DJ Gangster",
+            "Snoop Dogg",
+            "Gucci Mane",
+            "Nipsey Hussle"
+          ],
+          "primary_artist": "DJ Gangster",
+          "duration": "3:19",
+          "duration_sec": 199,
+          "spotify_track_id": "49IAVsn2tmfkyXVYH1vpWW",
+          "spotify_uri": "spotify:track:49IAVsn2tmfkyXVYH1vpWW",
+          "spotify_url": "https://open.spotify.com/track/49IAVsn2tmfkyXVYH1vpWW",
+          "genres": [
+            "hip-hop"
+          ],
+          "genre_primary": "hip-hop",
+          "subgenres": [
+            "west coast hip-hop",
+            "g-funk",
+            "gangsta rap"
+          ],
+          "mood": [
+            "hard",
+            "groovy",
+            "confident"
+          ],
+          "mood_parameters": {
+            "energy": 0.62,
+            "valence": 0.5,
+            "danceability": 0.72,
+            "acousticness": 0.1,
+            "instrumentalness": 0.0
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 15,
+          "title": "Pizza Mind",
+          "artists": [
+            "Benjamin Clementine"
+          ],
+          "primary_artist": "Benjamin Clementine",
+          "duration": "3:15",
+          "duration_sec": 195,
+          "spotify_track_id": "7dJQAf1MRXQcJrJtYY83B6",
+          "spotify_uri": "spotify:track:7dJQAf1MRXQcJrJtYY83B6",
+          "spotify_url": "https://open.spotify.com/track/7dJQAf1MRXQcJrJtYY83B6",
+          "genres": [
+            "alt"
+          ],
+          "genre_primary": "alt",
+          "subgenres": [
+            "art pop",
+            "chamber pop",
+            "experimental"
+          ],
+          "mood": [
+            "theatrical",
+            "intense",
+            "idiosyncratic"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.45,
+            "danceability": 0.4,
+            "acousticness": 0.5,
+            "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 16,
+          "title": "Something New - feat. Salimata",
+          "artists": [
+            "Wiki",
+            "SALIMATA"
+          ],
+          "primary_artist": "Wiki",
+          "duration": "2:26",
+          "duration_sec": 146,
+          "spotify_track_id": "4EpvVX5CowjIpbzJa25QoM",
+          "spotify_uri": "spotify:track:4EpvVX5CowjIpbzJa25QoM",
+          "spotify_url": "https://open.spotify.com/track/4EpvVX5CowjIpbzJa25QoM",
+          "genres": [
+            "hip-hop"
+          ],
+          "genre_primary": "hip-hop",
+          "subgenres": [
+            "alternative hip-hop",
+            "ny hip-hop",
+            "boom bap"
+          ],
+          "mood": [
+            "gritty",
+            "soulful",
+            "urban"
+          ],
+          "mood_parameters": {
+            "energy": 0.58,
+            "valence": 0.5,
+            "danceability": 0.65,
+            "acousticness": 0.2,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 17,
+          "title": "Bad Instinct",
+          "artists": [
+            "Charlie Risso"
+          ],
+          "primary_artist": "Charlie Risso",
+          "duration": "4:10",
+          "duration_sec": 250,
+          "spotify_track_id": "6TOnxx4F8sATGx5lshYC2w",
+          "spotify_uri": "spotify:track:6TOnxx4F8sATGx5lshYC2w",
+          "spotify_url": "https://open.spotify.com/track/6TOnxx4F8sATGx5lshYC2w",
+          "genres": [
+            "electronic",
+            "alt"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "electropop",
+            "alternative electronic",
+            "dream pop"
+          ],
+          "mood": [
+            "moody",
+            "atmospheric",
+            "pulsing"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.45,
+            "danceability": 0.55,
+            "acousticness": 0.25,
+            "instrumentalness": 0.3
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 18,
+          "title": "Lovey Dovey - Kenny Dope Remix",
+          "artists": [
+            "Omar",
+            "Kenny Dope",
+            "Eric Roberson",
+            "Raheem DeVaughn"
+          ],
+          "primary_artist": "Omar",
+          "duration": "3:50",
+          "duration_sec": 230,
+          "spotify_track_id": "1467QC7FnBer8o7OCdO3Kb",
+          "spotify_uri": "spotify:track:1467QC7FnBer8o7OCdO3Kb",
+          "spotify_url": "https://open.spotify.com/track/1467QC7FnBer8o7OCdO3Kb",
+          "genres": [
+            "soulful-house",
+            "neo-soul"
+          ],
+          "genre_primary": "soulful-house",
+          "subgenres": [
+            "soulful house",
+            "uk soul",
+            "garage"
+          ],
+          "mood": [
+            "soulful",
+            "groovy",
+            "uplifting"
+          ],
+          "mood_parameters": {
+            "energy": 0.62,
+            "valence": 0.65,
+            "danceability": 0.78,
+            "acousticness": 0.2,
+            "instrumentalness": 0.3
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 19,
+          "title": "DID IT AGAIN",
+          "artists": [
+            "Travy",
+            "Elzzz",
+            "Fred again.."
+          ],
+          "primary_artist": "Travy",
+          "duration": "2:33",
+          "duration_sec": 153,
+          "spotify_track_id": "2MfWz9bUFvQyxK2lGygobj",
+          "spotify_uri": "spotify:track:2MfWz9bUFvQyxK2lGygobj",
+          "spotify_url": "https://open.spotify.com/track/2MfWz9bUFvQyxK2lGygobj",
+          "genres": [
+            "electronic"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "uk garage",
+            "electronic pop",
+            "dance"
+          ],
+          "mood": [
+            "euphoric",
+            "emotional",
+            "driving"
+          ],
+          "mood_parameters": {
+            "energy": 0.68,
+            "valence": 0.6,
+            "danceability": 0.75,
+            "acousticness": 0.15,
+            "instrumentalness": 0.2
           },
           "bpm": null,
           "bpm_source": "estimated"
@@ -57666,6 +58391,777 @@
         "danceability": 0.35,
         "acousticness": 0.75,
         "instrumentalness": 0.3
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 1,
+      "title": "Me and You",
+      "artists": [
+        "Bonobo"
+      ],
+      "primary_artist": "Bonobo",
+      "duration": "3:49",
+      "duration_sec": 229,
+      "spotify_track_id": "3K3yAN6QVsLNM3tNkn8zuo",
+      "spotify_uri": "spotify:track:3K3yAN6QVsLNM3tNkn8zuo",
+      "spotify_url": "https://open.spotify.com/track/3K3yAN6QVsLNM3tNkn8zuo",
+      "genres": [
+        "electronic",
+        "downtempo"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "downtempo",
+        "organic electronica",
+        "trip-hop"
+      ],
+      "mood": [
+        "warm",
+        "hypnotic",
+        "melodic"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.55,
+        "danceability": 0.62,
+        "acousticness": 0.25,
+        "instrumentalness": 0.7
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 2,
+      "title": "Sweetest Season",
+      "artists": [
+        "Yazmin Lacey"
+      ],
+      "primary_artist": "Yazmin Lacey",
+      "duration": "2:51",
+      "duration_sec": 171,
+      "spotify_track_id": "2UKYhq5GAjhmFwBk7uwRGG",
+      "spotify_uri": "spotify:track:2UKYhq5GAjhmFwBk7uwRGG",
+      "spotify_url": "https://open.spotify.com/track/2UKYhq5GAjhmFwBk7uwRGG",
+      "genres": [
+        "neo-soul",
+        "uk-jazz"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "uk soul",
+        "jazz-soul",
+        "vocal soul"
+      ],
+      "mood": [
+        "warm",
+        "intimate",
+        "soulful"
+      ],
+      "mood_parameters": {
+        "energy": 0.4,
+        "valence": 0.55,
+        "danceability": 0.52,
+        "acousticness": 0.45,
+        "instrumentalness": 0.05
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 3,
+      "title": "Blessing",
+      "artists": [
+        "Marla Kether",
+        "Mez"
+      ],
+      "primary_artist": "Marla Kether",
+      "duration": "3:54",
+      "duration_sec": 234,
+      "spotify_track_id": "0yNFPaMseUjuSCR4Mb49cC",
+      "spotify_uri": "spotify:track:0yNFPaMseUjuSCR4Mb49cC",
+      "spotify_url": "https://open.spotify.com/track/0yNFPaMseUjuSCR4Mb49cC",
+      "genres": [
+        "uk-jazz",
+        "broken-beat"
+      ],
+      "genre_primary": "uk-jazz",
+      "subgenres": [
+        "uk jazz",
+        "broken beat",
+        "jazz-funk"
+      ],
+      "mood": [
+        "groovy",
+        "vibrant",
+        "soulful"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.62,
+        "danceability": 0.7,
+        "acousticness": 0.3,
+        "instrumentalness": 0.4
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 4,
+      "title": "Let Me Go",
+      "artists": [
+        "Baby Rose"
+      ],
+      "primary_artist": "Baby Rose",
+      "duration": "3:09",
+      "duration_sec": 189,
+      "spotify_track_id": "0Bw0kB0fDnAS8IKks0S8Qu",
+      "spotify_uri": "spotify:track:0Bw0kB0fDnAS8IKks0S8Qu",
+      "spotify_url": "https://open.spotify.com/track/0Bw0kB0fDnAS8IKks0S8Qu",
+      "genres": [
+        "neo-soul"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "r&b",
+        "soul",
+        "alternative r&b"
+      ],
+      "mood": [
+        "melancholic",
+        "intense",
+        "emotive"
+      ],
+      "mood_parameters": {
+        "energy": 0.45,
+        "valence": 0.35,
+        "danceability": 0.5,
+        "acousticness": 0.4,
+        "instrumentalness": 0.0
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 5,
+      "title": "Seva",
+      "artists": [
+        "OPEN Project",
+        "anaiis"
+      ],
+      "primary_artist": "OPEN Project",
+      "duration": "3:14",
+      "duration_sec": 194,
+      "spotify_track_id": "1SJhMJwJ0srXKAjIpEQZfp",
+      "spotify_uri": "spotify:track:1SJhMJwJ0srXKAjIpEQZfp",
+      "spotify_url": "https://open.spotify.com/track/1SJhMJwJ0srXKAjIpEQZfp",
+      "genres": [
+        "neo-soul",
+        "electronic"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "alternative soul",
+        "electronic soul",
+        "downtempo"
+      ],
+      "mood": [
+        "ethereal",
+        "introspective",
+        "delicate"
+      ],
+      "mood_parameters": {
+        "energy": 0.4,
+        "valence": 0.48,
+        "danceability": 0.5,
+        "acousticness": 0.4,
+        "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 6,
+      "title": "PEARL",
+      "artists": [
+        "Nate Smith",
+        "Kiefer",
+        "CARRTOONS",
+        "Kenny Beats"
+      ],
+      "primary_artist": "Nate Smith",
+      "duration": "3:51",
+      "duration_sec": 231,
+      "spotify_track_id": "33E2bU4xRVvjuc6Y4dtk5k",
+      "spotify_uri": "spotify:track:33E2bU4xRVvjuc6Y4dtk5k",
+      "spotify_url": "https://open.spotify.com/track/33E2bU4xRVvjuc6Y4dtk5k",
+      "genres": [
+        "jazz",
+        "soul-funk"
+      ],
+      "genre_primary": "jazz",
+      "subgenres": [
+        "jazz-funk",
+        "beat music",
+        "instrumental hip-hop"
+      ],
+      "mood": [
+        "groovy",
+        "playful",
+        "virtuosic"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.65,
+        "danceability": 0.72,
+        "acousticness": 0.3,
+        "instrumentalness": 0.85
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 7,
+      "title": "July",
+      "artists": [
+        "Plumm"
+      ],
+      "primary_artist": "Plumm",
+      "duration": "3:54",
+      "duration_sec": 234,
+      "spotify_track_id": "54ozoKC6nyMWhgw8YFQoH9",
+      "spotify_uri": "spotify:track:54ozoKC6nyMWhgw8YFQoH9",
+      "spotify_url": "https://open.spotify.com/track/54ozoKC6nyMWhgw8YFQoH9",
+      "genres": [
+        "electronic",
+        "alt"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "indie electronic",
+        "dream pop",
+        "downtempo"
+      ],
+      "mood": [
+        "dreamy",
+        "melancholic",
+        "atmospheric"
+      ],
+      "mood_parameters": {
+        "energy": 0.42,
+        "valence": 0.45,
+        "danceability": 0.5,
+        "acousticness": 0.3,
+        "instrumentalness": 0.3
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 8,
+      "title": "Massa",
+      "artists": [
+        "Fatoumata Diawara"
+      ],
+      "primary_artist": "Fatoumata Diawara",
+      "duration": "3:46",
+      "duration_sec": 226,
+      "spotify_track_id": "07e5OdYVfaBRCtVpXUKMrc",
+      "spotify_uri": "spotify:track:07e5OdYVfaBRCtVpXUKMrc",
+      "spotify_url": "https://open.spotify.com/track/07e5OdYVfaBRCtVpXUKMrc",
+      "genres": [
+        "world"
+      ],
+      "genre_primary": "world",
+      "subgenres": [
+        "wassoulou",
+        "afro-folk",
+        "malian"
+      ],
+      "mood": [
+        "warm",
+        "soulful",
+        "uplifting"
+      ],
+      "mood_parameters": {
+        "energy": 0.55,
+        "valence": 0.62,
+        "danceability": 0.6,
+        "acousticness": 0.5,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 9,
+      "title": "Spirit Of Place",
+      "artists": [
+        "Fink"
+      ],
+      "primary_artist": "Fink",
+      "duration": "4:27",
+      "duration_sec": 267,
+      "spotify_track_id": "6fvSl0bsJDf3zeDxN3jFqC",
+      "spotify_uri": "spotify:track:6fvSl0bsJDf3zeDxN3jFqC",
+      "spotify_url": "https://open.spotify.com/track/6fvSl0bsJDf3zeDxN3jFqC",
+      "genres": [
+        "alt",
+        "downtempo"
+      ],
+      "genre_primary": "alt",
+      "subgenres": [
+        "folk",
+        "downtempo",
+        "acoustic"
+      ],
+      "mood": [
+        "contemplative",
+        "warm",
+        "melancholic"
+      ],
+      "mood_parameters": {
+        "energy": 0.35,
+        "valence": 0.45,
+        "danceability": 0.38,
+        "acousticness": 0.65,
+        "instrumentalness": 0.3
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 10,
+      "title": "XOXO",
+      "artists": [
+        "Aaron Childs"
+      ],
+      "primary_artist": "Aaron Childs",
+      "duration": "2:17",
+      "duration_sec": 137,
+      "spotify_track_id": "4eJR2tqZ1gakKJo9cdWeFu",
+      "spotify_uri": "spotify:track:4eJR2tqZ1gakKJo9cdWeFu",
+      "spotify_url": "https://open.spotify.com/track/4eJR2tqZ1gakKJo9cdWeFu",
+      "genres": [
+        "neo-soul"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "r&b",
+        "contemporary soul",
+        "jazz-soul"
+      ],
+      "mood": [
+        "smooth",
+        "warm",
+        "intimate"
+      ],
+      "mood_parameters": {
+        "energy": 0.45,
+        "valence": 0.55,
+        "danceability": 0.55,
+        "acousticness": 0.35,
+        "instrumentalness": 0.05
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 11,
+      "title": "That's All I Ask - HAAi Remix / Edit",
+      "artists": [
+        "Nina Simone",
+        "HAAi"
+      ],
+      "primary_artist": "Nina Simone",
+      "duration": "4:18",
+      "duration_sec": 258,
+      "spotify_track_id": "40qN3XgBBaq3AtD4a6ArJc",
+      "spotify_uri": "spotify:track:40qN3XgBBaq3AtD4a6ArJc",
+      "spotify_url": "https://open.spotify.com/track/40qN3XgBBaq3AtD4a6ArJc",
+      "genres": [
+        "electronic",
+        "soul-funk"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "remix",
+        "breakbeat",
+        "electronic"
+      ],
+      "mood": [
+        "hypnotic",
+        "soulful",
+        "driving"
+      ],
+      "mood_parameters": {
+        "energy": 0.65,
+        "valence": 0.55,
+        "danceability": 0.7,
+        "acousticness": 0.15,
+        "instrumentalness": 0.5
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 12,
+      "title": "Sweetie (IZCO Remix)",
+      "artists": [
+        "Kokoroko",
+        "IZCO"
+      ],
+      "primary_artist": "Kokoroko",
+      "duration": "4:28",
+      "duration_sec": 268,
+      "spotify_track_id": "4layZoqukXPJf6K1XMmbMr",
+      "spotify_uri": "spotify:track:4layZoqukXPJf6K1XMmbMr",
+      "spotify_url": "https://open.spotify.com/track/4layZoqukXPJf6K1XMmbMr",
+      "genres": [
+        "world",
+        "soulful-house"
+      ],
+      "genre_primary": "world",
+      "subgenres": [
+        "afrobeat",
+        "afro-house",
+        "remix"
+      ],
+      "mood": [
+        "groovy",
+        "sunny",
+        "danceable"
+      ],
+      "mood_parameters": {
+        "energy": 0.65,
+        "valence": 0.68,
+        "danceability": 0.75,
+        "acousticness": 0.2,
+        "instrumentalness": 0.5
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 13,
+      "title": "Berlin-orbit 4",
+      "artists": [
+        "Nils Petter Molvær",
+        "alva noto"
+      ],
+      "primary_artist": "Nils Petter Molvær",
+      "duration": "9:07",
+      "duration_sec": 547,
+      "spotify_track_id": "6XPrRywSWoUrfbZskQFGm8",
+      "spotify_uri": "spotify:track:6XPrRywSWoUrfbZskQFGm8",
+      "spotify_url": "https://open.spotify.com/track/6XPrRywSWoUrfbZskQFGm8",
+      "genres": [
+        "electronic",
+        "jazz"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "nu jazz",
+        "ambient",
+        "glitch",
+        "electronic jazz"
+      ],
+      "mood": [
+        "cinematic",
+        "expansive",
+        "cerebral"
+      ],
+      "mood_parameters": {
+        "energy": 0.4,
+        "valence": 0.42,
+        "danceability": 0.3,
+        "acousticness": 0.25,
+        "instrumentalness": 0.9
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 14,
+      "title": "What's Real",
+      "artists": [
+        "DJ Gangster",
+        "Snoop Dogg",
+        "Gucci Mane",
+        "Nipsey Hussle"
+      ],
+      "primary_artist": "DJ Gangster",
+      "duration": "3:19",
+      "duration_sec": 199,
+      "spotify_track_id": "49IAVsn2tmfkyXVYH1vpWW",
+      "spotify_uri": "spotify:track:49IAVsn2tmfkyXVYH1vpWW",
+      "spotify_url": "https://open.spotify.com/track/49IAVsn2tmfkyXVYH1vpWW",
+      "genres": [
+        "hip-hop"
+      ],
+      "genre_primary": "hip-hop",
+      "subgenres": [
+        "west coast hip-hop",
+        "g-funk",
+        "gangsta rap"
+      ],
+      "mood": [
+        "hard",
+        "groovy",
+        "confident"
+      ],
+      "mood_parameters": {
+        "energy": 0.62,
+        "valence": 0.5,
+        "danceability": 0.72,
+        "acousticness": 0.1,
+        "instrumentalness": 0.0
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 15,
+      "title": "Pizza Mind",
+      "artists": [
+        "Benjamin Clementine"
+      ],
+      "primary_artist": "Benjamin Clementine",
+      "duration": "3:15",
+      "duration_sec": 195,
+      "spotify_track_id": "7dJQAf1MRXQcJrJtYY83B6",
+      "spotify_uri": "spotify:track:7dJQAf1MRXQcJrJtYY83B6",
+      "spotify_url": "https://open.spotify.com/track/7dJQAf1MRXQcJrJtYY83B6",
+      "genres": [
+        "alt"
+      ],
+      "genre_primary": "alt",
+      "subgenres": [
+        "art pop",
+        "chamber pop",
+        "experimental"
+      ],
+      "mood": [
+        "theatrical",
+        "intense",
+        "idiosyncratic"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.45,
+        "danceability": 0.4,
+        "acousticness": 0.5,
+        "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 16,
+      "title": "Something New - feat. Salimata",
+      "artists": [
+        "Wiki",
+        "SALIMATA"
+      ],
+      "primary_artist": "Wiki",
+      "duration": "2:26",
+      "duration_sec": 146,
+      "spotify_track_id": "4EpvVX5CowjIpbzJa25QoM",
+      "spotify_uri": "spotify:track:4EpvVX5CowjIpbzJa25QoM",
+      "spotify_url": "https://open.spotify.com/track/4EpvVX5CowjIpbzJa25QoM",
+      "genres": [
+        "hip-hop"
+      ],
+      "genre_primary": "hip-hop",
+      "subgenres": [
+        "alternative hip-hop",
+        "ny hip-hop",
+        "boom bap"
+      ],
+      "mood": [
+        "gritty",
+        "soulful",
+        "urban"
+      ],
+      "mood_parameters": {
+        "energy": 0.58,
+        "valence": 0.5,
+        "danceability": 0.65,
+        "acousticness": 0.2,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 17,
+      "title": "Bad Instinct",
+      "artists": [
+        "Charlie Risso"
+      ],
+      "primary_artist": "Charlie Risso",
+      "duration": "4:10",
+      "duration_sec": 250,
+      "spotify_track_id": "6TOnxx4F8sATGx5lshYC2w",
+      "spotify_uri": "spotify:track:6TOnxx4F8sATGx5lshYC2w",
+      "spotify_url": "https://open.spotify.com/track/6TOnxx4F8sATGx5lshYC2w",
+      "genres": [
+        "electronic",
+        "alt"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "electropop",
+        "alternative electronic",
+        "dream pop"
+      ],
+      "mood": [
+        "moody",
+        "atmospheric",
+        "pulsing"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.45,
+        "danceability": 0.55,
+        "acousticness": 0.25,
+        "instrumentalness": 0.3
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 18,
+      "title": "Lovey Dovey - Kenny Dope Remix",
+      "artists": [
+        "Omar",
+        "Kenny Dope",
+        "Eric Roberson",
+        "Raheem DeVaughn"
+      ],
+      "primary_artist": "Omar",
+      "duration": "3:50",
+      "duration_sec": 230,
+      "spotify_track_id": "1467QC7FnBer8o7OCdO3Kb",
+      "spotify_uri": "spotify:track:1467QC7FnBer8o7OCdO3Kb",
+      "spotify_url": "https://open.spotify.com/track/1467QC7FnBer8o7OCdO3Kb",
+      "genres": [
+        "soulful-house",
+        "neo-soul"
+      ],
+      "genre_primary": "soulful-house",
+      "subgenres": [
+        "soulful house",
+        "uk soul",
+        "garage"
+      ],
+      "mood": [
+        "soulful",
+        "groovy",
+        "uplifting"
+      ],
+      "mood_parameters": {
+        "energy": 0.62,
+        "valence": 0.65,
+        "danceability": 0.78,
+        "acousticness": 0.2,
+        "instrumentalness": 0.3
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 35,
+      "playlist_name": "New Release Playlist #35",
+      "playlist_id": "14vvxFCXnMFGZOC4j0fdmX",
+      "position_in_playlist": 19,
+      "title": "DID IT AGAIN",
+      "artists": [
+        "Travy",
+        "Elzzz",
+        "Fred again.."
+      ],
+      "primary_artist": "Travy",
+      "duration": "2:33",
+      "duration_sec": 153,
+      "spotify_track_id": "2MfWz9bUFvQyxK2lGygobj",
+      "spotify_uri": "spotify:track:2MfWz9bUFvQyxK2lGygobj",
+      "spotify_url": "https://open.spotify.com/track/2MfWz9bUFvQyxK2lGygobj",
+      "genres": [
+        "electronic"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "uk garage",
+        "electronic pop",
+        "dance"
+      ],
+      "mood": [
+        "euphoric",
+        "emotional",
+        "driving"
+      ],
+      "mood_parameters": {
+        "energy": 0.68,
+        "valence": 0.6,
+        "danceability": 0.75,
+        "acousticness": 0.15,
+        "instrumentalness": 0.2
       },
       "bpm": null,
       "bpm_source": "estimated"
