@@ -747,7 +747,8 @@ function MusicNetworkInner() {
             }}
           >
             {meta.unique_tracks} tracks · {meta.edges} links · {orderedGenres.length}{" "}
-            genres · playlists #12–#32
+            genres · {meta.playlists} playlists ({meta.playlist_range})
+            {meta.updated ? ` · updated ${meta.updated}` : ""}
           </div>
         )}
 
@@ -902,6 +903,36 @@ function MusicNetworkInner() {
         Click a node to isolate its links · drag to reposition
         <br />
         scroll to zoom · clusters are the inferred genres
+      </div>
+      )}
+
+      {/* Credits — bottom-right, discreto. Su mobile nascosti quando il player
+          è attivo o la chat è aperta, per non sovrapporsi alla barra in basso. */}
+      {(!isMobile || (!playTracks.length && !chatOpen)) && (
+      <div
+        style={{
+          position: "absolute",
+          bottom: `calc(8px + env(safe-area-inset-bottom))`,
+          right: isMobile ? 12 : 32,
+          zIndex: 10,
+          fontSize: 10.5,
+          color: MUTED,
+          textAlign: "right",
+          lineHeight: 1.5,
+          pointerEvents: "auto",
+        }}
+      >
+        by Marco Mauro ·{" "}
+        <a
+          href="https://github.com/marcomauro/new-release-atlas"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: INK, textDecoration: "none", borderBottom: `1px solid ${MUTED}` }}
+        >
+          source on GitHub
+        </a>
+        <br />
+        built with Claude by Anthropic
       </div>
       )}
 
