@@ -109,6 +109,48 @@ function hashJitter(id) {
   return ((h >>> 0) % 1000) / 1000;
 }
 
+// Ancore di genere "impacchettate" PROPORZIONALMENTE alla dimensione del cluster.
+// Ogni genere riceve un raggio-territorio ∝ √(n° brani) → area ∝ conteggio →
+// densità ~uniforme su tutta la tela. Una mini-simulazione DETERMINISTICA (init
+// su spirale aurea, niente random) dispone i 13 territori senza sovrapporsi
+// attorno al centro; il risultato è poi scalato per riempire il riquadro (con
+// margini, adattandosi all'aspect-ratio). Sostituisce l'anello a passo fisso, che
+// comprimeva i cluster grandi, sperdeva i piccoli e lasciava vuoto il centro.
+function packGenreAnchors(genres, counts, dims) {
+  const cx = dims.w / 2, cy = dims.h / 2;
+  const GOLD = Math.PI * (3 - Math.sqrt(5)); // angolo aureo (init riproducibile)
+  const terr = (g) => Math.sqrt(Math.max(1, counts[g] || 1));
+  const a = genres.map((g, i) => ({
+    genre: g, r: terr(g),
+    x: cx + 14 * Math.sqrt(i + 0.5) * Math.cos(i * GOLD),
+    y: cy + 14 * Math.sqrt(i + 0.5) * Math.sin(i * GOLD),
+  }));
+  const sim = d3
+    .forceSimulation(a)
+    .force("collide", d3.forceCollide((d) => d.r + 1.2).iterations(6))
+    .force("x", d3.forceX(cx).strength(0.045))
+    .force("y", d3.forceY(cy).strength(0.045))
+    .stop();
+  for (let i = 0; i < 320; i++) sim.tick();
+  // bounding box dei territori → fit nella tela con margini
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  for (const d of a) {
+    minX = Math.min(minX, d.x - d.r); maxX = Math.max(maxX, d.x + d.r);
+    minY = Math.min(minY, d.y - d.r); maxY = Math.max(maxY, d.y + d.r);
+  }
+  const margin = Math.min(dims.w, dims.h) * 0.10;
+  const bw = Math.max(1, maxX - minX), bh = Math.max(1, maxY - minY);
+  let sx = (dims.w - 2 * margin) / bw, sy = (dims.h - 2 * margin) / bh;
+  // limita la distorsione fra gli assi (riempie il widescreen senza stirare troppo)
+  const RATIO = 1.7;
+  if (sx > sy * RATIO) sx = sy * RATIO;
+  if (sy > sx * RATIO) sy = sx * RATIO;
+  const bcx = (minX + maxX) / 2, bcy = (minY + maxY) / 2;
+  const m = new Map();
+  for (const d of a) m.set(d.genre, { x: cx + (d.x - bcx) * sx, y: cy + (d.y - bcy) * sy });
+  return m;
+}
+
 function MusicNetworkInner() {
   const svgRef = useRef(null);
   const wrapRef = useRef(null);
@@ -353,16 +395,10 @@ function MusicNetworkInner() {
 
     // Genre clustering force — pulls same-genre nodes toward shared anchors,
     // giving spatial separation between genres on top of the link forces.
+    // Ancore impacchettate proporzionalmente alla dimensione (riempimento omogeneo).
     const genres = GRAPH.genres;
-    const angle = (gi) => (gi / genres.length) * 2 * Math.PI;
-    const radius = Math.min(dims.w, dims.h) * 0.42;
-    const anchor = (genre) => {
-      const gi = genres.indexOf(genre);
-      return {
-        x: dims.w / 2 + radius * Math.cos(angle(gi)),
-        y: dims.h / 2 + radius * Math.sin(angle(gi)),
-      };
-    };
+    let anchorMap = packGenreAnchors(genres, genreCounts, dims);
+    const anchor = (genre) => anchorMap.get(genre) || { x: dims.w / 2, y: dims.h / 2 };
 
     const sameGenre = (l) => l.source.genre === l.target.genre;
 
@@ -423,30 +459,15 @@ function MusicNetworkInner() {
   useEffect(() => {
     if (!simRef.current) return;
     const { sim } = simRef.current;
-    const genres = GRAPH.genres;
-    const radius = Math.min(dims.w, dims.h) * 0.42;
-    const angle = (gi) => (gi / genres.length) * 2 * Math.PI;
+    // Ricalcola le ancore impacchettate per le nuove dimensioni (init e resize
+    // condividono la stessa geometria proporzionale alla dimensione dei cluster).
+    const anchorMap = packGenreAnchors(GRAPH.genres, genreCounts, dims);
+    const at = (d) => anchorMap.get(d.genre) || { x: dims.w / 2, y: dims.h / 2 };
     sim
-      .force(
-        "x",
-        d3
-          .forceX((d) => {
-            const gi = genres.indexOf(d.genre);
-            return dims.w / 2 + radius * Math.cos(angle(gi));
-          })
-          .strength(0.13)
-      )
-      .force(
-        "y",
-        d3
-          .forceY((d) => {
-            const gi = genres.indexOf(d.genre);
-            return dims.h / 2 + radius * Math.sin(angle(gi));
-          })
-          .strength(0.13)
-      );
+      .force("x", d3.forceX((d) => at(d).x).strength(0.13))
+      .force("y", d3.forceY((d) => at(d).y).strength(0.13));
     sim.alpha(0.3).restart();
-  }, [dims]);
+  }, [dims, genreCounts]);
 
   useEffect(() => {
     if (!simRef.current) return;
