@@ -127,7 +127,10 @@ function packGenreAnchors(genres, counts, dims) {
   }));
   const sim = d3
     .forceSimulation(a)
-    .force("collide", d3.forceCollide((d) => d.r + 1.2).iterations(6))
+    // Padding ampio fra i territori (+6): riserva vuoto attorno a ogni cluster
+    // cosi' nessun contorno tocca. La copertura risulta meno omogenea (isole con
+    // spazio fra loro) ed e' un compromesso voluto.
+    .force("collide", d3.forceCollide((d) => d.r + 6).iterations(6))
     .force("x", d3.forceX(cx).strength(0.045))
     .force("y", d3.forceY(cy).strength(0.045))
     .stop();
@@ -418,8 +421,8 @@ function MusicNetworkInner() {
       // Repulsione piu' contenuta: blob piu' compatti -> piu' vuoto fra i cluster.
       .force("charge", d3.forceManyBody().strength(-34))
       // Ancore forti -> ogni genere collassa stretto sul proprio territorio.
-      .force("x", d3.forceX((d) => anchor(d.genre).x).strength(0.22))
-      .force("y", d3.forceY((d) => anchor(d.genre).y).strength(0.22))
+      .force("x", d3.forceX((d) => anchor(d.genre).x).strength(0.26))
+      .force("y", d3.forceY((d) => anchor(d.genre).y).strength(0.26))
       // Coesione esplicita per cluster. Lo stesso autore si attrae, ma con una
       // forza MODERATA. Una coesione troppo alta (era 0.5) comprime i nodi dello
       // stesso autore fino al limite di impacchettamento: con dischi di collisione
@@ -465,8 +468,8 @@ function MusicNetworkInner() {
     const anchorMap = packGenreAnchors(GRAPH.genres, genreCounts, dims);
     const at = (d) => anchorMap.get(d.genre) || { x: dims.w / 2, y: dims.h / 2 };
     sim
-      .force("x", d3.forceX((d) => at(d).x).strength(0.22))
-      .force("y", d3.forceY((d) => at(d).y).strength(0.22));
+      .force("x", d3.forceX((d) => at(d).x).strength(0.26))
+      .force("y", d3.forceY((d) => at(d).y).strength(0.26));
     sim.alpha(0.3).restart();
   }, [dims, genreCounts]);
 
