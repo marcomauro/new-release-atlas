@@ -300,7 +300,7 @@ function MusicNetworkInner() {
     const rScale = d3
       .scaleSqrt()
       .domain([1, maxDeg])
-      .range(isMobile ? [2.5, 8] : [3, 12]);
+      .range(isMobile ? [3.5, 10] : [3, 12]);
 
     const link = g
       .append("g")
@@ -443,7 +443,7 @@ function MusicNetworkInner() {
         "collide",
         d3
           .forceCollide()
-          .radius((d) => rScale(d.degree) + (isMobile ? 1.5 : 4) + hashJitter(d.id) * (isMobile ? 1.5 : 4))
+          .radius((d) => rScale(d.degree) + (isMobile ? 0.5 : 4) + hashJitter(d.id) * (isMobile ? 1 : 4))
           .strength(0.9)
           .iterations(2)
       )
