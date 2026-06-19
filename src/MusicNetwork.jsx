@@ -300,7 +300,7 @@ function MusicNetworkInner() {
     const rScale = d3
       .scaleSqrt()
       .domain([1, maxDeg])
-      .range(isMobile ? [5, 12] : [3, 12]);
+      .range(isMobile ? [4, 10] : [3, 12]);
 
     const link = g
       .append("g")
