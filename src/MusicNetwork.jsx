@@ -293,11 +293,14 @@ function MusicNetworkInner() {
     svg.on("dblclick.zoom", null);
 
     const maxDeg = d3.max(nodes, (d) => d.degree) || 1;
-    // Slightly larger nodes on phones so they're easier to tap accurately.
+    // Su mobile la tela e' stretta: nodi PIU' PICCOLI (non piu' grandi) cosi'
+    // l'area totale dei pallini sta nel canvas e resta spazio VUOTO fra le isole
+    // di genere. Nodi grandi su schermo piccolo facevano collassare i cluster in
+    // un'unica massa (la collisione vinceva sulle ancore).
     const rScale = d3
       .scaleSqrt()
       .domain([1, maxDeg])
-      .range(isMobile ? [5, 14] : [3, 12]);
+      .range(isMobile ? [2.5, 8] : [3, 12]);
 
     const link = g
       .append("g")
@@ -440,7 +443,7 @@ function MusicNetworkInner() {
         "collide",
         d3
           .forceCollide()
-          .radius((d) => rScale(d.degree) + 4 + hashJitter(d.id) * 4)
+          .radius((d) => rScale(d.degree) + (isMobile ? 1.5 : 4) + hashJitter(d.id) * (isMobile ? 1.5 : 4))
           .strength(0.9)
           .iterations(2)
       )
