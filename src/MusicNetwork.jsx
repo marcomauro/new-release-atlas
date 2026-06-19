@@ -374,13 +374,18 @@ function MusicNetworkInner() {
       // Ancore di genere piu' forti -> stesso genere piu' coeso, generi diversi piu' lontani.
       .force("x", d3.forceX((d) => anchor(d.genre).x).strength(0.13))
       .force("y", d3.forceY((d) => anchor(d.genre).y).strength(0.13))
-      // Coesione esplicita: stesso genere si attrae; stesso autore (nello stesso
-      // genere/cluster) si attrae di piu'.
+      // Coesione esplicita per cluster. Lo stesso autore si attrae, ma con una
+      // forza MODERATA. Una coesione troppo alta (era 0.5) comprime i nodi dello
+      // stesso autore fino al limite di impacchettamento: con dischi di collisione
+      // ~uguali questo fa cristallizzare un reticolo ESAGONALE (l'impacchettamento
+      // 2D più denso). Tenendola bassa lasciamo che siano le distanze-preferite
+      // dei link a dare la forma — più organica — mentre i brani dello stesso
+      // autore restano comunque vicini grazie ai link d'autore (peso 3.0).
       .force("genreCohesion", clusterForce((n) => n.genre, 0.06))
-      .force("artistCohesion", clusterForce((n) => n.genre + "|" + n.artist, 0.5))
+      .force("artistCohesion", clusterForce((n) => n.genre + "|" + n.artist, 0.15))
       .force(
         "collide",
-        d3.forceCollide().radius((d) => rScale(d.degree) + 2)
+        d3.forceCollide().radius((d) => rScale(d.degree) + 3)
       )
       .on("tick", () => {
         link
