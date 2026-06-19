@@ -300,7 +300,7 @@ function MusicNetworkInner() {
     const rScale = d3
       .scaleSqrt()
       .domain([1, maxDeg])
-      .range(isMobile ? [4, 10] : [3, 12]);
+      .range(isMobile ? [3, 8] : [3, 12]);
 
     const link = g
       .append("g")
@@ -445,8 +445,10 @@ function MusicNetworkInner() {
         d3
           .forceCollide()
           .radius((d) => rScale(d.degree) + (isMobile ? 0.5 : 1.5) + hashJitter(d.id) * (isMobile ? 1 : 4))
-          .strength(0.9)
-          .iterations(2)
+          // strength 1 + 3 iterazioni: la spaziatura minima e' sempre rispettata,
+          // i pallini non si sovrappongono mai nemmeno sotto la spinta delle ancore.
+          .strength(1)
+          .iterations(3)
       )
       .on("tick", () => {
         link
