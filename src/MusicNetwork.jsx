@@ -100,6 +100,15 @@ function clusterForce(keyFn, strength) {
   return force;
 }
 
+// Jitter deterministico 0..1 da un id (hash stabile). Usato per variare di poco
+// il raggio di collisione: dischi NON tutti uguali -> niente impacchettamento
+// esagonale (che richiede cerchi uguali), disposizione più organica.
+function hashJitter(id) {
+  let h = 0;
+  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) | 0;
+  return ((h >>> 0) % 1000) / 1000;
+}
+
 function MusicNetworkInner() {
   const svgRef = useRef(null);
   const wrapRef = useRef(null);
@@ -383,9 +392,17 @@ function MusicNetworkInner() {
       // autore restano comunque vicini grazie ai link d'autore (peso 3.0).
       .force("genreCohesion", clusterForce((n) => n.genre, 0.06))
       .force("artistCohesion", clusterForce((n) => n.genre + "|" + n.artist, 0.15))
+      // Collisione = leva per separare i nodi densi senza "aprire" il cluster
+      // (link e coesione lo tengono comunque unito). Padding +4 per un po' d'aria,
+      // più un jitter 0..4px sul raggio: dischi disuguali rompono il reticolo
+      // esagonale. strength/iterations alti fanno rispettare la spaziatura.
       .force(
         "collide",
-        d3.forceCollide().radius((d) => rScale(d.degree) + 3)
+        d3
+          .forceCollide()
+          .radius((d) => rScale(d.degree) + 4 + hashJitter(d.id) * 4)
+          .strength(0.9)
+          .iterations(2)
       )
       .on("tick", () => {
         link
