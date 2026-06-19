@@ -436,14 +436,15 @@ function MusicNetworkInner() {
       .force("genreCohesion", clusterForce((n) => n.genre, 0.06))
       .force("artistCohesion", clusterForce((n) => n.genre + "|" + n.artist, 0.15))
       // Collisione = leva per separare i nodi densi senza "aprire" il cluster
-      // (link e coesione lo tengono comunque unito). Padding +4 per un po' d'aria,
-      // più un jitter 0..4px sul raggio: dischi disuguali rompono il reticolo
-      // esagonale. strength/iterations alti fanno rispettare la spaziatura.
+      // (link e coesione lo tengono comunque unito). Padding piccolo (mobile 0.5,
+      // desktop 1.5) -> blob COMPATTI cosi' le isole di genere restano staccate;
+      // il jitter sul raggio resta alto (dischi disuguali) per rompere il
+      // reticolo esagonale. strength/iterations alti fanno rispettare la spaziatura.
       .force(
         "collide",
         d3
           .forceCollide()
-          .radius((d) => rScale(d.degree) + (isMobile ? 0.5 : 4) + hashJitter(d.id) * (isMobile ? 1 : 4))
+          .radius((d) => rScale(d.degree) + (isMobile ? 0.5 : 1.5) + hashJitter(d.id) * (isMobile ? 1 : 4))
           .strength(0.9)
           .iterations(2)
       )
