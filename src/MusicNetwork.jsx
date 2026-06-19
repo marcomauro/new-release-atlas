@@ -410,15 +410,16 @@ function MusicNetworkInner() {
           .forceLink(links)
           .id((d) => d.id)
           // Stesso genere: legami piu' corti; generi diversi: piu' lunghi.
-          .distance((d) => (55 / (0.4 + d.weight * 0.22)) * (sameGenre(d) ? 0.7 : 1.7))
-          // Stesso genere: attrazione piu' forte; generi diversi: piu' debole.
-          .strength((d) => Math.min(1, d.weight * 0.1) * (sameGenre(d) ? 1.6 : 0.35))
+          .distance((d) => (55 / (0.4 + d.weight * 0.22)) * (sameGenre(d) ? 0.7 : 2.0))
+          // Stesso genere: attrazione piu' forte; generi diversi: piu' debole
+          // (0.22) cosi' i cluster non si tirano addosso e restano separati.
+          .strength((d) => Math.min(1, d.weight * 0.1) * (sameGenre(d) ? 1.6 : 0.22))
       )
       // Piu' repulsione generale: aiuta a separare i cluster di genere.
       .force("charge", d3.forceManyBody().strength(-44))
       // Ancore di genere piu' forti -> stesso genere piu' coeso, generi diversi piu' lontani.
-      .force("x", d3.forceX((d) => anchor(d.genre).x).strength(0.13))
-      .force("y", d3.forceY((d) => anchor(d.genre).y).strength(0.13))
+      .force("x", d3.forceX((d) => anchor(d.genre).x).strength(0.15))
+      .force("y", d3.forceY((d) => anchor(d.genre).y).strength(0.15))
       // Coesione esplicita per cluster. Lo stesso autore si attrae, ma con una
       // forza MODERATA. Una coesione troppo alta (era 0.5) comprime i nodi dello
       // stesso autore fino al limite di impacchettamento: con dischi di collisione
@@ -464,8 +465,8 @@ function MusicNetworkInner() {
     const anchorMap = packGenreAnchors(GRAPH.genres, genreCounts, dims);
     const at = (d) => anchorMap.get(d.genre) || { x: dims.w / 2, y: dims.h / 2 };
     sim
-      .force("x", d3.forceX((d) => at(d).x).strength(0.13))
-      .force("y", d3.forceY((d) => at(d).y).strength(0.13));
+      .force("x", d3.forceX((d) => at(d).x).strength(0.15))
+      .force("y", d3.forceY((d) => at(d).y).strength(0.15));
     sim.alpha(0.3).restart();
   }, [dims, genreCounts]);
 
