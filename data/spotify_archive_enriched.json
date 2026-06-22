@@ -27,9 +27,9 @@
       "bpm": "int | null (null = non verificabile, mai inventato)",
       "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
     },
-    "total_tracks_with_duplicates": 817,
-    "unique_tracks": 797,
-    "unique_artists": 786,
+    "total_tracks_with_duplicates": 816,
+    "unique_tracks": 796,
+    "unique_artists": 785,
     "top_artists": [
       [
         "Louie Vega",
@@ -25311,7 +25311,7 @@
       "playlist_id": "0Rw98BRtzPmtE6HU4IX143",
       "spotify_url": "https://open.spotify.com/playlist/0Rw98BRtzPmtE6HU4IX143",
       "description": "",
-      "track_count": 19,
+      "track_count": 18,
       "tracks": [
         {
           "position_in_playlist": 1,
@@ -25692,34 +25692,6 @@
           },
           "bpm": null,
           "bpm_source": "estimated"
-        },
-        {
-          "position_in_playlist": 11,
-          "title": "[Unknown / Unavailable Track]",
-          "artists": [
-            "Unknown"
-          ],
-          "primary_artist": "Unknown",
-          "duration": "0:00",
-          "duration_sec": 0,
-          "spotify_track_id": "6hTyV70KoYRZ0hwgG9I6uf",
-          "spotify_uri": "spotify:track:6hTyV70KoYRZ0hwgG9I6uf",
-          "spotify_url": "https://open.spotify.com/track/6hTyV70KoYRZ0hwgG9I6uf",
-          "genres": [
-            "unknown"
-          ],
-          "genre_primary": "unknown",
-          "subgenres": [],
-          "mood": [],
-          "mood_parameters": {
-            "energy": null,
-            "valence": null,
-            "danceability": null,
-            "acousticness": null,
-            "instrumentalness": null
-          },
-          "bpm": null,
-          "bpm_source": "unavailable"
         },
         {
           "position_in_playlist": 12,
@@ -59026,37 +58998,6 @@
       },
       "bpm": null,
       "bpm_source": "estimated"
-    },
-    {
-      "playlist_number": 31,
-      "playlist_name": "New Release Playlist #31",
-      "playlist_id": "0Rw98BRtzPmtE6HU4IX143",
-      "position_in_playlist": 11,
-      "title": "[Unknown / Unavailable Track]",
-      "artists": [
-        "Unknown"
-      ],
-      "primary_artist": "Unknown",
-      "duration": "0:00",
-      "duration_sec": 0,
-      "spotify_track_id": "6hTyV70KoYRZ0hwgG9I6uf",
-      "spotify_uri": "spotify:track:6hTyV70KoYRZ0hwgG9I6uf",
-      "spotify_url": "https://open.spotify.com/track/6hTyV70KoYRZ0hwgG9I6uf",
-      "genres": [
-        "unknown"
-      ],
-      "genre_primary": "unknown",
-      "subgenres": [],
-      "mood": [],
-      "mood_parameters": {
-        "energy": null,
-        "valence": null,
-        "danceability": null,
-        "acousticness": null,
-        "instrumentalness": null
-      },
-      "bpm": null,
-      "bpm_source": "unavailable"
     },
     {
       "playlist_number": 31,
