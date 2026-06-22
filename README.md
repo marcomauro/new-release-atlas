@@ -9,7 +9,7 @@ Static app: **Vite + React + D3**, with automatic deploy to **GitHub Pages**.
 Data is loaded **at runtime** via `fetch` from `graph.json` (not inlined in the
 bundle).
 
-Current state: **707 tracks · 5765 edges · 13 genres** (playlists #1–#34).
+Current state: **797 tracks · 6864 edges · 13 genres** (playlists #1–#36, updated 2026-06-18).
 
 Live: https://marcomauro.github.io/new-release-atlas/
 
@@ -188,7 +188,7 @@ public/graph.json                       the map's input, served statically
 When run **without `--input`** (the default, and what CI does) it auto-selects the
 **first existing** file in this order — richest first:
 
-1. `data/spotify_archive_enriched.json` ← currently the live source (#1–#34)
+1. `data/spotify_archive_enriched.json` ← currently the live source (#1–#36)
 2. `data/spotify_archive_features.json`
 3. `data/spotify_archive_genres.json`
 
@@ -213,7 +213,7 @@ are simply omitted.
 
 ### The supporting scripts
 
-- **`scripts/genre_map.py`** — artist→genres map (≈541 artists) + helper functions.
+- **`scripts/genre_map.py`** — artist→genres map (≈529 artists) + helper functions.
   A **dependency** of `enrich_genres.py`: they must live in the same `scripts/` folder.
 - **`scripts/enrich_genres.py`** — classifies each track by genre.
 - **`scripts/enrich_audio.py`** — fetches audio data from **ReccoBeats** (audio
@@ -243,7 +243,7 @@ are simply omitted.
   }],
   "links": [{ "source", "target", "weight", "c": [artist, primary, secondary, playlist] }],
   "genres": ["...ordered by frequency = cluster index..."],
-  "meta": { "unique_tracks", "edges", "genres", "linkWeights" }
+  "meta": { "unique_tracks", "edges", "genres", "playlists", "playlist_range", "updated", "linkWeights" }
 }
 ```
 
@@ -257,6 +257,26 @@ playlist]`, so the front-end can re-weight on the fly. The default weights
 - **shared primary genre** → medium link, sparse kNN (`1.2`)
 - **shared secondary genre** → light link (`0.6`)
 - **same playlist** → weak link, sliding window (`0.3`)
+
+---
+
+## Stato dati / TODO
+
+> ⚠️ **Disallineamento dei sorgenti dati.** Il grafo live (`public/graph.json`) è
+> a **#1–#36 · 797 tracks · 6864 edges · 13 genres**, generato dall'archivio
+> AI-arricchito `data/spotify_archive_enriched.json` (#1–#36, 36 playlist, 817
+> tracce flat). I sorgenti della pipeline *classica* sono invece fermi a **#12–#32
+> · 471 tracks · 21 playlist**:
+>
+> - `data/spotify_archive.json` (RAW, fonte di verità a monte)
+> - `data/spotify_archive_genres.json`
+> - `data/spotify_archive_features.json`
+>
+> **TODO:** rigenerare/ricommittare questi tre file dalla pipeline reale che
+> alimenta il grafo (#1–#36, con mood/bpm), così che la sorgente a monte torni
+> allineata al grafo pubblicato. Finché non avviene, l'unica sorgente aggiornata è
+> `spotify_archive_enriched.json`. *(I file dati non vanno modificati a mano: vanno
+> prodotti dalla pipeline.)*
 
 ---
 
@@ -397,7 +417,8 @@ new-release-atlas/
 └── README.md
 ```
 
-> **Historical note:** `CLAUDE_CODE_BRIEFING.md` and `prompt.md` are the original
-> scaffolding artifacts used to bootstrap the project (two-stage pipeline, 468
-> tracks). They are kept as a creation record and are **not** maintained against the
-> current state — this README is the source of truth.
+> **Historical note:** `prompt.md` is the original scaffolding artifact used to
+> bootstrap the project (a smaller two-stage pipeline) and is kept **untouched** as
+> a creation record. `CLAUDE_CODE_BRIEFING.md` has since been realigned to the
+> current state (counts, pipeline, per-track schema). This README remains the
+> source of truth.
