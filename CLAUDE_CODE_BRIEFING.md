@@ -1,5 +1,11 @@
 # Briefing per Claude Code — New Release Atlas (Vite + React, deploy GitHub Pages)
 
+> **Nota (allineamento).** Questo briefing era l'artefatto di bootstrap iniziale.
+> I conteggi e la descrizione di pipeline/schema qui sotto sono stati **riallineati
+> allo stato reale** del progetto — fonte di verità: `public/graph.json`
+> (#1–#36 · 797 tracce · 6864 archi · 13 generi, updated 2026-06-18). Il file
+> `prompt.md` resta invece il record storico originale, non aggiornato.
+
 ## Obiettivo
 Creare da zero un progetto **Vite + React** che visualizza una mappa force-directed
 interattiva di un archivio musicale (force graph con D3), pronta per il deploy su
@@ -9,20 +15,42 @@ separato (NON inline nel bundle).
 Stesso pattern già usato per "B-Side Player": app statica, build Vite, deploy
 automatico su GitHub Pages via GitHub Actions.
 
-## Pipeline dati a due stadi (importante)
-L'archivio attraversa due script Python prima di diventare la mappa:
+## Pipeline dati (importante)
+L'archivio attraversa più stadi prima di diventare la mappa. La fonte live del
+grafo è l'archivio **AI-arricchito**; gli stadi genere/audio producono gli
+archivi di *fallback*.
 
 ```
 spotify_archive.json                (archivio grezzo: tracce, artisti, playlist)
         │
         ▼  enrich_genres.py         ← aggiunge genres + genre_primary per traccia
-spotify_archive_genres.json         (archivio arricchito)
+spotify_archive_genres.json
         │
-        ▼  build_graph.py           ← costruisce nodi + archi + cluster
+        ▼  enrich_audio.py          ← LOCALE, serve internet: bpm/energy/valence/year/…
+spotify_archive_features.json
+
+spotify_archive_enriched.json       ← arricchimento AI-expert: subgenres, mood,
+        │                             mood_parameters (0–1), bpm/bpm_source
+        ▼  build_graph.py           ← idempotente, stdlib: nodi + archi + cluster
 public/graph.json                   (input della mappa, servito staticamente)
 ```
 
-Nessuno dei due script usa le API di Spotify né richiede credenziali.
+`build_graph.py` senza `--input` auto-seleziona l'archivio più ricco disponibile
+(enriched → features → genres). Nessuno script usa le API di Spotify a runtime;
+solo `enrich_audio.py` richiede internet.
+
+## Schema per-traccia (nodi del grafo)
+Ogni nodo di `graph.json` porta, oltre a `id/title/artist/artists/url/duration`:
+- **genere**: `genres`, `genre` (primario), `genre_count`;
+- **mood/audio** (dall'archivio AI-arricchito; `mood_parameters` 0–1 mappati sui
+  campi numerici, soft-degradation se assenti): `mood`, `subgenres`, `bpm`,
+  `bpm_source`, `energy`, `valence`, `danceability`, `acousticness`,
+  `instrumentalness`;
+- **campi calcolati dal build**: `community` (indice cluster), `era`, `era_norm`,
+  `bridging`, `is_bridge`, `is_remix`, `artist_track_count`, `degree`, `playlists`.
+
+Il blocco `meta` riporta `unique_tracks`, `edges`, `genres`, `playlists`,
+`playlist_range`, `updated`, `linkWeights`.
 
 ## File allegati a questo briefing
 1. `spotify_archive_genres.json` — archivio GIÀ arricchito (stato attuale, pronto).
@@ -32,14 +60,16 @@ Nessuno dei due script usa le API di Spotify né richiede credenziali.
    com'è; non riscrivere la logica di visualizzazione.
 3. `build_graph.py` — trasforma l'archivio arricchito in `graph.json`. Validato.
 4. `enrich_genres.py` — aggiunge i generi all'archivio grezzo. Validato.
-5. `genre_map.py` — modulo con la mappa artista→generi (541 artisti) e le funzioni
+5. `genre_map.py` — modulo con la mappa artista→generi (≈529 artisti) e le funzioni
    di supporto. È una DIPENDENZA di `enrich_genres.py`: devono stare nella stessa
    cartella `scripts/`.
-6. `spotify_archive.json` — archivio GREZZO (471 tracce, 21 playlist, #12–#32).
-   È la fonte di verità mantenuta a mano: ogni settimana l'utente vi appende le
-   nuove playlist (via Spotify MCP). Mettilo in `data/`. Da qui parte la pipeline
-   di arricchimento. Verificato: la pipeline completa dal grezzo produce
-   copertura 100% (535 artisti) → 468 nodi · 3391 archi · 12 generi.
+6. `spotify_archive.json` — archivio GREZZO, fonte di verità mantenuta a mano:
+   ogni settimana l'utente vi appende le nuove playlist (via Spotify MCP). Mettilo
+   in `data/`; da qui parte la pipeline di arricchimento. Il grafo live è oggi
+   prodotto dall'archivio AI-arricchito `spotify_archive_enriched.json`
+   (#1–#36, 36 playlist) → **797 nodi · 6864 archi · 13 generi**.
+   Nota: i sorgenti della pipeline classica (RAW/genres/features) sono al momento
+   fermi a #12–#32 · 471 tracce (vedi "Stato dati / TODO" nel README).
 
 ## Struttura del progetto da creare
 ```
@@ -81,9 +111,10 @@ new-release-atlas/
 
 ### 3. Genera `public/graph.json`
 ```bash
-python3 scripts/build_graph.py --input data/spotify_archive_genres.json --output public/graph.json
+python3 scripts/build_graph.py --output public/graph.json
 ```
-Output atteso: `468 nodi · 3391 archi · 12 generi`.
+Senza `--input`, `build_graph.py` auto-seleziona l'archivio più ricco (oggi
+`spotify_archive_enriched.json`, #1–#36). Output atteso: `797 nodi · 6864 archi · 13 generi`.
 
 ### 4. `vite.config.js` — CRITICO per GitHub Pages
 GitHub Pages serve i project site da `/<nome-repo>/`. Imposta `base`:
@@ -124,13 +155,13 @@ Standard Node/Vite: `node_modules/`, `dist/`, `.DS_Store`, cache.
 NON ignorare `public/graph.json`, `data/`, `scripts/`.
 
 ### 9. `README.md`
-Documenta tutto (vedi sezioni sotto): setup locale, pipeline dati a due stadi,
+Documenta tutto (vedi sezioni sotto): setup locale, pipeline dati,
 workflow settimanale, gestione artisti nuovi/sconosciuti, nota su `base`.
 
 ## Setup locale (da mettere nel README)
 ```bash
 npm install
-python3 scripts/build_graph.py --input data/spotify_archive_genres.json --output public/graph.json
+python3 scripts/build_graph.py --output public/graph.json
 npm run dev
 ```
 La mappa funziona SOLO via dev server o build servita: usa `fetch` su `graph.json`,
@@ -155,10 +186,8 @@ python3 scripts/enrich_genres.py \
 #    data/genre_overrides.json  (formato: {"Nome Artista": ["genere1","genere2"]})
 #    e ri-esegui lo step 2. I generi validi sono in genre_map.TAXONOMY.
 
-# 4. rigenera il grafo
-python3 scripts/build_graph.py \
-    --input data/spotify_archive_genres.json \
-    --output public/graph.json
+# 4. rigenera il grafo (auto-seleziona l'archivio più ricco disponibile)
+python3 scripts/build_graph.py --output public/graph.json
 
 # 5. commit + push -> GitHub Actions ripubblica da solo
 git add -A && git commit -m "update: New Release #NN" && git push
@@ -184,10 +213,10 @@ electronic, downtempo, world, alt, classical`
 
 ## Verifiche finali prima di considerare il task completo
 - [ ] `npm install` senza errori.
-- [ ] `python3 scripts/build_graph.py ...` stampa `468 nodi · 3391 archi · 12 generi`.
+- [ ] `python3 scripts/build_graph.py ...` stampa `797 nodi · 6864 archi · 13 generi`.
 - [ ] `npm run dev` mostra la mappa: nodi colorati per genere, legenda-filtro a
       sinistra, ricerca, pannello di dettaglio al click, zoom/pan/drag.
-- [ ] In console `graph.json` viene caricato (468 nodi).
+- [ ] In console `graph.json` viene caricato (797 nodi).
 - [ ] La legenda NON intercetta i click sui nodi sottostanti (il componente lo
       gestisce via `pointer-events`; verifica dopo il build).
 - [ ] `npm run build` produce `dist/` senza errori; `dist/index.html` referenzia
@@ -200,6 +229,6 @@ electronic, downtempo, world, alt, classical`
 - Nodi = brani; archi = artista condiviso (forte) + genere primario condiviso (medio)
   + genere secondario condiviso (leggero) + stessa playlist (debole).
 - Colore = `genre` primario; una forza radiale separa i generi nello spazio.
-- Stato attuale: 468 brani unici, 3391 archi, 12 generi (playlist #12–#32).
+- Stato attuale: 797 brani unici, 6864 archi, 13 generi (playlist #1–#36, updated 2026-06-18).
 - Il default export fa il `fetch` di `graph.json`, mostra un loader, poi monta la
   mappa. Nessuna prop da passare. Unico punto da toccare se cambi il path del JSON.
