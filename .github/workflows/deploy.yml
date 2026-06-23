@@ -30,13 +30,18 @@ jobs:
         with:
           python-version: '3.x'
 
-      # Rigenera public/graph.json dall'archivio arricchito.
+      # Rigenera public/graph.json dall'archivio.
       # build_graph.py usa solo la stdlib: nessuna dipendenza pip. Senza --input
-      # sceglie da solo l'archivio con audio (spotify_archive_features.json) se
-      # presente, altrimenti quello con i soli generi. enrich_audio.py NON gira
+      # auto-seleziona il primo archivio esistente, dal più ricco al più povero:
+      # enriched (sorgente live) → features → genres. enrich_audio.py NON gira
       # in CI: i dati audio sono committati a parte.
       - name: Generate graph.json
         run: python scripts/build_graph.py --output public/graph.json
+
+      # Guardia anti-drift: i conteggi nella riga "Current state:" del README
+      # devono combaciare con graph.json appena rigenerato, altrimenti stop.
+      - name: Check docs are in sync with graph.json
+        run: python scripts/check_docs.py
 
       - name: Setup Node
         uses: actions/setup-node@v4

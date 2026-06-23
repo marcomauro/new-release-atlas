@@ -13,8 +13,8 @@ const MOOD_ROWS = [
 ];
 
 // Slider per i pesi dei legami + varieta' + (opzionale) mood. Condiviso tra il
-// pannello del brano e la chat. Gerarchia default: genere primario > artista >
-// genere secondario > stessa playlist.
+// pannello del brano e la chat. Gerarchia default: artista > genere primario >
+// genere secondario > stessa playlist (= graph.json meta.linkWeights).
 export default function WeightControls({ weights, setWeights, randomness, setRandomness, mood, setMood }) {
   const rows = [
     ["primary", "Primary genre"],

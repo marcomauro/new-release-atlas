@@ -48,9 +48,6 @@ export function isSpotifyLoggedIn() {
   const t = readTokens();
   return !!(t && t.refresh_token);
 }
-export function logoutSpotify() {
-  localStorage.removeItem(LS_TOKENS);
-}
 
 // ---- pending play (sopravvive al redirect di login) ----
 export function setPendingPlay(ids) {
@@ -210,9 +207,6 @@ export async function spotifyPause() {
 }
 export async function spotifyResume() {
   return apiCall("/me/player/play", "PUT");
-}
-export async function spotifyCurrentlyPlaying() {
-  return apiCall("/me/player/currently-playing");
 }
 
 // Stato completo del player: device, progress_ms, item (con album.images +

@@ -1,26 +1,35 @@
 #!/usr/bin/env python3
 """
-build_graph.py — costruisce public/graph.json a partire dall'archivio
-arricchito con i generi (spotify_archive_genres.json).
+build_graph.py — costruisce public/graph.json dall'archivio musicale.
 
 Uso:
-    python scripts/build_graph.py \
-        --input data/spotify_archive_genres.json \
-        --output public/graph.json
+    python scripts/build_graph.py [--input <archivio>] --output public/graph.json
 
-Lo script è idempotente: rigenera l'intero grafo dallo stato corrente
-dell'archivio. Per il workflow settimanale basta aggiornare l'archivio
-arricchito e rilanciare questo script.
+Senza --input auto-seleziona il PRIMO archivio esistente, dal più ricco:
+    1. data/spotify_archive_enriched.json   (AI: subgenres/mood/bpm — sorgente live)
+    2. data/spotify_archive_features.json   (audio web: bpm/year/popularity/...)
+    3. data/spotify_archive_genres.json     (solo generi)
+È quello che fa anche la CI. I campi non presenti nell'archivio scelto
+(audio, mood, subgenres…) vengono semplicemente omessi (degradazione morbida).
+
+Lo script è idempotente (solo stdlib): rigenera l'intero grafo dallo stato
+corrente dell'archivio. Per aggiornare la mappa basta estendere l'archivio
+e rilanciarlo.
 
 Schema di output:
     {
-      "nodes": [{id,title,artist,artists,url,duration,genres,genre,community,playlists,degree,
-                 era,era_norm,genre_count,bridging,artist_track_count,duration_sec,
-                 is_bridge?,is_remix?,remixer?,is_instrumental?,is_live?,is_interlude?,   # derivati (Fase 1)
-                 bpm?,key?,mode?,camelot?,energy?,valence?,year?}],                        # audio (enrich_audio.py)
-      "links": [{source,target,weight}],
-      "genres": [genre, ...],          # ordinati per frequenza (= indice cluster)
-      "meta":   {unique_tracks,edges,genres}
+      "nodes": [{id,title,artist,artists,url,duration,duration_sec,
+                 genres,genre,community,playlists,degree,
+                 era,era_norm,genre_count,bridging,artist_track_count,
+                 is_bridge?,is_remix?,remixer?,is_instrumental?,is_live?,is_interlude?,  # derivati dal titolo
+                 mood?,subgenres?,bpm_source?,                                           # archivio AI-arricchito
+                 bpm?,key?,mode?,camelot?,energy?,valence?,                              # audio
+                 danceability?,acousticness?,instrumentalness?,year?,popularity?}],
+      # ogni arco tiene i COMPONENTI separati in c=[artista,primario,secondario,playlist]
+      # così il front-end può ri-pesare al volo; weight = peso default pre-calcolato.
+      "links": [{source,target,weight,c}],
+      "genres": [genre, ...],   # ordinati per frequenza (= indice cluster/community)
+      "meta":   {unique_tracks,edges,genres,playlists,playlist_range,updated,linkWeights}
     }
 I campi con "?" sono presenti solo quando veri/disponibili (degradazione morbida).
 """
@@ -267,7 +276,8 @@ def build(archive: dict, seed: int = 7) -> dict:
 
 def main():
     ap = argparse.ArgumentParser()
-    # se non specificato: usa l'archivio con audio se esiste, altrimenti i generi
+    # se non specificato: auto-seleziona il primo archivio esistente, dal più
+    # ricco al più povero (enriched → features → genres).
     ap.add_argument("--input", default=None)
     ap.add_argument("--output", default="public/graph.json")
     ap.add_argument("--seed", type=int, default=7)
