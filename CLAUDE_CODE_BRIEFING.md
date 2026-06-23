@@ -3,7 +3,7 @@
 > **Nota (allineamento).** Questo briefing era l'artefatto di bootstrap iniziale.
 > I conteggi e la descrizione di pipeline/schema qui sotto sono stati **riallineati
 > allo stato reale** del progetto — fonte di verità: `public/graph.json`
-> (#1–#36 · 797 tracce · 6864 archi · 13 generi, updated 2026-06-18). Il file
+> (#1–#36 · 796 tracce · 6862 archi · 12 generi, updated 2026-06-18). Il file
 > `prompt.md` resta invece il record storico originale, non aggiornato.
 
 ## Obiettivo
@@ -60,14 +60,14 @@ Il blocco `meta` riporta `unique_tracks`, `edges`, `genres`, `playlists`,
    com'è; non riscrivere la logica di visualizzazione.
 3. `build_graph.py` — trasforma l'archivio arricchito in `graph.json`. Validato.
 4. `enrich_genres.py` — aggiunge i generi all'archivio grezzo. Validato.
-5. `genre_map.py` — modulo con la mappa artista→generi (≈529 artisti) e le funzioni
+5. `genre_map.py` — modulo con la mappa artista→generi (≈541 artisti) e le funzioni
    di supporto. È una DIPENDENZA di `enrich_genres.py`: devono stare nella stessa
    cartella `scripts/`.
 6. `spotify_archive.json` — archivio GREZZO, fonte di verità mantenuta a mano:
    ogni settimana l'utente vi appende le nuove playlist (via Spotify MCP). Mettilo
    in `data/`; da qui parte la pipeline di arricchimento. Il grafo live è oggi
    prodotto dall'archivio AI-arricchito `spotify_archive_enriched.json`
-   (#1–#36, 36 playlist) → **797 nodi · 6864 archi · 13 generi**.
+   (#1–#36, 36 playlist) → **796 nodi · 6862 archi · 12 generi**.
    Nota: i sorgenti della pipeline classica (RAW/genres/features) sono al momento
    fermi a #12–#32 · 471 tracce (vedi "Stato dati / TODO" nel README).
 
@@ -78,7 +78,7 @@ new-release-atlas/
 ├── data/
 │   ├── spotify_archive.json          # archivio GREZZO (fonte di verità, mantenuto a mano)
 │   ├── spotify_archive_genres.json   # archivio arricchito (input di build_graph)
-│   └── genre_overrides.json          # (opzionale) artista→generi extra; vedi sotto
+│   └── genre_overrides.json          # (opzionale, NON committato) artista→generi extra; vedi sotto
 ├── public/
 │   └── graph.json                    # GENERATO da build_graph.py
 ├── scripts/
@@ -114,7 +114,7 @@ new-release-atlas/
 python3 scripts/build_graph.py --output public/graph.json
 ```
 Senza `--input`, `build_graph.py` auto-seleziona l'archivio più ricco (oggi
-`spotify_archive_enriched.json`, #1–#36). Output atteso: `797 nodi · 6864 archi · 13 generi`.
+`spotify_archive_enriched.json`, #1–#36). Output atteso: `796 nodi · 6862 archi · 12 generi`.
 
 ### 4. `vite.config.js` — CRITICO per GitHub Pages
 GitHub Pages serve i project site da `/<nome-repo>/`. Imposta `base`:
@@ -213,10 +213,10 @@ electronic, downtempo, world, alt, classical`
 
 ## Verifiche finali prima di considerare il task completo
 - [ ] `npm install` senza errori.
-- [ ] `python3 scripts/build_graph.py ...` stampa `797 nodi · 6864 archi · 13 generi`.
+- [ ] `python3 scripts/build_graph.py ...` stampa `796 nodi · 6862 archi · 12 generi`.
 - [ ] `npm run dev` mostra la mappa: nodi colorati per genere, legenda-filtro a
       sinistra, ricerca, pannello di dettaglio al click, zoom/pan/drag.
-- [ ] In console `graph.json` viene caricato (797 nodi).
+- [ ] In console `graph.json` viene caricato (796 nodi).
 - [ ] La legenda NON intercetta i click sui nodi sottostanti (il componente lo
       gestisce via `pointer-events`; verifica dopo il build).
 - [ ] `npm run build` produce `dist/` senza errori; `dist/index.html` referenzia
@@ -229,6 +229,6 @@ electronic, downtempo, world, alt, classical`
 - Nodi = brani; archi = artista condiviso (forte) + genere primario condiviso (medio)
   + genere secondario condiviso (leggero) + stessa playlist (debole).
 - Colore = `genre` primario; una forza radiale separa i generi nello spazio.
-- Stato attuale: 797 brani unici, 6864 archi, 13 generi (playlist #1–#36, updated 2026-06-18).
+- Stato attuale: 796 brani unici, 6862 archi, 12 generi (playlist #1–#36, updated 2026-06-18).
 - Il default export fa il `fetch` di `graph.json`, mostra un loader, poi monta la
   mappa. Nessuna prop da passare. Unico punto da toccare se cambi il path del JSON.

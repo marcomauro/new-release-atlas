@@ -22,7 +22,7 @@ Keeping them in sync is optional (archive tidiness only).
 | Archive | Content | Role |
 |---|---|---|
 | `spotify_archive.json` · `_genres` · `_features` | #12–#32 (frozen) | legacy / fallback — **not** the live source |
-| **`spotify_archive_enriched.json`** | #1–#34 | **live source** (what `build_graph` picks) |
+| **`spotify_archive_enriched.json`** | #1–#36 | **live source** (what `build_graph` picks) |
 
 ---
 

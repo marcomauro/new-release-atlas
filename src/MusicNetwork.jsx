@@ -5,7 +5,7 @@ import PlayerBar, { preloadSpotifyApi } from "./PlayerBar.jsx";
 import {
   completeSpotifyAuthIfNeeded, isSpotifyLoggedIn, loginSpotify, setPendingPlay, takePendingPlay,
 } from "./spotifyConnect.js";
-import { buildPlaylist, buildFromSeed, DEFAULT_LINK_WEIGHTS, DEFAULT_RANDOMNESS, DEFAULT_MOOD } from "./playlist.js";
+import { buildPlaylist, buildFromSeed, GENRE_LABEL, DEFAULT_LINK_WEIGHTS, DEFAULT_RANDOMNESS, DEFAULT_MOOD } from "./playlist.js";
 import WeightControls from "./WeightControls.jsx";
 import {
   SPOTLISTR_URL, playlistLinks, playlistCsv, exportFilename, copyText, downloadFile,
@@ -37,21 +37,7 @@ const GENRE_COLOR = {
   "classical": "#7a8aa0",
   "unknown": "#b8b0a4",
 };
-const GENRE_LABEL = {
-  "neo-soul": "Neo-Soul / R&B",
-  "electronic": "Electronic",
-  "jazz": "Jazz",
-  "alt": "Alt / Indie",
-  "uk-jazz": "UK Jazz",
-  "hip-hop": "Hip-Hop",
-  "world": "World / Afro / Latin",
-  "soulful-house": "Soulful House",
-  "soul-funk": "Soul / Funk",
-  "broken-beat": "Broken Beat",
-  "downtempo": "Downtempo",
-  "classical": "Classical / Score",
-  "unknown": "Unclassified",
-};
+// GENRE_LABEL è importato da playlist.js (unica fonte di verità).
 
 const INK = "#2b2724";
 const PAPER = "#f4f1ea";
