@@ -2,6 +2,7 @@ import React from "react";
 import { DEFAULT_LINK_WEIGHTS, DEFAULT_RANDOMNESS, DEFAULT_MOOD } from "./playlist.js";
 
 const INK = "#2b2724";
+const PAPER = "#f4f1ea";
 const MUTED = "#9a938a";
 
 const MOOD_ROWS = [
@@ -15,7 +16,7 @@ const MOOD_ROWS = [
 // Slider per i pesi dei legami + varieta' + (opzionale) mood. Condiviso tra il
 // pannello del brano e la chat. Gerarchia default: genere primario > artista >
 // genere secondario > stessa playlist.
-export default function WeightControls({ weights, setWeights, randomness, setRandomness, mood, setMood }) {
+export default function WeightControls({ weights, setWeights, randomness, setRandomness, mood, setMood, liveRegen, setLiveRegen, onRegenerate, canRegenerate }) {
   const rows = [
     ["primary", "Primary genre"],
     ["artist", "Artist"],
@@ -63,6 +64,40 @@ export default function WeightControls({ weights, setWeights, randomness, setRan
                    onChange={(v) => setTarget(k, v)} decimals={2} />
             ))}
           </div>
+        </div>
+      )}
+
+      {/* Modalità di aggiornamento: di default la playlist si rigenera solo con
+          "Regenerate"; il toggle "live" ripristina il comportamento legacy
+          (rigenera al volo a ogni modifica dei parametri). */}
+      {(setLiveRegen || onRegenerate) && (
+        <div style={{
+          marginTop: 10, borderTop: `1px solid rgba(154,147,138,0.25)`, paddingTop: 8,
+          display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8,
+        }}>
+          {setLiveRegen ? (
+            <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, color: INK, cursor: "pointer" }}>
+              <input type="checkbox" checked={!!liveRegen} onChange={(e) => setLiveRegen(e.target.checked)} />
+              Live update (legacy)
+            </label>
+          ) : <span />}
+          {!liveRegen && onRegenerate && (
+            <button
+              onClick={onRegenerate}
+              disabled={!canRegenerate}
+              title={canRegenerate ? "Rebuild the active playlist with the current parameters" : "Generate a playlist first"}
+              style={{
+                fontFamily: "inherit", fontSize: 12, fontWeight: 500,
+                color: canRegenerate ? PAPER : MUTED,
+                background: canRegenerate ? INK : "transparent",
+                border: canRegenerate ? "none" : `1px solid ${MUTED}`,
+                borderRadius: 4, padding: "6px 14px",
+                cursor: canRegenerate ? "pointer" : "default",
+              }}
+            >
+              ↻ Regenerate
+            </button>
+          )}
         </div>
       )}
     </div>

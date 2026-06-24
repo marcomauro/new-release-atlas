@@ -190,6 +190,15 @@ function MusicNetworkInner() {
   const [randomness, setRandomness] = useState(DEFAULT_RANDOMNESS);
   // mood/atmosfera per la generazione (influence 0 => ignorato, come prima)
   const [mood, setMood] = useState(() => ({ influence: DEFAULT_MOOD.influence, target: { ...DEFAULT_MOOD.target } }));
+  // Comportamento al cambio dei parametri (pesi/varietà/mood) con una playlist
+  // attiva. Default OFF: la playlist si rigenera SOLO premendo "Regenerate".
+  // ON = comportamento "legacy": rigenera al volo a ogni modifica. Persistito.
+  const [liveRegen, setLiveRegen] = useState(() => {
+    try { return localStorage.getItem("nra_live_regen") === "1"; } catch { return false; }
+  });
+  useEffect(() => {
+    try { localStorage.setItem("nra_live_regen", liveRegen ? "1" : "0"); } catch {}
+  }, [liveRegen]);
   const [weightsOpen, setWeightsOpen] = useState(false);
   // sezione mood/audio del pannello: parte chiusa ad ogni nuova selezione
   const [moodOpen, setMoodOpen] = useState(false);
@@ -661,34 +670,39 @@ function MusicNetworkInner() {
 
   const clearPlaylist = useCallback(() => setPlaylist(null), []);
 
-  // Se cambio i parametri (pesi / varietà / mood) con una playlist attiva,
-  // rigenero a partire dalla stessa richiesta (testo chat o brano-seed) con i
-  // nuovi valori. Debounce: non ricalcola a ogni scatto dello slider, ma quando
-  // ci si ferma. Aggiorna anche l'ultima risposta in chat per restare coerente.
-  useEffect(() => {
+  // Rigenera la playlist attiva a partire dalla stessa richiesta (testo chat o
+  // brano-seed) con i valori CORRENTI di pesi/varietà/mood. Aggiorna anche
+  // l'ultima risposta in chat per restare coerente. È il "Regenerate" manuale.
+  const regenerateFromLast = useCallback(() => {
     const lg = lastGenRef.current;
     if (!playlist || !lg) return;
-    const t = setTimeout(() => {
-      const res =
-        lg.kind === "seed"
-          ? buildFromSeed(GRAPH, lg.node, lg.size || 18, weights, randomness, mood)
-          : buildPlaylist(GRAPH, lg.text, weights, randomness, mood);
-      if (!res.ok || !res.ids.length) return;
-      setPlaylist(res.ids);
-      setMessages((msgs) => {
-        for (let i = msgs.length - 1; i >= 0; i--) {
-          if (msgs[i].role === "assistant") {
-            const copy = msgs.slice();
-            copy[i] = { ...copy[i], res };
-            return copy;
-          }
+    const res =
+      lg.kind === "seed"
+        ? buildFromSeed(GRAPH, lg.node, lg.size || 18, weights, randomness, mood)
+        : buildPlaylist(GRAPH, lg.text, weights, randomness, mood);
+    if (!res.ok || !res.ids.length) return;
+    setPlaylist(res.ids);
+    setMessages((msgs) => {
+      for (let i = msgs.length - 1; i >= 0; i--) {
+        if (msgs[i].role === "assistant") {
+          const copy = msgs.slice();
+          copy[i] = { ...copy[i], res };
+          return copy;
         }
-        return msgs;
-      });
-    }, 400);
+      }
+      return msgs;
+    });
+  }, [playlist, weights, randomness, mood]);
+
+  // Comportamento "legacy" (liveRegen ON): al cambio dei parametri rigenera al
+  // volo, con debounce (non ad ogni scatto dello slider ma quando ci si ferma).
+  // Default OFF: non fa nulla, la rigenerazione avviene solo con "Regenerate".
+  useEffect(() => {
+    if (!liveRegen) return;
+    const t = setTimeout(regenerateFromLast, 400);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [weights, randomness, mood]);
+  }, [weights, randomness, mood, liveRegen]);
 
   // --- export "senza setup": link Spotify esatti + CSV, poi Spotlistr/Spotify ---
   const sysMsg = useCallback((text, link, linkLabel) => {
@@ -1021,8 +1035,8 @@ function MusicNetworkInner() {
             boxSizing: "border-box",
             maxHeight: isMobile ? "70dvh" : undefined,
             overflowY: isMobile ? "auto" : undefined,
-            background: "rgba(255,255,255,0.96)",
-            backdropFilter: "blur(8px)",
+            background: "rgba(255,255,255,0.72)",
+            backdropFilter: "blur(10px)",
             border: `1px solid ${MUTED}`,
             borderRadius: isMobile ? "14px 14px 0 0" : 3,
             padding: isMobile ? "18px 20px 0" : "20px 22px",
@@ -1221,6 +1235,8 @@ function MusicNetworkInner() {
                 weights={weights} setWeights={setWeights}
                 randomness={randomness} setRandomness={setRandomness}
                 mood={mood} setMood={setMood}
+                liveRegen={liveRegen} setLiveRegen={setLiveRegen}
+                onRegenerate={regenerateFromLast} canRegenerate={!!playlist}
               />
             </div>
           )}
@@ -1292,6 +1308,10 @@ function MusicNetworkInner() {
         setRandomness={setRandomness}
         mood={mood}
         setMood={setMood}
+        liveRegen={liveRegen}
+        setLiveRegen={setLiveRegen}
+        onRegenerate={regenerateFromLast}
+        canRegenerate={!!playlist}
       />
 
       {/* Ascolto continuo del percorso: mini-player persistente che incatena i brani */}
