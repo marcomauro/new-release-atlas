@@ -11,13 +11,22 @@
           }
    ---------------------------------------------------------------- */
 
+// Etichette dei generi — UNICA fonte di verità (anche MusicNetwork le importa
+// da qui via `export { GENRE_LABEL }` in fondo al file).
 const GENRE_LABEL = {
-  "neo-soul": "Neo-Soul/R&B", "electronic": "Electronic", "jazz": "Jazz",
-  "alt": "Alt/Indie", "uk-jazz": "UK Jazz", "hip-hop": "Hip-Hop",
-  "world": "World/Afro/Latin", "soulful-house": "Soulful House",
-  "soul-funk": "Soul/Funk", "broken-beat": "Broken Beat",
+  "neo-soul": "Neo-Soul / R&B",
+  "electronic": "Electronic",
+  "jazz": "Jazz",
+  "alt": "Alt / Indie",
+  "uk-jazz": "UK Jazz",
+  "hip-hop": "Hip-Hop",
+  "world": "World / Afro / Latin",
+  "soulful-house": "Soulful House",
+  "soul-funk": "Soul / Funk",
+  "broken-beat": "Broken Beat",
   "downtempo": "Downtempo",
-  "classical": "Classical/Score", "unknown": "Unclassified",
+  "classical": "Classical / Score",
+  "unknown": "Unclassified",
 };
 
 // sinonimi/parole-chiave -> genere (substring, normalizzati)
@@ -175,9 +184,12 @@ function findSeed(msg, graph, { explicit, mood }) {
   return null;
 }
 
-// Pesi default dei legami (gerarchia: genere primario > artista > genere
-// secondario > stessa playlist). Sovrascrivibili a runtime dall'utente.
-export const DEFAULT_LINK_WEIGHTS = { primary: 3.0, artist: 2.0, secondary: 1.0, playlist: 0.4 };
+// Pesi default dei legami — gerarchia ORIGINALE con cui è disegnato il grafo:
+// artista condiviso > genere primario > genere secondario > stessa playlist.
+// DEVONO combaciare con build_graph.py / graph.json `meta.linkWeights`: sono il
+// fallback se `meta.linkWeights` manca E i valori a cui torna il pulsante "reset"
+// dei cursori (così reset == stato iniziale del grafo). Sovrascrivibili a runtime.
+export const DEFAULT_LINK_WEIGHTS = { primary: 1.2, artist: 3.0, secondary: 0.6, playlist: 0.3 };
 
 // peso effettivo di un arco dati i componenti c=[artista,primario,secondario,playlist]
 // e i pesi scelti. Fallback al peso pre-calcolato se mancano i componenti.
