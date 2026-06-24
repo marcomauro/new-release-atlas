@@ -17,6 +17,7 @@ export default function Chat({
   open, setOpen, messages, value, onChange, onSubmit, onPick, onPlay,
   onExport, genreColor, bottomOffset = 0,
   weights, setWeights, randomness, setRandomness, mood, setMood,
+  liveRegen, setLiveRegen, onRegenerate, canRegenerate,
 }) {
   const bodyRef = useRef(null);
   const [showWeights, setShowWeights] = useState(false);
@@ -62,8 +63,8 @@ export default function Chat({
         // mobile non si riesce più a chiudere i pesi. La lista messaggi si comprime.
         maxHeight: `calc(100dvh - ${32 + bottomOffset}px - env(safe-area-inset-bottom))`,
         fontFamily: font,
-        background: "rgba(255,255,255,0.95)",
-        backdropFilter: "blur(8px)",
+        background: "rgba(255,255,255,0.72)",
+        backdropFilter: "blur(10px)",
         border: `1px solid ${MUTED}`, borderRadius: 8,
         boxShadow: "0 12px 40px rgba(0,0,0,0.16)",
         display: "flex", flexDirection: "column", overflow: "hidden",
@@ -99,6 +100,8 @@ export default function Chat({
             weights={weights} setWeights={setWeights}
             randomness={randomness} setRandomness={setRandomness}
             mood={mood} setMood={setMood}
+            liveRegen={liveRegen} setLiveRegen={setLiveRegen}
+            onRegenerate={onRegenerate} canRegenerate={canRegenerate}
           />
         </div>
       )}
