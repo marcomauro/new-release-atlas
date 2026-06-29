@@ -27,7 +27,7 @@ def main() -> int:
 
     m = re.search(
         r"Current state:\s*\*\*(\d+)\s+tracks\s*·\s*(\d+)\s+edges\s*·\s*(\d+)\s+genres\*\*"
-        r"\s*\(playlists\s+(#\d+[–-]#\d+)",
+        r"\s*\(playlists\s+(#\d+[–-]#\d+(?:\s*\+\s*\d+\s+extra)?)",
         readme,
     )
     if not m:
@@ -43,8 +43,8 @@ def main() -> int:
     }
     real = {k: meta.get(k) for k in doc}
 
-    # normalizza il trattino (en-dash vs hyphen) nel range
-    norm = lambda s: str(s).replace("-", "–")
+    # normalizza il range: trattino (en-dash vs hyphen) e spazi multipli
+    norm = lambda s: re.sub(r"\s+", " ", str(s).replace("-", "–")).strip()
     mismatches = [
         (k, doc[k], real[k])
         for k in doc
