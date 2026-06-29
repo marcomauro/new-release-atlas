@@ -4,8 +4,8 @@
     "source_account": "Spotify",
     "generated_at": "2026-05-23T12:27:11.266084",
     "description": "Archivio strutturato delle 'New Release Playlist' di Marco Mauro, da consultare via AI per generare playlist tematiche o effettuare analisi.",
-    "playlist_range": "#1 - #36 (35 New Release + 1 compilation tematica)",
-    "note_on_gaps": "Nessuno: il dataset copre integralmente le playlist da #12 a #35. Le playlist #12 e dalla #18 in poi si chiamano 'New Release Playlist #N', le #13-#17 'New Release Friday #N'.",
+    "playlist_range": "#1 - #36 (36 New Release Playlist consecutive) + 1 extra (#101 '2025 Fav Album Playlist', compilation tematica)",
+    "note_on_gaps": "Nessuno: il dataset copre integralmente le New Release Playlist da #12 a #36. Le #1-#11 e #13-#17 si chiamano 'New Release Friday #N', dalla #12 e #18 in poi 'New Release Playlist #N'. La '2025 Fav Album Playlist' e' una compilation tematica (extra), spostata fuori dalla sequenza NRP al playlist_number 101.",
     "schema_per_track": {
       "playlist_number": "int (numero progressivo della playlist di origine)",
       "playlist_name": "string",
@@ -27,9 +27,9 @@
       "bpm": "int | null (null = non verificabile, mai inventato)",
       "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
     },
-    "total_tracks_with_duplicates": 816,
-    "unique_tracks": 796,
-    "unique_artists": 785,
+    "total_tracks_with_duplicates": 836,
+    "unique_tracks": 816,
+    "unique_artists": 805,
     "top_artists": [
       [
         "Louie Vega",
@@ -56,11 +56,11 @@
         12
       ],
       [
-        "Fatoumata Diawara",
-        11
+        "Charles Webster",
+        12
       ],
       [
-        "Charles Webster",
+        "Fatoumata Diawara",
         11
       ],
       [
@@ -80,15 +80,15 @@
         10
       ],
       [
+        "PJ Morton",
+        10
+      ],
+      [
         "Alfa Mist",
         9
       ],
       [
         "Koralle",
-        9
-      ],
-      [
-        "Sampha",
         9
       ]
     ],
@@ -110,33 +110,32 @@
         "classical"
       ],
       "primary_genre_distribution": {
-        "neo-soul": 104,
-        "electronic": 94,
-        "jazz": 76,
-        "alt": 40,
-        "uk-jazz": 37,
-        "hip-hop": 31,
-        "world": 26,
-        "soulful-house": 25,
-        "soul-funk": 19,
-        "broken-beat": 14,
-        "classical": 4,
-        "unknown": 1
+        "neo-soul": 163,
+        "electronic": 148,
+        "jazz": 118,
+        "alt": 78,
+        "hip-hop": 70,
+        "uk-jazz": 66,
+        "soulful-house": 53,
+        "world": 52,
+        "soul-funk": 33,
+        "broken-beat": 16,
+        "downtempo": 13,
+        "classical": 6
       },
       "genre_presence_any": {
-        "neo-soul": 212,
-        "electronic": 172,
-        "jazz": 154,
-        "alt": 106,
-        "hip-hop": 79,
-        "uk-jazz": 73,
-        "world": 70,
-        "soul-funk": 60,
-        "soulful-house": 38,
-        "broken-beat": 23,
-        "classical": 23,
-        "downtempo": 13,
-        "unknown": 1
+        "neo-soul": 315,
+        "electronic": 281,
+        "jazz": 230,
+        "alt": 168,
+        "hip-hop": 133,
+        "world": 109,
+        "uk-jazz": 108,
+        "soul-funk": 99,
+        "soulful-house": 72,
+        "downtempo": 37,
+        "classical": 32,
+        "broken-beat": 30
       },
       "schema_added": {
         "genres": "list[string] ordered by weight across the track's artists",
@@ -188,7 +187,7 @@
         "title": "Taka",
         "playlists": [
           17,
-          36
+          101
         ]
       },
       {
@@ -196,7 +195,7 @@
         "title": "Amore, vedrai - sampled from \"5 bambole per la luna d'agosto\"",
         "playlists": [
           7,
-          36
+          101
         ]
       },
       {
@@ -204,7 +203,7 @@
         "title": "Chant Song: Bakoena Ba Nkopane",
         "playlists": [
           10,
-          36
+          101
         ]
       },
       {
@@ -212,7 +211,7 @@
         "title": "Gnu Blue",
         "playlists": [
           5,
-          36
+          101
         ]
       },
       {
@@ -220,7 +219,7 @@
         "title": "OYSTRI (feat. Richard Spaven)",
         "playlists": [
           3,
-          36
+          101
         ]
       },
       {
@@ -228,7 +227,7 @@
         "title": "The Look Of Love (feat. T3 & Bilal)",
         "playlists": [
           2,
-          36
+          101
         ]
       },
       {
@@ -236,7 +235,7 @@
         "title": "Time Will Tell",
         "playlists": [
           7,
-          36
+          101
         ]
       },
       {
@@ -244,7 +243,7 @@
         "title": "The Package",
         "playlists": [
           6,
-          36
+          101
         ]
       },
       {
@@ -252,7 +251,7 @@
         "title": "Cold Zone",
         "playlists": [
           3,
-          36
+          101
         ]
       },
       {
@@ -260,7 +259,7 @@
         "title": "Selfish (feat. James Blake)",
         "playlists": [
           5,
-          36
+          101
         ]
       },
       {
@@ -268,7 +267,7 @@
         "title": "The Bottle - Dub with Omar",
         "playlists": [
           4,
-          36
+          101
         ]
       },
       {
@@ -276,7 +275,7 @@
         "title": "Here Comes The Sun",
         "playlists": [
           9,
-          36
+          101
         ]
       }
     ],
@@ -321,7 +320,10 @@
     "extended_at_35": "2026-06-18T20:37:16.374018",
     "extension_note_35": "Playlist #35 (19 brani) aggiunta a giugno 2026 con caratterizzazione esperta completa (genres/genre_primary nella tassonomia a 12 macro-generi, subgenres, mood, mood_parameters, bpm null/estimated). Tutti i 19 brani sono nuovi e unici (nessun duplicato cross-playlist per id).",
     "extended_at_36": "2026-06-18T21:34:10.854768",
-    "extension_note_36": "Playlist #36 '2025 Fav Album Playlist' (compilation tematica, 83 brani) aggiunta a giugno 2026. 71 brani nuovi con caratterizzazione esperta completa; 12 brani gia' presenti nell'archivio riusano la caratterizzazione esistente (duplicati cross-playlist, era = playlist originale). Non e' una 'New Release #N': numerata #36 perche' il grafo usa il numero playlist come era cronologica e per gli archi di co-occorrenza."
+    "extension_note_36": "Playlist #36 '2025 Fav Album Playlist' (compilation tematica, 83 brani) aggiunta a giugno 2026. 71 brani nuovi con caratterizzazione esperta completa; 12 brani gia' presenti nell'archivio riusano la caratterizzazione esistente (duplicati cross-playlist, era = playlist originale). Non e' una 'New Release #N': numerata #36 perche' il grafo usa il numero playlist come era cronologica e per gli archi di co-occorrenza.",
+    "extended_at_36nrp": "2026-06-30T00:38:06.459512",
+    "extension_note_36nrp": "New Release Playlist #36 (20 brani, id 4PMKaFt96XtkVpc4Ufj055) aggiunta a giugno 2026. Tutti i 20 brani sono nuovi e unici (nessun duplicato cross-playlist per id). Caratterizzazione esperta (subgenres/mood/mood_parameters; bpm verified solo dove disponibile, altrimenti null/estimated). genres/genre_primary generati per-artista da genre_map.py + data/genre_overrides.json (24 artisti nuovi classificati nella tassonomia a 12 macro-generi); le caratterizzazioni #1-#35 e dell'extra sono INVARIATE. Nota: PJ Morton ha 2 brani distinti in #36 ('Protect My Heart' pos.1 / 'Mercy' pos.20, id diversi).",
+    "renumber_note_extra1": "La '2025 Fav Album Playlist' (compilation, 83 brani) era erroneamente al playlist_number 36; rinumerata a 101 come 'extra #1' (non e' una New Release #N). I riferimenti in cross_playlist_duplicates sono stati aggiornati 36->101."
   },
   "playlists": [
     {
@@ -28845,6 +28847,777 @@
     },
     {
       "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "spotify_url": "https://open.spotify.com/playlist/4PMKaFt96XtkVpc4Ufj055",
+      "track_count": 20,
+      "tracks": [
+        {
+          "position_in_playlist": 1,
+          "title": "Protect My Heart",
+          "artists": [
+            "PJ Morton"
+          ],
+          "primary_artist": "PJ Morton",
+          "duration": "3:48",
+          "duration_sec": 228,
+          "spotify_track_id": "5ygX4Sq4PM9c8kaPJB660f",
+          "spotify_uri": "spotify:track:5ygX4Sq4PM9c8kaPJB660f",
+          "spotify_url": "https://open.spotify.com/track/5ygX4Sq4PM9c8kaPJB660f",
+          "genres": [
+            "neo-soul"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "neo-soul",
+            "contemporary R&B",
+            "gospel-soul"
+          ],
+          "mood": [
+            "tender",
+            "yearning",
+            "warm"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.55,
+            "danceability": 0.55,
+            "acousticness": 0.35,
+            "instrumentalness": 0.0
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 2,
+          "title": "Breathe",
+          "artists": [
+            "Masego"
+          ],
+          "primary_artist": "Masego",
+          "duration": "3:57",
+          "duration_sec": 237,
+          "spotify_track_id": "28AnZq4Yo21iyneTWGjeUT",
+          "spotify_uri": "spotify:track:28AnZq4Yo21iyneTWGjeUT",
+          "spotify_url": "https://open.spotify.com/track/28AnZq4Yo21iyneTWGjeUT",
+          "genres": [
+            "neo-soul",
+            "jazz"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "alt R&B",
+            "neo-soul",
+            "jazz-soul"
+          ],
+          "mood": [
+            "smooth",
+            "sensual",
+            "laid-back"
+          ],
+          "mood_parameters": {
+            "energy": 0.45,
+            "valence": 0.6,
+            "danceability": 0.6,
+            "acousticness": 0.4,
+            "instrumentalness": 0.0
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 3,
+          "title": "Boogie's in My Soul",
+          "artists": [
+            "Chaka Khan",
+            "Snoop Dogg"
+          ],
+          "primary_artist": "Chaka Khan",
+          "duration": "3:42",
+          "duration_sec": 222,
+          "spotify_track_id": "3auasA1oQjH9hXr5Ux72Sk",
+          "spotify_uri": "spotify:track:3auasA1oQjH9hXr5Ux72Sk",
+          "spotify_url": "https://open.spotify.com/track/3auasA1oQjH9hXr5Ux72Sk",
+          "genres": [
+            "soul-funk",
+            "hip-hop",
+            "neo-soul"
+          ],
+          "genre_primary": "soul-funk",
+          "subgenres": [
+            "funk",
+            "soul-funk",
+            "disco-funk"
+          ],
+          "mood": [
+            "celebratory",
+            "groovy",
+            "playful"
+          ],
+          "mood_parameters": {
+            "energy": 0.75,
+            "valence": 0.85,
+            "danceability": 0.82,
+            "acousticness": 0.1,
+            "instrumentalness": 0.0
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 4,
+          "title": "Rainbow",
+          "artists": [
+            "Gretchen Parlato",
+            "Robert Glasper"
+          ],
+          "primary_artist": "Gretchen Parlato",
+          "duration": "3:46",
+          "duration_sec": 226,
+          "spotify_track_id": "528pHUtcTjp4D3UxouB4CE",
+          "spotify_uri": "spotify:track:528pHUtcTjp4D3UxouB4CE",
+          "spotify_url": "https://open.spotify.com/track/528pHUtcTjp4D3UxouB4CE",
+          "genres": [
+            "jazz",
+            "neo-soul"
+          ],
+          "genre_primary": "jazz",
+          "subgenres": [
+            "jazz",
+            "vocal jazz",
+            "contemporary jazz"
+          ],
+          "mood": [
+            "intimate",
+            "luminous",
+            "reflective"
+          ],
+          "mood_parameters": {
+            "energy": 0.35,
+            "valence": 0.55,
+            "danceability": 0.4,
+            "acousticness": 0.55,
+            "instrumentalness": 0.05
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 5,
+          "title": "Expecting",
+          "artists": [
+            "Candice Hoyes",
+            "Junius Paul",
+            "Makaya McCraven"
+          ],
+          "primary_artist": "Candice Hoyes",
+          "duration": "5:53",
+          "duration_sec": 353,
+          "spotify_track_id": "7xv0LwUvvBq70KdcVdhfgm",
+          "spotify_uri": "spotify:track:7xv0LwUvvBq70KdcVdhfgm",
+          "spotify_url": "https://open.spotify.com/track/7xv0LwUvvBq70KdcVdhfgm",
+          "genres": [
+            "jazz",
+            "uk-jazz"
+          ],
+          "genre_primary": "jazz",
+          "subgenres": [
+            "spiritual jazz",
+            "uk-jazz",
+            "jazz-fusion"
+          ],
+          "mood": [
+            "meditative",
+            "expansive",
+            "hypnotic"
+          ],
+          "mood_parameters": {
+            "energy": 0.45,
+            "valence": 0.5,
+            "danceability": 0.4,
+            "acousticness": 0.4,
+            "instrumentalness": 0.4
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 6,
+          "title": "On Your Mind (feat. Lil Yachty)",
+          "artists": [
+            "FKA twigs",
+            "Lil Yachty"
+          ],
+          "primary_artist": "FKA twigs",
+          "duration": "3:38",
+          "duration_sec": 218,
+          "spotify_track_id": "21C6u4k9di4S7w4JsQS1k7",
+          "spotify_uri": "spotify:track:21C6u4k9di4S7w4JsQS1k7",
+          "spotify_url": "https://open.spotify.com/track/21C6u4k9di4S7w4JsQS1k7",
+          "genres": [
+            "alt",
+            "hip-hop",
+            "neo-soul"
+          ],
+          "genre_primary": "hip-hop",
+          "subgenres": [
+            "alt R&B",
+            "experimental pop",
+            "trap-soul"
+          ],
+          "mood": [
+            "sultry",
+            "hazy",
+            "off-kilter"
+          ],
+          "mood_parameters": {
+            "energy": 0.5,
+            "valence": 0.45,
+            "danceability": 0.6,
+            "acousticness": 0.2,
+            "instrumentalness": 0.0
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 7,
+          "title": "Sapo Mix 1 - Remix 2026",
+          "artists": [
+            "Esteban Sehinkman",
+            "Charles Webster"
+          ],
+          "primary_artist": "Esteban Sehinkman",
+          "duration": "4:50",
+          "duration_sec": 290,
+          "spotify_track_id": "2NtBEW3gEjx0IkqTthtgAS",
+          "spotify_uri": "spotify:track:2NtBEW3gEjx0IkqTthtgAS",
+          "spotify_url": "https://open.spotify.com/track/2NtBEW3gEjx0IkqTthtgAS",
+          "genres": [
+            "soulful-house",
+            "jazz"
+          ],
+          "genre_primary": "soulful-house",
+          "subgenres": [
+            "deep house",
+            "soulful-house",
+            "tech-house"
+          ],
+          "mood": [
+            "hypnotic",
+            "warm",
+            "propulsive"
+          ],
+          "mood_parameters": {
+            "energy": 0.7,
+            "valence": 0.6,
+            "danceability": 0.82,
+            "acousticness": 0.1,
+            "instrumentalness": 0.5
+          },
+          "bpm": 123,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 8,
+          "title": "Finders",
+          "artists": [
+            "Richard Spaven"
+          ],
+          "primary_artist": "Richard Spaven",
+          "duration": "3:49",
+          "duration_sec": 229,
+          "spotify_track_id": "26S1rmY8cE3P6ZaWCNuMzg",
+          "spotify_uri": "spotify:track:26S1rmY8cE3P6ZaWCNuMzg",
+          "spotify_url": "https://open.spotify.com/track/26S1rmY8cE3P6ZaWCNuMzg",
+          "genres": [
+            "uk-jazz",
+            "broken-beat"
+          ],
+          "genre_primary": "uk-jazz",
+          "subgenres": [
+            "uk-jazz",
+            "broken-beat",
+            "jazz-fusion"
+          ],
+          "mood": [
+            "propulsive",
+            "intricate",
+            "kinetic"
+          ],
+          "mood_parameters": {
+            "energy": 0.65,
+            "valence": 0.55,
+            "danceability": 0.6,
+            "acousticness": 0.2,
+            "instrumentalness": 0.55
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 9,
+          "title": "Eating Hooks (Deep Dish Remix) - Mixed",
+          "artists": [
+            "Moderat",
+            "Deep Dish"
+          ],
+          "primary_artist": "Moderat",
+          "duration": "5:37",
+          "duration_sec": 337,
+          "spotify_track_id": "2PYC9rUpTn1s01Bc3kt58v",
+          "spotify_uri": "spotify:track:2PYC9rUpTn1s01Bc3kt58v",
+          "spotify_url": "https://open.spotify.com/track/2PYC9rUpTn1s01Bc3kt58v",
+          "genres": [
+            "electronic",
+            "soulful-house"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "progressive house",
+            "deep house",
+            "electronic"
+          ],
+          "mood": [
+            "brooding",
+            "driving",
+            "hypnotic"
+          ],
+          "mood_parameters": {
+            "energy": 0.7,
+            "valence": 0.4,
+            "danceability": 0.78,
+            "acousticness": 0.05,
+            "instrumentalness": 0.6
+          },
+          "bpm": 122,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 10,
+          "title": "Blood In The Labyrinth",
+          "artists": [
+            "Boards of Canada"
+          ],
+          "primary_artist": "Boards of Canada",
+          "duration": "4:56",
+          "duration_sec": 296,
+          "spotify_track_id": "1sJSQT0OSIAsiMDE7Qs9zj",
+          "spotify_uri": "spotify:track:1sJSQT0OSIAsiMDE7Qs9zj",
+          "spotify_url": "https://open.spotify.com/track/1sJSQT0OSIAsiMDE7Qs9zj",
+          "genres": [
+            "electronic"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "IDM",
+            "downtempo",
+            "ambient electronic"
+          ],
+          "mood": [
+            "eerie",
+            "nostalgic",
+            "dreamlike"
+          ],
+          "mood_parameters": {
+            "energy": 0.35,
+            "valence": 0.35,
+            "danceability": 0.4,
+            "acousticness": 0.25,
+            "instrumentalness": 0.85
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 11,
+          "title": "When the Lights Gone - Blundetto Version",
+          "artists": [
+            "Nostalgia 77",
+            "Blundetto"
+          ],
+          "primary_artist": "Nostalgia 77",
+          "duration": "3:28",
+          "duration_sec": 208,
+          "spotify_track_id": "2KrtLWQI7itG9LBJQSUDkh",
+          "spotify_uri": "spotify:track:2KrtLWQI7itG9LBJQSUDkh",
+          "spotify_url": "https://open.spotify.com/track/2KrtLWQI7itG9LBJQSUDkh",
+          "genres": [
+            "jazz",
+            "downtempo",
+            "soul-funk",
+            "world"
+          ],
+          "genre_primary": "jazz",
+          "subgenres": [
+            "nu-jazz",
+            "downtempo",
+            "dub-soul"
+          ],
+          "mood": [
+            "mellow",
+            "soulful",
+            "languid"
+          ],
+          "mood_parameters": {
+            "energy": 0.4,
+            "valence": 0.55,
+            "danceability": 0.55,
+            "acousticness": 0.35,
+            "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 12,
+          "title": "Let's try",
+          "artists": [
+            "Greg Spero",
+            "Robert \"Sput\" Searight",
+            "MonoNeon"
+          ],
+          "primary_artist": "Greg Spero",
+          "duration": "6:17",
+          "duration_sec": 377,
+          "spotify_track_id": "6Y6ncZAtBwI16AP5541aDr",
+          "spotify_uri": "spotify:track:6Y6ncZAtBwI16AP5541aDr",
+          "spotify_url": "https://open.spotify.com/track/6Y6ncZAtBwI16AP5541aDr",
+          "genres": [
+            "jazz",
+            "electronic",
+            "neo-soul",
+            "soul-funk"
+          ],
+          "genre_primary": "jazz",
+          "subgenres": [
+            "jazz-funk",
+            "fusion",
+            "soul-funk"
+          ],
+          "mood": [
+            "groovy",
+            "playful",
+            "virtuosic"
+          ],
+          "mood_parameters": {
+            "energy": 0.65,
+            "valence": 0.7,
+            "danceability": 0.7,
+            "acousticness": 0.2,
+            "instrumentalness": 0.4
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 13,
+          "title": "I Want Your Love",
+          "artists": [
+            "Prunk",
+            "Riva Starr",
+            "Danny Losito"
+          ],
+          "primary_artist": "Prunk",
+          "duration": "4:01",
+          "duration_sec": 241,
+          "spotify_track_id": "3maBFltdmodeTDz82ZqeLU",
+          "spotify_uri": "spotify:track:3maBFltdmodeTDz82ZqeLU",
+          "spotify_url": "https://open.spotify.com/track/3maBFltdmodeTDz82ZqeLU",
+          "genres": [
+            "soulful-house",
+            "electronic"
+          ],
+          "genre_primary": "soulful-house",
+          "subgenres": [
+            "soulful-house",
+            "deep house",
+            "disco-house"
+          ],
+          "mood": [
+            "uplifting",
+            "warm",
+            "danceable"
+          ],
+          "mood_parameters": {
+            "energy": 0.75,
+            "valence": 0.75,
+            "danceability": 0.85,
+            "acousticness": 0.1,
+            "instrumentalness": 0.3
+          },
+          "bpm": 124,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 14,
+          "title": "Circles",
+          "artists": [
+            "Quinn Oulton"
+          ],
+          "primary_artist": "Quinn Oulton",
+          "duration": "2:35",
+          "duration_sec": 155,
+          "spotify_track_id": "1Y564qo4Kb0LvGnbTqKbk7",
+          "spotify_uri": "spotify:track:1Y564qo4Kb0LvGnbTqKbk7",
+          "spotify_url": "https://open.spotify.com/track/1Y564qo4Kb0LvGnbTqKbk7",
+          "genres": [
+            "uk-jazz",
+            "neo-soul"
+          ],
+          "genre_primary": "uk-jazz",
+          "subgenres": [
+            "alt R&B",
+            "jazz-pop",
+            "neo-soul"
+          ],
+          "mood": [
+            "wistful",
+            "intimate",
+            "melancholic"
+          ],
+          "mood_parameters": {
+            "energy": 0.4,
+            "valence": 0.4,
+            "danceability": 0.5,
+            "acousticness": 0.4,
+            "instrumentalness": 0.1
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 15,
+          "title": "I See You Baby (feat. Gramma Funk) - DJ BORING Remix",
+          "artists": [
+            "Groove Armada",
+            "DJ BORING",
+            "Gramma Funk"
+          ],
+          "primary_artist": "Groove Armada",
+          "duration": "5:37",
+          "duration_sec": 337,
+          "spotify_track_id": "3RaOSNfKdHUMfrbBpzcnJ6",
+          "spotify_uri": "spotify:track:3RaOSNfKdHUMfrbBpzcnJ6",
+          "spotify_url": "https://open.spotify.com/track/3RaOSNfKdHUMfrbBpzcnJ6",
+          "genres": [
+            "electronic",
+            "soulful-house",
+            "soul-funk"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "house",
+            "deep house",
+            "disco-house"
+          ],
+          "mood": [
+            "groovy",
+            "hypnotic",
+            "feel-good"
+          ],
+          "mood_parameters": {
+            "energy": 0.7,
+            "valence": 0.7,
+            "danceability": 0.85,
+            "acousticness": 0.1,
+            "instrumentalness": 0.3
+          },
+          "bpm": 124,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 16,
+          "title": "Ogun Nilê - Refix",
+          "artists": [
+            "BaianaSystem",
+            "Seun Kuti",
+            "SekoBass"
+          ],
+          "primary_artist": "BaianaSystem",
+          "duration": "3:29",
+          "duration_sec": 209,
+          "spotify_track_id": "2290TwgLEr8TXYWu2Hu9Sy",
+          "spotify_uri": "spotify:track:2290TwgLEr8TXYWu2Hu9Sy",
+          "spotify_url": "https://open.spotify.com/track/2290TwgLEr8TXYWu2Hu9Sy",
+          "genres": [
+            "world"
+          ],
+          "genre_primary": "world",
+          "subgenres": [
+            "afrobeat",
+            "world",
+            "afro-funk"
+          ],
+          "mood": [
+            "fiery",
+            "defiant",
+            "percussive"
+          ],
+          "mood_parameters": {
+            "energy": 0.8,
+            "valence": 0.6,
+            "danceability": 0.75,
+            "acousticness": 0.15,
+            "instrumentalness": 0.2
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 17,
+          "title": "La Luna (feat. MILLE)",
+          "artists": [
+            "Hal Quartièr",
+            "MILLE"
+          ],
+          "primary_artist": "Hal Quartièr",
+          "duration": "2:58",
+          "duration_sec": 178,
+          "spotify_track_id": "08TK64x0nlOVAtxACgnhMw",
+          "spotify_uri": "spotify:track:08TK64x0nlOVAtxACgnhMw",
+          "spotify_url": "https://open.spotify.com/track/08TK64x0nlOVAtxACgnhMw",
+          "genres": [
+            "electronic",
+            "alt"
+          ],
+          "genre_primary": "electronic",
+          "subgenres": [
+            "nu-disco",
+            "french touch",
+            "electronic"
+          ],
+          "mood": [
+            "breezy",
+            "playful",
+            "sunny"
+          ],
+          "mood_parameters": {
+            "energy": 0.65,
+            "valence": 0.75,
+            "danceability": 0.75,
+            "acousticness": 0.15,
+            "instrumentalness": 0.3
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 18,
+          "title": "Nobody Speak Part 2",
+          "artists": [
+            "DJ Shadow",
+            "Run The Jewels",
+            "Denzel Curry",
+            "TiaCorine"
+          ],
+          "primary_artist": "DJ Shadow",
+          "duration": "2:08",
+          "duration_sec": 128,
+          "spotify_track_id": "1mCBdy88f3dI6QBTOhnv13",
+          "spotify_uri": "spotify:track:1mCBdy88f3dI6QBTOhnv13",
+          "spotify_url": "https://open.spotify.com/track/1mCBdy88f3dI6QBTOhnv13",
+          "genres": [
+            "hip-hop",
+            "electronic"
+          ],
+          "genre_primary": "hip-hop",
+          "subgenres": [
+            "hip-hop",
+            "instrumental hip-hop",
+            "trip-hop"
+          ],
+          "mood": [
+            "menacing",
+            "punchy",
+            "cinematic"
+          ],
+          "mood_parameters": {
+            "energy": 0.75,
+            "valence": 0.45,
+            "danceability": 0.6,
+            "acousticness": 0.1,
+            "instrumentalness": 0.05
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 19,
+          "title": "Roots, Rock, Reggae - Live At The Hammersmith Odeon, London, UK - June, 1976",
+          "artists": [
+            "Bob Marley & The Wailers"
+          ],
+          "primary_artist": "Bob Marley & The Wailers",
+          "duration": "5:22",
+          "duration_sec": 322,
+          "spotify_track_id": "5f08TjZ0NqmPOO0KSMXLtw",
+          "spotify_uri": "spotify:track:5f08TjZ0NqmPOO0KSMXLtw",
+          "spotify_url": "https://open.spotify.com/track/5f08TjZ0NqmPOO0KSMXLtw",
+          "genres": [
+            "world"
+          ],
+          "genre_primary": "world",
+          "subgenres": [
+            "reggae",
+            "roots reggae",
+            "live"
+          ],
+          "mood": [
+            "uplifting",
+            "warm",
+            "communal"
+          ],
+          "mood_parameters": {
+            "energy": 0.6,
+            "valence": 0.8,
+            "danceability": 0.7,
+            "acousticness": 0.3,
+            "instrumentalness": 0.0
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        },
+        {
+          "position_in_playlist": 20,
+          "title": "Mercy",
+          "artists": [
+            "PJ Morton"
+          ],
+          "primary_artist": "PJ Morton",
+          "duration": "2:27",
+          "duration_sec": 147,
+          "spotify_track_id": "2qqbj6LiDSv6OHRyaELwVG",
+          "spotify_uri": "spotify:track:2qqbj6LiDSv6OHRyaELwVG",
+          "spotify_url": "https://open.spotify.com/track/2qqbj6LiDSv6OHRyaELwVG",
+          "genres": [
+            "neo-soul"
+          ],
+          "genre_primary": "neo-soul",
+          "subgenres": [
+            "neo-soul",
+            "gospel-soul",
+            "contemporary R&B"
+          ],
+          "mood": [
+            "soulful",
+            "heartfelt",
+            "intimate"
+          ],
+          "mood_parameters": {
+            "energy": 0.45,
+            "valence": 0.6,
+            "danceability": 0.55,
+            "acousticness": 0.4,
+            "instrumentalness": 0.0
+          },
+          "bpm": null,
+          "bpm_source": "estimated"
+        }
+      ]
+    },
+    {
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "spotify_url": "https://open.spotify.com/playlist/4L97j3CR3qY62adGJexylI",
@@ -62357,7 +63130,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 1,
@@ -62397,7 +63170,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 2,
@@ -62438,7 +63211,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 3,
@@ -62480,7 +63253,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 4,
@@ -62522,7 +63295,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 5,
@@ -62563,7 +63336,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 6,
@@ -62605,7 +63378,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 7,
@@ -62645,7 +63418,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 8,
@@ -62687,7 +63460,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 9,
@@ -62728,7 +63501,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 10,
@@ -62769,7 +63542,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 11,
@@ -62812,7 +63585,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 12,
@@ -62855,7 +63628,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 13,
@@ -62897,7 +63670,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 14,
@@ -62937,7 +63710,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 15,
@@ -62978,7 +63751,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 16,
@@ -63019,7 +63792,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 17,
@@ -63062,7 +63835,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 18,
@@ -63104,7 +63877,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 19,
@@ -63144,7 +63917,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 20,
@@ -63182,7 +63955,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 21,
@@ -63223,7 +63996,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 22,
@@ -63267,7 +64040,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 23,
@@ -63307,7 +64080,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 24,
@@ -63347,7 +64120,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 25,
@@ -63387,7 +64160,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 26,
@@ -63428,7 +64201,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 27,
@@ -63470,7 +64243,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 28,
@@ -63512,7 +64285,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 29,
@@ -63551,7 +64324,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 30,
@@ -63594,7 +64367,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 31,
@@ -63634,7 +64407,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 32,
@@ -63674,7 +64447,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 33,
@@ -63714,7 +64487,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 34,
@@ -63754,7 +64527,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 35,
@@ -63794,7 +64567,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 36,
@@ -63835,7 +64608,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 37,
@@ -63875,7 +64648,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 38,
@@ -63916,7 +64689,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 39,
@@ -63956,7 +64729,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 40,
@@ -63998,7 +64771,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 41,
@@ -64039,7 +64812,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 42,
@@ -64084,7 +64857,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 43,
@@ -64124,7 +64897,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 44,
@@ -64165,7 +64938,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 45,
@@ -64205,7 +64978,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 46,
@@ -64244,7 +65017,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 47,
@@ -64286,7 +65059,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 48,
@@ -64326,7 +65099,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 49,
@@ -64366,7 +65139,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 50,
@@ -64409,7 +65182,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 51,
@@ -64450,7 +65223,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 52,
@@ -64490,7 +65263,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 53,
@@ -64530,7 +65303,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 54,
@@ -64572,7 +65345,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 55,
@@ -64612,7 +65385,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 56,
@@ -64654,7 +65427,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 57,
@@ -64695,7 +65468,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 58,
@@ -64735,7 +65508,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 59,
@@ -64777,7 +65550,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 60,
@@ -64817,7 +65590,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 61,
@@ -64859,7 +65632,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 62,
@@ -64900,7 +65673,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 63,
@@ -64940,7 +65713,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 64,
@@ -64984,7 +65757,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 65,
@@ -65024,7 +65797,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 66,
@@ -65065,7 +65838,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 67,
@@ -65106,7 +65879,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 68,
@@ -65147,7 +65920,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 69,
@@ -65187,7 +65960,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 70,
@@ -65228,7 +66001,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 71,
@@ -65268,7 +66041,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 72,
@@ -65306,7 +66079,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 73,
@@ -65346,7 +66119,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 74,
@@ -65386,7 +66159,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 75,
@@ -65426,7 +66199,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 76,
@@ -65466,7 +66239,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 77,
@@ -65506,7 +66279,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 78,
@@ -65547,7 +66320,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 79,
@@ -65587,7 +66360,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 80,
@@ -65627,7 +66400,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 81,
@@ -65668,7 +66441,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 82,
@@ -65708,7 +66481,7 @@
       "bpm_source": "estimated"
     },
     {
-      "playlist_number": 36,
+      "playlist_number": 101,
       "playlist_name": "2025 Fav Album Playlist",
       "playlist_id": "4L97j3CR3qY62adGJexylI",
       "position_in_playlist": 83,
@@ -65743,6 +66516,828 @@
         "danceability": 0.55,
         "acousticness": 0.5,
         "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 1,
+      "title": "Protect My Heart",
+      "artists": [
+        "PJ Morton"
+      ],
+      "primary_artist": "PJ Morton",
+      "duration": "3:48",
+      "duration_sec": 228,
+      "spotify_track_id": "5ygX4Sq4PM9c8kaPJB660f",
+      "spotify_uri": "spotify:track:5ygX4Sq4PM9c8kaPJB660f",
+      "spotify_url": "https://open.spotify.com/track/5ygX4Sq4PM9c8kaPJB660f",
+      "genres": [
+        "neo-soul"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "neo-soul",
+        "contemporary R&B",
+        "gospel-soul"
+      ],
+      "mood": [
+        "tender",
+        "yearning",
+        "warm"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.55,
+        "danceability": 0.55,
+        "acousticness": 0.35,
+        "instrumentalness": 0.0
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 2,
+      "title": "Breathe",
+      "artists": [
+        "Masego"
+      ],
+      "primary_artist": "Masego",
+      "duration": "3:57",
+      "duration_sec": 237,
+      "spotify_track_id": "28AnZq4Yo21iyneTWGjeUT",
+      "spotify_uri": "spotify:track:28AnZq4Yo21iyneTWGjeUT",
+      "spotify_url": "https://open.spotify.com/track/28AnZq4Yo21iyneTWGjeUT",
+      "genres": [
+        "neo-soul",
+        "jazz"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "alt R&B",
+        "neo-soul",
+        "jazz-soul"
+      ],
+      "mood": [
+        "smooth",
+        "sensual",
+        "laid-back"
+      ],
+      "mood_parameters": {
+        "energy": 0.45,
+        "valence": 0.6,
+        "danceability": 0.6,
+        "acousticness": 0.4,
+        "instrumentalness": 0.0
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 3,
+      "title": "Boogie's in My Soul",
+      "artists": [
+        "Chaka Khan",
+        "Snoop Dogg"
+      ],
+      "primary_artist": "Chaka Khan",
+      "duration": "3:42",
+      "duration_sec": 222,
+      "spotify_track_id": "3auasA1oQjH9hXr5Ux72Sk",
+      "spotify_uri": "spotify:track:3auasA1oQjH9hXr5Ux72Sk",
+      "spotify_url": "https://open.spotify.com/track/3auasA1oQjH9hXr5Ux72Sk",
+      "genres": [
+        "soul-funk",
+        "hip-hop",
+        "neo-soul"
+      ],
+      "genre_primary": "soul-funk",
+      "subgenres": [
+        "funk",
+        "soul-funk",
+        "disco-funk"
+      ],
+      "mood": [
+        "celebratory",
+        "groovy",
+        "playful"
+      ],
+      "mood_parameters": {
+        "energy": 0.75,
+        "valence": 0.85,
+        "danceability": 0.82,
+        "acousticness": 0.1,
+        "instrumentalness": 0.0
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 4,
+      "title": "Rainbow",
+      "artists": [
+        "Gretchen Parlato",
+        "Robert Glasper"
+      ],
+      "primary_artist": "Gretchen Parlato",
+      "duration": "3:46",
+      "duration_sec": 226,
+      "spotify_track_id": "528pHUtcTjp4D3UxouB4CE",
+      "spotify_uri": "spotify:track:528pHUtcTjp4D3UxouB4CE",
+      "spotify_url": "https://open.spotify.com/track/528pHUtcTjp4D3UxouB4CE",
+      "genres": [
+        "jazz",
+        "neo-soul"
+      ],
+      "genre_primary": "jazz",
+      "subgenres": [
+        "jazz",
+        "vocal jazz",
+        "contemporary jazz"
+      ],
+      "mood": [
+        "intimate",
+        "luminous",
+        "reflective"
+      ],
+      "mood_parameters": {
+        "energy": 0.35,
+        "valence": 0.55,
+        "danceability": 0.4,
+        "acousticness": 0.55,
+        "instrumentalness": 0.05
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 5,
+      "title": "Expecting",
+      "artists": [
+        "Candice Hoyes",
+        "Junius Paul",
+        "Makaya McCraven"
+      ],
+      "primary_artist": "Candice Hoyes",
+      "duration": "5:53",
+      "duration_sec": 353,
+      "spotify_track_id": "7xv0LwUvvBq70KdcVdhfgm",
+      "spotify_uri": "spotify:track:7xv0LwUvvBq70KdcVdhfgm",
+      "spotify_url": "https://open.spotify.com/track/7xv0LwUvvBq70KdcVdhfgm",
+      "genres": [
+        "jazz",
+        "uk-jazz"
+      ],
+      "genre_primary": "jazz",
+      "subgenres": [
+        "spiritual jazz",
+        "uk-jazz",
+        "jazz-fusion"
+      ],
+      "mood": [
+        "meditative",
+        "expansive",
+        "hypnotic"
+      ],
+      "mood_parameters": {
+        "energy": 0.45,
+        "valence": 0.5,
+        "danceability": 0.4,
+        "acousticness": 0.4,
+        "instrumentalness": 0.4
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 6,
+      "title": "On Your Mind (feat. Lil Yachty)",
+      "artists": [
+        "FKA twigs",
+        "Lil Yachty"
+      ],
+      "primary_artist": "FKA twigs",
+      "duration": "3:38",
+      "duration_sec": 218,
+      "spotify_track_id": "21C6u4k9di4S7w4JsQS1k7",
+      "spotify_uri": "spotify:track:21C6u4k9di4S7w4JsQS1k7",
+      "spotify_url": "https://open.spotify.com/track/21C6u4k9di4S7w4JsQS1k7",
+      "genres": [
+        "alt",
+        "hip-hop",
+        "neo-soul"
+      ],
+      "genre_primary": "hip-hop",
+      "subgenres": [
+        "alt R&B",
+        "experimental pop",
+        "trap-soul"
+      ],
+      "mood": [
+        "sultry",
+        "hazy",
+        "off-kilter"
+      ],
+      "mood_parameters": {
+        "energy": 0.5,
+        "valence": 0.45,
+        "danceability": 0.6,
+        "acousticness": 0.2,
+        "instrumentalness": 0.0
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 7,
+      "title": "Sapo Mix 1 - Remix 2026",
+      "artists": [
+        "Esteban Sehinkman",
+        "Charles Webster"
+      ],
+      "primary_artist": "Esteban Sehinkman",
+      "duration": "4:50",
+      "duration_sec": 290,
+      "spotify_track_id": "2NtBEW3gEjx0IkqTthtgAS",
+      "spotify_uri": "spotify:track:2NtBEW3gEjx0IkqTthtgAS",
+      "spotify_url": "https://open.spotify.com/track/2NtBEW3gEjx0IkqTthtgAS",
+      "genres": [
+        "soulful-house",
+        "jazz"
+      ],
+      "genre_primary": "soulful-house",
+      "subgenres": [
+        "deep house",
+        "soulful-house",
+        "tech-house"
+      ],
+      "mood": [
+        "hypnotic",
+        "warm",
+        "propulsive"
+      ],
+      "mood_parameters": {
+        "energy": 0.7,
+        "valence": 0.6,
+        "danceability": 0.82,
+        "acousticness": 0.1,
+        "instrumentalness": 0.5
+      },
+      "bpm": 123,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 8,
+      "title": "Finders",
+      "artists": [
+        "Richard Spaven"
+      ],
+      "primary_artist": "Richard Spaven",
+      "duration": "3:49",
+      "duration_sec": 229,
+      "spotify_track_id": "26S1rmY8cE3P6ZaWCNuMzg",
+      "spotify_uri": "spotify:track:26S1rmY8cE3P6ZaWCNuMzg",
+      "spotify_url": "https://open.spotify.com/track/26S1rmY8cE3P6ZaWCNuMzg",
+      "genres": [
+        "uk-jazz",
+        "broken-beat"
+      ],
+      "genre_primary": "uk-jazz",
+      "subgenres": [
+        "uk-jazz",
+        "broken-beat",
+        "jazz-fusion"
+      ],
+      "mood": [
+        "propulsive",
+        "intricate",
+        "kinetic"
+      ],
+      "mood_parameters": {
+        "energy": 0.65,
+        "valence": 0.55,
+        "danceability": 0.6,
+        "acousticness": 0.2,
+        "instrumentalness": 0.55
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 9,
+      "title": "Eating Hooks (Deep Dish Remix) - Mixed",
+      "artists": [
+        "Moderat",
+        "Deep Dish"
+      ],
+      "primary_artist": "Moderat",
+      "duration": "5:37",
+      "duration_sec": 337,
+      "spotify_track_id": "2PYC9rUpTn1s01Bc3kt58v",
+      "spotify_uri": "spotify:track:2PYC9rUpTn1s01Bc3kt58v",
+      "spotify_url": "https://open.spotify.com/track/2PYC9rUpTn1s01Bc3kt58v",
+      "genres": [
+        "electronic",
+        "soulful-house"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "progressive house",
+        "deep house",
+        "electronic"
+      ],
+      "mood": [
+        "brooding",
+        "driving",
+        "hypnotic"
+      ],
+      "mood_parameters": {
+        "energy": 0.7,
+        "valence": 0.4,
+        "danceability": 0.78,
+        "acousticness": 0.05,
+        "instrumentalness": 0.6
+      },
+      "bpm": 122,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 10,
+      "title": "Blood In The Labyrinth",
+      "artists": [
+        "Boards of Canada"
+      ],
+      "primary_artist": "Boards of Canada",
+      "duration": "4:56",
+      "duration_sec": 296,
+      "spotify_track_id": "1sJSQT0OSIAsiMDE7Qs9zj",
+      "spotify_uri": "spotify:track:1sJSQT0OSIAsiMDE7Qs9zj",
+      "spotify_url": "https://open.spotify.com/track/1sJSQT0OSIAsiMDE7Qs9zj",
+      "genres": [
+        "electronic"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "IDM",
+        "downtempo",
+        "ambient electronic"
+      ],
+      "mood": [
+        "eerie",
+        "nostalgic",
+        "dreamlike"
+      ],
+      "mood_parameters": {
+        "energy": 0.35,
+        "valence": 0.35,
+        "danceability": 0.4,
+        "acousticness": 0.25,
+        "instrumentalness": 0.85
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 11,
+      "title": "When the Lights Gone - Blundetto Version",
+      "artists": [
+        "Nostalgia 77",
+        "Blundetto"
+      ],
+      "primary_artist": "Nostalgia 77",
+      "duration": "3:28",
+      "duration_sec": 208,
+      "spotify_track_id": "2KrtLWQI7itG9LBJQSUDkh",
+      "spotify_uri": "spotify:track:2KrtLWQI7itG9LBJQSUDkh",
+      "spotify_url": "https://open.spotify.com/track/2KrtLWQI7itG9LBJQSUDkh",
+      "genres": [
+        "jazz",
+        "downtempo",
+        "soul-funk",
+        "world"
+      ],
+      "genre_primary": "jazz",
+      "subgenres": [
+        "nu-jazz",
+        "downtempo",
+        "dub-soul"
+      ],
+      "mood": [
+        "mellow",
+        "soulful",
+        "languid"
+      ],
+      "mood_parameters": {
+        "energy": 0.4,
+        "valence": 0.55,
+        "danceability": 0.55,
+        "acousticness": 0.35,
+        "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 12,
+      "title": "Let's try",
+      "artists": [
+        "Greg Spero",
+        "Robert \"Sput\" Searight",
+        "MonoNeon"
+      ],
+      "primary_artist": "Greg Spero",
+      "duration": "6:17",
+      "duration_sec": 377,
+      "spotify_track_id": "6Y6ncZAtBwI16AP5541aDr",
+      "spotify_uri": "spotify:track:6Y6ncZAtBwI16AP5541aDr",
+      "spotify_url": "https://open.spotify.com/track/6Y6ncZAtBwI16AP5541aDr",
+      "genres": [
+        "jazz",
+        "electronic",
+        "neo-soul",
+        "soul-funk"
+      ],
+      "genre_primary": "jazz",
+      "subgenres": [
+        "jazz-funk",
+        "fusion",
+        "soul-funk"
+      ],
+      "mood": [
+        "groovy",
+        "playful",
+        "virtuosic"
+      ],
+      "mood_parameters": {
+        "energy": 0.65,
+        "valence": 0.7,
+        "danceability": 0.7,
+        "acousticness": 0.2,
+        "instrumentalness": 0.4
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 13,
+      "title": "I Want Your Love",
+      "artists": [
+        "Prunk",
+        "Riva Starr",
+        "Danny Losito"
+      ],
+      "primary_artist": "Prunk",
+      "duration": "4:01",
+      "duration_sec": 241,
+      "spotify_track_id": "3maBFltdmodeTDz82ZqeLU",
+      "spotify_uri": "spotify:track:3maBFltdmodeTDz82ZqeLU",
+      "spotify_url": "https://open.spotify.com/track/3maBFltdmodeTDz82ZqeLU",
+      "genres": [
+        "soulful-house",
+        "electronic"
+      ],
+      "genre_primary": "soulful-house",
+      "subgenres": [
+        "soulful-house",
+        "deep house",
+        "disco-house"
+      ],
+      "mood": [
+        "uplifting",
+        "warm",
+        "danceable"
+      ],
+      "mood_parameters": {
+        "energy": 0.75,
+        "valence": 0.75,
+        "danceability": 0.85,
+        "acousticness": 0.1,
+        "instrumentalness": 0.3
+      },
+      "bpm": 124,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 14,
+      "title": "Circles",
+      "artists": [
+        "Quinn Oulton"
+      ],
+      "primary_artist": "Quinn Oulton",
+      "duration": "2:35",
+      "duration_sec": 155,
+      "spotify_track_id": "1Y564qo4Kb0LvGnbTqKbk7",
+      "spotify_uri": "spotify:track:1Y564qo4Kb0LvGnbTqKbk7",
+      "spotify_url": "https://open.spotify.com/track/1Y564qo4Kb0LvGnbTqKbk7",
+      "genres": [
+        "uk-jazz",
+        "neo-soul"
+      ],
+      "genre_primary": "uk-jazz",
+      "subgenres": [
+        "alt R&B",
+        "jazz-pop",
+        "neo-soul"
+      ],
+      "mood": [
+        "wistful",
+        "intimate",
+        "melancholic"
+      ],
+      "mood_parameters": {
+        "energy": 0.4,
+        "valence": 0.4,
+        "danceability": 0.5,
+        "acousticness": 0.4,
+        "instrumentalness": 0.1
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 15,
+      "title": "I See You Baby (feat. Gramma Funk) - DJ BORING Remix",
+      "artists": [
+        "Groove Armada",
+        "DJ BORING",
+        "Gramma Funk"
+      ],
+      "primary_artist": "Groove Armada",
+      "duration": "5:37",
+      "duration_sec": 337,
+      "spotify_track_id": "3RaOSNfKdHUMfrbBpzcnJ6",
+      "spotify_uri": "spotify:track:3RaOSNfKdHUMfrbBpzcnJ6",
+      "spotify_url": "https://open.spotify.com/track/3RaOSNfKdHUMfrbBpzcnJ6",
+      "genres": [
+        "electronic",
+        "soulful-house",
+        "soul-funk"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "house",
+        "deep house",
+        "disco-house"
+      ],
+      "mood": [
+        "groovy",
+        "hypnotic",
+        "feel-good"
+      ],
+      "mood_parameters": {
+        "energy": 0.7,
+        "valence": 0.7,
+        "danceability": 0.85,
+        "acousticness": 0.1,
+        "instrumentalness": 0.3
+      },
+      "bpm": 124,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 16,
+      "title": "Ogun Nilê - Refix",
+      "artists": [
+        "BaianaSystem",
+        "Seun Kuti",
+        "SekoBass"
+      ],
+      "primary_artist": "BaianaSystem",
+      "duration": "3:29",
+      "duration_sec": 209,
+      "spotify_track_id": "2290TwgLEr8TXYWu2Hu9Sy",
+      "spotify_uri": "spotify:track:2290TwgLEr8TXYWu2Hu9Sy",
+      "spotify_url": "https://open.spotify.com/track/2290TwgLEr8TXYWu2Hu9Sy",
+      "genres": [
+        "world"
+      ],
+      "genre_primary": "world",
+      "subgenres": [
+        "afrobeat",
+        "world",
+        "afro-funk"
+      ],
+      "mood": [
+        "fiery",
+        "defiant",
+        "percussive"
+      ],
+      "mood_parameters": {
+        "energy": 0.8,
+        "valence": 0.6,
+        "danceability": 0.75,
+        "acousticness": 0.15,
+        "instrumentalness": 0.2
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 17,
+      "title": "La Luna (feat. MILLE)",
+      "artists": [
+        "Hal Quartièr",
+        "MILLE"
+      ],
+      "primary_artist": "Hal Quartièr",
+      "duration": "2:58",
+      "duration_sec": 178,
+      "spotify_track_id": "08TK64x0nlOVAtxACgnhMw",
+      "spotify_uri": "spotify:track:08TK64x0nlOVAtxACgnhMw",
+      "spotify_url": "https://open.spotify.com/track/08TK64x0nlOVAtxACgnhMw",
+      "genres": [
+        "electronic",
+        "alt"
+      ],
+      "genre_primary": "electronic",
+      "subgenres": [
+        "nu-disco",
+        "french touch",
+        "electronic"
+      ],
+      "mood": [
+        "breezy",
+        "playful",
+        "sunny"
+      ],
+      "mood_parameters": {
+        "energy": 0.65,
+        "valence": 0.75,
+        "danceability": 0.75,
+        "acousticness": 0.15,
+        "instrumentalness": 0.3
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 18,
+      "title": "Nobody Speak Part 2",
+      "artists": [
+        "DJ Shadow",
+        "Run The Jewels",
+        "Denzel Curry",
+        "TiaCorine"
+      ],
+      "primary_artist": "DJ Shadow",
+      "duration": "2:08",
+      "duration_sec": 128,
+      "spotify_track_id": "1mCBdy88f3dI6QBTOhnv13",
+      "spotify_uri": "spotify:track:1mCBdy88f3dI6QBTOhnv13",
+      "spotify_url": "https://open.spotify.com/track/1mCBdy88f3dI6QBTOhnv13",
+      "genres": [
+        "hip-hop",
+        "electronic"
+      ],
+      "genre_primary": "hip-hop",
+      "subgenres": [
+        "hip-hop",
+        "instrumental hip-hop",
+        "trip-hop"
+      ],
+      "mood": [
+        "menacing",
+        "punchy",
+        "cinematic"
+      ],
+      "mood_parameters": {
+        "energy": 0.75,
+        "valence": 0.45,
+        "danceability": 0.6,
+        "acousticness": 0.1,
+        "instrumentalness": 0.05
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 19,
+      "title": "Roots, Rock, Reggae - Live At The Hammersmith Odeon, London, UK - June, 1976",
+      "artists": [
+        "Bob Marley & The Wailers"
+      ],
+      "primary_artist": "Bob Marley & The Wailers",
+      "duration": "5:22",
+      "duration_sec": 322,
+      "spotify_track_id": "5f08TjZ0NqmPOO0KSMXLtw",
+      "spotify_uri": "spotify:track:5f08TjZ0NqmPOO0KSMXLtw",
+      "spotify_url": "https://open.spotify.com/track/5f08TjZ0NqmPOO0KSMXLtw",
+      "genres": [
+        "world"
+      ],
+      "genre_primary": "world",
+      "subgenres": [
+        "reggae",
+        "roots reggae",
+        "live"
+      ],
+      "mood": [
+        "uplifting",
+        "warm",
+        "communal"
+      ],
+      "mood_parameters": {
+        "energy": 0.6,
+        "valence": 0.8,
+        "danceability": 0.7,
+        "acousticness": 0.3,
+        "instrumentalness": 0.0
+      },
+      "bpm": null,
+      "bpm_source": "estimated"
+    },
+    {
+      "playlist_number": 36,
+      "playlist_name": "New Release Playlist #36",
+      "playlist_id": "4PMKaFt96XtkVpc4Ufj055",
+      "position_in_playlist": 20,
+      "title": "Mercy",
+      "artists": [
+        "PJ Morton"
+      ],
+      "primary_artist": "PJ Morton",
+      "duration": "2:27",
+      "duration_sec": 147,
+      "spotify_track_id": "2qqbj6LiDSv6OHRyaELwVG",
+      "spotify_uri": "spotify:track:2qqbj6LiDSv6OHRyaELwVG",
+      "spotify_url": "https://open.spotify.com/track/2qqbj6LiDSv6OHRyaELwVG",
+      "genres": [
+        "neo-soul"
+      ],
+      "genre_primary": "neo-soul",
+      "subgenres": [
+        "neo-soul",
+        "gospel-soul",
+        "contemporary R&B"
+      ],
+      "mood": [
+        "soulful",
+        "heartfelt",
+        "intimate"
+      ],
+      "mood_parameters": {
+        "energy": 0.45,
+        "valence": 0.6,
+        "danceability": 0.55,
+        "acousticness": 0.4,
+        "instrumentalness": 0.0
       },
       "bpm": null,
       "bpm_source": "estimated"
