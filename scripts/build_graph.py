@@ -251,9 +251,17 @@ def build(archive: dict, seed: int = 7) -> dict:
                  for (x, y), c in comp.items()]
 
     # --- info per il sottotitolo (numero playlist, range, ultimo aggiornamento) ---
+    # Le playlist "extra" (compilation fuori dalla sequenza New Release) usano
+    # numeri fuori-banda (>= EXTRA_MIN): vanno contate a parte, NON nel range
+    # #1–#N, così il sottotitolo resta pulito (es. "#1–#36 + 1 extra").
+    EXTRA_MIN = 100
     pl_numbers = sorted({p for n in nodes for p in n["playlists"]})
+    nrp = [p for p in pl_numbers if p < EXTRA_MIN]
+    extras = [p for p in pl_numbers if p >= EXTRA_MIN]
     n_playlists = len(archive.get("playlists", [])) or len(pl_numbers)
-    playlist_range = f"#{pl_numbers[0]}–#{pl_numbers[-1]}" if pl_numbers else ""
+    playlist_range = f"#{nrp[0]}–#{nrp[-1]}" if nrp else ""
+    if extras:
+        playlist_range += f" + {len(extras)} extra"
 
     return {
         "nodes": out_nodes,
