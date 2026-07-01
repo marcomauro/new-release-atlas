@@ -1,9 +1,7 @@
 import React from "react";
 import { DEFAULT_LINK_WEIGHTS, DEFAULT_RANDOMNESS, DEFAULT_MOOD } from "./playlist.js";
+import { INK, PAPER, MUTED } from "./theme.js";
 
-const INK = "#2b2724";
-const PAPER = "#f4f1ea";
-const MUTED = "#9a938a";
 
 const MOOD_ROWS = [
   ["energy", "Energy"],
