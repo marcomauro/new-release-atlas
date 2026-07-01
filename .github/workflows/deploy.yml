@@ -30,6 +30,16 @@ jobs:
         with:
           python-version: '3.x'
 
+      # Guardia d'integrità: l'archivio live deve essere internamente coerente
+      # (conteggi, arricchimento completo, playlist valide) PRIMA di generare
+      # il grafo. Un merge corrotto ferma il deploy qui.
+      - name: Check archive integrity
+        run: python scripts/check_archive.py
+
+      # Test della pipeline dati (add_playlist + check_archive), stdlib only.
+      - name: Run pipeline tests
+        run: python -m unittest discover -s tests -q
+
       # Rigenera public/graph.json dall'archivio.
       # build_graph.py usa solo la stdlib: nessuna dipendenza pip. Senza --input
       # usa la sorgente live data/spotify_archive_enriched.json (fallback

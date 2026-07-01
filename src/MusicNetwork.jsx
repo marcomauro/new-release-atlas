@@ -13,6 +13,30 @@ import {
 
 let GRAPH = null; // populated by loader before MusicNetworkInner mounts
 
+// Idrata il graph.json "formato 2" (compatto) nel formato ricco che il resto
+// del codice si aspetta. Nel formato 2 gli archi usano INDICI interi nei nodi
+// (non gli id Spotify da 22 char), niente campo weight (ricalcolato da c) e i
+// nodi non portano l'url (derivabile dall'id): ~50% di payload in meno.
+// Retro-compatibile: un graph.json vecchio formato passa invariato.
+function hydrateGraph(data) {
+  const W = (data.meta && data.meta.linkWeights) ||
+    { primary: 1.2, artist: 3.0, secondary: 0.6, playlist: 0.3 };
+  for (const n of data.nodes) {
+    if (!n.url) n.url = "https://open.spotify.com/track/" + n.id;
+  }
+  for (const l of data.links) {
+    if (typeof l.source === "number") l.source = data.nodes[l.source].id;
+    if (typeof l.target === "number") l.target = data.nodes[l.target].id;
+    if (l.weight == null) {
+      const c = l.c || [0, 0, 0, 0];
+      l.weight = Math.round(
+        (c[0] * W.artist + c[1] * W.primary + c[2] * W.secondary + c[3] * W.playlist) * 100
+      ) / 100;
+    }
+  }
+  return data;
+}
+
 /* ----------------------------------------------------------------
    New Release Atlas v2 — force-directed map by inferred GENRE
    Nodes = tracks · Edges = shared artist / shared genre / co-playlist
@@ -144,6 +168,7 @@ function MusicNetworkInner() {
   const svgRef = useRef(null);
   const wrapRef = useRef(null);
   const simRef = useRef(null);
+  const hoverElsRef = useRef(null); // elementi evidenziati dall'hover corrente
   const [selected, setSelected] = useState(null);
   const [hovered, setHovered] = useState(null);
   const [query, setQuery] = useState("");
@@ -299,6 +324,7 @@ function MusicNetworkInner() {
 
     const link = g
       .append("g")
+      .attr("class", "mn-linkg")
       .attr("stroke", INK)
       .attr("stroke-opacity", 0.1)
       // Links are visual only — never let them intercept pan/drag gestures.
@@ -342,6 +368,7 @@ function MusicNetworkInner() {
 
     const node = g
       .append("g")
+      .attr("class", "mn-nodeg")
       .selectAll("circle")
       .data(nodes)
       .join("circle")
@@ -371,6 +398,7 @@ function MusicNetworkInner() {
 
     const labels = g
       .append("g")
+      .attr("class", "mn-labelg")
       .selectAll("text")
       .data(nodes)
       .join("text")
@@ -385,9 +413,12 @@ function MusicNetworkInner() {
     labels.append("tspan").text((d) => d.title);
     labels.append("tspan").attr("fill", MUTED).text((d) => " — " + d.artist);
 
+    // Hover solo dove esiste davvero (mouse/trackpad): su touch il mouseenter
+    // sintetico del tap farebbe un restyle inutile prima di ogni click.
+    const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     node
-      .on("mouseenter", (e, d) => setHovered(d))
-      .on("mouseleave", () => setHovered(null))
+      .on("mouseenter", canHover ? (e, d) => setHovered(d) : null)
+      .on("mouseleave", canHover ? () => setHovered(null) : null)
       .on("click", (e, d) => {
         setSelected((prev) => (prev && prev.id === d.id ? null : d));
         e.stopPropagation();
@@ -456,7 +487,19 @@ function MusicNetworkInner() {
         drawRoute();
       });
 
-    simRef.current = { sim, node, link, labels, g, zoom, svg, anchor, route, nodesById, drawRoute };
+    // Mappa id -> elementi <line> incidenti: l'hover evidenzia solo i ~deg
+    // archi del nodo (via classi CSS) invece di ristilizzare tutti i 7k link.
+    const incident = new Map();
+    link.each(function (l) {
+      const s = l.source.id ?? l.source;
+      const t = l.target.id ?? l.target;
+      if (!incident.has(s)) incident.set(s, []);
+      if (!incident.has(t)) incident.set(t, []);
+      incident.get(s).push(this);
+      incident.get(t).push(this);
+    });
+
+    simRef.current = { sim, node, link, labels, g, zoom, svg, anchor, route, nodesById, drawRoute, incident };
     return () => sim.stop();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -474,10 +517,14 @@ function MusicNetworkInner() {
     sim.alpha(0.3).restart();
   }, [dims, genreCounts]);
 
+  // Restyle "strutturale" (selezione, filtri, ricerca, playlist): tocca tutti
+  // gli elementi, quindi NON dipende dall'hover — quello e' gestito a parte con
+  // classi CSS (effetto leggero qui sotto) per non ristilizzare 7k archi a
+  // ogni passaggio del mouse.
   useEffect(() => {
     if (!simRef.current) return;
     const { node, link, labels } = simRef.current;
-    const focus = selected || hovered;
+    const focus = selected;
     const focusId = focus?.id;
     const selId = selected?.id; // solo il brano cliccato pulsa (non l'hover)
     const nbr = focusId ? neighbors.get(focusId) : null;
@@ -504,8 +551,9 @@ function MusicNetworkInner() {
       // Dimmed background nodes must not catch taps/drags: while a node is
       // focused (or a filter/playlist is active) only the highlighted layer
       // stays interactive, so a drag over the faded nodes pans/zooms the view
-      // instead of grabbing a node underneath.
-      .style("pointer-events", (d) => {
+      // instead of grabbing a node underneath. Attributo (non style inline):
+      // le regole CSS .mn-hover devono poterlo sovrascrivere durante l'hover.
+      .attr("pointer-events", (d) => {
         if (focusId && d.id === focusId) return "auto";
         if (!focusId && playlistSet?.has(d.id)) return "auto";
         return dim(d) ? "none" : "auto";
@@ -552,7 +600,34 @@ function MusicNetworkInner() {
       const showRoute = !focusId && playlistSet && playlistSet.size > 1;
       simRef.current.route.attr("display", showRoute ? null : "none");
     }
-  }, [selected, hovered, matchSet, activeGenre, neighbors, playlistSet, playlist, playIndex]);
+  }, [selected, matchSet, activeGenre, neighbors, playlistSet, playlist, playIndex]);
+
+  // Effetto LEGGERO per l'hover: aggiunge/toglie classi solo sul nodo, i suoi
+  // vicini, le sue etichette e i suoi ~deg archi incidenti; il resto della
+  // scena sfuma via regole CSS scoped sotto .mn-hover (che sovrascrivono gli
+  // attributi di base impostati dall'effetto strutturale). Costo per hover:
+  // O(grado del nodo) mutazioni DOM invece di ~8k.
+  useEffect(() => {
+    if (!simRef.current) return;
+    const { g, node, labels, incident } = simRef.current;
+    if (hoverElsRef.current) {
+      for (const el of hoverElsRef.current) el.classList.remove("mn-hl", "mn-hl-n");
+      hoverElsRef.current = null;
+    }
+    const id = !selected && hovered ? hovered.id : null;
+    g.classed("mn-hover", !!id);
+    if (!id) return;
+    const nbr = neighbors.get(id) || new Set();
+    const els = [];
+    const mark = function (d) {
+      if (d.id === id) { this.classList.add("mn-hl"); els.push(this); }
+      else if (nbr.has(d.id)) { this.classList.add("mn-hl-n"); els.push(this); }
+    };
+    node.each(mark);
+    labels.each(mark);
+    for (const el of incident.get(id) || []) { el.classList.add("mn-hl"); els.push(el); }
+    hoverElsRef.current = els;
+  }, [hovered, selected, neighbors]);
 
   // Aggiorna il percorso della playlist e inquadra i suoi nodi (solo al cambio).
   useEffect(() => {
@@ -747,6 +822,21 @@ function MusicNetworkInner() {
         }
         /* Percorso della playlist: linea azzurra brillante con leggero bagliore. */
         .mn-route { filter: drop-shadow(0 0 4px rgba(31,182,232,0.7)); }
+        /* Hover di un nodo: il nodo + vicini + archi incidenti ricevono classi
+           (.mn-hl / .mn-hl-n, costo O(grado)); tutto il resto sfuma con queste
+           regole, che sovrascrivono gli attributi di base della scena. */
+        .mn-hover .mn-nodeg circle { opacity: 0.08; pointer-events: none; }
+        .mn-hover .mn-nodeg circle.mn-hl-n { opacity: 0.96; pointer-events: auto; }
+        .mn-hover .mn-nodeg circle.mn-hl {
+          opacity: 1; pointer-events: auto;
+          stroke: #2b2724; stroke-width: 2.4px;
+        }
+        .mn-hover .mn-linkg line { stroke-opacity: 0.02; }
+        .mn-hover .mn-linkg line.mn-hl { stroke-opacity: 0.5; }
+        .mn-hover .mn-labelg text { opacity: 0; }
+        .mn-hover .mn-labelg text.mn-hl-n { opacity: 0.8; }
+        .mn-hover .mn-labelg text.mn-hl { opacity: 1; }
+        .mn-hover .mn-route { display: none; }
         @media (max-width: 640px) {
           /* 16px keeps iOS Safari from auto-zooming when an input is focused. */
           .mn-input, .mn-chat input { font-size: 16px !important; }
@@ -1332,7 +1422,7 @@ export default function MusicNetwork() {
         return r.json();
       })
       .then((data) => {
-        GRAPH = data;
+        GRAPH = hydrateGraph(data);
         setReady(true);
       })
       .catch((e) => setError(e.message));

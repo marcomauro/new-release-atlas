@@ -222,17 +222,28 @@ reads). Every track carries the full enrichment: `genres`/`genre_primary`
   Stops with a to-do report if any new track lacks a characterization.
 - **`scripts/build_graph.py`** — builds `public/graph.json`. Idempotent: it
   regenerates the whole graph from the archive's current state.
+- **`scripts/check_archive.py`** — CI guard: verifies the enriched archive's
+  internal consistency (counts, full enrichment, valid playlists) before the
+  graph is generated. A corrupted merge stops the deploy here.
 - **`scripts/check_docs.py`** — CI guard: fails the build if this README's
   "Current state" line drifts from the freshly regenerated `graph.json`.
+- **`tests/`** — stdlib `unittest` suite for the data pipeline
+  (`python3 -m unittest discover -s tests`), also run in CI.
 - The classic enrichment scripts (`enrich_genres.py`, `enrich_audio.py`,
   `genre_map.py`) are archived in [`legacy/scripts/`](legacy/README.md).
 
 ### `graph.json` schema
 
+Compact "format 2": links reference nodes by **integer index** and carry no
+`weight`; nodes carry no `url`. The front-end hydrates at load time
+(`hydrateGraph` in `MusicNetwork.jsx`): indices → ids, `weight` recomputed from
+`c` × `meta.linkWeights`, `url` derived from the id. ~40% smaller payload; old
+full-format files still load fine.
+
 ```jsonc
 {
   "nodes": [{
-    "id", "title", "artist", "artists", "url", "duration", "duration_sec",
+    "id", "title", "artist", "artists", "duration", "duration_sec",
     "genres", "genre", "community",          // community = cluster index (genre by frequency)
     "playlists", "degree",
     "era", "era_norm", "genre_count", "bridging", "artist_track_count",
@@ -243,9 +254,9 @@ reads). Every track carries the full enrichment: `genres`/`genre_primary`
     "energy?", "valence?", "danceability?", "acousticness?", "instrumentalness?",
     "year?", "popularity?"
   }],
-  "links": [{ "source", "target", "weight", "c": [artist, primary, secondary, playlist] }],
+  "links": [{ "source": nodeIndex, "target": nodeIndex, "c": [artist, primary, secondary, playlist] }],
   "genres": ["...ordered by frequency = cluster index..."],
-  "meta": { "unique_tracks", "edges", "genres", "playlists", "playlist_range", "updated", "linkWeights" }
+  "meta": { "format": 2, "unique_tracks", "edges", "genres", "playlists", "playlist_range", "updated", "linkWeights" }
 }
 ```
 
