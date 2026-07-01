@@ -6,9 +6,9 @@ Uso:
     python scripts/build_graph.py [--input <archivio>] --output public/graph.json
 
 Senza --input auto-seleziona il PRIMO archivio esistente, dal più ricco:
-    1. data/spotify_archive_enriched.json   (AI: subgenres/mood/bpm — sorgente live)
-    2. data/spotify_archive_features.json   (audio web: bpm/year/popularity/...)
-    3. data/spotify_archive_genres.json     (solo generi)
+    1. data/spotify_archive_enriched.json          (AI: subgenres/mood/bpm — SORGENTE LIVE)
+    2. legacy/data/spotify_archive_features.json   (fallback storico, congelato a #12–#32)
+    3. legacy/data/spotify_archive_genres.json     (fallback storico, congelato a #12–#32)
 È quello che fa anche la CI. I campi non presenti nell'archivio scelto
 (audio, mood, subgenres…) vengono semplicemente omessi (degradazione morbida).
 
@@ -293,10 +293,11 @@ def main():
 
     inp = args.input
     if inp is None:
+        # sorgente live prima; i fallback storici vivono in legacy/ (congelati)
         inp = next((c for c in ("data/spotify_archive_enriched.json",
-                                "data/spotify_archive_features.json",
-                                "data/spotify_archive_genres.json") if os.path.exists(c)),
-                   "data/spotify_archive_genres.json")
+                                "legacy/data/spotify_archive_features.json",
+                                "legacy/data/spotify_archive_genres.json") if os.path.exists(c)),
+                   "data/spotify_archive_enriched.json")
 
     with open(inp, encoding="utf-8") as f:
         archive = json.load(f)

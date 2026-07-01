@@ -14,31 +14,36 @@ is first in that order — so it always wins. Therefore:
 
 > **Adding playlists = extending `spotify_archive_enriched.json`.**
 
-The "classic" pipeline in the README (`enrich_genres.py` → `enrich_audio.py`)
-produces the *fallback* archives (`spotify_archive(.json|_genres|_features)`).
-Those are currently **frozen at #12–#32 and are NOT used by the live map.**
-Keeping them in sync is optional (archive tidiness only).
+The "classic" pipeline (`enrich_genres.py` → `enrich_audio.py`) and its
+archives are **frozen in [`legacy/`](../legacy/README.md)** and are NOT used by
+the live map.
 
 | Archive | Content | Role |
 |---|---|---|
-| `spotify_archive.json` · `_genres` · `_features` | #12–#32 (frozen) | legacy / fallback — **not** the live source |
-| **`spotify_archive_enriched.json`** | #1–#36 | **live source** (what `build_graph` picks) |
+| `legacy/data/spotify_archive(.json\|_genres\|_features)` | #12–#32 (frozen) | legacy / extreme fallback — **not** the live source |
+| **`data/spotify_archive_enriched.json`** | #1–#36 + extra | **live source** (what `build_graph` picks) |
 
 ---
 
 ## Flow
 
 ```
- PHASE A — DATA PREP (outside the repo · you + AI)     PHASE B — MERGE & PUBLISH (in the repo · AI/CLI)
+ PHASE A — DATA PREP (outside the repo · you + AI)     PHASE B — MERGE & PUBLISH (in the repo · automated)
  ─────────────────────────────────────────────────    ────────────────────────────────────────────────
- 1. support.json   (raw tracklist)                     4. merge → spotify_archive_enriched.json
-    pl/pos/id/title/artists/dur + playlist_id              + validate (counts, enrichment, duplicates)
- 2. char.json      (expert characterization)           5. python3 scripts/build_graph.py → public/graph.json
-    NEW tracks only, keyed by spotify_track_id         6. npm run build → commit → push
- 3. tracks already in the archive → REUSE existing        → GitHub Actions republishes
-    characterization (don't redo them)
+ 1. support.json   (raw tracklist)                     4. python3 scripts/add_playlist.py
+    pl/pos/id/title/artists/dur + playlist_id              --support support.json --char char.json --build
+ 2. char.json      (expert characterization)              → validates, merges, updates metadata,
+    NEW tracks only, keyed by spotify_track_id              backs up (.bak), regenerates graph.json
+ 3. tracks already in the archive → REUSE existing     5. npm run build → commit → push
+    characterization (don't redo them)                    → GitHub Actions republishes
                                                        ▼  https://marcomauro.github.io/new-release-atlas/
 ```
+
+> **Phase B is automated by [`scripts/add_playlist.py`](../scripts/add_playlist.py).**
+> The manual steps below (4–6) document what the script does — useful for
+> understanding, review, or edge cases the script refuses to handle. Run with
+> `--dry-run` to preview the merge; if any new track lacks a characterization
+> the script stops and prints the exact to-do list of ids.
 
 ---
 
@@ -150,12 +155,17 @@ git push                              # GitHub Actions rebuilds graph.json and r
 
 ---
 
-## TL;DR — what to hand Claude
+## TL;DR — what to hand Claude (or run yourself)
 
-Just the **two Phase-A files** (`support.json` + `char.json`). Claude does Phase B
-(merge, validation, graph regeneration, build, PR) — exactly as done for #1–#11.
+Just the **two Phase-A files** (`support.json` + `char.json`), then:
 
-> **Legacy pipeline note:** the RAW/genres/features archives are frozen at #12–#32
-> and do not feed the map. Re-syncing them is optional. Re-generating the enriched
-> archive *from a script* (instead of the AI-expert pass) would be a separate
-> project to design.
+```bash
+python3 scripts/add_playlist.py --support support.json --char char.json --dry-run   # preview
+python3 scripts/add_playlist.py --support support.json --char char.json --build     # merge + graph
+npm run build && git add -A data/ public/ && git commit -m "data+graph: add #NN" && git push
+```
+
+> **Legacy pipeline note:** the classic pipeline and its archives (frozen at
+> #12–#32) are archived in [`legacy/`](../legacy/README.md) and do not feed the
+> map. The only part of the flow that still needs a human/AI is the **expert
+> characterization** of new tracks (`char.json`).
