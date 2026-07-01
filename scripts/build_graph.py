@@ -16,9 +16,10 @@ Lo script è idempotente (solo stdlib): rigenera l'intero grafo dallo stato
 corrente dell'archivio. Per aggiornare la mappa basta estendere l'archivio
 e rilanciarlo.
 
-Schema di output:
+Schema di output (formato 2, compatto — il front-end idrata al load:
+url dei nodi ricostruito dall'id, weight degli archi ricalcolato da c):
     {
-      "nodes": [{id,title,artist,artists,url,duration,duration_sec,
+      "nodes": [{id,title,artist,artists,duration,duration_sec,
                  genres,genre,community,playlists,degree,
                  era,era_norm,genre_count,bridging,artist_track_count,
                  is_bridge?,is_remix?,remixer?,is_instrumental?,is_live?,is_interlude?,  # derivati dal titolo
@@ -26,8 +27,8 @@ Schema di output:
                  bpm?,key?,mode?,camelot?,energy?,valence?,                              # audio
                  danceability?,acousticness?,instrumentalness?,year?,popularity?}],
       # ogni arco tiene i COMPONENTI separati in c=[artista,primario,secondario,playlist]
-      # così il front-end può ri-pesare al volo; weight = peso default pre-calcolato.
-      "links": [{source,target,weight,c}],
+      # così il front-end può ri-pesare al volo; source/target = indici in nodes.
+      "links": [{source,target,c}],
       "genres": [genre, ...],   # ordinati per frequenza (= indice cluster/community)
       "meta":   {unique_tracks,edges,genres,playlists,playlist_range,updated,linkWeights}
     }
@@ -230,9 +231,11 @@ def build(archive: dict, seed: int = 7) -> dict:
         d.update(title_flags(n["title"]))
         return d
 
+    # Formato 2 (compatto): l'url è derivabile dall'id (lo ricostruisce il
+    # front-end all'idratazione), quindi non viene emesso.
     out_nodes = [{
         "id": n["id"], "title": n["title"], "artist": n["primary_artist"],
-        "artists": n["artists"], "url": n["url"], "duration": n["duration"],
+        "artists": n["artists"], "duration": n["duration"],
         "genres": n["genres"], "genre": n["genre_primary"],
         "community": gidx[n["genre_primary"]],
         "playlists": sorted(n["playlists"]), "degree": deg[n["id"]],
@@ -246,8 +249,11 @@ def build(archive: dict, seed: int = 7) -> dict:
         **n.get("audio", {}),
     } for n in nodes]
 
-    # weight = peso default (per layout/back-compat); c = componenti per ri-pesare al volo
-    out_links = [{"source": x, "target": y, "weight": round(edge_weight(c), 2), "c": c}
+    # Formato 2 (compatto): source/target = INDICI in nodes (non gli id da 22
+    # char) e niente weight (il front-end lo ricalcola da c × linkWeights
+    # all'idratazione). Dimezza il peso degli archi nel JSON.
+    node_index = {n["id"]: i for i, n in enumerate(out_nodes)}
+    out_links = [{"source": node_index[x], "target": node_index[y], "c": c}
                  for (x, y), c in comp.items()]
 
     # --- info per il sottotitolo (numero playlist, range, ultimo aggiornamento) ---
@@ -268,6 +274,9 @@ def build(archive: dict, seed: int = 7) -> dict:
         "links": out_links,
         "genres": genre_order,
         "meta": {
+            # formato 2 = compatto: archi con indici, niente weight/url
+            # (il front-end idrata al load; vedi hydrateGraph in MusicNetwork.jsx)
+            "format": 2,
             "unique_tracks": len(out_nodes),
             "edges": len(out_links),
             "genres": len(genre_order),
