@@ -379,7 +379,16 @@ new-release-atlas/
 │   ├── data/                            # RAW/genres/features archives (#12–#32) + overrides
 │   └── docs/                            # prompt.md · CLAUDE_CODE_BRIEFING.md (bootstrap records)
 ├── src/
-│   ├── MusicNetwork.jsx                 # the map component (D3 force graph)
+│   ├── MusicNetwork.jsx                 # orchestrator: state, D3 simulation, wiring
+│   ├── graph/
+│   │   ├── hydrate.js                   # format-2 graph.json hydration
+│   │   └── layout.js                    # force helpers (anchors, cluster force, jitter)
+│   ├── components/
+│   │   ├── Header.jsx                   # title, subtitle, search / reset toolbar
+│   │   ├── Legend.jsx                   # genre legend / filter
+│   │   ├── DetailPanel.jsx              # track card (mood, actions, embed)
+│   │   └── Overlays.jsx                 # map hints, credits, hover tooltip
+│   ├── theme.js                         # palette: genre colours + ink/paper/accent
 │   ├── Chat.jsx                         # chat panel (prompt → playlist)
 │   ├── playlist.js                      # rule engine: prompt → playlist
 │   ├── WeightControls.jsx               # route-weight / variety / mood sliders

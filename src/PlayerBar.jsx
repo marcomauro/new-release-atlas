@@ -3,10 +3,8 @@ import {
   spotifyPlay, spotifyPause, spotifyResume, spotifyDevices, spotifyState, spotifyTransfer,
   spotifyNext, spotifyPrevious, spotifySeek, spotifyShuffle, spotifyRepeat,
 } from "./spotifyConnect.js";
+import { INK, PAPER, MUTED } from "./theme.js";
 
-const INK = "#2b2724";
-const PAPER = "#f4f1ea";
-const MUTED = "#9a938a";
 const GREEN = "#1db954";
 
 // Carica una sola volta l'API iFrame ufficiale di Spotify (per l'embed 30s).

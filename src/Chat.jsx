@@ -1,9 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import WeightControls from "./WeightControls.jsx";
+import { INK, PAPER, MUTED } from "./theme.js";
 
-const INK = "#2b2724";
-const PAPER = "#f4f1ea";
-const MUTED = "#9a938a";
 
 const SUGGESTIONS = [
   "relaxing jazz, 15 tracks",

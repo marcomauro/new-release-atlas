@@ -5,164 +5,29 @@ import PlayerBar, { preloadSpotifyApi } from "./PlayerBar.jsx";
 import {
   completeSpotifyAuthIfNeeded, isSpotifyLoggedIn, loginSpotify, setPendingPlay, takePendingPlay,
 } from "./spotifyConnect.js";
-import { buildPlaylist, buildFromSeed, GENRE_LABEL, DEFAULT_LINK_WEIGHTS, DEFAULT_RANDOMNESS, DEFAULT_MOOD } from "./playlist.js";
-import WeightControls from "./WeightControls.jsx";
+import { buildPlaylist, buildFromSeed, DEFAULT_LINK_WEIGHTS, DEFAULT_RANDOMNESS, DEFAULT_MOOD } from "./playlist.js";
 import {
   SPOTLISTR_URL, playlistLinks, playlistCsv, exportFilename, copyText, downloadFile,
 } from "./export.js";
-
-let GRAPH = null; // populated by loader before MusicNetworkInner mounts
-
-// Idrata il graph.json "formato 2" (compatto) nel formato ricco che il resto
-// del codice si aspetta. Nel formato 2 gli archi usano INDICI interi nei nodi
-// (non gli id Spotify da 22 char), niente campo weight (ricalcolato da c) e i
-// nodi non portano l'url (derivabile dall'id): ~50% di payload in meno.
-// Retro-compatibile: un graph.json vecchio formato passa invariato.
-function hydrateGraph(data) {
-  const W = (data.meta && data.meta.linkWeights) ||
-    { primary: 1.2, artist: 3.0, secondary: 0.6, playlist: 0.3 };
-  for (const n of data.nodes) {
-    if (!n.url) n.url = "https://open.spotify.com/track/" + n.id;
-  }
-  for (const l of data.links) {
-    if (typeof l.source === "number") l.source = data.nodes[l.source].id;
-    if (typeof l.target === "number") l.target = data.nodes[l.target].id;
-    if (l.weight == null) {
-      const c = l.c || [0, 0, 0, 0];
-      l.weight = Math.round(
-        (c[0] * W.artist + c[1] * W.primary + c[2] * W.secondary + c[3] * W.playlist) * 100
-      ) / 100;
-    }
-  }
-  return data;
-}
+import { INK, PAPER, MUTED, ACCENT, gColor } from "./theme.js";
+import { hydrateGraph } from "./graph/hydrate.js";
+import { clusterForce, hashJitter, packGenreAnchors } from "./graph/layout.js";
+import Header from "./components/Header.jsx";
+import Legend from "./components/Legend.jsx";
+import DetailPanel from "./components/DetailPanel.jsx";
+import { MapHints, Credits, HoverCard } from "./components/Overlays.jsx";
 
 /* ----------------------------------------------------------------
    New Release Atlas v2 — force-directed map by inferred GENRE
    Nodes = tracks · Edges = shared artist / shared genre / co-playlist
    Colour = inferred primary genre · interactive legend filter
+
+   This file is the orchestrator: it owns the state, the D3 simulation
+   effects and the wiring between the map and the UI. Presentational
+   pieces live in components/, force helpers in graph/, colours in theme.
    ---------------------------------------------------------------- */
 
-// GRAPH is loaded at runtime from /graph.json (see useEffect below)
-
-// Genre palette — each genre its own hue, editorial / muted.
-const GENRE_COLOR = {
-  "neo-soul": "#c75b4a",
-  "electronic": "#3a7d8c",
-  "jazz": "#d39a3e",
-  "alt": "#8a6d9e",
-  "uk-jazz": "#6b8e5a",
-  "hip-hop": "#b5697e",
-  "world": "#bf8b4a",
-  "soulful-house": "#4f9e9e",
-  "soul-funk": "#9e6b52",
-  "broken-beat": "#7d8c4f",
-  "downtempo": "#5b6b9e",
-  "classical": "#7a8aa0",
-  "unknown": "#b8b0a4",
-};
-// GENRE_LABEL è importato da playlist.js (unica fonte di verità).
-
-const INK = "#2b2724";
-const PAPER = "#f4f1ea";
-const MUTED = "#9a938a";
-// Accento "attivo": usato sia per l'alone del brano selezionato sia per la
-// linea del percorso. Azzurro brillante -> azzurro = ciò che è attivo/in ascolto.
-const ACCENT = "#1fb6e8";
-
-const gColor = (g) => GENRE_COLOR[g] || MUTED;
-
-// Parametri di mood (0–1) mostrati come barrette nel pannello dettaglio.
-const MOOD_PARAMS = [
-  ["energy", "Energy"],
-  ["valence", "Valence"],
-  ["danceability", "Danceability"],
-  ["acousticness", "Acousticness"],
-  ["instrumentalness", "Instrumental"],
-];
-
-// Forza di coesione "a cluster": ogni tick spinge i nodi che condividono la
-// stessa chiave (es. genere, oppure genere+artista) verso il loro centroide.
-// Usata per compattare i cluster di genere e avvicinare i brani dello stesso
-// autore all'interno del cluster.
-function clusterForce(keyFn, strength) {
-  let groups = [];
-  function force(alpha) {
-    const k = strength * alpha;
-    for (const arr of groups) {
-      if (arr.length < 2) continue;
-      let cx = 0, cy = 0;
-      for (const n of arr) { cx += n.x; cy += n.y; }
-      cx /= arr.length; cy /= arr.length;
-      for (const n of arr) { n.vx += (cx - n.x) * k; n.vy += (cy - n.y) * k; }
-    }
-  }
-  force.initialize = (nodes) => {
-    const m = new Map();
-    for (const n of nodes) {
-      const key = keyFn(n);
-      let a = m.get(key);
-      if (!a) m.set(key, (a = []));
-      a.push(n);
-    }
-    groups = Array.from(m.values());
-  };
-  return force;
-}
-
-// Jitter deterministico 0..1 da un id (hash stabile). Usato per variare di poco
-// il raggio di collisione: dischi NON tutti uguali -> niente impacchettamento
-// esagonale (che richiede cerchi uguali), disposizione più organica.
-function hashJitter(id) {
-  let h = 0;
-  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) | 0;
-  return ((h >>> 0) % 1000) / 1000;
-}
-
-// Ancore di genere "impacchettate" PROPORZIONALMENTE alla dimensione del cluster.
-// Ogni genere riceve un raggio-territorio ∝ √(n° brani) → area ∝ conteggio →
-// densità ~uniforme su tutta la tela. Una mini-simulazione DETERMINISTICA (init
-// su spirale aurea, niente random) dispone i 13 territori senza sovrapporsi
-// attorno al centro; il risultato è poi scalato per riempire il riquadro (con
-// margini, adattandosi all'aspect-ratio). Sostituisce l'anello a passo fisso, che
-// comprimeva i cluster grandi, sperdeva i piccoli e lasciava vuoto il centro.
-function packGenreAnchors(genres, counts, dims) {
-  const cx = dims.w / 2, cy = dims.h / 2;
-  const GOLD = Math.PI * (3 - Math.sqrt(5)); // angolo aureo (init riproducibile)
-  const terr = (g) => Math.sqrt(Math.max(1, counts[g] || 1));
-  const a = genres.map((g, i) => ({
-    genre: g, r: terr(g),
-    x: cx + 14 * Math.sqrt(i + 0.5) * Math.cos(i * GOLD),
-    y: cy + 14 * Math.sqrt(i + 0.5) * Math.sin(i * GOLD),
-  }));
-  const sim = d3
-    .forceSimulation(a)
-    // Padding ampio fra i territori (+6): riserva vuoto attorno a ogni cluster
-    // cosi' nessun contorno tocca. La copertura risulta meno omogenea (isole con
-    // spazio fra loro) ed e' un compromesso voluto.
-    .force("collide", d3.forceCollide((d) => d.r + 6).iterations(6))
-    .force("x", d3.forceX(cx).strength(0.045))
-    .force("y", d3.forceY(cy).strength(0.045))
-    .stop();
-  for (let i = 0; i < 320; i++) sim.tick();
-  // bounding box dei territori → fit nella tela con margini
-  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-  for (const d of a) {
-    minX = Math.min(minX, d.x - d.r); maxX = Math.max(maxX, d.x + d.r);
-    minY = Math.min(minY, d.y - d.r); maxY = Math.max(maxY, d.y + d.r);
-  }
-  const margin = Math.min(dims.w, dims.h) * 0.10;
-  const bw = Math.max(1, maxX - minX), bh = Math.max(1, maxY - minY);
-  let sx = (dims.w - 2 * margin) / bw, sy = (dims.h - 2 * margin) / bh;
-  // limita la distorsione fra gli assi (riempie il widescreen senza stirare troppo)
-  const RATIO = 1.7;
-  if (sx > sy * RATIO) sx = sy * RATIO;
-  if (sy > sx * RATIO) sy = sx * RATIO;
-  const bcx = (minX + maxX) / 2, bcy = (minY + maxY) / 2;
-  const m = new Map();
-  for (const d of a) m.set(d.genre, { x: cx + (d.x - bcx) * sx, y: cy + (d.y - bcy) * sy });
-  return m;
-}
+let GRAPH = null; // populated by loader (hydrateGraph) before MusicNetworkInner mounts
 
 function MusicNetworkInner() {
   const svgRef = useRef(null);
@@ -858,226 +723,32 @@ function MusicNetworkInner() {
         }}
       />
 
-      {/* Header — container click-through; inputs re-enable events */}
-      <div
-        style={{
-          position: "absolute",
-          top: isMobile ? 12 : 28,
-          left: isMobile ? 12 : 32,
-          right: isMobile ? 12 : undefined,
-          zIndex: 10,
-          maxWidth: isMobile ? undefined : 360,
-          pointerEvents: "none",
-        }}
-      >
-        <div
-          style={{
-            fontFamily: "'Spectral', serif",
-            fontSize: isMobile ? 22 : 30,
-            fontWeight: 500,
-            letterSpacing: "-0.01em",
-            lineHeight: 1.05,
-          }}
-        >
-          New Release Atlas
-        </div>
-        {!isMobile && (
-          <div
-            style={{
-              fontSize: 12,
-              color: MUTED,
-              marginTop: 6,
-            }}
-          >
-            {meta.unique_tracks} tracks · {meta.edges} links · {orderedGenres.length}{" "}
-            genres · {meta.playlists} playlists ({meta.playlist_range})
-            {meta.updated ? ` · updated ${meta.updated}` : ""}
-          </div>
-        )}
+      <Header
+        isMobile={isMobile}
+        meta={meta}
+        genreCount={orderedGenres.length}
+        query={query}
+        setQuery={setQuery}
+        legendOpen={legendOpen}
+        setLegendOpen={setLegendOpen}
+        onReset={resetView}
+      />
 
-        <div
-          style={{
-            marginTop: isMobile ? 10 : 18,
-            display: "flex",
-            gap: 8,
-            pointerEvents: "auto",
-            width: isMobile ? "100%" : "fit-content",
-          }}
-        >
-          <input
-            className="mn-input"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search track or artist…"
-            style={{
-              flex: 1,
-              minWidth: 0,
-              padding: isMobile ? "10px 12px" : "8px 12px",
-              fontSize: 13,
-              background: "rgba(255,255,255,0.6)",
-              border: `1px solid ${MUTED}`,
-              borderRadius: 2,
-              color: INK,
-              transition: "border-color 0.2s",
-            }}
-          />
-          {isMobile && (
-            <button
-              onClick={() => setLegendOpen((v) => !v)}
-              aria-label="Toggle genre filter"
-              style={{
-                padding: "10px 12px",
-                fontSize: 12,
-                background: legendOpen ? "rgba(255,255,255,0.85)" : "transparent",
-                border: `1px solid ${MUTED}`,
-                borderRadius: 2,
-                color: INK,
-                cursor: "pointer",
-                whiteSpace: "nowrap",
-              }}
-            >
-              ⦿ Genres
-            </button>
-          )}
-          <button
-            onClick={resetView}
-            style={{
-              padding: isMobile ? "10px 14px" : "8px 14px",
-              fontSize: 12,
-              background: "transparent",
-              border: `1px solid ${MUTED}`,
-              borderRadius: 2,
-              color: INK,
-              cursor: "pointer",
-            }}
-          >
-            Reset
-          </button>
-        </div>
-      </div>
-
-      {/* Genre legend / filter — container is click-through; only rows catch clicks.
-          On mobile it's a toggleable card so it doesn't bury the map. */}
       {showLegend && (
-      <div
-        style={{
-          position: "absolute",
-          top: isMobile ? 92 : 150,
-          left: isMobile ? 12 : 32,
-          right: isMobile ? 12 : undefined,
-          zIndex: 10,
-          width: isMobile ? "auto" : "fit-content",
-          maxWidth: isMobile ? undefined : 220,
-          maxHeight: isMobile ? "52dvh" : undefined,
-          overflowY: isMobile ? "auto" : undefined,
-          pointerEvents: isMobile ? "auto" : "none",
-          background: isMobile ? "rgba(255,255,255,0.72)" : "transparent",
-          backdropFilter: isMobile ? "blur(10px)" : undefined,
-          border: isMobile ? `1px solid ${MUTED}` : undefined,
-          borderRadius: isMobile ? 6 : undefined,
-          padding: isMobile ? "10px 12px" : undefined,
-          boxShadow: isMobile ? "0 10px 30px rgba(0,0,0,0.12)" : undefined,
-        }}
-      >
-        <div
-          style={{
-            fontSize: 10,
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-            color: MUTED,
-            marginBottom: 8,
-          }}
-        >
-          Genres — {isMobile ? "tap" : "click"} to filter
-        </div>
-        {orderedGenres.map((g) => {
-          const active = activeGenre === g;
-          return (
-            <div
-              key={g}
-              className="mn-chip"
-              onClick={() => setActiveGenre(active ? null : g)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                padding: isMobile ? "8px 8px" : "3px 6px",
-                marginBottom: 1,
-                width: isMobile ? "100%" : "fit-content",
-                cursor: "pointer",
-                pointerEvents: "auto",
-                borderRadius: 2,
-                background: active ? "rgba(255,255,255,0.7)" : "transparent",
-                opacity: activeGenre && !active ? 0.4 : 1,
-              }}
-            >
-              <span
-                style={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: "50%",
-                  background: gColor(g),
-                  flexShrink: 0,
-                  border: active ? `1.5px solid ${INK}` : "none",
-                }}
-              />
-              <span style={{ fontSize: isMobile ? 13 : 12, minWidth: isMobile ? 0 : 120, flex: isMobile ? 1 : undefined }}>{GENRE_LABEL[g] || g}</span>
-              <span style={{ fontSize: 11, color: MUTED, marginLeft: "auto" }}>
-                {genreCounts[g]}
-              </span>
-            </div>
-          );
-        })}
-      </div>
+        <Legend
+          isMobile={isMobile}
+          genres={orderedGenres}
+          genreCounts={genreCounts}
+          activeGenre={activeGenre}
+          setActiveGenre={setActiveGenre}
+        />
       )}
 
-      {!isMobile && (
-      <div
-        style={{
-          position: "absolute",
-          bottom: 24,
-          left: 32,
-          zIndex: 10,
-          fontSize: 11,
-          color: MUTED,
-          lineHeight: 1.6,
-        }}
-      >
-        Click a node to isolate its links · drag to reposition
-        <br />
-        scroll to zoom · clusters are the inferred genres
-      </div>
-      )}
+      {!isMobile && <MapHints />}
 
-      {/* Credits — bottom-right, discreto. Su mobile nascosti quando il player
-          è attivo o la chat è aperta, per non sovrapporsi alla barra in basso. */}
-      {(!isMobile || (!playTracks.length && !chatOpen)) && (
-      <div
-        style={{
-          position: "absolute",
-          bottom: `calc(8px + env(safe-area-inset-bottom))`,
-          right: isMobile ? 12 : 32,
-          zIndex: 10,
-          fontSize: 10.5,
-          color: MUTED,
-          textAlign: "right",
-          lineHeight: 1.5,
-          pointerEvents: "auto",
-        }}
-      >
-        by Marco Mauro ·{" "}
-        <a
-          href="https://github.com/marcomauro/new-release-atlas"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: INK, textDecoration: "none", borderBottom: `1px solid ${MUTED}` }}
-        >
-          source on GitHub
-        </a>
-        <br />
-        built with Claude by Anthropic
-      </div>
-      )}
+      {/* Credits are hidden on mobile while the player is active or the chat
+          is open, so they don't overlap the bottom bar. */}
+      {(!isMobile || (!playTracks.length && !chatOpen)) && <Credits isMobile={isMobile} />}
 
       <div ref={wrapRef} style={{ position: "absolute", inset: 0, zIndex: 2 }}>
         <svg
@@ -1096,275 +767,25 @@ function MusicNetworkInner() {
         />
       </div>
 
-      {/* Detail panel — a docked card on desktop, a bottom sheet on mobile. */}
       {selected && (
-        <div
-          style={{
-            position: "absolute",
-            top: isMobile ? undefined : 28,
-            right: isMobile ? 0 : 28,
-            bottom: isMobile ? 0 : undefined,
-            left: isMobile ? 0 : undefined,
-            zIndex: 40,
-            width: isMobile ? "auto" : 340,
-            maxWidth: isMobile ? undefined : "calc(100vw - 56px)",
-            boxSizing: "border-box",
-            maxHeight: isMobile ? "70dvh" : undefined,
-            overflowY: isMobile ? "auto" : undefined,
-            background: "rgba(255,255,255,0.72)",
-            backdropFilter: "blur(10px)",
-            border: `1px solid ${MUTED}`,
-            borderRadius: isMobile ? "14px 14px 0 0" : 3,
-            padding: isMobile ? "18px 20px 0" : "20px 22px",
-            // su mobile riserva in fondo lo spazio del player attivo, così i
-            // bottoni/contenuto non finiscono coperti dal mini-player.
-            paddingBottom: isMobile
-              ? `calc(${playTracks.length ? playerH + 36 : 20}px + env(safe-area-inset-bottom))`
-              : undefined,
-            boxShadow: isMobile ? "0 -8px 30px rgba(0,0,0,0.16)" : "0 8px 30px rgba(0,0,0,0.08)",
-          }}
-        >
-          <button
-            onClick={() => setSelected(null)}
-            aria-label="Close"
-            style={{
-              position: "absolute",
-              top: 12,
-              right: 12,
-              width: 30,
-              height: 30,
-              lineHeight: "28px",
-              textAlign: "center",
-              fontSize: 15,
-              background: "transparent",
-              border: `1px solid rgba(154,147,138,0.5)`,
-              borderRadius: "50%",
-              color: MUTED,
-              cursor: "pointer",
-            }}
-          >
-            ✕
-          </button>
-          <div style={{ display: "flex", gap: 6, marginBottom: 12, flexWrap: "wrap", paddingRight: 34 }}>
-            {selected.genres.map((g) => (
-              <span
-                key={g}
-                style={{
-                  fontSize: 10,
-                  padding: "2px 8px",
-                  borderRadius: 10,
-                  background: gColor(g),
-                  color: "#fff",
-                  letterSpacing: "0.02em",
-                }}
-              >
-                {GENRE_LABEL[g] || g}
-              </span>
-            ))}
-          </div>
-          <div
-            style={{
-              fontFamily: "'Spectral', serif",
-              fontSize: 19,
-              fontWeight: 500,
-              lineHeight: 1.2,
-            }}
-          >
-            {selected.title}
-          </div>
-          <div style={{ fontSize: 13, marginTop: 6 }}>
-            {selected.artists.join(", ")}
-          </div>
-          <div
-            style={{
-              fontSize: 11,
-              color: MUTED,
-              marginTop: 14,
-              lineHeight: 1.7,
-            }}
-          >
-            Duration {selected.duration} · {selected.degree} links
-            {selected.bpm != null && <> · {selected.bpm} BPM</>}
-            <br />
-            Playlists {selected.playlists.map((p) => "#" + p).join(", ")}
-          </div>
-
-          {/* Atmosfera: mood + parametri + subgenres — nascosta di default,
-              si apre a richiesta per non affollare la scheda. */}
-          {(selected.mood?.length ||
-            selected.subgenres?.length ||
-            MOOD_PARAMS.some(([k]) => selected[k] != null)) && (
-            <div style={{ marginTop: 14 }}>
-              <button
-                onClick={() => setMoodOpen((v) => !v)}
-                style={{
-                  fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase",
-                  color: MUTED, background: "transparent", border: "none",
-                  padding: 0, cursor: "pointer",
-                }}
-              >
-                {moodOpen ? "▾" : "▸"} Mood & audio
-              </button>
-              {moodOpen && (
-              <div style={{ marginTop: 10 }}>
-              {selected.mood?.length > 0 && (
-                <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }}>
-                  {selected.mood.map((m) => (
-                    <span
-                      key={m}
-                      style={{
-                        fontSize: 10,
-                        padding: "2px 8px",
-                        borderRadius: 10,
-                        background: "rgba(43,39,36,0.06)",
-                        color: INK,
-                        border: `1px solid rgba(154,147,138,0.45)`,
-                        letterSpacing: "0.02em",
-                      }}
-                    >
-                      {m}
-                    </span>
-                  ))}
-                </div>
-              )}
-              {MOOD_PARAMS.map(([key, label]) =>
-                selected[key] != null ? (
-                  <div key={key} style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 5 }}>
-                    <span
-                      style={{
-                        fontSize: 9.5,
-                        color: MUTED,
-                        width: 104,
-                        whiteSpace: "nowrap",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.04em",
-                      }}
-                    >
-                      {label}
-                    </span>
-                    <div style={{ flex: 1, height: 5, background: "rgba(154,147,138,0.25)", borderRadius: 3, overflow: "hidden" }}>
-                      <div style={{ width: `${Math.round(selected[key] * 100)}%`, height: "100%", background: INK }} />
-                    </div>
-                    <span style={{ fontSize: 10, color: MUTED, width: 22, textAlign: "right" }}>
-                      {Math.round(selected[key] * 100)}
-                    </span>
-                  </div>
-                ) : null
-              )}
-              {selected.subgenres?.length > 0 && (
-                <div style={{ fontSize: 11, color: MUTED, marginTop: 12, lineHeight: 1.5 }}>
-                  {selected.subgenres.join(" · ")}
-                </div>
-              )}
-              </div>
-              )}
-            </div>
-          )}
-          {/* Azioni: su mobile stanno su un'unica riga (etichette compatte). */}
-          <div style={{ display: "flex", gap: isMobile ? 6 : 8, marginTop: 16, flexWrap: isMobile ? "nowrap" : "wrap" }}>
-            <a
-              href={selected.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                flex: isMobile ? 1 : undefined, minWidth: 0,
-                textAlign: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
-                fontSize: 12, color: PAPER, background: INK,
-                padding: isMobile ? "9px 8px" : "7px 14px",
-                borderRadius: 2, textDecoration: "none",
-              }}
-            >
-              {isMobile ? "Spotify ↗" : "Open in Spotify ↗"}
-            </a>
-            <button
-              onClick={() => generateFromNode(selected)}
-              title="Build a playlist from this track's graph connections"
-              style={{
-                flex: isMobile ? 1 : undefined, minWidth: 0,
-                whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
-                fontSize: 12, color: INK, background: "transparent",
-                border: `1px solid ${INK}`,
-                padding: isMobile ? "9px 8px" : "7px 14px",
-                borderRadius: 2, cursor: "pointer",
-              }}
-            >
-              {isMobile ? "♫ Generate" : "♫ Generate playlist"}
-            </button>
-            <button
-              onClick={() => setWeightsOpen((v) => !v)}
-              title="Adjust the link weights used to build the route"
-              style={{
-                flex: isMobile ? "0 0 auto" : undefined,
-                fontSize: 12, color: INK, background: weightsOpen ? "rgba(43,39,36,0.08)" : "transparent",
-                border: `1px solid ${MUTED}`,
-                padding: isMobile ? "9px 11px" : "7px 12px",
-                borderRadius: 2, cursor: "pointer", whiteSpace: "nowrap",
-              }}
-            >
-              {isMobile ? "⚖" : "⚖ weights"}
-            </button>
-          </div>
-
-          {weightsOpen && (
-            <div style={{ marginTop: 12 }}>
-              <WeightControls
-                weights={weights} setWeights={setWeights}
-                randomness={randomness} setRandomness={setRandomness}
-                mood={mood} setMood={setMood}
-                liveRegen={liveRegen} setLiveRegen={setLiveRegen}
-                onRegenerate={regenerateFromLast} canRegenerate={!!playlist}
-              />
-            </div>
-          )}
-          {/* Player Spotify del singolo brano (anteprima ~30s per tutti, brano
-              intero per Premium loggato). Nascosto se c'è un percorso in
-              ascolto: in quel caso suona il mini-player del percorso (no doppio audio). */}
-          {!playlist && (
-            <iframe
-              title="Spotify player"
-              src={`https://open.spotify.com/embed/track/${selected.id}?utm_source=new-release-atlas`}
-              width="100%"
-              height="80"
-              frameBorder="0"
-              loading="lazy"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              style={{ border: 0, borderRadius: 8, marginTop: 16, display: "block" }}
-            />
-          )}
-        </div>
+        <DetailPanel
+          track={selected}
+          onClose={() => setSelected(null)}
+          isMobile={isMobile}
+          reserveBottom={playTracks.length ? playerH + 36 : 20}
+          moodOpen={moodOpen} setMoodOpen={setMoodOpen}
+          weightsOpen={weightsOpen} setWeightsOpen={setWeightsOpen}
+          onGenerate={generateFromNode}
+          showEmbed={!playlist}
+          weights={weights} setWeights={setWeights}
+          randomness={randomness} setRandomness={setRandomness}
+          mood={mood} setMood={setMood}
+          liveRegen={liveRegen} setLiveRegen={setLiveRegen}
+          onRegenerate={regenerateFromLast} canRegenerate={!!playlist}
+        />
       )}
 
-      {!isMobile && hovered && !selected && (
-        <div
-          style={{
-            position: "absolute",
-            bottom: 24,
-            right: 28,
-            zIndex: 15,
-            background: "rgba(43,39,36,0.92)",
-            color: PAPER,
-            padding: "8px 14px",
-            borderRadius: 2,
-            fontSize: 12,
-            maxWidth: 260,
-          }}
-        >
-          <span style={{ fontFamily: "'Spectral', serif", fontWeight: 500 }}>
-            {hovered.title}
-          </span>
-          <span style={{ opacity: 0.7 }}> — {hovered.artist}</span>
-          <span
-            style={{
-              display: "block",
-              marginTop: 2,
-              fontSize: 10,
-              color: gColor(hovered.genre),
-            }}
-          >
-            ● {GENRE_LABEL[hovered.genre] || hovered.genre}
-          </span>
-        </div>
-      )}
+      {!isMobile && hovered && !selected && <HoverCard track={hovered} />}
 
       <Chat
         open={chatOpen}
