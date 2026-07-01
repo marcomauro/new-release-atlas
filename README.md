@@ -164,66 +164,68 @@ configured in [`vite.config.js`](vite.config.js)):
 
 ## Data pipeline
 
-The archive goes through several stages before becoming the map. **None of the
-committed Python scripts use the Spotify API at runtime, and only `enrich_audio.py`
-needs internet.** `build_graph.py` reads whatever archive is present, fully offline.
+The live map is driven by **one archive**: `data/spotify_archive_enriched.json`
+(the AI-enriched archive — genres, subgenres, mood, `mood_parameters`, bpm).
+Everything else that used to feed the map (the classic genre/audio enrichment
+pipeline) is **frozen in [`legacy/`](legacy/README.md)** and is not part of the
+flow anymore. All committed scripts are stdlib-only and fully offline.
 
 ```
-data/spotify_archive.json              RAW archive (tracks, artists, playlists) — source of truth, hand-maintained
-        │
-        ▼  scripts/enrich_genres.py     (uses scripts/genre_map.py) — adds genres + genre_primary
-data/spotify_archive_genres.json
-        │
-        ▼  scripts/enrich_audio.py      LOCAL, needs internet — adds bpm/key/mode/camelot/energy/valence/year/popularity/isrc
-data/spotify_archive_features.json
+ PHASE A — data prep (outside the repo · you + AI)
+ ──────────────────────────────────────────────────
+ support.json   raw tracklist of the new playlist(s)
+ char.json      expert characterization of the NEW tracks only
 
-data/spotify_archive_enriched.json      AI-expert enrichment — subgenres, mood, mood_parameters (0–1), bpm/bpm_source
+ PHASE B — merge & publish (in the repo · automated)
+ ──────────────────────────────────────────────────
+ scripts/add_playlist.py         validates + merges into the enriched archive
+        │                        (reuse of existing characterizations, duplicate
+        ▼                        detection, metadata update, .bak backup)
+ data/spotify_archive_enriched.json     the single source of truth
         │
-        ▼  scripts/build_graph.py       idempotent, stdlib only — builds nodes + edges + clusters
-public/graph.json                       the map's input, served statically
+        ▼  scripts/build_graph.py       idempotent, stdlib only — nodes + edges + clusters
+ public/graph.json                      the map's input, served statically
 ```
+
+The full step-by-step (input formats, decision checkpoints, validation rules) is
+in [`docs/ADDING_PLAYLISTS.md`](docs/ADDING_PLAYLISTS.md).
 
 ### Which archive does `build_graph.py` use?
 
 When run **without `--input`** (the default, and what CI does) it auto-selects the
-**first existing** file in this order — richest first:
+**first existing** file in this order:
 
-1. `data/spotify_archive_enriched.json` ← currently the live source (#1–#36)
-2. `data/spotify_archive_features.json`
-3. `data/spotify_archive_genres.json`
+1. `data/spotify_archive_enriched.json` ← **the live source** (#1–#36 + extra)
+2. `legacy/data/spotify_archive_features.json` (frozen fallback, #12–#32)
+3. `legacy/data/spotify_archive_genres.json` (frozen fallback, #12–#32)
 
 Pass `--input <file>` to force a specific archive. The build degrades gracefully:
 node fields that aren't present in the chosen archive (audio, mood, subgenres…)
 are simply omitted.
 
-### The archives
+### The archive
 
-- **`spotify_archive.json`** — RAW, hand-maintained source of truth. New playlists
-  are appended here.
-- **`spotify_archive_genres.json`** — output of `enrich_genres.py`: every track
-  gets `genres` + `genre_primary`.
-- **`spotify_archive_features.json`** — output of `enrich_audio.py`: web-sourced
-  audio data. Coverage is high for `year`/`popularity`/`isrc` (≈97%) and low for
-  ReccoBeats audio features like `bpm`/`energy` (≈6%), so it's complementary to:
-- **`spotify_archive_enriched.json`** — produced by an **AI-expert enrichment
-  pass** (not a committed script; its schema is documented in the file's
-  `metadata`). Adds granular `subgenres`, `mood` descriptors, numeric
-  `mood_parameters` (energy/valence/danceability/acousticness/instrumentalness,
-  0–1) and `bpm`/`bpm_source`. This is what drives the map's mood features today.
+**`data/spotify_archive_enriched.json`** holds `metadata` (counts, playlist
+range, duplicate notes), `playlists[]` (archival, per-playlist tracklists) and
+`tracks_flat[]` (one entry per occurrence — what `build_graph.py` actually
+reads). Every track carries the full enrichment: `genres`/`genre_primary`
+(12-value taxonomy), `subgenres`, `mood` descriptors, numeric `mood_parameters`
+(energy/valence/danceability/acousticness/instrumentalness, 0–1) and
+`bpm`/`bpm_source`. The historical RAW/genres/features archives live in
+[`legacy/data/`](legacy/README.md), frozen at #12–#32.
 
-### The supporting scripts
+### The scripts
 
-- **`scripts/genre_map.py`** — artist→genres map (≈541 artists) + helper functions.
-  A **dependency** of `enrich_genres.py`: they must live in the same `scripts/` folder.
-- **`scripts/enrich_genres.py`** — classifies each track by genre.
-- **`scripts/enrich_audio.py`** — fetches audio data from **ReccoBeats** (audio
-  features by Spotify ID), **Spotify** (track object: year/popularity/isrc — needs
-  `SPOTIFY_CLIENT_ID`/`SPOTIFY_CLIENT_SECRET` in env, skipped otherwise) and
-  **Deezer** (gap-fill by duration match). Idempotent with an on-disk cache
-  (`data/.audio_cache.json`, gitignored). Run locally; the result is committed and
-  **`enrich_audio.py` never runs in CI**.
-- **`scripts/build_graph.py`** — builds the graph. Idempotent: it regenerates the
-  whole graph from the archive's current state.
+- **`scripts/add_playlist.py`** — automated Phase B: takes `support.json` (+
+  `char.json`), validates, merges into the enriched archive with backup, updates
+  `metadata`, annotates duplicates, and optionally rebuilds the graph (`--build`).
+  Stops with a to-do report if any new track lacks a characterization.
+- **`scripts/build_graph.py`** — builds `public/graph.json`. Idempotent: it
+  regenerates the whole graph from the archive's current state.
+- **`scripts/check_docs.py`** — CI guard: fails the build if this README's
+  "Current state" line drifts from the freshly regenerated `graph.json`.
+- The classic enrichment scripts (`enrich_genres.py`, `enrich_audio.py`,
+  `genre_map.py`) are archived in [`legacy/scripts/`](legacy/README.md).
 
 ### `graph.json` schema
 
@@ -260,88 +262,48 @@ playlist]`, so the front-end can re-weight on the fly. The default weights
 
 ---
 
-## Stato dati / TODO
-
-> ⚠️ **Disallineamento dei sorgenti dati.** Il grafo live (`public/graph.json`) è
-> a **#1–#36 · 796 tracks · 6862 edges · 12 genres**, generato dall'archivio
-> AI-arricchito `data/spotify_archive_enriched.json` (#1–#36, 36 playlist, 816
-> tracce flat). I sorgenti della pipeline *classica* sono invece fermi a **#12–#32
-> · 471 tracks · 21 playlist**:
->
-> - `data/spotify_archive.json` (RAW, fonte di verità a monte)
-> - `data/spotify_archive_genres.json`
-> - `data/spotify_archive_features.json`
->
-> **TODO:** rigenerare/ricommittare questi tre file dalla pipeline reale che
-> alimenta il grafo (#1–#36, con mood/bpm), così che la sorgente a monte torni
-> allineata al grafo pubblicato. Finché non avviene, l'unica sorgente aggiornata è
-> `spotify_archive_enriched.json`. *(I file dati non vanno modificati a mano: vanno
-> prodotti dalla pipeline.)*
-
----
-
 ## Weekly workflow
-
-> **Adding playlists to the live map → see [`docs/ADDING_PLAYLISTS.md`](docs/ADDING_PLAYLISTS.md).**
-> The map is driven by the AI-enriched archive (`spotify_archive_enriched.json`), so
-> that doc is the current step-by-step. The pipeline below is the **classic
-> genre/audio enrichment** that produces the *fallback* archives.
 
 When a new New Release Playlist arrives:
 
+**Phase A — prepare the two inputs** (formats in
+[`docs/ADDING_PLAYLISTS.md`](docs/ADDING_PLAYLISTS.md)):
+
+1. `support.json` — the raw tracklist (playlist number/id + per-track
+   pos/id/title/artists/duration).
+2. `char.json` — the expert characterization of the **new** tracks only
+   (genres in the 12-taxonomy, subgenres, mood descriptors, `p` = 5 mood
+   parameters 0–1, optional bpm). Tracks already in the archive are reused
+   automatically — don't re-characterize them.
+
+**Phase B — merge & publish** (automated):
+
 ```bash
-# 1. Update the RAW archive with the new tracks (data/spotify_archive.json),
-#    exporting from your curation system.
+# 1. Validate + merge into the enriched archive (writes a .bak first)
+#    and regenerate public/graph.json:
+python3 scripts/add_playlist.py --support support.json --char char.json --build
 
-# 2. Enrich with genres
-python3 scripts/enrich_genres.py \
-    --input data/spotify_archive.json \
-    --output data/spotify_archive_genres.json \
-    --overrides data/genre_overrides.json \
-    --report-missing data/missing_artists.json
+#    Tip: run with --dry-run first to preview the merge report.
+#    If any new track has no characterization, the script STOPS and prints
+#    the exact to-do list of ids to characterize.
 
-# 3. If the script reports unclassified artists, add them to
-#    data/genre_overrides.json and re-run step 2 (see below).
-
-# 4. (optional) Refresh audio data — local, needs internet:
-python3 scripts/enrich_audio.py --report
-#    Set SPOTIFY_CLIENT_ID / SPOTIFY_CLIENT_SECRET in env to include
-#    year/popularity/isrc from Spotify.
-
-# 5. Regenerate the graph (auto-picks the richest archive available)
-python3 scripts/build_graph.py --output public/graph.json
-
-# 6. Commit + push → GitHub Actions republishes by itself
-git add -A && git commit -m "update: New Release #NN" && git push
+# 2. Verify + publish
+npm run build
+git add data/spotify_archive_enriched.json public/graph.json
+git commit -m "data+graph: add playlist #NN" && git push
+# → GitHub Actions regenerates the graph, checks docs, rebuilds, republishes
 ```
 
-> CI regenerates `graph.json` from the richest committed archive on every push, so
-> even if you forget step 5 the published site stays consistent. The AI-enriched
-> `spotify_archive_enriched.json` is maintained separately and committed when refreshed.
+### Decision checkpoints
 
-### Handling new / unknown artists
-
-`enrich_genres.py` classifies artists via `genre_map.py`. For unknown artists it
-attempts **context inference**: an artist that collaborates on a track with known
-artists inherits their genres (reduced weight). It stays `unknown` only with no
-anchor at all, and is **reported** at the end of the run.
-
-Two ways to classify a new artist:
-
-- **quick** — add it to `data/genre_overrides.json` (no code change):
-
-  ```json
-  { "Artist Name": ["genre1", "genre2"], "Another Artist": ["jazz"] }
-  ```
-
-- **permanent** — add it to the `GENRES` dictionary in `scripts/genre_map.py`.
-
-Useful `enrich_genres.py` options:
-
-- `--report-missing data/missing_artists.json` — for each `unknown` artist, writes
-  track count and known collaborators: useful for classifying it.
-- `--fail-on-missing N` — exits with an error if more than `N` remain unclassified
-  (handy in CI to be alerted when a playlist introduces new artists).
+- **Cross-playlist duplicate** (same id in 2+ playlists) → handled automatically:
+  1 unique track, N occurrences, annotated in `metadata`.
+- **False duplicate** (same title, different id = another recording/edit) →
+  the script keeps them separate and prints a WARN so you can double-check.
+- **New `genre_primary` outside the 12-taxonomy** → the script warns: adopting a
+  new genre also means adding a colour + label in
+  [`src/MusicNetwork.jsx`](src/MusicNetwork.jsx) (`GENRE_COLOR`, `GENRE_LABEL`)
+  and label/synonyms in [`src/playlist.js`](src/playlist.js).
 
 ### Genre taxonomy
 
@@ -350,7 +312,9 @@ soulful-house · broken-beat · uk-jazz · jazz · neo-soul · soul-funk
 hip-hop · electronic · downtempo · world · alt · classical
 ```
 
-(`unknown` is the fallback, to be avoided in overrides.)
+The taxonomy is defined by the archive itself (the set of `genre_primary`
+values) plus the colour/label maps in the front-end. The historical
+artist→genres map that generated it lives in `legacy/scripts/genre_map.py`.
 
 ---
 
@@ -361,8 +325,8 @@ Deploy is automatic: on every push to `main`, the workflow in
 
 1. checks out the repo;
 2. installs Python and regenerates `public/graph.json` with `build_graph.py`
-   (no `--input` → auto-picks the richest archive). `enrich_audio.py` does **not**
-   run in CI — its data is committed separately;
+   (no `--input` → picks the enriched archive), then runs `check_docs.py`
+   (fails the build if this README drifted from the data);
 3. installs Node, runs `npm ci` and `npm run build`;
 4. publishes `dist/` to Pages.
 
@@ -389,18 +353,20 @@ derive from `base`.
 new-release-atlas/
 ├── .github/workflows/deploy.yml         # automatic deploy to GitHub Pages
 ├── data/
-│   ├── spotify_archive.json             # RAW archive (source of truth)
-│   ├── spotify_archive_genres.json      # + genres (enrich_genres.py)
-│   ├── spotify_archive_features.json    # + web audio data (enrich_audio.py)
-│   ├── spotify_archive_enriched.json    # + AI subgenres/mood/bpm — live source for build_graph
-│   └── genre_overrides.json             # (optional, NOT committed) extra artist→genres, created on demand
+│   └── spotify_archive_enriched.json    # THE live source (AI-enriched, #1–#36 + extra)
 ├── public/
 │   └── graph.json                       # GENERATED by build_graph.py
 ├── scripts/
-│   ├── genre_map.py                     # artist→genres map (dependency of enrich_genres)
-│   ├── enrich_genres.py                 # genre enrichment
-│   ├── enrich_audio.py                  # audio enrichment (local, needs internet)
-│   └── build_graph.py                   # builds graph.json
+│   ├── add_playlist.py                  # automated merge of new playlists (Phase B)
+│   ├── build_graph.py                   # builds graph.json
+│   └── check_docs.py                    # CI guard: README ↔ graph.json
+├── docs/
+│   └── ADDING_PLAYLISTS.md              # step-by-step: adding playlists to the map
+├── legacy/                              # frozen: classic pipeline + historical artifacts
+│   ├── README.md                        # what's here and why
+│   ├── scripts/                         # enrich_genres.py · enrich_audio.py · genre_map.py
+│   ├── data/                            # RAW/genres/features archives (#12–#32) + overrides
+│   └── docs/                            # prompt.md · CLAUDE_CODE_BRIEFING.md (bootstrap records)
 ├── src/
 │   ├── MusicNetwork.jsx                 # the map component (D3 force graph)
 │   ├── Chat.jsx                         # chat panel (prompt → playlist)
@@ -417,8 +383,7 @@ new-release-atlas/
 └── README.md
 ```
 
-> **Historical note:** `prompt.md` is the original scaffolding artifact used to
-> bootstrap the project (a smaller two-stage pipeline) and is kept **untouched** as
-> a creation record. `CLAUDE_CODE_BRIEFING.md` has since been realigned to the
-> current state (counts, pipeline, per-track schema). This README remains the
-> source of truth.
+> **Historical note:** the project's bootstrap artifacts (`prompt.md`, the
+> original scaffolding prompt, and `CLAUDE_CODE_BRIEFING.md`) are archived in
+> [`legacy/docs/`](legacy/README.md) together with the frozen classic pipeline.
+> This README describes the current flow and remains the source of truth.

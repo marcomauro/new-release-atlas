@@ -32,9 +32,8 @@ jobs:
 
       # Rigenera public/graph.json dall'archivio.
       # build_graph.py usa solo la stdlib: nessuna dipendenza pip. Senza --input
-      # auto-seleziona il primo archivio esistente, dal più ricco al più povero:
-      # enriched (sorgente live) → features → genres. enrich_audio.py NON gira
-      # in CI: i dati audio sono committati a parte.
+      # usa la sorgente live data/spotify_archive_enriched.json (fallback
+      # estremo: gli archivi storici congelati in legacy/data/).
       - name: Generate graph.json
         run: python scripts/build_graph.py --output public/graph.json
 
