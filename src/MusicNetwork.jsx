@@ -29,6 +29,10 @@ import { MapHints, Credits, HoverCard } from "./components/Overlays.jsx";
 
 let GRAPH = null; // populated by loader (hydrateGraph) before MusicNetworkInner mounts
 
+// Node labels: constant ON-SCREEN size in px (the zoom handler counter-scales
+// the group's font by 1/k, so this is exactly what the eye sees at any zoom).
+const LABEL_PX = 10;
+
 function MusicNetworkInner() {
   const svgRef = useRef(null);
   const wrapRef = useRef(null);
@@ -180,7 +184,7 @@ function MusicNetworkInner() {
         // units) is counter-scaled by the zoom factor. Without this, the
         // route auto-fit (k ≈ 0.4–0.9) rendered them at 4–8 real px.
         // One attribute write on the group per frame — tspans inherit.
-        g.select(".mn-labelg").attr("font-size", 9 / e.transform.k);
+        g.select(".mn-labelg").attr("font-size", LABEL_PX / e.transform.k);
       });
     svg.call(zoom);
     svg.on("dblclick.zoom", null);
@@ -274,7 +278,7 @@ function MusicNetworkInner() {
       .attr("class", "mn-labelg")
       // font-size lives on the GROUP (single write per zoom frame counter-
       // scales every label; texts and tspans inherit it)
-      .attr("font-size", 9)
+      .attr("font-size", LABEL_PX)
       .attr("font-family", "'Spectral', Georgia, serif")
       .selectAll("text")
       .data(nodes)
