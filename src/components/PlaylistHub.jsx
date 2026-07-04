@@ -1,26 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import WeightControls from "../WeightControls.jsx";
 import { INK, PAPER, MUTED } from "../theme.js";
 
-const SUGGESTIONS = [
-  "relaxing jazz, 15 tracks",
-  "soulful house for the party",
-  "like Moodymann",
-  "mix neo-soul and uk jazz",
-  "surprise me",
-];
-
 const font = "Inter, system-ui, sans-serif";
 
-// Playlist Hub — the panel behind the "Playlist" launcher. Replaces the old
-// chat-thread UI with three zones, each with a single job:
-//   1. prompt bar (ask): input + always-visible suggestion chips;
-//   2. ACTIVE playlist card (the one drawn on the map): title, note, ALL of
-//      its actions together (Play / Regenerate / Tune / Export) and the
-//      tracklist. The weights panel opens inline here — single entry point;
-//   3. compact history: previous generations as one-line rows with Restore.
-// The engine (playlist.js) is prompt-in → playlist-out, not conversational,
-// so the UI no longer pretends to be a chat.
+// Playlist Hub — the panel behind the "Playlist" launcher. Minimalist rule:
+// show the ask OR the result, never both. With no active playlist the panel
+// is just a prompt row; once one exists, the ACTIVE card is the whole panel
+// (title, actions, tracklist) and the prompt collapses behind a small "+ New"
+// in the header, reappearing only on demand and folding back after each
+// generation. Previous generations sit in a compact restorable history.
 export default function PlaylistHub({
   open, setOpen, value, onChange, onSubmit,
   active, history, notice,
@@ -30,8 +19,17 @@ export default function PlaylistHub({
   liveRegen, setLiveRegen,
 }) {
   const [tuneOpen, setTuneOpen] = useState(false);
+  const [promptOpen, setPromptOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
-  const listRef = useRef(null);
+  const inputRef = useRef(null);
+
+  // A new/updated generation takes the stage: fold the prompt away.
+  useEffect(() => { setPromptOpen(false); }, [active]);
+  // Focus the input whenever the prompt row (re)appears.
+  const showPrompt = !active || promptOpen;
+  useEffect(() => {
+    if (open && showPrompt) inputRef.current?.focus();
+  }, [open, showPrompt]);
 
   const submit = (e) => {
     e.preventDefault();
@@ -69,8 +67,7 @@ export default function PlaylistHub({
         transform: "translateX(-50%)", zIndex: 30,
         width: "min(580px, 94vw)",
         // Height cap: the panel (anchored at the bottom) must never exceed the
-        // viewport, or the header with ✕ escapes above the screen. The
-        // tracklist and history compress/scroll instead.
+        // viewport. The card body is the single scroll area and compresses.
         maxHeight: `calc(100dvh - ${32 + bottomOffset}px - env(safe-area-inset-bottom))`,
         fontFamily: font,
         background: "rgba(255,255,255,0.72)",
@@ -90,61 +87,66 @@ export default function PlaylistHub({
         <span style={{ fontFamily: "'Spectral', serif", fontSize: 15, fontWeight: 500, color: INK }}>
           ♫ Playlist from the graph
         </span>
-        <span style={{ fontSize: 11, color: MUTED }}>— describe what you want to hear</span>
-        <button onClick={() => setOpen(false)} title="Close" style={{ ...iconBtn, marginLeft: "auto" }}>
-          ✕
-        </button>
-      </div>
-
-      {/* ---- zone 1: prompt bar ---- */}
-      <div style={{ padding: "10px 14px 8px", flexShrink: 0, borderBottom: `1px solid rgba(154,147,138,0.3)` }}>
-        <form onSubmit={submit} style={{ display: "flex", gap: 8 }}>
-          <input
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            placeholder="e.g. groovy soul-funk, 10 tracks"
-            style={{
-              flex: 1, fontFamily: font, fontSize: 13, color: INK,
-              border: `1px solid ${MUTED}`, borderRadius: 6, padding: "8px 10px",
-              background: "rgba(255,255,255,0.7)", outline: "none",
-            }}
-          />
-          <button type="submit" style={{ fontFamily: font, fontSize: 13, fontWeight: 500, color: PAPER, background: INK, border: "none", borderRadius: 6, padding: "0 16px", cursor: "pointer" }}>
-            Generate
-          </button>
-        </form>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginTop: 8 }}>
-          {SUGGESTIONS.map((s) => (
-            <button key={s} onClick={() => onSubmit(s)} style={chip}>
-              {s}
+        <span style={{ marginLeft: "auto", display: "flex", gap: 4 }}>
+          {active && (
+            <button
+              onClick={() => setPromptOpen((v) => !v)}
+              title="Ask for a new playlist"
+              style={{ ...iconBtn, background: promptOpen ? "rgba(43,39,36,0.08)" : "transparent" }}
+            >
+              + New
             </button>
-          ))}
-        </div>
-        {/* errors (e.g. prompt not understood) surface here, next to the ask */}
-        {notice && !active && <Notice notice={notice} />}
+          )}
+          <button onClick={() => setOpen(false)} title="Close" style={iconBtn}>
+            ✕
+          </button>
+        </span>
       </div>
 
-      {/* ---- zone 2: ACTIVE playlist card ---- */}
-      {active ? (
-        <div style={{ padding: "10px 14px", minHeight: 0, display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 9.5, letterSpacing: "0.09em", textTransform: "uppercase", color: MUTED, marginBottom: 4 }}>
-            ● On the map
-          </div>
-          <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexShrink: 0 }}>
-            <div style={{ fontFamily: "'Spectral', serif", fontSize: 16, fontWeight: 500, color: INK, textTransform: "capitalize", flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-              {active.res.theme}
+      {/* ---- prompt row: visible only when asking ---- */}
+      {showPrompt && (
+        <div style={{ padding: "10px 14px", flexShrink: 0, borderBottom: `1px solid rgba(154,147,138,0.3)` }}>
+          <form onSubmit={submit} style={{ display: "flex", gap: 8 }}>
+            <input
+              ref={inputRef}
+              value={value}
+              onChange={(e) => onChange(e.target.value)}
+              placeholder="genre, mood, artist… e.g. groovy soul-funk, 10 tracks"
+              style={{
+                flex: 1, minWidth: 0, fontFamily: font, fontSize: 13, color: INK,
+                border: `1px solid ${MUTED}`, borderRadius: 14, padding: "8px 12px",
+                background: "rgba(255,255,255,0.7)", outline: "none",
+              }}
+            />
+            <button type="submit" style={{ ...btnDark, fontSize: 12.5, padding: "7px 16px" }}>
+              Generate
+            </button>
+          </form>
+          {!active && (
+            <div style={{ fontSize: 11.5, color: MUTED, marginTop: 8, lineHeight: 1.5 }}>
+              Tip: you can also click any node on the map and hit <b>♫ Generate</b>.
             </div>
-            <span style={{ fontSize: 11, color: MUTED, flexShrink: 0 }}>
+          )}
+          {notice && !active && <Notice notice={notice} />}
+        </div>
+      )}
+
+      {/* ---- ACTIVE playlist card: the panel's main citizen ---- */}
+      {active && (
+        <div style={{ padding: "10px 14px", flex: "1 1 auto", minHeight: 0, display: "flex", flexDirection: "column" }}>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexShrink: 0 }}>
+            <span style={{ fontSize: 9.5, letterSpacing: "0.09em", textTransform: "uppercase", color: MUTED, flexShrink: 0 }}>
+              ● On the map
+            </span>
+            <span style={{ marginLeft: "auto", fontSize: 11, color: MUTED, flexShrink: 0 }}>
               {active.res.tracks.length} tracks · {active.res.totalLabel}
             </span>
           </div>
-          {active.res.note && (
-            <div style={{ fontSize: 11.5, color: MUTED, margin: "2px 0 0", lineHeight: 1.5 }}>
-              {active.res.note}
-            </div>
-          )}
+          <div style={{ fontFamily: "'Spectral', serif", fontSize: 16, fontWeight: 500, color: INK, textTransform: "capitalize", marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flexShrink: 0 }}>
+            {active.res.theme}
+          </div>
 
-          {/* every action of the active playlist lives HERE, together */}
+          {/* every action of the active playlist lives here, together */}
           <div style={{ display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap", flexShrink: 0 }}>
             <button onClick={() => onPlay(active)} title="Show the route on the map and play it" style={btnDark}>
               ▶ Play
@@ -166,51 +168,49 @@ export default function PlaylistHub({
 
           {notice && <Notice notice={notice} />}
 
-          {tuneOpen && (
-            <div style={{ marginTop: 10, maxHeight: "38vh", overflowY: "auto", flexShrink: 0 }}>
-              {/* No onRegenerate here: the card's own ↻ button is the one
-                  regenerate action. The live-update (legacy) toggle stays. */}
-              <WeightControls
-                weights={weights} setWeights={setWeights}
-                randomness={randomness} setRandomness={setRandomness}
-                mood={mood} setMood={setMood}
-                liveRegen={liveRegen} setLiveRegen={setLiveRegen}
-              />
-            </div>
-          )}
-
-          <ol ref={listRef} style={{ margin: "8px 0 0", paddingLeft: 0, listStyle: "none", overflowY: "auto", minHeight: 0, maxHeight: "34vh" }}>
-            {active.res.tracks.map((t, i) => (
-              <li
-                key={t.id}
-                onClick={() => onPick(t.id)}
-                title="Show on the map"
-                style={{
-                  display: "flex", alignItems: "center", gap: 8,
-                  padding: "4px 6px", borderRadius: 4, cursor: "pointer",
-                  fontSize: 12.5,
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(43,39,36,0.05)")}
-                onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-              >
-                <span style={{ width: 16, textAlign: "right", color: MUTED, fontSize: 11 }}>{i + 1}</span>
-                <span style={{ width: 9, height: 9, borderRadius: "50%", flexShrink: 0, background: genreColor(t.genre) }} />
-                <span style={{ flex: 1, minWidth: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", color: INK }}>
-                  {t.title} <span style={{ color: MUTED }}>— {t.artist}</span>
-                </span>
-                <span style={{ color: MUTED, fontSize: 11, flexShrink: 0 }}>{t.duration}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
-      ) : (
-        <div style={{ padding: "14px", fontSize: 12.5, color: MUTED, lineHeight: 1.6 }}>
-          Type a genre, mood, artist, or number of tracks — or tap a suggestion.
-          You can also click any node on the map and hit <b>♫ Generate</b> in its card.
+          {/* single scroll context: sliders and tracklist share it, so the
+              tune panel can always be scrolled to its last slider */}
+          <div style={{ flex: "1 1 auto", minHeight: 0, overflowY: "auto", marginTop: 8 }}>
+            {tuneOpen && (
+              <div style={{ marginBottom: 8 }}>
+                {/* No onRegenerate here: the card's own ↻ button is the one
+                    regenerate action. The live-update (legacy) toggle stays. */}
+                <WeightControls
+                  weights={weights} setWeights={setWeights}
+                  randomness={randomness} setRandomness={setRandomness}
+                  mood={mood} setMood={setMood}
+                  liveRegen={liveRegen} setLiveRegen={setLiveRegen}
+                />
+              </div>
+            )}
+            <ol style={{ margin: 0, paddingLeft: 0, listStyle: "none" }}>
+              {active.res.tracks.map((t, i) => (
+                <li
+                  key={t.id}
+                  onClick={() => onPick(t.id)}
+                  title="Show on the map"
+                  style={{
+                    display: "flex", alignItems: "center", gap: 8,
+                    padding: "4px 6px", borderRadius: 4, cursor: "pointer",
+                    fontSize: 12.5,
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(43,39,36,0.05)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                >
+                  <span style={{ width: 16, textAlign: "right", color: MUTED, fontSize: 11 }}>{i + 1}</span>
+                  <span style={{ width: 9, height: 9, borderRadius: "50%", flexShrink: 0, background: genreColor(t.genre) }} />
+                  <span style={{ flex: 1, minWidth: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", color: INK }}>
+                    {t.title} <span style={{ color: MUTED }}>— {t.artist}</span>
+                  </span>
+                  <span style={{ color: MUTED, fontSize: 11, flexShrink: 0 }}>{t.duration}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
       )}
 
-      {/* ---- zone 3: compact history ---- */}
+      {/* ---- compact history ---- */}
       {history.length > 0 && (
         <div style={{ borderTop: `1px solid rgba(154,147,138,0.3)`, flexShrink: 0, padding: "8px 14px 10px", maxHeight: "22vh", overflowY: "auto" }}>
           <button
@@ -261,11 +261,6 @@ const iconBtn = {
   fontFamily: font, fontSize: 11, color: MUTED,
   background: "transparent", border: `1px solid rgba(154,147,138,0.5)`,
   borderRadius: 4, padding: "3px 8px", cursor: "pointer", flexShrink: 0,
-};
-const chip = {
-  fontFamily: font, fontSize: 11.5, color: INK,
-  background: "rgba(43,39,36,0.05)", border: `1px solid rgba(154,147,138,0.4)`,
-  borderRadius: 14, padding: "4px 10px", cursor: "pointer",
 };
 const btnDark = {
   fontFamily: font, fontSize: 11.5, fontWeight: 500,
