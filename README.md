@@ -61,11 +61,16 @@ npm run preview    # serves dist/ locally for a realistic check
 - Edges are weighted by relationship type and can be **re-weighted live** without
   rebuilding the graph (see [Route weights](#route-weights--mood)).
 
-### Chat → playlist ([`src/Chat.jsx`](src/Chat.jsx) + [`src/playlist.js`](src/playlist.js))
+### Prompt → playlist ([`src/components/PlaylistHub.jsx`](src/components/PlaylistHub.jsx) + [`src/playlist.js`](src/playlist.js))
 
-At the bottom of the map there's a chat (**♫ Create a playlist**): describe what
-you want to hear and the app builds a playlist by **traversing the graph**,
-highlighting the chosen tracks and drawing the listening path that connects them.
+At the bottom of the map there's the **Playlist Hub** (the "Playlist" pill):
+describe what you want to hear and the app builds a playlist by **traversing
+the graph**, highlighting the chosen tracks and drawing the listening path that
+connects them. The hub has three zones: a **prompt bar** (input + suggestion
+chips), the **active playlist card** — the one drawn on the map, with all of
+its actions together (▶ Play, ↻ Regenerate, ⚖ Tune, ↗ Export) and the
+tracklist — and a compact, restorable **history** of previous generations.
+Pressing ▶ Play collapses the hub so the route is immediately visible.
 
 **No external AI / no API:** the interpretation is a client-side rule engine
 ([`src/playlist.js`](src/playlist.js)), so it works offline and is free and
@@ -387,9 +392,9 @@ new-release-atlas/
 │   │   ├── Header.jsx                   # title, subtitle, search / reset toolbar
 │   │   ├── Legend.jsx                   # genre legend / filter
 │   │   ├── DetailPanel.jsx              # track card (mood, actions, embed)
+│   │   ├── PlaylistHub.jsx              # prompt bar + active playlist card + history
 │   │   └── Overlays.jsx                 # map hints, credits, hover tooltip
 │   ├── theme.js                         # palette: genre colours + ink/paper/accent
-│   ├── Chat.jsx                         # chat panel (prompt → playlist)
 │   ├── playlist.js                      # rule engine: prompt → playlist
 │   ├── WeightControls.jsx               # route-weight / variety / mood sliders
 │   ├── PlayerBar.jsx                    # mini-player (Spotify Connect + embed)
