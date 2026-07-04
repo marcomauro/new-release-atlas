@@ -410,7 +410,9 @@ export function buildPlaylist(graph, rawMessage, weights, randomness = DEFAULT_R
       chosen.push(best.id); chosenSet.add(best.id); note(best);
     }
     chosen = routeOrder(chosen, adj, byId, seed.id);
-    theme = `like ${seed.artist}`;
+    // Theme doubles as the playlist name (hub card, launcher pill, export
+    // filename): carry enough keywords to identify it later.
+    theme = `like ${seed.artist} · ${GENRE_LABEL[seed.genre] || seed.genre}`;
     interpretation =
       `seed "${seed.title}" — ${seed.artist}` +
       (target ? ` · filter ${[...target].map((g) => GENRE_LABEL[g]).join(", ")}` : "");
@@ -448,7 +450,9 @@ export function buildPlaylist(graph, rawMessage, weights, randomness = DEFAULT_R
     }
     chosen = routeOrder(chosen, adj, byId);
     const lbls = [...target].map((g) => GENRE_LABEL[g]).join(", ");
-    theme = moodName && !explicit.size ? `mood ${moodName}` : lbls;
+    // The name carries every recognized keyword — mood AND genres — so
+    // "relaxing jazz" becomes "relaxing · Jazz", not just "Jazz".
+    theme = moodName ? `${moodName} · ${lbls}` : lbls;
     interpretation =
       (explicit.size ? `genres ${lbls}` : `mood ${moodName} → ${lbls}`);
     if (primaryCount < chosen.length)
@@ -480,7 +484,16 @@ export function buildPlaylist(graph, rawMessage, weights, randomness = DEFAULT_R
       }
     }
     chosen = routeOrder(chosen, adj, byId);
-    theme = "discovery mix";
+    // Name the mix after its dominant genres, so each discovery run is
+    // identifiable ("discovery mix · Neo-Soul, Jazz").
+    const gCount = {};
+    for (const id of chosen) {
+      const g = byId.get(id)?.genre;
+      if (g) gCount[g] = (gCount[g] || 0) + 1;
+    }
+    const topG = Object.entries(gCount).sort((a, b) => b[1] - a[1]).slice(0, 2)
+      .map(([g]) => GENRE_LABEL[g] || g).join(", ");
+    theme = topG ? `discovery mix · ${topG}` : "discovery mix";
     interpretation = "no genre/artist recognized → a mix across all clusters";
   }
 
@@ -552,7 +565,7 @@ export function buildFromSeed(graph, seedNode, size = 18, weights, randomness = 
     tracks,
     totalSeconds,
     totalLabel: fmtDur(totalSeconds),
-    theme: seedNode.title,
+    theme: `${seedNode.title} · ${seedNode.artist}`,
     interpretation: `from "${seedNode.title}" — ${seedNode.artist}, via graph connections` + (ml ? ` · mood: ${ml}` : ""),
     note:
       `${tracks.length} tracks · ${fmtDur(totalSeconds)} — built from "${seedNode.title}" by ${seedNode.artist}, ` +

@@ -77,7 +77,6 @@ function MusicNetworkInner() {
   useEffect(() => {
     try { localStorage.setItem("nra_live_regen", liveRegen ? "1" : "0"); } catch {}
   }, [liveRegen]);
-  const [weightsOpen, setWeightsOpen] = useState(false);
   // sezione mood/audio del pannello: parte chiusa ad ogni nuova selezione
   const [moodOpen, setMoodOpen] = useState(false);
 
@@ -784,14 +783,8 @@ function MusicNetworkInner() {
           isMobile={isMobile}
           reserveBottom={playTracks.length ? playerH + 36 : 20}
           moodOpen={moodOpen} setMoodOpen={setMoodOpen}
-          weightsOpen={weightsOpen} setWeightsOpen={setWeightsOpen}
           onGenerate={generateFromNode}
           showEmbed={!playlist}
-          weights={weights} setWeights={setWeights}
-          randomness={randomness} setRandomness={setRandomness}
-          mood={mood} setMood={setMood}
-          liveRegen={liveRegen} setLiveRegen={setLiveRegen}
-          onRegenerate={regenerateFromLast} canRegenerate={!!active}
         />
       )}
 

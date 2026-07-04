@@ -202,11 +202,11 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
 
   return (
     <Shell bottomGap={bottomGap} onHeight={onHeight}>
-      {/* now playing: copertina + titolo (tap → mostra sulla mappa) + chiudi */}
-      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 12px 6px" }}>
+      {/* now playing: artwork + title (tap → show on the map) + close */}
+      <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 12px 6px" }}>
         {cover
-          ? <img src={cover} alt="" width={40} height={40} style={{ borderRadius: 4, flexShrink: 0, objectFit: "cover" }} />
-          : <div style={{ width: 40, height: 40, borderRadius: 4, background: "rgba(154,147,138,0.25)", flexShrink: 0 }} />}
+          ? <img src={cover} alt="" width={56} height={56} style={{ borderRadius: 6, flexShrink: 0, objectFit: "cover", boxShadow: "0 2px 8px rgba(0,0,0,0.18)" }} />
+          : <div style={{ width: 56, height: 56, borderRadius: 6, background: "rgba(154,147,138,0.25)", flexShrink: 0 }} />}
         <button
           onClick={() => onOpenTrack && onOpenTrack(cur.id)}
           title="Show on the map"
@@ -231,12 +231,13 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
         <span style={{ fontSize: 10, color: MUTED, width: 32 }}>{fmtTime(prog.dur)}</span>
       </div>
 
-      {/* controlli */}
-      <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "0 12px 8px" }}>
+      {/* transport: five controls distributed along the full row, with the
+          play/pause as the larger, round centrepiece */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "2px 26px 8px" }}>
         <button onClick={toggleShuffle} title="Shuffle the route" style={tglBtn(shuffle)}>⇄</button>
-        {many && <button onClick={goPrev} title="Previous" style={navBtn}>‹</button>}
-        <button onClick={toggle} title={paused ? "Resume" : "Pause"} style={navBtn}>{paused ? "▶" : "❚❚"}</button>
-        {many && <button onClick={goNext} title="Next" style={navBtn}>›</button>}
+        <button onClick={goPrev} disabled={!many} title="Previous" style={{ ...navBtn, opacity: many ? 1 : 0.35 }}>‹</button>
+        <button onClick={toggle} title={paused ? "Resume" : "Pause"} style={playBtn}>{paused ? "▶" : "❚❚"}</button>
+        <button onClick={goNext} disabled={!many} title="Next" style={{ ...navBtn, opacity: many ? 1 : 0.35 }}>›</button>
         <button onClick={cycleRepeat} title={`Repeat: ${repeat}`} style={tglBtn(repeat !== "off")}>{repeat === "one" ? "₁⟲" : "⟲"}</button>
       </div>
 
@@ -407,13 +408,25 @@ const navBtn = {
   padding: "5px 9px",
   cursor: "pointer",
 };
-// pulsante "toggle": stato attivo = pieno (inchiostro), spento = contorno
+// "toggle" button: active = filled (ink), off = outline
 const tglBtn = (active) => ({
   ...navBtn,
   color: active ? PAPER : INK,
   background: active ? INK : "transparent",
   borderColor: active ? INK : "rgba(154,147,138,0.5)",
 });
+// play/pause: the transport's round centrepiece, bigger than the rest
+const playBtn = {
+  ...navBtn,
+  width: 40,
+  height: 40,
+  padding: 0,
+  borderRadius: "50%",
+  fontSize: 15,
+  color: PAPER,
+  background: INK,
+  borderColor: INK,
+};
 const fullBtn = {
   display: "block",
   width: "100%",
