@@ -288,8 +288,8 @@ function MusicNetworkInner() {
       .attr("dy", 3)
       .attr("opacity", 0)
       .style("pointer-events", "none");
-    // Label next to the node: title + artist (artist muted; hidden while a
-    // route is on the map — see .mn-plmode — to halve label length).
+    // Label next to the node: title + artist (artist in a muted tone) —
+    // shown in full in route mode too.
     labels.append("tspan").text((d) => d.title);
     labels.append("tspan").attr("class", "mn-artist").attr("fill", MUTED).text((d) => " — " + d.artist);
 
@@ -474,10 +474,6 @@ function MusicNetworkInner() {
       if (playlistSet) return playlistSet.has(d.id) ? 1 : 0;
       return 0;
     });
-
-    // Route mode: title-only labels (the artist tspan is hidden via CSS) so
-    // fifteen route labels don't collide into each other in tight clusters.
-    g.classed("mn-plmode", !focusId && !!playlistSet);
 
     // Nascondi il percorso della playlist mentre un nodo e' in focus (dettaglio).
     if (simRef.current.route) {
@@ -744,8 +740,6 @@ function MusicNetworkInner() {
           stroke-width: 2.6px;
           stroke-linejoin: round;
         }
-        /* Route on the map: labels shrink to title-only (artist in the hub). */
-        .mn-plmode .mn-labelg .mn-artist { display: none; }
         @media (max-width: 640px) {
           /* 16px keeps iOS Safari from auto-zooming when an input is focused. */
           .mn-input, .mn-chat input { font-size: 16px !important; }
