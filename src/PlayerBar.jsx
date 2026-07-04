@@ -40,7 +40,7 @@ export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap 
     return (
       <ConnectPlayer
         tracks={tracks} index={index} setIndex={setIndex} onClose={onClose} bottomGap={bottomGap}
-        isMobile={isMobile} onOpenTrack={onOpenTrack} onHeight={onHeight}
+        isMobile={isMobile} onOpenTrack={onOpenTrack} onHeight={onHeight} onLogin={onLogin}
       />
     );
   }
@@ -54,19 +54,22 @@ export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap 
 // ---------------------------------------------------------------------------
 //  CONNECT: full track sul device dell'utente (Premium)
 // ---------------------------------------------------------------------------
-function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, onOpenTrack, onHeight }) {
+function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, onOpenTrack, onHeight, onLogin }) {
   const uris = useMemo(() => tracks.map((t) => `spotify:track:${t.id}`), [tracks]);
   const [paused, setPaused] = useState(false);
   const [liveIdx, setLiveIdx] = useState(index);
   const [msg, setMsg] = useState("");
   const [devices, setDevices] = useState([]);
   const [deviceId, setDeviceId] = useState(null);
+  const [devicesOpen, setDevicesOpen] = useState(false); // device row hidden until asked
+  const [authErr, setAuthErr] = useState(false); // token died mid-session -> reconnect CTA
   const [cover, setCover] = useState(null);
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState("off"); // off | all | one
   const [prog, setProg] = useState({ pos: 0, dur: 0, at: 0, playing: false });
   const [, force] = useState(0);
-  const pickedRef = useRef(false);       // l'utente ha scelto un device a mano?
+  const pickedRef = useRef(false);       // did the user pick a device manually?
+  const auth401Ref = useRef(0);          // consecutive 401s from the state poll
 
   const refreshDevices = useCallback(async () => {
     try { const ds = await spotifyDevices(); setDevices(ds); return ds; }
@@ -102,6 +105,7 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
             catch (e2) { /* fallthrough */ }
           }
           setMsg("Open Spotify on the device and play a track for a moment, then press ⟳.");
+          setDevicesOpen(true); // surface the device picker: that's what needs fixing
         } else if (e.status === 403) {
           setMsg("Full playback requires Spotify Premium.");
         } else if (e.status === 401) {
@@ -133,45 +137,65 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
       try {
         const c = await spotifyState();
         if (stop || !c) return;
+        auth401Ref.current = 0;
+        setAuthErr(false);
         if (c.item) {
           const i = uris.indexOf(c.item.uri);
-          if (i >= 0) { setLiveIdx(i); setIndex(i); } // segue l'avanzamento reale (display + mappa)
+          if (i >= 0) { setLiveIdx(i); setIndex(i); } // follow real progress (display + map)
           const imgs = (c.item.album && c.item.album.images) || [];
-          setCover(imgs.length ? imgs[imgs.length - 1].url : null);
+          // Artwork is shown at 56px CSS = ~112 device px on retina: take the
+          // mid-size image (~300px), NOT the smallest (64px, blurry upscaled).
+          const img = imgs.length > 1 ? imgs[imgs.length - 2] : imgs[0];
+          setCover(img ? img.url : null);
           setProg({ pos: c.progress_ms || 0, dur: c.item.duration_ms || 0, at: Date.now(), playing: !!c.is_playing });
         }
         setPaused(!c.is_playing);
         setShuffle(!!c.shuffle_state);
         setRepeat(c.repeat_state === "context" ? "all" : c.repeat_state === "track" ? "one" : "off");
         if (c.device && c.device.id && !pickedRef.current) setDeviceId(c.device.id);
-      } catch (e) { /* noop */ }
+      } catch (e) {
+        // If the token dies mid-session the poll would fail forever in
+        // silence: after 2 consecutive 401s surface the reconnect CTA.
+        if (e && e.status === 401) {
+          if (++auth401Ref.current >= 2) setAuthErr(true);
+        }
+      }
     };
-    const id = setInterval(tick, 3000);
+    // Poll only while the tab is visible (background polling wastes battery
+    // and API quota); on return to visibility resync immediately.
+    const id = setInterval(() => { if (!document.hidden) tick(); }, 3000);
+    const onVis = () => { if (!document.hidden) tick(); };
+    document.addEventListener("visibilitychange", onVis);
     tick();
-    return () => { stop = true; clearInterval(id); };
+    return () => { stop = true; clearInterval(id); document.removeEventListener("visibilitychange", onVis); };
   }, [uris, setIndex]);
 
-  // ticker locale: anima la barra fra un poll e l'altro
+  // Local ticker: animates the bar between polls — only while playing.
   useEffect(() => {
+    if (!prog.playing) return;
     const id = setInterval(() => force((n) => n + 1), 500);
     return () => clearInterval(id);
-  }, []);
+  }, [prog.playing]);
 
   const shown = Math.min(Math.max(liveIdx, 0), tracks.length - 1);
   const cur = tracks[shown];
+
+  // A transport command that fails would otherwise LOOK like it worked
+  // (optimistic UI) until the next poll: surface a hint instead.
+  const cmdFail = () => setMsg("Command didn't reach Spotify — check the device, then press ⟳.");
 
   const toggle = async () => {
     try {
       if (paused) { await spotifyResume(); setPaused(false); }
       else { await spotifyPause(); setPaused(true); }
-    } catch (e) { /* noop */ }
+    } catch (e) { cmdFail(); }
   };
-  const goPrev = () => { spotifyPrevious().catch(() => {}); };
-  const goNext = () => { spotifyNext().catch(() => {}); };
+  const goPrev = () => { spotifyPrevious().then(() => setMsg("")).catch(cmdFail); };
+  const goNext = () => { spotifyNext().then(() => setMsg("")).catch(cmdFail); };
   const onPickDevice = (id) => {
     pickedRef.current = true;
     setDeviceId(id);
-    spotifyTransfer(id, true).catch(() => {}); // sposta la riproduzione corrente (no restart)
+    spotifyTransfer(id, true).catch(cmdFail); // move current playback (no restart)
   };
 
   const toggleShuffle = async () => {
@@ -179,11 +203,19 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
     try { await spotifyShuffle(next); } catch (e) { setShuffle(!next); }
   };
   const cycleRepeat = async () => {
+    const prev = repeat;
     const nextOf = { off: "all", all: "one", one: "off" };
     const next = nextOf[repeat];
     const api = next === "all" ? "context" : next === "one" ? "track" : "off";
     setRepeat(next);
-    try { await spotifyRepeat(api); } catch (e) { /* noop */ }
+    try { await spotifyRepeat(api); } catch (e) { setRepeat(prev); }
+  };
+
+  // ✕ = silence, not just "hide the panel": pause the device before closing
+  // (best effort — the panel closes regardless).
+  const closePlayer = () => {
+    spotifyPause().catch(() => {});
+    onClose();
   };
 
   const many = tracks.length > 1;
@@ -219,54 +251,79 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
             <span style={{ color: GREEN, fontWeight: 600 }}>● Spotify</span>{many ? ` · ${shown + 1}/${tracks.length}` : ""}
           </div>
         </button>
-        <button onClick={onClose} title="Close player" style={navBtn}>✕</button>
+        <button
+          onClick={() => setDevicesOpen((v) => !v)}
+          title="Choose the playback device"
+          aria-label="Choose the playback device"
+          style={tglBtn(devicesOpen)}
+        >
+          🔊
+        </button>
+        <button onClick={closePlayer} title="Pause and close" aria-label="Pause and close" style={navBtn}>✕</button>
       </div>
 
-      {/* barra di avanzamento + seek */}
-      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 6px" }}>
+      {/* progress + seek: the visible bar is 6px but the pointer target is
+          ~20px tall (invisible padding) — seekable with a thumb, not a sniper */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 2px" }}>
         <span style={{ fontSize: 10, color: MUTED, width: 32, textAlign: "right" }}>{fmtTime(posDisp)}</span>
-        <div onClick={onSeek} style={{ flex: 1, height: 6, borderRadius: 3, background: "rgba(154,147,138,0.3)", cursor: "pointer", position: "relative" }}>
-          <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${pct}%`, background: INK, borderRadius: 3 }} />
+        <div onClick={onSeek} style={{ flex: 1, padding: "7px 0", cursor: "pointer" }}>
+          <div style={{ height: 6, borderRadius: 3, background: "rgba(154,147,138,0.3)", position: "relative" }}>
+            <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${pct}%`, background: INK, borderRadius: 3 }} />
+          </div>
         </div>
         <span style={{ fontSize: 10, color: MUTED, width: 32 }}>{fmtTime(prog.dur)}</span>
       </div>
 
-      {/* transport: five controls distributed along the full row, with the
-          play/pause as the larger, round centrepiece */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "2px 26px 8px" }}>
-        <button onClick={toggleShuffle} title="Shuffle the route" style={tglBtn(shuffle)}>⇄</button>
-        <button onClick={goPrev} disabled={!many} title="Previous" style={{ ...navBtn, opacity: many ? 1 : 0.35 }}>‹</button>
-        <button onClick={toggle} title={paused ? "Resume" : "Pause"} style={playBtn}>{paused ? "▶" : "❚❚"}</button>
-        <button onClick={goNext} disabled={!many} title="Next" style={{ ...navBtn, opacity: many ? 1 : 0.35 }}>›</button>
-        <button onClick={cycleRepeat} title={`Repeat: ${repeat}`} style={tglBtn(repeat !== "off")}>{repeat === "one" ? "₁⟲" : "⟲"}</button>
+      {/* transport: five controls distributed along the row (capped width so
+          desktop doesn't scatter them), round play/pause as the centrepiece */}
+      <div style={{ padding: "0 26px 8px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 340, margin: "0 auto" }}>
+          <button onClick={toggleShuffle} title="Shuffle the route" aria-label="Shuffle" style={tglBtn(shuffle)}>⇄</button>
+          <button onClick={goPrev} disabled={!many} title="Previous" aria-label="Previous track" style={{ ...navBtn, opacity: many ? 1 : 0.35 }}>‹</button>
+          <button onClick={toggle} title={paused ? "Resume" : "Pause"} aria-label={paused ? "Resume" : "Pause"} style={playBtn}>{paused ? "▶" : "❚❚"}</button>
+          <button onClick={goNext} disabled={!many} title="Next" aria-label="Next track" style={{ ...navBtn, opacity: many ? 1 : 0.35 }}>›</button>
+          <button onClick={cycleRepeat} title={`Repeat: ${repeat}`} aria-label={`Repeat: ${repeat}`} style={tglBtn(repeat !== "off")}>{repeat === "one" ? "₁⟲" : "⟲"}</button>
+        </div>
       </div>
 
-      {/* selettore device */}
-      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 10px" }}>
-        <span style={{ fontSize: 11, color: MUTED, whiteSpace: "nowrap" }}>Play on</span>
-        <select
-          value={deviceId || ""}
-          onChange={(e) => onPickDevice(e.target.value)}
-          style={{
-            flex: 1, minWidth: 0, fontFamily: "Inter, sans-serif", fontSize: 12, color: INK,
-            background: "rgba(255,255,255,0.7)", border: `1px solid rgba(154,147,138,0.5)`,
-            borderRadius: 6, padding: "5px 8px",
-          }}
-        >
-          {devices.length === 0 && <option value="">no device — open Spotify</option>}
-          {devices.map((d) => (
-            <option key={d.id} value={d.id}>
-              {d.name}{d.type === "Smartphone" ? " (phone)" : ""}{d.is_active ? " ·active" : ""}
-            </option>
-          ))}
-        </select>
-        <button onClick={refreshDevices} title="Refresh devices" style={navBtn}>⟳</button>
-      </div>
+      {/* device picker: hidden by default (needed ~once per session), opened
+          by the 🔊 button — or automatically when playback finds no device */}
+      {devicesOpen && (
+        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 10px" }}>
+          <span style={{ fontSize: 11, color: MUTED, whiteSpace: "nowrap" }}>Play on</span>
+          <select
+            value={deviceId || ""}
+            onChange={(e) => onPickDevice(e.target.value)}
+            style={{
+              flex: 1, minWidth: 0, fontFamily: "Inter, sans-serif", fontSize: 12, color: INK,
+              background: "rgba(255,255,255,0.7)", border: `1px solid rgba(154,147,138,0.5)`,
+              borderRadius: 6, padding: "5px 8px",
+            }}
+          >
+            {devices.length === 0 && <option value="">no device — open Spotify</option>}
+            {devices.map((d) => (
+              <option key={d.id} value={d.id}>
+                {d.name}{d.type === "Smartphone" ? " (phone)" : ""}{d.is_active ? " ·active" : ""}
+              </option>
+            ))}
+          </select>
+          <button onClick={refreshDevices} title="Refresh devices" aria-label="Refresh devices" style={navBtn}>⟳</button>
+        </div>
+      )}
 
-      {msg && (
+      {authErr ? (
+        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 10px", fontSize: 11, color: "#9a5b3a" }}>
+          <span style={{ flex: 1 }}>Spotify session expired.</span>
+          {onLogin && (
+            <button onClick={onLogin} title="Reconnect to Spotify" style={{ ...navBtn, fontSize: 11, color: PAPER, background: GREEN, borderColor: GREEN }}>
+              Reconnect
+            </button>
+          )}
+        </div>
+      ) : msg && (
         <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 10px", fontSize: 11, color: "#9a5b3a" }}>
           <span style={{ flex: 1, wordBreak: "break-word" }}>{msg}</span>
-          <button onClick={() => playFrom(shown)} title="Retry" style={navBtn}>⟳</button>
+          <button onClick={() => { setMsg(""); playFrom(shown); }} title="Retry" style={navBtn}>⟳</button>
         </div>
       )}
     </Shell>
