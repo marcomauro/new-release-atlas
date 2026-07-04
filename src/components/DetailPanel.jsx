@@ -1,5 +1,4 @@
-import React from "react";
-import WeightControls from "../WeightControls.jsx";
+import React, { useEffect, useRef } from "react";
 import { GENRE_LABEL } from "../playlist.js";
 import { INK, MUTED, PAPER, gColor } from "../theme.js";
 
@@ -14,19 +13,26 @@ const MOOD_PARAMS = [
 
 // Track detail card — docked on desktop, a bottom sheet on mobile. Shows the
 // selected track's genres/metadata, the collapsible mood/audio section, the
-// action row (Spotify / generate playlist / weights) and, when no route is
-// playing, the single-track Spotify embed.
+// action row (Spotify / generate playlist) and, when no route is playing, the
+// single-track Spotify embed. Weights live in the Playlist Hub only (⚖ Tune).
 export default function DetailPanel({
   track, onClose, isMobile,
   // bottom padding reservation for the mobile mini-player
   reserveBottom,
-  // collapsible sections
-  moodOpen, setMoodOpen, weightsOpen, setWeightsOpen,
-  // playlist generation + weight controls wiring
+  moodOpen, setMoodOpen,
   onGenerate, showEmbed,
-  weights, setWeights, randomness, setRandomness, mood, setMood,
-  liveRegen, setLiveRegen, onRegenerate, canRegenerate,
 }) {
+  // When "Mood & audio" opens, make sure the expanded section scrolls into
+  // view ABOVE the mini-player (the reserved bottom padding is inside this
+  // scroll container, so scrolling the section into view clears the player).
+  const moodRef = useRef(null);
+  useEffect(() => {
+    if (moodOpen) {
+      requestAnimationFrame(() =>
+        moodRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+      );
+    }
+  }, [moodOpen]);
   return (
     <div
       style={{
@@ -115,8 +121,7 @@ export default function DetailPanel({
       >
         Duration {track.duration} · {track.degree} links
         {track.bpm != null && <> · {track.bpm} BPM</>}
-        <br />
-        Playlists {track.playlists.map((p) => "#" + p).join(", ")}
+        {" · "}Playlists {track.playlists.map((p) => "#" + p).join(", ")}
       </div>
 
       {/* Mood + parameters + subgenres — hidden by default, opens on demand
@@ -124,7 +129,7 @@ export default function DetailPanel({
       {(track.mood?.length ||
         track.subgenres?.length ||
         MOOD_PARAMS.some(([k]) => track[k] != null)) && (
-        <div style={{ marginTop: 14 }}>
+        <div ref={moodRef} style={{ marginTop: 14, scrollMarginTop: 8 }}>
           <button
             onClick={() => setMoodOpen((v) => !v)}
             style={{
@@ -190,7 +195,8 @@ export default function DetailPanel({
           )}
         </div>
       )}
-      {/* Actions: on mobile they fit a single row (compact labels). */}
+      {/* Actions: pill buttons, same family as the Playlist Hub's. On mobile
+          they share a single row (compact labels). */}
       <div style={{ display: "flex", gap: isMobile ? 6 : 8, marginTop: 16, flexWrap: isMobile ? "nowrap" : "wrap" }}>
         <a
           href={track.url}
@@ -199,9 +205,9 @@ export default function DetailPanel({
           style={{
             flex: isMobile ? 1 : undefined, minWidth: 0,
             textAlign: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
-            fontSize: 12, color: PAPER, background: INK,
-            padding: isMobile ? "9px 8px" : "7px 14px",
-            borderRadius: 2, textDecoration: "none",
+            fontSize: 12, fontWeight: 500, color: PAPER, background: INK,
+            padding: isMobile ? "9px 12px" : "7px 16px",
+            borderRadius: 16, textDecoration: "none",
           }}
         >
           {isMobile ? "Spotify ↗" : "Open in Spotify ↗"}
@@ -212,40 +218,15 @@ export default function DetailPanel({
           style={{
             flex: isMobile ? 1 : undefined, minWidth: 0,
             whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
-            fontSize: 12, color: INK, background: "transparent",
+            fontSize: 12, fontWeight: 500, color: INK, background: "transparent",
             border: `1px solid ${INK}`,
-            padding: isMobile ? "9px 8px" : "7px 14px",
-            borderRadius: 2, cursor: "pointer",
+            padding: isMobile ? "8px 12px" : "6px 16px",
+            borderRadius: 16, cursor: "pointer",
           }}
         >
           {isMobile ? "♫ Generate" : "♫ Generate playlist"}
         </button>
-        <button
-          onClick={() => setWeightsOpen((v) => !v)}
-          title="Adjust the link weights used to build the route"
-          style={{
-            flex: isMobile ? "0 0 auto" : undefined,
-            fontSize: 12, color: INK, background: weightsOpen ? "rgba(43,39,36,0.08)" : "transparent",
-            border: `1px solid ${MUTED}`,
-            padding: isMobile ? "9px 11px" : "7px 12px",
-            borderRadius: 2, cursor: "pointer", whiteSpace: "nowrap",
-          }}
-        >
-          {isMobile ? "⚖" : "⚖ weights"}
-        </button>
       </div>
-
-      {weightsOpen && (
-        <div style={{ marginTop: 12 }}>
-          <WeightControls
-            weights={weights} setWeights={setWeights}
-            randomness={randomness} setRandomness={setRandomness}
-            mood={mood} setMood={setMood}
-            liveRegen={liveRegen} setLiveRegen={setLiveRegen}
-            onRegenerate={onRegenerate} canRegenerate={canRegenerate}
-          />
-        </div>
-      )}
       {/* Single-track Spotify player (~30s preview for everyone, full track
           for logged-in Premium). Hidden while a route is playing: the route's
           mini-player owns the audio then (no double playback). */}
