@@ -174,7 +174,14 @@ function MusicNetworkInner() {
     const zoom = d3
       .zoom()
       .scaleExtent([0.12, 6])
-      .on("zoom", (e) => g.attr("transform", e.transform));
+      .on("zoom", (e) => {
+        g.attr("transform", e.transform);
+        // Node labels keep a CONSTANT screen size: their font (in graph
+        // units) is counter-scaled by the zoom factor. Without this, the
+        // route auto-fit (k ≈ 0.4–0.9) rendered them at 4–8 real px.
+        // One attribute write on the group per frame — tspans inherit.
+        g.select(".mn-labelg").attr("font-size", 9 / e.transform.k);
+      });
     svg.call(zoom);
     svg.on("dblclick.zoom", null);
 
@@ -265,19 +272,22 @@ function MusicNetworkInner() {
     const labels = g
       .append("g")
       .attr("class", "mn-labelg")
+      // font-size lives on the GROUP (single write per zoom frame counter-
+      // scales every label; texts and tspans inherit it)
+      .attr("font-size", 9)
+      .attr("font-family", "'Spectral', Georgia, serif")
       .selectAll("text")
       .data(nodes)
       .join("text")
-      .attr("font-size", 9)
-      .attr("font-family", "'Spectral', Georgia, serif")
       .attr("fill", INK)
       .attr("dx", (d) => rScale(d.degree) + 3)
       .attr("dy", 3)
       .attr("opacity", 0)
       .style("pointer-events", "none");
-    // Etichetta accanto al nodo: titolo + artista (artista in tono attenuato).
+    // Label next to the node: title + artist (artist muted; hidden while a
+    // route is on the map — see .mn-plmode — to halve label length).
     labels.append("tspan").text((d) => d.title);
-    labels.append("tspan").attr("fill", MUTED).text((d) => " — " + d.artist);
+    labels.append("tspan").attr("class", "mn-artist").attr("fill", MUTED).text((d) => " — " + d.artist);
 
     // Hover solo dove esiste davvero (mouse/trackpad): su touch il mouseenter
     // sintetico del tap farebbe un restyle inutile prima di ogni click.
@@ -389,7 +399,7 @@ function MusicNetworkInner() {
   // ogni passaggio del mouse.
   useEffect(() => {
     if (!simRef.current) return;
-    const { node, link, labels } = simRef.current;
+    const { node, link, labels, g } = simRef.current;
     const focus = selected;
     const focusId = focus?.id;
     const selId = selected?.id; // solo il brano cliccato pulsa (non l'hover)
@@ -457,9 +467,13 @@ function MusicNetworkInner() {
         return nbr?.has(d.id) ? 0.8 : 0;
       }
       if (matchSet) return matchSet.has(d.id) ? 1 : 0;
-      if (playlistSet) return playlistSet.has(d.id) ? 0.92 : 0;
+      if (playlistSet) return playlistSet.has(d.id) ? 1 : 0;
       return 0;
     });
+
+    // Route mode: title-only labels (the artist tspan is hidden via CSS) so
+    // fifteen route labels don't collide into each other in tight clusters.
+    g.classed("mn-plmode", !focusId && !!playlistSet);
 
     // Nascondi il percorso della playlist mentre un nodo e' in focus (dettaglio).
     if (simRef.current.route) {
@@ -498,11 +512,18 @@ function MusicNetworkInner() {
   // Aggiorna il percorso della playlist e inquadra i suoi nodi (solo al cambio).
   useEffect(() => {
     if (!simRef.current) return;
-    const { nodesById, drawRoute, route, svg, zoom } = simRef.current;
+    const { nodesById, drawRoute, route, svg, zoom, labels } = simRef.current;
     const pts = (playlist || []).map((id) => nodesById.get(id)).filter(Boolean);
     routeRef.current = pts;
     drawRoute();
     route.attr("display", pts.length > 1 ? null : "none");
+    // Route labels alternate above/below the node along the listening order,
+    // halving the horizontal collisions in tight clusters. Others keep the
+    // default baseline offset.
+    const order = new Map((playlist || []).map((id, i) => [id, i]));
+    labels.attr("dy", (d) =>
+      order.has(d.id) ? (order.get(d.id) % 2 ? -7 : 14) : 3
+    );
     if (pts.length) {
       const xs = pts.map((p) => p.x);
       const ys = pts.map((p) => p.y);
@@ -711,6 +732,16 @@ function MusicNetworkInner() {
         .mn-hover .mn-labelg text.mn-hl-n { opacity: 0.8; }
         .mn-hover .mn-labelg text.mn-hl { opacity: 1; }
         .mn-hover .mn-route { display: none; }
+        /* Label halo: a paper-coloured stroke painted UNDER the glyphs makes
+           small labels readable over links and coloured discs. */
+        .mn-labelg text {
+          paint-order: stroke;
+          stroke: ${PAPER};
+          stroke-width: 2.6px;
+          stroke-linejoin: round;
+        }
+        /* Route on the map: labels shrink to title-only (artist in the hub). */
+        .mn-plmode .mn-labelg .mn-artist { display: none; }
         @media (max-width: 640px) {
           /* 16px keeps iOS Safari from auto-zooming when an input is focused. */
           .mn-input, .mn-chat input { font-size: 16px !important; }

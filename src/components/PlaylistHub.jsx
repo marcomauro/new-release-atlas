@@ -44,12 +44,14 @@ export default function PlaylistHub({
         onClick={() => setOpen(true)}
         title={active ? "Reopen the playlist panel" : "Build a playlist from the graph"}
         style={{
+          // Same family as the header's Genres/Reset buttons: outline, square
+          // corners, ink on a light veil (legible over the map's nodes).
           position: "absolute", bottom: `calc(${24 + bottomOffset}px + env(safe-area-inset-bottom))`, left: "50%",
           transform: "translateX(-50%)", zIndex: 30,
-          fontFamily: font, fontSize: 14, fontWeight: 500,
-          color: PAPER, background: INK, border: "none",
-          padding: "11px 23px", borderRadius: 23, cursor: "pointer",
-          boxShadow: "0 6px 20px rgba(0,0,0,0.18)",
+          fontFamily: font, fontSize: 12,
+          color: INK, background: "rgba(255,255,255,0.6)",
+          border: `1px solid ${MUTED}`,
+          padding: "10px 14px", borderRadius: 2, cursor: "pointer",
           maxWidth: "86vw", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
           textTransform: active ? "capitalize" : "none",
         }}
