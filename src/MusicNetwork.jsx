@@ -29,6 +29,10 @@ import { MapHints, Credits, HoverCard } from "./components/Overlays.jsx";
 
 let GRAPH = null; // populated by loader (hydrateGraph) before MusicNetworkInner mounts
 
+// Node labels: constant ON-SCREEN size in px (the zoom handler counter-scales
+// the group's font by 1/k, so this is exactly what the eye sees at any zoom).
+const LABEL_PX = 10;
+
 function MusicNetworkInner() {
   const svgRef = useRef(null);
   const wrapRef = useRef(null);
@@ -180,7 +184,7 @@ function MusicNetworkInner() {
         // units) is counter-scaled by the zoom factor. Without this, the
         // route auto-fit (k ≈ 0.4–0.9) rendered them at 4–8 real px.
         // One attribute write on the group per frame — tspans inherit.
-        g.select(".mn-labelg").attr("font-size", 9 / e.transform.k);
+        g.select(".mn-labelg").attr("font-size", LABEL_PX / e.transform.k);
       });
     svg.call(zoom);
     svg.on("dblclick.zoom", null);
@@ -274,7 +278,7 @@ function MusicNetworkInner() {
       .attr("class", "mn-labelg")
       // font-size lives on the GROUP (single write per zoom frame counter-
       // scales every label; texts and tspans inherit it)
-      .attr("font-size", 9)
+      .attr("font-size", LABEL_PX)
       .attr("font-family", "'Spectral', Georgia, serif")
       .selectAll("text")
       .data(nodes)
@@ -284,8 +288,8 @@ function MusicNetworkInner() {
       .attr("dy", 3)
       .attr("opacity", 0)
       .style("pointer-events", "none");
-    // Label next to the node: title + artist (artist muted; hidden while a
-    // route is on the map — see .mn-plmode — to halve label length).
+    // Label next to the node: title + artist (artist in a muted tone) —
+    // shown in full in route mode too.
     labels.append("tspan").text((d) => d.title);
     labels.append("tspan").attr("class", "mn-artist").attr("fill", MUTED).text((d) => " — " + d.artist);
 
@@ -470,10 +474,6 @@ function MusicNetworkInner() {
       if (playlistSet) return playlistSet.has(d.id) ? 1 : 0;
       return 0;
     });
-
-    // Route mode: title-only labels (the artist tspan is hidden via CSS) so
-    // fifteen route labels don't collide into each other in tight clusters.
-    g.classed("mn-plmode", !focusId && !!playlistSet);
 
     // Nascondi il percorso della playlist mentre un nodo e' in focus (dettaglio).
     if (simRef.current.route) {
@@ -740,8 +740,6 @@ function MusicNetworkInner() {
           stroke-width: 2.6px;
           stroke-linejoin: round;
         }
-        /* Route on the map: labels shrink to title-only (artist in the hub). */
-        .mn-plmode .mn-labelg .mn-artist { display: none; }
         @media (max-width: 640px) {
           /* 16px keeps iOS Safari from auto-zooming when an input is focused. */
           .mn-input, .mn-chat input { font-size: 16px !important; }
