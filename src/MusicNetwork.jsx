@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useMemo, useCallback } from "react";
 import * as d3 from "d3";
-import Chat from "./Chat.jsx";
+import PlaylistHub from "./components/PlaylistHub.jsx";
 import PlayerBar, { preloadSpotifyApi } from "./PlayerBar.jsx";
 import {
   completeSpotifyAuthIfNeeded, isSpotifyLoggedIn, loginSpotify, setPendingPlay, takePendingPlay,
@@ -48,15 +48,17 @@ function MusicNetworkInner() {
   const isMobile = dims.w > 0 && dims.w <= 640;
   const showLegend = !isMobile || legendOpen;
 
-  // --- chat / playlist generata dal grafo ---
-  const [playlist, setPlaylist] = useState(null); // array ordinato di id
-  const [messages, setMessages] = useState([]);
+  // --- playlist hub: generated-playlist state ---
+  const [playlist, setPlaylist] = useState(null); // ordered ids of the route on the map
+  // The ACTIVE generation (the one drawn on the map): { res, source } where
+  // source is { kind: "chat", text } or { kind: "seed", node, size }. The
+  // source is what Regenerate re-runs with the current weights/variety/mood.
+  const [active, setActive] = useState(null);
+  const [history, setHistory] = useState([]); // previous actives, most recent first (capped)
+  const [notice, setNotice] = useState(null); // transient feedback: export links, errors
   const [chatInput, setChatInput] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
-  const routeRef = useRef([]); // datum dei nodi della playlist, per disegnare il percorso
-  // fonte dell'ultima playlist generata (testo chat o brano-seed): serve per
-  // rigenerarla con nuovi pesi/mood quando l'utente cambia i parametri.
-  const lastGenRef = useRef(null);
+  const routeRef = useRef([]); // node datums of the playlist, used to draw the route
   const playlistSet = useMemo(() => (playlist ? new Set(playlist) : null), [playlist]);
 
   // --- pesi dei legami, regolabili a mano (default dalla pipeline) ---
@@ -539,27 +541,53 @@ function MusicNetworkInner() {
     setPlaylist(null);
   }, []);
 
-  // --- chat: interpreta il messaggio e genera la playlist navigando il grafo ---
+  // Promote a successful generation to ACTIVE (the previous active moves to
+  // the history). A failed prompt only raises a notice — it does NOT clear
+  // the playlist currently on the map.
+  const activate = useCallback((res, source) => {
+    setHistory((h) => (activeRef.current ? [activeRef.current, ...h].slice(0, 8) : h));
+    setActive({ res, source });
+    setPlaylist([...res.ids]);
+    setNotice(null);
+  }, []);
+  // Ref mirror of `active` so activate() can read it without re-creating
+  // every handler that depends on it.
+  const activeRef = useRef(null);
+  useEffect(() => { activeRef.current = active; }, [active]);
+
+  // Prompt bar: interpret the text and build a playlist by walking the graph.
   const handleChat = useCallback((text) => {
     setChatInput("");
     const res = buildPlaylist(GRAPH, text, weights, randomness, mood);
-    setMessages((m) => [...m, { role: "user", text }, { role: "assistant", res }]);
     setSelected(null);
     setActiveGenre(null);
     setQuery("");
-    if (res.ok && res.ids.length) lastGenRef.current = { kind: "chat", text };
-    setPlaylist(res.ok && res.ids.length ? res.ids : null);
-  }, [weights, randomness, mood]);
+    if (res.ok && res.ids.length) activate(res, { kind: "chat", text });
+    else setNotice({ error: true, text: "I couldn't build a playlist from that. Try a genre, a mood, or an artist name." });
+  }, [weights, randomness, mood, activate]);
 
   const pickTrack = useCallback((id) => {
     const n = GRAPH.nodes.find((x) => x.id === id);
     if (n) setSelected(n);
   }, []);
 
-  // Ri-attiva una playlist generata (dal tasto "▶ Play" nella chat): rimostra
-  // route + player anche dopo un Reset o la chiusura del player.
-  const onPlayResult = useCallback((ids) => {
-    if (ids && ids.length) setPlaylist([...ids]);
+  // ▶ Play on the active card: re-shows route + player (even after a Reset or
+  // after closing the player) and COLLAPSES the hub so the route on the map is
+  // immediately visible instead of hidden behind the panel.
+  const onPlayActive = useCallback((item) => {
+    if (item?.res?.ids?.length) setPlaylist([...item.res.ids]);
+    setChatOpen(false);
+  }, []);
+
+  // ↩ Restore from history: swap it with the current active.
+  const onRestore = useCallback((item) => {
+    setHistory((h) => {
+      const rest = h.filter((x) => x !== item);
+      return activeRef.current ? [activeRef.current, ...rest].slice(0, 8) : rest;
+    });
+    setActive(item);
+    setPlaylist([...item.res.ids]);
+    setNotice(null);
   }, []);
 
   // Dal mini-player: apre il dettaglio del brano e centra il nodo sulla mappa.
@@ -576,49 +604,36 @@ function MusicNetworkInner() {
   }, [dims]);
 
 
-  // Genera una playlist usando il nodo selezionato come seed, seguendo le
-  // connessioni del grafo. Chiude il dettaglio e mostra il risultato in chat.
+  // Generate a playlist seeded on the selected node, following the graph
+  // connections. Closes the detail card and opens the hub on the result.
   const generateFromNode = useCallback((node) => {
     if (!node) return;
     const res = buildFromSeed(GRAPH, node, 18, weights, randomness, mood);
-    setMessages((m) => [
-      ...m,
-      { role: "user", text: `playlist from "${node.title}"` },
-      { role: "assistant", res },
-    ]);
     setSelected(null);
     setActiveGenre(null);
     setQuery("");
     setChatOpen(true);
-    if (res.ok && res.ids.length) lastGenRef.current = { kind: "seed", node, size: 18 };
-    setPlaylist(res.ok && res.ids.length ? res.ids : null);
-  }, [weights, randomness, mood]);
+    if (res.ok && res.ids.length) activate(res, { kind: "seed", node, size: 18 });
+    else setNotice({ error: true, text: `Couldn't grow a playlist from "${node.title}" — the track has too few connections.` });
+  }, [weights, randomness, mood, activate]);
 
   const clearPlaylist = useCallback(() => setPlaylist(null), []);
 
-  // Rigenera la playlist attiva a partire dalla stessa richiesta (testo chat o
-  // brano-seed) con i valori CORRENTI di pesi/varietà/mood. Aggiorna anche
-  // l'ultima risposta in chat per restare coerente. È il "Regenerate" manuale.
+  // Regenerate the ACTIVE playlist from its own source (prompt text or seed
+  // track) with the CURRENT weights/variety/mood. Updates the active card in
+  // place — it's the same playlist re-tuned, so it does NOT go to history.
   const regenerateFromLast = useCallback(() => {
-    const lg = lastGenRef.current;
-    if (!playlist || !lg) return;
+    const a = activeRef.current;
+    if (!a) return;
+    const s = a.source;
     const res =
-      lg.kind === "seed"
-        ? buildFromSeed(GRAPH, lg.node, lg.size || 18, weights, randomness, mood)
-        : buildPlaylist(GRAPH, lg.text, weights, randomness, mood);
+      s.kind === "seed"
+        ? buildFromSeed(GRAPH, s.node, s.size || 18, weights, randomness, mood)
+        : buildPlaylist(GRAPH, s.text, weights, randomness, mood);
     if (!res.ok || !res.ids.length) return;
-    setPlaylist(res.ids);
-    setMessages((msgs) => {
-      for (let i = msgs.length - 1; i >= 0; i--) {
-        if (msgs[i].role === "assistant") {
-          const copy = msgs.slice();
-          copy[i] = { ...copy[i], res };
-          return copy;
-        }
-      }
-      return msgs;
-    });
-  }, [playlist, weights, randomness, mood]);
+    setActive({ ...a, res });
+    setPlaylist([...res.ids]);
+  }, [weights, randomness, mood]);
 
   // Comportamento "legacy" (liveRegen ON): al cambio dei parametri rigenera al
   // volo, con debounce (non ad ogni scatto dello slider ma quando ci si ferma).
@@ -630,31 +645,26 @@ function MusicNetworkInner() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weights, randomness, mood, liveRegen]);
 
-  // --- export "senza setup": link Spotify esatti + CSV, poi Spotlistr/Spotify ---
-  const sysMsg = useCallback((text, link, linkLabel) => {
-    setMessages((m) => [...m, { role: "system", text, link, linkLabel }]);
-    setChatOpen(true);
-  }, []);
-
-  const handleExport = useCallback(
-    async (res) => {
-      if (!res || !res.ok) return;
-      // Apri Spotlistr subito: restando nel gesto del click si evita il popup-block.
-      window.open(SPOTLISTR_URL, "_blank", "noopener");
-      const links = playlistLinks(res);
-      downloadFile(exportFilename(res, "csv"), playlistCsv(res), "text/csv;charset=utf-8");
-      const copied = await copyText(links);
-      sysMsg(
+  // --- zero-setup export: exact Spotify links + CSV, then Spotlistr/Spotify ---
+  // Feedback lands in the hub's notice line, right under the card's actions.
+  const handleExport = useCallback(async (res) => {
+    if (!res || !res.ok) return;
+    // Open Spotlistr right away: staying inside the click gesture avoids the popup blocker.
+    window.open(SPOTLISTR_URL, "_blank", "noopener");
+    const links = playlistLinks(res);
+    downloadFile(exportFilename(res, "csv"), playlistCsv(res), "text/csv;charset=utf-8");
+    const copied = await copyText(links);
+    setNotice({
+      text:
         `${res.tracks.length} tracks exported — Spotify links ${
           copied ? "copied to clipboard" : "in the downloaded CSV"
-        } and CSV saved. Paste them into Spotlistr (opened in a new tab) to create the playlist, ` +
-          `or paste the links into a Spotify desktop playlist.`,
-        SPOTLISTR_URL,
-        "Open Spotlistr ↗"
-      );
-    },
-    [sysMsg]
-  );
+        } and CSV saved. Paste them into Spotlistr (opened in a new tab), ` +
+        `or into a Spotify desktop playlist.`,
+      link: SPOTLISTR_URL,
+      linkLabel: "Open Spotlistr ↗",
+    });
+    setChatOpen(true);
+  }, []);
 
   const meta = GRAPH.meta;
   const orderedGenres = GRAPH.genres.filter((g) => genreCounts[g]);
@@ -781,22 +791,26 @@ function MusicNetworkInner() {
           randomness={randomness} setRandomness={setRandomness}
           mood={mood} setMood={setMood}
           liveRegen={liveRegen} setLiveRegen={setLiveRegen}
-          onRegenerate={regenerateFromLast} canRegenerate={!!playlist}
+          onRegenerate={regenerateFromLast} canRegenerate={!!active}
         />
       )}
 
       {!isMobile && hovered && !selected && <HoverCard track={hovered} />}
 
-      <Chat
+      <PlaylistHub
         open={chatOpen}
         setOpen={setChatOpen}
-        messages={messages}
         value={chatInput}
         onChange={setChatInput}
         onSubmit={handleChat}
+        active={active}
+        history={history}
+        notice={notice}
         onPick={pickTrack}
-        onPlay={onPlayResult}
+        onPlay={onPlayActive}
         onExport={handleExport}
+        onRegenerate={regenerateFromLast}
+        onRestore={onRestore}
         genreColor={gColor}
         bottomOffset={playTracks.length ? playerH + 16 : 0}
         weights={weights}
@@ -807,8 +821,6 @@ function MusicNetworkInner() {
         setMood={setMood}
         liveRegen={liveRegen}
         setLiveRegen={setLiveRegen}
-        onRegenerate={regenerateFromLast}
-        canRegenerate={!!playlist}
       />
 
       {/* Ascolto continuo del percorso: mini-player persistente che incatena i brani */}
