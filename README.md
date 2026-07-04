@@ -66,11 +66,13 @@ npm run preview    # serves dist/ locally for a realistic check
 At the bottom of the map there's the **Playlist Hub** (the "Playlist" pill):
 describe what you want to hear and the app builds a playlist by **traversing
 the graph**, highlighting the chosen tracks and drawing the listening path that
-connects them. The hub has three zones: a **prompt bar** (input + suggestion
-chips), the **active playlist card** — the one drawn on the map, with all of
-its actions together (▶ Play, ↻ Regenerate, ⚖ Tune, ↗ Export) and the
-tracklist — and a compact, restorable **history** of previous generations.
-Pressing ▶ Play collapses the hub so the route is immediately visible.
+connects them. Minimalist rule: **the ask or the result, never both** — with no
+playlist the panel is just a prompt row; once one exists, the **active playlist
+card** (the one on the map) takes over the panel with all of its actions
+together (▶ Play, ↻ Regenerate, ⚖ Tune, ↗ Export) and the tracklist, while the
+prompt folds behind a small **+ New** in the header. Previous generations sit
+in a compact, restorable **history**. Pressing ▶ Play collapses the hub so the
+route is immediately visible.
 
 **No external AI / no API:** the interpretation is a client-side rule engine
 ([`src/playlist.js`](src/playlist.js)), so it works offline and is free and
