@@ -31,20 +31,27 @@ let GRAPH = null; // populated by loader (hydrateGraph) before MusicNetworkInner
 
 // Node labels: constant ON-SCREEN size in px (the zoom handler counter-scales
 // the group's font by 1/k, so this is exactly what the eye sees at any zoom).
-// Route mode bumps it: those labels are the point of the view.
-const LABEL_PX = 10;
-const ROUTE_LABEL_PX = 11;
-// Extra collision radius (graph units) for the nodes of the active route:
-// gently pushes their close neighbours away so labels have room to breathe.
+// Emphasis mode (route / selected node) bumps it: those labels are the point.
+const LABEL_PX = 10;        // desktop base
+const MOBILE_LABEL_PX = 11; // mobile base
+const ROUTE_LABEL_PX = 11;  // emphasis (route or selection)
+// On mobile the size is softly coupled to the zoom (base × k^0.3, clamped):
+// zooming in grows the labels a little, zooming out shrinks them a little.
+const MOBILE_ZOOM_EXP = 0.3;
+// Extra collision radius (graph units) for emphasized nodes: gently pushes
+// their close neighbours away so labels have room to breathe. The selection
+// boost is smaller — a hub can emphasize 40 neighbours at once.
 const ROUTE_NODE_SPACING = 12;
+const SELECT_NODE_SPACING = 8;
 
 function MusicNetworkInner() {
   const svgRef = useRef(null);
   const wrapRef = useRef(null);
   const simRef = useRef(null);
   const hoverElsRef = useRef(null); // elementi evidenziati dall'hover corrente
-  const labelPxRef = useRef(LABEL_PX); // on-screen label size (route mode bumps it)
-  const routeBoostRef = useRef(null);  // ids of route nodes getting extra collision room
+  const labelPxRef = useRef(LABEL_PX); // on-screen label size (emphasis bumps it)
+  const routeBoostRef = useRef(null);  // { ids, extra }: nodes getting extra collision room
+  const emphRef = useRef(null);        // node datums whose labels get anti-overlap placement
   const [selected, setSelected] = useState(null);
   const [hovered, setHovered] = useState(null);
   const [query, setQuery] = useState("");
@@ -182,16 +189,25 @@ function MusicNetworkInner() {
     const nodesById = new Map(nodes.map((d) => [d.id, d]));
     const g = svg.append("g");
 
+    // Target ON-SCREEN label size for the current zoom factor. Desktop:
+    // constant (labelPxRef). Mobile: softly zoom-coupled — base × k^0.3,
+    // clamped to [9, 14] px — so zooming feels natural without ever making
+    // the labels unreadable or oversized.
+    const labelScreenPx = (k) =>
+      isMobile
+        ? Math.max(9, Math.min(14, labelPxRef.current * Math.pow(k, MOBILE_ZOOM_EXP)))
+        : labelPxRef.current;
+
     const zoom = d3
       .zoom()
       .scaleExtent([0.12, 6])
       .on("zoom", (e) => {
         g.attr("transform", e.transform);
-        // Node labels keep a CONSTANT screen size: their font (in graph
-        // units) is counter-scaled by the zoom factor. Without this, the
-        // route auto-fit (k ≈ 0.4–0.9) rendered them at 4–8 real px.
+        // Node labels keep a controlled screen size: the group's font (in
+        // graph units) is counter-scaled by the zoom factor. Desktop is
+        // pinned; mobile couples softly to the zoom (base × k^0.3, clamped).
         // One attribute write on the group per frame — tspans inherit.
-        g.select(".mn-labelg").attr("font-size", labelPxRef.current / e.transform.k);
+        g.select(".mn-labelg").attr("font-size", labelScreenPx(e.transform.k) / e.transform.k);
       });
     svg.call(zoom);
     svg.on("dblclick.zoom", null);
@@ -321,14 +337,15 @@ function MusicNetworkInner() {
 
     const sameGenre = (l) => l.source.genre === l.target.genre;
 
-    // Collision radius accessor. Route nodes (routeBoostRef) get extra room so
-    // close neighbours are gently pushed away and route labels can breathe;
-    // re-initialized by the route effect via sim.force("collide").radius(...).
+    // Collision radius accessor. Emphasized nodes (routeBoostRef: route OR the
+    // selected node's neighbourhood) get extra room so close neighbours are
+    // gently pushed away and their labels can breathe; re-initialized by the
+    // emphasis effect via sim.force("collide").radius(...).
     const collideRadius = (d) =>
       rScale(d.degree) +
       (isMobile ? 0.5 : 1.5) +
       hashJitter(d.id) * (isMobile ? 1 : 4) +
-      (routeBoostRef.current && routeBoostRef.current.has(d.id) ? ROUTE_NODE_SPACING : 0);
+      (routeBoostRef.current && routeBoostRef.current.ids.has(d.id) ? routeBoostRef.current.extra : 0);
 
     const sim = d3
       .forceSimulation(nodes)
@@ -395,21 +412,23 @@ function MusicNetworkInner() {
       incident.get(t).push(this);
     });
 
-    // Greedy label placement for the ACTIVE route: works in SCREEN space (the
-    // labels' font is screen-constant), measures each label's real width and
-    // tries 6 candidate positions around the node (right/left x mid/up/down)
-    // in listening order, picking the first that doesn't overlap the labels
+    // Greedy label placement for the EMPHASIZED nodes (the active route, or
+    // the selected node + its neighbours): works in SCREEN space (label fonts
+    // are screen-controlled), measures each label's real width and tries 10
+    // candidate positions around the node (right/left x 5 vertical tiers) in
+    // priority order, picking the first that doesn't overlap the labels
     // already placed (or the least-overlapping one as a fallback). Runs after
-    // the fit-zoom + settle, and again on every zoom end while a route is on.
-    const placeRouteLabels = () => {
+    // the settle, and again on every zoom end while an emphasis is active.
+    // Cost: O(n²) pairwise checks on n ≤ ~40 labels — negligible.
+    const placeLabels = () => {
       const t = d3.zoomTransform(svg.node());
       const k = t.k;
-      // reset everyone to the default anchor first (also clears a previous route)
+      // reset everyone to the default anchor first (also clears a previous set)
       labels
         .attr("dx", (d) => rScale(d.degree) + 3)
         .attr("dy", 3)
         .attr("text-anchor", null);
-      const pts = routeRef.current || [];
+      const pts = emphRef.current || [];
       if (pts.length < 2) return;
       const ids = new Set(pts.map((p) => p.id));
       const byId = new Map();
@@ -459,11 +478,11 @@ function MusicNetworkInner() {
       }
     };
     // Re-distribute on zoom end: overlaps depend on the zoom factor.
-    zoom.on("end.routeLabels", () => {
-      if (routeRef.current && routeRef.current.length > 1) placeRouteLabels();
+    zoom.on("end.emphasisLabels", () => {
+      if (emphRef.current && emphRef.current.length > 1) placeLabels();
     });
 
-    simRef.current = { sim, node, link, labels, g, zoom, svg, anchor, route, nodesById, drawRoute, incident, collideRadius, placeRouteLabels };
+    simRef.current = { sim, node, link, labels, g, zoom, svg, anchor, route, nodesById, drawRoute, incident, collideRadius, placeLabels, labelScreenPx };
     return () => sim.stop();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -596,27 +615,11 @@ function MusicNetworkInner() {
   // Aggiorna il percorso della playlist e inquadra i suoi nodi (solo al cambio).
   useEffect(() => {
     if (!simRef.current) return;
-    const { nodesById, drawRoute, route, svg, zoom, g, sim, collideRadius, placeRouteLabels } = simRef.current;
+    const { nodesById, drawRoute, route, svg, zoom } = simRef.current;
     const pts = (playlist || []).map((id) => nodesById.get(id)).filter(Boolean);
     routeRef.current = pts;
     drawRoute();
     route.attr("display", pts.length > 1 ? null : "none");
-
-    // Route mode: bigger on-screen labels (11px) — update the group's font
-    // immediately at the current zoom, the zoom handler keeps it in sync.
-    labelPxRef.current = pts.length ? ROUTE_LABEL_PX : LABEL_PX;
-    g.select(".mn-labelg").attr("font-size", labelPxRef.current / d3.zoomTransform(svg.node()).k);
-
-    // Gentle repulsion around the route: its nodes get extra collision room
-    // (close neighbours slide away), then the sim re-settles at low alpha so
-    // the layout adjusts without reshuffling the clusters.
-    routeBoostRef.current = pts.length ? new Set(pts.map((p) => p.id)) : null;
-    sim.force("collide").radius(collideRadius);
-    sim.alpha(pts.length ? 0.25 : 0.12).restart();
-
-    // Distribute the route labels once the fit-zoom (750ms) and most of the
-    // settle are done; zoom-end re-runs it after any manual pan/zoom.
-    const timer = setTimeout(placeRouteLabels, pts.length ? 1000 : 0);
     if (pts.length) {
       const xs = pts.map((p) => p.x);
       const ys = pts.map((p) => p.y);
@@ -641,9 +644,46 @@ function MusicNetworkInner() {
         .translate(-cx, -cy);
       svg.transition().duration(750).call(zoom.transform, t);
     }
-    return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playlist]);
+
+  // EMPHASIS mode — one mechanism for two situations: the active ROUTE, or
+  // the SELECTED node with its neighbourhood. Emphasized nodes get bigger
+  // labels (11px), extra collision room (their close neighbours slide away at
+  // low alpha, without reshuffling the clusters) and the greedy anti-overlap
+  // label placement. Cheap: placement is O(n²) on ≤ ~40 labels, and the only
+  // visible cost is the gentle re-settle (smaller boost for selections).
+  useEffect(() => {
+    if (!simRef.current) return;
+    const { sim, collideRadius, placeLabels, labelScreenPx, g, svg, nodesById } = simRef.current;
+    let pts = null;
+    if (selected) {
+      const ids = [selected.id, ...(neighbors.get(selected.id) || [])];
+      pts = ids.map((id) => nodesById.get(id)).filter(Boolean);
+      routeBoostRef.current = { ids: new Set(ids), extra: SELECT_NODE_SPACING };
+    } else if (routeRef.current && routeRef.current.length > 1) {
+      pts = routeRef.current;
+      routeBoostRef.current = { ids: new Set(pts.map((p) => p.id)), extra: ROUTE_NODE_SPACING };
+    } else {
+      routeBoostRef.current = null;
+    }
+    emphRef.current = pts;
+
+    // label size for the mode, applied immediately at the current zoom
+    labelPxRef.current = pts ? ROUTE_LABEL_PX : isMobile ? MOBILE_LABEL_PX : LABEL_PX;
+    const k = d3.zoomTransform(svg.node()).k;
+    g.select(".mn-labelg").attr("font-size", labelScreenPx(k) / k);
+
+    // re-init collision radii and let the layout breathe
+    sim.force("collide").radius(collideRadius);
+    sim.alpha(pts ? (selected ? 0.18 : 0.25) : 0.12).restart();
+
+    // place labels after the settle (selection settles faster than the
+    // route's fit-zoom); zoom-end re-runs placement after manual pan/zoom
+    const timer = setTimeout(placeLabels, pts ? (selected ? 700 : 1000) : 0);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected, playlist, neighbors, isMobile]);
 
   const resetView = useCallback(() => {
     if (!simRef.current) return;
