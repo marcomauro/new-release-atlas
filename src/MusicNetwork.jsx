@@ -31,13 +31,20 @@ let GRAPH = null; // populated by loader (hydrateGraph) before MusicNetworkInner
 
 // Node labels: constant ON-SCREEN size in px (the zoom handler counter-scales
 // the group's font by 1/k, so this is exactly what the eye sees at any zoom).
+// Route mode bumps it: those labels are the point of the view.
 const LABEL_PX = 10;
+const ROUTE_LABEL_PX = 11;
+// Extra collision radius (graph units) for the nodes of the active route:
+// gently pushes their close neighbours away so labels have room to breathe.
+const ROUTE_NODE_SPACING = 12;
 
 function MusicNetworkInner() {
   const svgRef = useRef(null);
   const wrapRef = useRef(null);
   const simRef = useRef(null);
   const hoverElsRef = useRef(null); // elementi evidenziati dall'hover corrente
+  const labelPxRef = useRef(LABEL_PX); // on-screen label size (route mode bumps it)
+  const routeBoostRef = useRef(null);  // ids of route nodes getting extra collision room
   const [selected, setSelected] = useState(null);
   const [hovered, setHovered] = useState(null);
   const [query, setQuery] = useState("");
@@ -184,7 +191,7 @@ function MusicNetworkInner() {
         // units) is counter-scaled by the zoom factor. Without this, the
         // route auto-fit (k ≈ 0.4–0.9) rendered them at 4–8 real px.
         // One attribute write on the group per frame — tspans inherit.
-        g.select(".mn-labelg").attr("font-size", LABEL_PX / e.transform.k);
+        g.select(".mn-labelg").attr("font-size", labelPxRef.current / e.transform.k);
       });
     svg.call(zoom);
     svg.on("dblclick.zoom", null);
@@ -314,6 +321,15 @@ function MusicNetworkInner() {
 
     const sameGenre = (l) => l.source.genre === l.target.genre;
 
+    // Collision radius accessor. Route nodes (routeBoostRef) get extra room so
+    // close neighbours are gently pushed away and route labels can breathe;
+    // re-initialized by the route effect via sim.force("collide").radius(...).
+    const collideRadius = (d) =>
+      rScale(d.degree) +
+      (isMobile ? 0.5 : 1.5) +
+      hashJitter(d.id) * (isMobile ? 1 : 4) +
+      (routeBoostRef.current && routeBoostRef.current.has(d.id) ? ROUTE_NODE_SPACING : 0);
+
     const sim = d3
       .forceSimulation(nodes)
       .force(
@@ -350,7 +366,7 @@ function MusicNetworkInner() {
         "collide",
         d3
           .forceCollide()
-          .radius((d) => rScale(d.degree) + (isMobile ? 0.5 : 1.5) + hashJitter(d.id) * (isMobile ? 1 : 4))
+          .radius(collideRadius)
           // strength 1 + 3 iterazioni: la spaziatura minima e' sempre rispettata,
           // i pallini non si sovrappongono mai nemmeno sotto la spinta delle ancore.
           .strength(1)
@@ -379,7 +395,75 @@ function MusicNetworkInner() {
       incident.get(t).push(this);
     });
 
-    simRef.current = { sim, node, link, labels, g, zoom, svg, anchor, route, nodesById, drawRoute, incident };
+    // Greedy label placement for the ACTIVE route: works in SCREEN space (the
+    // labels' font is screen-constant), measures each label's real width and
+    // tries 6 candidate positions around the node (right/left x mid/up/down)
+    // in listening order, picking the first that doesn't overlap the labels
+    // already placed (or the least-overlapping one as a fallback). Runs after
+    // the fit-zoom + settle, and again on every zoom end while a route is on.
+    const placeRouteLabels = () => {
+      const t = d3.zoomTransform(svg.node());
+      const k = t.k;
+      // reset everyone to the default anchor first (also clears a previous route)
+      labels
+        .attr("dx", (d) => rScale(d.degree) + 3)
+        .attr("dy", 3)
+        .attr("text-anchor", null);
+      const pts = routeRef.current || [];
+      if (pts.length < 2) return;
+      const ids = new Set(pts.map((p) => p.id));
+      const byId = new Map();
+      labels.filter((d) => ids.has(d.id)).each(function (d) { byId.set(d.id, this); });
+      const placed = [];
+      const grow = 2; // safety margin around each box, px
+      const overlapArea = (a, b) => {
+        const w = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x) + grow;
+        const h = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y) + grow;
+        return w > 0 && h > 0 ? w * h : 0;
+      };
+      for (const p of pts) {
+        const el = byId.get(p.id);
+        if (!el) continue;
+        const w = el.getComputedTextLength() * k; // screen px
+        const h = 15; // real bbox at 11px + halo
+        const sx = p.x * k + t.x;
+        const sy = p.y * k + t.y;
+        const off = rScale(p.degree) * k + 5;
+        const cands = [
+          { dx: off, dy: 4, anchor: "start" },
+          { dx: off, dy: -9, anchor: "start" },
+          { dx: off, dy: 17, anchor: "start" },
+          { dx: -off, dy: 4, anchor: "end" },
+          { dx: -off, dy: -9, anchor: "end" },
+          { dx: -off, dy: 17, anchor: "end" },
+          // second ring: two extra vertical tiers for the densest spots
+          { dx: off, dy: -22, anchor: "start" },
+          { dx: off, dy: 30, anchor: "start" },
+          { dx: -off, dy: -22, anchor: "end" },
+          { dx: -off, dy: 30, anchor: "end" },
+        ];
+        let best = null;
+        let bestArea = Infinity;
+        for (const c of cands) {
+          const box = { x: c.anchor === "start" ? sx + c.dx : sx + c.dx - w, y: sy + c.dy - h + 3, w, h };
+          let area = 0;
+          for (const q of placed) area += overlapArea(box, q);
+          if (area < bestArea) { bestArea = area; best = { c, box }; }
+          if (area === 0) break;
+        }
+        placed.push(best.box);
+        d3.select(el)
+          .attr("dx", best.c.dx / k)
+          .attr("dy", best.c.dy / k)
+          .attr("text-anchor", best.c.anchor);
+      }
+    };
+    // Re-distribute on zoom end: overlaps depend on the zoom factor.
+    zoom.on("end.routeLabels", () => {
+      if (routeRef.current && routeRef.current.length > 1) placeRouteLabels();
+    });
+
+    simRef.current = { sim, node, link, labels, g, zoom, svg, anchor, route, nodesById, drawRoute, incident, collideRadius, placeRouteLabels };
     return () => sim.stop();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -512,18 +596,27 @@ function MusicNetworkInner() {
   // Aggiorna il percorso della playlist e inquadra i suoi nodi (solo al cambio).
   useEffect(() => {
     if (!simRef.current) return;
-    const { nodesById, drawRoute, route, svg, zoom, labels } = simRef.current;
+    const { nodesById, drawRoute, route, svg, zoom, g, sim, collideRadius, placeRouteLabels } = simRef.current;
     const pts = (playlist || []).map((id) => nodesById.get(id)).filter(Boolean);
     routeRef.current = pts;
     drawRoute();
     route.attr("display", pts.length > 1 ? null : "none");
-    // Route labels alternate above/below the node along the listening order,
-    // halving the horizontal collisions in tight clusters. Others keep the
-    // default baseline offset.
-    const order = new Map((playlist || []).map((id, i) => [id, i]));
-    labels.attr("dy", (d) =>
-      order.has(d.id) ? (order.get(d.id) % 2 ? -7 : 14) : 3
-    );
+
+    // Route mode: bigger on-screen labels (11px) — update the group's font
+    // immediately at the current zoom, the zoom handler keeps it in sync.
+    labelPxRef.current = pts.length ? ROUTE_LABEL_PX : LABEL_PX;
+    g.select(".mn-labelg").attr("font-size", labelPxRef.current / d3.zoomTransform(svg.node()).k);
+
+    // Gentle repulsion around the route: its nodes get extra collision room
+    // (close neighbours slide away), then the sim re-settles at low alpha so
+    // the layout adjusts without reshuffling the clusters.
+    routeBoostRef.current = pts.length ? new Set(pts.map((p) => p.id)) : null;
+    sim.force("collide").radius(collideRadius);
+    sim.alpha(pts.length ? 0.25 : 0.12).restart();
+
+    // Distribute the route labels once the fit-zoom (750ms) and most of the
+    // settle are done; zoom-end re-runs it after any manual pan/zoom.
+    const timer = setTimeout(placeRouteLabels, pts.length ? 1000 : 0);
     if (pts.length) {
       const xs = pts.map((p) => p.x);
       const ys = pts.map((p) => p.y);
@@ -548,6 +641,7 @@ function MusicNetworkInner() {
         .translate(-cx, -cy);
       svg.transition().duration(750).call(zoom.transform, t);
     }
+    return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playlist]);
 
