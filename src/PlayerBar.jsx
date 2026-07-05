@@ -234,55 +234,56 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
 
   return (
     <Shell bottomGap={bottomGap} onHeight={onHeight}>
-      {/* now playing: artwork + title (tap → show on the map) + close */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 12px 6px" }}>
+      {/* Spotify-style layout: big artwork fills the LEFT side; the RIGHT
+          column stacks title → progress bar → transport controls. */}
+      <div style={{ display: "flex", alignItems: "stretch", gap: 12, padding: "10px 12px 8px" }}>
         {cover
-          ? <img src={cover} alt="" width={56} height={56} style={{ borderRadius: 6, flexShrink: 0, objectFit: "cover", boxShadow: "0 2px 8px rgba(0,0,0,0.18)" }} />
-          : <div style={{ width: 56, height: 56, borderRadius: 6, background: "rgba(154,147,138,0.25)", flexShrink: 0 }} />}
-        <button
-          onClick={() => onOpenTrack && onOpenTrack(cur.id)}
-          title="Show on the map"
-          style={{ flex: 1, minWidth: 0, textAlign: "left", background: "transparent", border: "none", padding: 0, cursor: onOpenTrack ? "pointer" : "default" }}
-        >
-          <div style={{ fontSize: 12.5, color: INK, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-            {cur.title}<span style={{ color: MUTED }}> — {cur.artist}</span>
-          </div>
-          <div style={{ fontSize: 10.5, color: MUTED, marginTop: 1 }}>
-            <span style={{ color: GREEN, fontWeight: 600 }}>● Spotify</span>{many ? ` · ${shown + 1}/${tracks.length}` : ""}
-          </div>
-        </button>
-        <button
-          onClick={() => setDevicesOpen((v) => !v)}
-          title="Choose the playback device"
-          aria-label="Choose the playback device"
-          style={tglBtn(devicesOpen)}
-        >
-          🔊
-        </button>
-        <button onClick={closePlayer} title="Pause and close" aria-label="Pause and close" style={navBtn}>✕</button>
-      </div>
+          ? <img src={cover} alt="" width={96} height={96} style={{ borderRadius: 8, flexShrink: 0, objectFit: "cover", alignSelf: "center", boxShadow: "0 3px 12px rgba(0,0,0,0.22)" }} />
+          : <div style={{ width: 96, height: 96, borderRadius: 8, background: "rgba(154,147,138,0.25)", flexShrink: 0, alignSelf: "center" }} />}
 
-      {/* progress + seek: the visible bar is 6px but the pointer target is
-          ~20px tall (invisible padding) — seekable with a thumb, not a sniper */}
-      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 2px" }}>
-        <span style={{ fontSize: 10, color: MUTED, width: 32, textAlign: "right" }}>{fmtTime(posDisp)}</span>
-        <div onClick={onSeek} style={{ flex: 1, padding: "7px 0", cursor: "pointer" }}>
-          <div style={{ height: 6, borderRadius: 3, background: "rgba(154,147,138,0.3)", position: "relative" }}>
-            <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${pct}%`, background: INK, borderRadius: 3 }} />
+        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 4 }}>
+          {/* row 1: title (marquee when it overflows) + device + close */}
+          <div style={{ display: "flex", alignItems: "flex-start", gap: 6 }}>
+            <button
+              onClick={() => onOpenTrack && onOpenTrack(cur.id)}
+              title="Show on the map"
+              style={{ flex: 1, minWidth: 0, textAlign: "left", background: "transparent", border: "none", padding: 0, cursor: onOpenTrack ? "pointer" : "default" }}
+            >
+              <Marquee text={`${cur.title} — ${cur.artist}`} />
+              <div style={{ fontSize: 10.5, color: MUTED, marginTop: 1 }}>
+                <span style={{ color: GREEN, fontWeight: 600 }}>● Spotify</span>{many ? ` · ${shown + 1}/${tracks.length}` : ""}
+              </div>
+            </button>
+            <button
+              onClick={() => setDevicesOpen((v) => !v)}
+              title="Choose the playback device"
+              aria-label="Choose the playback device"
+              style={tglBtn(devicesOpen)}
+            >
+              🔊
+            </button>
+            <button onClick={closePlayer} title="Pause and close" aria-label="Pause and close" style={navBtn}>✕</button>
           </div>
-        </div>
-        <span style={{ fontSize: 10, color: MUTED, width: 32 }}>{fmtTime(prog.dur)}</span>
-      </div>
 
-      {/* transport: five controls distributed along the row (capped width so
-          desktop doesn't scatter them), round play/pause as the centrepiece */}
-      <div style={{ padding: "0 26px 8px" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 340, margin: "0 auto" }}>
-          <button onClick={toggleShuffle} title="Shuffle the route" aria-label="Shuffle" style={tglBtn(shuffle)}>⇄</button>
-          <button onClick={goPrev} disabled={!many} title="Previous" aria-label="Previous track" style={{ ...navBtn, opacity: many ? 1 : 0.35 }}>‹</button>
-          <button onClick={toggle} title={paused ? "Resume" : "Pause"} aria-label={paused ? "Resume" : "Pause"} style={playBtn}>{paused ? "▶" : "❚❚"}</button>
-          <button onClick={goNext} disabled={!many} title="Next" aria-label="Next track" style={{ ...navBtn, opacity: many ? 1 : 0.35 }}>›</button>
-          <button onClick={cycleRepeat} title={`Repeat: ${repeat}`} aria-label={`Repeat: ${repeat}`} style={tglBtn(repeat !== "off")}>{repeat === "one" ? "₁⟲" : "⟲"}</button>
+          {/* row 2: progress + seek (6px bar, ~20px pointer target) */}
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <span style={{ fontSize: 10, color: MUTED, width: 30, textAlign: "right" }}>{fmtTime(posDisp)}</span>
+            <div onClick={onSeek} style={{ flex: 1, padding: "7px 0", cursor: "pointer" }}>
+              <div style={{ height: 6, borderRadius: 3, background: "rgba(154,147,138,0.3)", position: "relative" }}>
+                <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${pct}%`, background: INK, borderRadius: 3 }} />
+              </div>
+            </div>
+            <span style={{ fontSize: 10, color: MUTED, width: 30 }}>{fmtTime(prog.dur)}</span>
+          </div>
+
+          {/* row 3: transport distributed along the column width */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 4px" }}>
+            <button onClick={toggleShuffle} title="Shuffle the route" aria-label="Shuffle" style={tglBtn(shuffle)}>⇄</button>
+            <button onClick={goPrev} disabled={!many} title="Previous" aria-label="Previous track" style={{ ...navBtn, opacity: many ? 1 : 0.35 }}>‹</button>
+            <button onClick={toggle} title={paused ? "Resume" : "Pause"} aria-label={paused ? "Resume" : "Pause"} style={playBtn}>{paused ? "▶" : "❚❚"}</button>
+            <button onClick={goNext} disabled={!many} title="Next" aria-label="Next track" style={{ ...navBtn, opacity: many ? 1 : 0.35 }}>›</button>
+            <button onClick={cycleRepeat} title={`Repeat: ${repeat}`} aria-label={`Repeat: ${repeat}`} style={tglBtn(repeat !== "off")}>{repeat === "one" ? "₁⟲" : "⟲"}</button>
+          </div>
         </div>
       </div>
 
@@ -415,6 +416,46 @@ function EmbedPlayer({ tracks, index, setIndex, onClose, bottomGap, onLogin, onH
   );
 }
 
+// Single-line title that scrolls (seamless loop) only when it doesn't fit:
+// the text is duplicated and translated by -50%, so the loop point is
+// invisible; a hold at the start keeps the beginning readable. Recomputed
+// on every track change.
+function Marquee({ text }) {
+  const outerRef = useRef(null);
+  const innerRef = useRef(null);
+  const [scroll, setScroll] = useState(false);
+  useEffect(() => {
+    const o = outerRef.current;
+    const i = innerRef.current;
+    if (o && i) setScroll(i.scrollWidth > o.clientWidth + 2);
+  }, [text]);
+  const dur = Math.max(9, text.length * 0.32); // longer titles scroll slower
+  const [title, artist] = splitDash(text);
+  const content = (
+    <>
+      <span style={{ color: INK }}>{title}</span>
+      {artist && <span style={{ color: MUTED }}> — {artist}</span>}
+    </>
+  );
+  return (
+    <div ref={outerRef} style={{ overflow: "hidden", whiteSpace: "nowrap", fontSize: 12.5 }}>
+      <div
+        ref={innerRef}
+        className={scroll ? "mn-marquee" : undefined}
+        style={{ display: "inline-block", ...(scroll ? { animationDuration: `${dur}s` } : {}) }}
+      >
+        {content}
+        {scroll && <span style={{ padding: "0 28px" }} aria-hidden="true">{content}</span>}
+      </div>
+    </div>
+  );
+}
+
+function splitDash(s) {
+  const i = s.lastIndexOf(" — ");
+  return i < 0 ? [s, ""] : [s.slice(0, i), s.slice(i + 3)];
+}
+
 function Shell({ children, bottomGap, onHeight }) {
   const ref = useRef(null);
   useEffect(() => {
@@ -444,6 +485,15 @@ function Shell({ children, bottomGap, onHeight }) {
         fontFamily: "Inter, system-ui, sans-serif",
       }}
     >
+      <style>{`
+        /* Marquee for overflowing titles: duplicated content + -50% loop =
+           seamless; the 12% hold keeps the start readable before scrolling. */
+        .mn-marquee { animation: mn-marquee 12s linear infinite; will-change: transform; }
+        @keyframes mn-marquee {
+          0%, 12% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
       {children}
     </div>
   );
