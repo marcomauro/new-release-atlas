@@ -35,9 +35,11 @@ let GRAPH = null; // populated by loader (hydrateGraph) before MusicNetworkInner
 const LABEL_PX = 10;        // desktop base
 const MOBILE_LABEL_PX = 11; // mobile base
 const ROUTE_LABEL_PX = 11;  // emphasis (route or selection)
-// On mobile the size is softly coupled to the zoom (base × k^0.3, clamped):
-// zooming in grows the labels a little, zooming out shrinks them a little.
-const MOBILE_ZOOM_EXP = 0.3;
+// On mobile the size is coupled to the zoom (base × k^0.4, clamped [8,16]):
+// perceivable growth when zooming in, gentle shrink when zooming out. The
+// previous 0.3 exponent with a 14px cap saturated at k≈2.3 — most of the
+// zoom-in range showed no change at all, which read as "not working".
+const MOBILE_ZOOM_EXP = 0.4;
 // Extra collision radius (graph units) for emphasized nodes: gently pushes
 // their close neighbours away so labels have room to breathe. The selection
 // boost is smaller — a hub can emphasize 40 neighbours at once.
@@ -195,7 +197,7 @@ function MusicNetworkInner() {
     // the labels unreadable or oversized.
     const labelScreenPx = (k) =>
       isMobile
-        ? Math.max(9, Math.min(14, labelPxRef.current * Math.pow(k, MOBILE_ZOOM_EXP)))
+        ? Math.max(8, Math.min(16, labelPxRef.current * Math.pow(k, MOBILE_ZOOM_EXP)))
         : labelPxRef.current;
 
     const zoom = d3
@@ -444,7 +446,7 @@ function MusicNetworkInner() {
         const el = byId.get(p.id);
         if (!el) continue;
         const w = el.getComputedTextLength() * k; // screen px
-        const h = 15; // real bbox at 11px + halo
+        const h = labelScreenPx(k) + 4; // real bbox: current label size + halo
         const sx = p.x * k + t.x;
         const sy = p.y * k + t.y;
         const off = rScale(p.degree) * k + 5;
