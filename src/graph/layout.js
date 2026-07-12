@@ -6,12 +6,17 @@ import * as d3 from "d3";
 // "Cluster" cohesion force: every tick pushes the nodes sharing the same key
 // (e.g. genre, or genre+artist) toward their centroid. Used to compact the
 // genre clusters and to keep same-artist tracks close within a cluster.
-export function clusterForce(keyFn, strength) {
+// Optional groupScale(size) rescales the pull per group: prolific artists
+// (10-20 tracks) would otherwise collapse into packed blobs, since their
+// total centroid pull grows with the group while collision only resists
+// linearly. E.g. (n) => 1/Math.sqrt(n/2) keeps duos at full strength and
+// tames the big groups.
+export function clusterForce(keyFn, strength, groupScale) {
   let groups = [];
   function force(alpha) {
-    const k = strength * alpha;
     for (const arr of groups) {
       if (arr.length < 2) continue;
+      const k = strength * (groupScale ? groupScale(arr.length) : 1) * alpha;
       let cx = 0, cy = 0;
       for (const n of arr) { cx += n.x; cy += n.y; }
       cx /= arr.length; cy /= arr.length;

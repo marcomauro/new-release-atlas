@@ -339,6 +339,28 @@ function MusicNetworkInner() {
 
     const sameGenre = (l) => l.source.genre === l.target.genre;
 
+    // Same-artist link degree per node. Artist edges form a COMPLETE CLIQUE
+    // per artist (n tracks -> n(n-1)/2 springs): a 14-track artist pulls each
+    // of its nodes with ~13 short springs at once, packing the group to the
+    // collision limit. Normalizing each artist spring by sqrt(clique degree)
+    // keeps the total per-node pull comparable to a small artist's, while
+    // duos (degree 1) stay at full strength.
+    const artistDeg = new Map();
+    links.forEach((l) => {
+      if ((l.c?.[0] || 0) > 0) {
+        const s = l.source.id ?? l.source;
+        const t = l.target.id ?? l.target;
+        artistDeg.set(s, (artistDeg.get(s) || 0) + 1);
+        artistDeg.set(t, (artistDeg.get(t) || 0) + 1);
+      }
+    });
+    const cliqueNorm = (d) => {
+      if ((d.c?.[0] || 0) <= 0) return 1;
+      const s = d.source.id ?? d.source;
+      const t = d.target.id ?? d.target;
+      return 1 / Math.sqrt(Math.max(1, Math.max(artistDeg.get(s) || 1, artistDeg.get(t) || 1)));
+    };
+
     // Collision radius accessor. Emphasized nodes (routeBoostRef: route OR the
     // selected node's neighbourhood) get extra room so close neighbours are
     // gently pushed away and their labels can breathe; re-initialized by the
@@ -360,7 +382,7 @@ function MusicNetworkInner() {
           .distance((d) => (55 / (0.4 + d.weight * 0.22)) * (sameGenre(d) ? 0.7 : 2.4))
           // Stesso genere: attrazione piu' forte; generi diversi: molto debole
           // (0.12) cosi' i cluster non si tirano addosso e restano separati.
-          .strength((d) => Math.min(1, d.weight * 0.1) * (sameGenre(d) ? 1.6 : 0.12))
+          .strength((d) => Math.min(1, d.weight * 0.1) * (sameGenre(d) ? 1.6 : 0.12) * cliqueNorm(d))
       )
       // Repulsione piu' contenuta: blob piu' compatti -> piu' vuoto fra i cluster.
       .force("charge", d3.forceManyBody().strength(-34))
@@ -375,7 +397,8 @@ function MusicNetworkInner() {
       // dei link a dare la forma — più organica — mentre i brani dello stesso
       // autore restano comunque vicini grazie ai link d'autore (peso 3.0).
       .force("genreCohesion", clusterForce((n) => n.genre, 0.06))
-      .force("artistCohesion", clusterForce((n) => n.genre + "|" + n.artist, 0.15))
+      // Adaptive: full pull for duos, tamed for prolific artists (see layout.js).
+      .force("artistCohesion", clusterForce((n) => n.genre + "|" + n.artist, 0.15, (n) => 1 / Math.sqrt(Math.max(1, n / 2))))
       // Collisione = leva per separare i nodi densi senza "aprire" il cluster
       // (link e coesione lo tengono comunque unito). Padding piccolo (mobile 0.5,
       // desktop 1.5) -> blob COMPATTI cosi' le isole di genere restano staccate;
