@@ -4,7 +4,7 @@
   "source_account": "Spotify",
   "generated_at": "2026-05-23T12:27:11.266084",
   "description": "Archivio strutturato delle 'New Release Playlist' di Marco Mauro, da consultare via AI per generare playlist tematiche o effettuare analisi.",
-  "playlist_range": "#1 - #37 (37 New Release Playlist consecutive) + 1 extra (#101)",
+  "playlist_range": "#1 - #38 (38 New Release Playlist consecutive) + 1 extra (#101)",
   "note_on_gaps": "Nessuno: il dataset copre integralmente le New Release Playlist da #12 a #36. Le #1-#11 e #13-#17 si chiamano 'New Release Friday #N', dalla #12 e #18 in poi 'New Release Playlist #N'. La '2025 Fav Album Playlist' e' una compilation tematica (extra), spostata fuori dalla sequenza NRP al playlist_number 101.",
   "schema_per_track": {
    "playlist_number": "int (numero progressivo della playlist di origine)",
@@ -27,9 +27,9 @@
    "bpm": "int | null (null = non verificabile, mai inventato)",
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
-  "total_tracks_with_duplicates": 853,
-  "unique_tracks": 833,
-  "unique_artists": 822,
+  "total_tracks_with_duplicates": 871,
+  "unique_tracks": 851,
+  "unique_artists": 835,
   "top_artists": [
    [
     "Brian Jackson",
@@ -45,7 +45,7 @@
    ],
    [
     "Tame Impala",
-    9
+    10
    ],
    [
     "Matthew Herbert",
@@ -57,6 +57,10 @@
    ],
    [
     "Charles Webster",
+    8
+   ],
+   [
+    "Peter Gabriel",
     8
    ],
    [
@@ -72,6 +76,10 @@
     7
    ],
    [
+    "Run Logan Run",
+    7
+   ],
+   [
     "Jordan Rakei",
     7
    ],
@@ -80,11 +88,7 @@
     7
    ],
    [
-    "Peter Gabriel",
-    7
-   ],
-   [
-    "Run Logan Run",
+    "Jorja Smith",
     6
    ],
    [
@@ -96,20 +100,16 @@
     6
    ],
    [
+    "Greg Spero",
+    6
+   ],
+   [
     "Nate Smith",
     6
    ],
    [
     "Kokoroko",
     6
-   ],
-   [
-    "PJ Morton",
-    6
-   ],
-   [
-    "Alfa Mist",
-    5
    ]
   ],
   "genre_inference": {
@@ -166,8 +166,8 @@
   "enrichment_note": "Caratterizzazione musicale esperta aggiunta da Claude (giugno 2026): subgenres granulari, mood, mood_parameters (energy/valence/danceability/acousticness/instrumentalness, scala 0-1, stime qualitative da esperto), bpm (int o null) e bpm_source. bpm_source='verified' = confermato da fonti web DJ-pool (Beatsource, BPM Supreme, SongBPM, Tunebat); 'estimated' = stima fondata sul tempo tipico del brano/genere (presente solo dove molto affidabile, es. house 120-126); bpm=null dove non verificabile, mai inventato. I campi 'genres' e 'genre_primary' preesistenti (tassonomia a 12 macro-generi della pipeline new-release-atlas) sono INTOCCATI e restano la classificazione di riferimento.",
   "extended_at": "2026-06-11T09:12:01.887032",
   "extension_note": "Playlist #33 e #34 aggiunte a giugno 2026 con caratterizzazione esperta completa. Per queste 2 playlist anche genres/genre_primary sono assegnati dall'AI (coerenti con la tassonomia a 12 macro-generi della pipeline). Nota: 'Fainted Light' (Indra Lesmana) in #34 è un duplicato cross-playlist di #32 (stesso track ID).",
-  "merged_at": "2026-07-01T22:00:45Z",
-  "merge_note": "add_playlist.py: aggiunte ['#37'] (17 occorrenze, 17 brani nuovi)",
+  "merged_at": "2026-07-14T22:55:18Z",
+  "merge_note": "add_playlist.py: aggiunte ['#38'] (18 occorrenze, 18 brani nuovi)",
   "cross_playlist_duplicates": [
    {
     "spotify_track_id": "3wIMAdnBrA4Mtb6WB2B4YT",
@@ -33463,6 +33463,715 @@
       "instrumentalness": 0.7
      },
      "bpm": 124,
+     "bpm_source": "estimated"
+    }
+   ]
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "spotify_url": "https://open.spotify.com/playlist/5YPuh3jq2w4gTwxLEdUMfG",
+   "description": "",
+   "date": null,
+   "track_count": 18,
+   "tracks": [
+    {
+     "position_in_playlist": 1,
+     "title": "Alive (feat. Wizkid)",
+     "artists": [
+      "Jorja Smith",
+      "Wizkid"
+     ],
+     "primary_artist": "Jorja Smith",
+     "duration": "3:27",
+     "duration_sec": 207,
+     "spotify_track_id": "7KeboxD6ciOo8MHlkTgqMH",
+     "spotify_uri": "spotify:track:7KeboxD6ciOo8MHlkTgqMH",
+     "spotify_url": "https://open.spotify.com/track/7KeboxD6ciOo8MHlkTgqMH",
+     "genres": [
+      "neo-soul",
+      "world"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "uk r&b",
+      "afrobeats",
+      "contemporary soul"
+     ],
+     "mood": [
+      "warm",
+      "romantic",
+      "smooth"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.7,
+      "danceability": 0.72,
+      "acousticness": 0.25,
+      "instrumentalness": 0.05
+     },
+     "bpm": 104,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 2,
+     "title": "Bloom - Live from Electric Lady Studios",
+     "artists": [
+      "Thom Yorke"
+     ],
+     "primary_artist": "Thom Yorke",
+     "duration": "5:11",
+     "duration_sec": 311,
+     "spotify_track_id": "39IiHpRESERDOESS1thMLe",
+     "spotify_uri": "spotify:track:39IiHpRESERDOESS1thMLe",
+     "spotify_url": "https://open.spotify.com/track/39IiHpRESERDOESS1thMLe",
+     "genres": [
+      "alt",
+      "electronic"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "art rock",
+      "experimental",
+      "live recording",
+      "electronic rock"
+     ],
+     "mood": [
+      "brooding",
+      "hypnotic",
+      "intense"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.3,
+      "danceability": 0.4,
+      "acousticness": 0.4,
+      "instrumentalness": 0.4
+     },
+     "bpm": 118,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 3,
+     "title": "Let the Music Find You",
+     "artists": [
+      "Galliano"
+     ],
+     "primary_artist": "Galliano",
+     "duration": "4:32",
+     "duration_sec": 272,
+     "spotify_track_id": "1uUzPCn8zokwtQnZV8iapv",
+     "spotify_uri": "spotify:track:1uUzPCn8zokwtQnZV8iapv",
+     "spotify_url": "https://open.spotify.com/track/1uUzPCn8zokwtQnZV8iapv",
+     "genres": [
+      "soulful-house",
+      "broken-beat"
+     ],
+     "genre_primary": "soulful-house",
+     "subgenres": [
+      "jazz-funk",
+      "acid jazz",
+      "nu-jazz",
+      "future soul"
+     ],
+     "mood": [
+      "uplifting",
+      "groovy",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.8,
+      "danceability": 0.78,
+      "acousticness": 0.2,
+      "instrumentalness": 0.2
+     },
+     "bpm": 112,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 4,
+     "title": "You Don't Believe (I Couldn't Be)",
+     "artists": [
+      "Run Logan Run",
+      "BB.JAMES"
+     ],
+     "primary_artist": "Run Logan Run",
+     "duration": "4:35",
+     "duration_sec": 275,
+     "spotify_track_id": "4kXgUbtvJkTA2NFdA6j9X7",
+     "spotify_uri": "spotify:track:4kXgUbtvJkTA2NFdA6j9X7",
+     "spotify_url": "https://open.spotify.com/track/4kXgUbtvJkTA2NFdA6j9X7",
+     "genres": [
+      "uk-jazz",
+      "broken-beat"
+     ],
+     "genre_primary": "uk-jazz",
+     "subgenres": [
+      "jazz",
+      "spiritual jazz",
+      "jazz fusion",
+      "experimental jazz"
+     ],
+     "mood": [
+      "intense",
+      "expansive",
+      "raw"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.5,
+      "danceability": 0.55,
+      "acousticness": 0.3,
+      "instrumentalness": 0.6
+     },
+     "bpm": 128,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 5,
+     "title": "American Dream - Herbert's Edibles Dub",
+     "artists": [
+      "eee gee",
+      "Matthew Herbert"
+     ],
+     "primary_artist": "eee gee",
+     "duration": "4:48",
+     "duration_sec": 288,
+     "spotify_track_id": "3noOA0EqHqdSDK1UTeHKlX",
+     "spotify_uri": "spotify:track:3noOA0EqHqdSDK1UTeHKlX",
+     "spotify_url": "https://open.spotify.com/track/3noOA0EqHqdSDK1UTeHKlX",
+     "genres": [
+      "electronic",
+      "downtempo"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "dub",
+      "art pop",
+      "leftfield"
+     ],
+     "mood": [
+      "hazy",
+      "hypnotic",
+      "moody"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.45,
+      "danceability": 0.6,
+      "acousticness": 0.3,
+      "instrumentalness": 0.4
+     },
+     "bpm": 110,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 6,
+     "title": "Hummer",
+     "artists": [
+      "Tame Impala"
+     ],
+     "primary_artist": "Tame Impala",
+     "duration": "6:02",
+     "duration_sec": 362,
+     "spotify_track_id": "1GfEpihzfbV6HFt21JA1dz",
+     "spotify_uri": "spotify:track:1GfEpihzfbV6HFt21JA1dz",
+     "spotify_url": "https://open.spotify.com/track/1GfEpihzfbV6HFt21JA1dz",
+     "genres": [
+      "alt",
+      "electronic"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "psychedelic rock",
+      "psych-pop",
+      "neo-psychedelia",
+      "synth rock"
+     ],
+     "mood": [
+      "trippy",
+      "driving",
+      "dreamy"
+     ],
+     "mood_parameters": {
+      "energy": 0.75,
+      "valence": 0.6,
+      "danceability": 0.65,
+      "acousticness": 0.15,
+      "instrumentalness": 0.35
+     },
+     "bpm": 120,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 7,
+     "title": "intrusive thoughts",
+     "artists": [
+      "Greg Spero",
+      "Noah Allen",
+      "Mattia Muller",
+      "Jack Kuelling",
+      "Joav Ganor"
+     ],
+     "primary_artist": "Greg Spero",
+     "duration": "6:50",
+     "duration_sec": 410,
+     "spotify_track_id": "5k5hCtJkpC2eKjVtYRe0Xa",
+     "spotify_uri": "spotify:track:5k5hCtJkpC2eKjVtYRe0Xa",
+     "spotify_url": "https://open.spotify.com/track/5k5hCtJkpC2eKjVtYRe0Xa",
+     "genres": [
+      "jazz",
+      "uk-jazz"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "contemporary jazz",
+      "jazz fusion",
+      "improvisation"
+     ],
+     "mood": [
+      "contemplative",
+      "intricate",
+      "immersive"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.5,
+      "danceability": 0.45,
+      "acousticness": 0.35,
+      "instrumentalness": 0.7
+     },
+     "bpm": 96,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 8,
+     "title": "RÀRECHE",
+     "artists": [
+      "LA NIÑA"
+     ],
+     "primary_artist": "LA NIÑA",
+     "duration": "2:51",
+     "duration_sec": 171,
+     "spotify_track_id": "5jZOwQ089xk0b3UUPK9169",
+     "spotify_uri": "spotify:track:5jZOwQ089xk0b3UUPK9169",
+     "spotify_url": "https://open.spotify.com/track/5jZOwQ089xk0b3UUPK9169",
+     "genres": [
+      "world",
+      "alt"
+     ],
+     "genre_primary": "world",
+     "subgenres": [
+      "mediterranean pop",
+      "neomelodic",
+      "electro-folk",
+      "napoli sound"
+     ],
+     "mood": [
+      "theatrical",
+      "urgent",
+      "intense"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.5,
+      "danceability": 0.6,
+      "acousticness": 0.3,
+      "instrumentalness": 0.1
+     },
+     "bpm": 125,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 9,
+     "title": "2030 - Gemini Man",
+     "artists": [
+      "Wyclef Jean",
+      "Theo Croker"
+     ],
+     "primary_artist": "Wyclef Jean",
+     "duration": "4:25",
+     "duration_sec": 265,
+     "spotify_track_id": "0ztMGj7TJVLnBjCPtggeMr",
+     "spotify_uri": "spotify:track:0ztMGj7TJVLnBjCPtggeMr",
+     "spotify_url": "https://open.spotify.com/track/0ztMGj7TJVLnBjCPtggeMr",
+     "genres": [
+      "hip-hop",
+      "jazz"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "jazz rap",
+      "conscious hip-hop",
+      "trumpet-led"
+     ],
+     "mood": [
+      "reflective",
+      "smooth",
+      "soulful"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.55,
+      "danceability": 0.7,
+      "acousticness": 0.25,
+      "instrumentalness": 0.2
+     },
+     "bpm": 92,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 10,
+     "title": "Made For Me",
+     "artists": [
+      "The Colleagues",
+      "Raheem DeVaughn"
+     ],
+     "primary_artist": "The Colleagues",
+     "duration": "5:05",
+     "duration_sec": 305,
+     "spotify_track_id": "1n5ZBlPEbyNPbYXcbqL9ET",
+     "spotify_uri": "spotify:track:1n5ZBlPEbyNPbYXcbqL9ET",
+     "spotify_url": "https://open.spotify.com/track/1n5ZBlPEbyNPbYXcbqL9ET",
+     "genres": [
+      "neo-soul",
+      "soul-funk"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "contemporary r&b",
+      "quiet storm",
+      "soul"
+     ],
+     "mood": [
+      "romantic",
+      "smooth",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.65,
+      "danceability": 0.6,
+      "acousticness": 0.35,
+      "instrumentalness": 0.05
+     },
+     "bpm": 88,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 11,
+     "title": "What Is The Message",
+     "artists": [
+      "KRS-One"
+     ],
+     "primary_artist": "KRS-One",
+     "duration": "3:52",
+     "duration_sec": 232,
+     "spotify_track_id": "2pGRbFGXd3Si2knula2OjX",
+     "spotify_uri": "spotify:track:2pGRbFGXd3Si2knula2OjX",
+     "spotify_url": "https://open.spotify.com/track/2pGRbFGXd3Si2knula2OjX",
+     "genres": [
+      "hip-hop"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "boom bap",
+      "conscious hip-hop",
+      "east coast"
+     ],
+     "mood": [
+      "assertive",
+      "gritty",
+      "energetic"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.55,
+      "danceability": 0.75,
+      "acousticness": 0.15,
+      "instrumentalness": 0.05
+     },
+     "bpm": 94,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 12,
+     "title": "Do Better",
+     "artists": [
+      "Jazzbois",
+      "Goya Gumbani",
+      "Franky Bones"
+     ],
+     "primary_artist": "Jazzbois",
+     "duration": "3:43",
+     "duration_sec": 223,
+     "spotify_track_id": "4SsbrLDtqf3PgO0JkdYEqa",
+     "spotify_uri": "spotify:track:4SsbrLDtqf3PgO0JkdYEqa",
+     "spotify_url": "https://open.spotify.com/track/4SsbrLDtqf3PgO0JkdYEqa",
+     "genres": [
+      "hip-hop",
+      "uk-jazz"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "jazz rap",
+      "uk hip-hop",
+      "lo-fi soul"
+     ],
+     "mood": [
+      "laid-back",
+      "smoky",
+      "groovy"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.55,
+      "danceability": 0.68,
+      "acousticness": 0.3,
+      "instrumentalness": 0.15
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 13,
+     "title": "ON THE LOW feat tyler, the creator",
+     "artists": [
+      "YG",
+      "Tyler, The Creator"
+     ],
+     "primary_artist": "YG",
+     "duration": "3:04",
+     "duration_sec": 184,
+     "spotify_track_id": "09vUEGDPqHaMWxRSS6XPY1",
+     "spotify_uri": "spotify:track:09vUEGDPqHaMWxRSS6XPY1",
+     "spotify_url": "https://open.spotify.com/track/09vUEGDPqHaMWxRSS6XPY1",
+     "genres": [
+      "hip-hop"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "west coast",
+      "g-funk",
+      "trap"
+     ],
+     "mood": [
+      "laid-back",
+      "confident",
+      "smooth"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.6,
+      "danceability": 0.8,
+      "acousticness": 0.1,
+      "instrumentalness": 0.05
+     },
+     "bpm": 98,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 14,
+     "title": "I Belong to the Sky - Bright-Side Mix",
+     "artists": [
+      "Peter Gabriel"
+     ],
+     "primary_artist": "Peter Gabriel",
+     "duration": "7:24",
+     "duration_sec": 444,
+     "spotify_track_id": "1yFOL8IHl4lhewcOgRvsaB",
+     "spotify_uri": "spotify:track:1yFOL8IHl4lhewcOgRvsaB",
+     "spotify_url": "https://open.spotify.com/track/1yFOL8IHl4lhewcOgRvsaB",
+     "genres": [
+      "alt",
+      "electronic"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "art rock",
+      "progressive pop",
+      "ambient rock",
+      "orchestral"
+     ],
+     "mood": [
+      "expansive",
+      "uplifting",
+      "cinematic"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.6,
+      "danceability": 0.5,
+      "acousticness": 0.35,
+      "instrumentalness": 0.25
+     },
+     "bpm": 100,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 15,
+     "title": "Shake Down",
+     "artists": [
+      "Adrian Younge"
+     ],
+     "primary_artist": "Adrian Younge",
+     "duration": "4:22",
+     "duration_sec": 262,
+     "spotify_track_id": "6jQ2AEAq0BKtaYgKNb5Gdz",
+     "spotify_uri": "spotify:track:6jQ2AEAq0BKtaYgKNb5Gdz",
+     "spotify_url": "https://open.spotify.com/track/6jQ2AEAq0BKtaYgKNb5Gdz",
+     "genres": [
+      "soul-funk",
+      "neo-soul"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "soul-funk",
+      "cinematic soul",
+      "psychedelic soul",
+      "instrumental funk"
+     ],
+     "mood": [
+      "moody",
+      "cinematic",
+      "groovy"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.5,
+      "danceability": 0.68,
+      "acousticness": 0.3,
+      "instrumentalness": 0.55
+     },
+     "bpm": 102,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 16,
+     "title": "Ride Lonesome (feat. Sierra Ferrell)",
+     "artists": [
+      "Beck",
+      "Sierra Ferrell"
+     ],
+     "primary_artist": "Beck",
+     "duration": "4:24",
+     "duration_sec": 264,
+     "spotify_track_id": "2lWk9Ik4LSAYKNGwBn86yJ",
+     "spotify_uri": "spotify:track:2lWk9Ik4LSAYKNGwBn86yJ",
+     "spotify_url": "https://open.spotify.com/track/2lWk9Ik4LSAYKNGwBn86yJ",
+     "genres": [
+      "alt",
+      "world"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "alternative",
+      "alt-country",
+      "folk rock",
+      "americana"
+     ],
+     "mood": [
+      "rootsy",
+      "wistful",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.55,
+      "danceability": 0.55,
+      "acousticness": 0.5,
+      "instrumentalness": 0.15
+     },
+     "bpm": 108,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 17,
+     "title": "Beyond the Miles - Fink Remix",
+     "artists": [
+      "Remy Van Kesteren",
+      "Fink",
+      "Nana Adjoa"
+     ],
+     "primary_artist": "Remy Van Kesteren",
+     "duration": "5:57",
+     "duration_sec": 357,
+     "spotify_track_id": "1NTTEmniu6QgLQsBfoS0ex",
+     "spotify_uri": "spotify:track:1NTTEmniu6QgLQsBfoS0ex",
+     "spotify_url": "https://open.spotify.com/track/1NTTEmniu6QgLQsBfoS0ex",
+     "genres": [
+      "downtempo",
+      "electronic"
+     ],
+     "genre_primary": "downtempo",
+     "subgenres": [
+      "electronic",
+      "nu-classical",
+      "ambient electronic",
+      "chillout"
+     ],
+     "mood": [
+      "serene",
+      "melancholic",
+      "atmospheric"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.4,
+      "danceability": 0.5,
+      "acousticness": 0.5,
+      "instrumentalness": 0.6
+     },
+     "bpm": 105,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 18,
+     "title": "Velvet Lathe - Nathan Fake Remix",
+     "artists": [
+      "Bar.ba",
+      "Nathan Fake"
+     ],
+     "primary_artist": "Bar.ba",
+     "duration": "6:46",
+     "duration_sec": 406,
+     "spotify_track_id": "6ibBeqIvDca2Ie7qJyhU0Q",
+     "spotify_uri": "spotify:track:6ibBeqIvDca2Ie7qJyhU0Q",
+     "spotify_url": "https://open.spotify.com/track/6ibBeqIvDca2Ie7qJyhU0Q",
+     "genres": [
+      "electronic",
+      "downtempo"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "idm",
+      "melodic techno",
+      "ambient techno"
+     ],
+     "mood": [
+      "hypnotic",
+      "textured",
+      "introspective"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.45,
+      "danceability": 0.62,
+      "acousticness": 0.25,
+      "instrumentalness": 0.75
+     },
+     "bpm": 122,
      "bpm_source": "estimated"
     }
    ]
@@ -68760,6 +69469,758 @@
     "instrumentalness": 0.7
    },
    "bpm": 124,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "position_in_playlist": 1,
+   "title": "Alive (feat. Wizkid)",
+   "artists": [
+    "Jorja Smith",
+    "Wizkid"
+   ],
+   "primary_artist": "Jorja Smith",
+   "duration": "3:27",
+   "duration_sec": 207,
+   "spotify_track_id": "7KeboxD6ciOo8MHlkTgqMH",
+   "spotify_uri": "spotify:track:7KeboxD6ciOo8MHlkTgqMH",
+   "spotify_url": "https://open.spotify.com/track/7KeboxD6ciOo8MHlkTgqMH",
+   "genres": [
+    "neo-soul",
+    "world"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "uk r&b",
+    "afrobeats",
+    "contemporary soul"
+   ],
+   "mood": [
+    "warm",
+    "romantic",
+    "smooth"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.7,
+    "danceability": 0.72,
+    "acousticness": 0.25,
+    "instrumentalness": 0.05
+   },
+   "bpm": 104,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "position_in_playlist": 2,
+   "title": "Bloom - Live from Electric Lady Studios",
+   "artists": [
+    "Thom Yorke"
+   ],
+   "primary_artist": "Thom Yorke",
+   "duration": "5:11",
+   "duration_sec": 311,
+   "spotify_track_id": "39IiHpRESERDOESS1thMLe",
+   "spotify_uri": "spotify:track:39IiHpRESERDOESS1thMLe",
+   "spotify_url": "https://open.spotify.com/track/39IiHpRESERDOESS1thMLe",
+   "genres": [
+    "alt",
+    "electronic"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "art rock",
+    "experimental",
+    "live recording",
+    "electronic rock"
+   ],
+   "mood": [
+    "brooding",
+    "hypnotic",
+    "intense"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.3,
+    "danceability": 0.4,
+    "acousticness": 0.4,
+    "instrumentalness": 0.4
+   },
+   "bpm": 118,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "position_in_playlist": 3,
+   "title": "Let the Music Find You",
+   "artists": [
+    "Galliano"
+   ],
+   "primary_artist": "Galliano",
+   "duration": "4:32",
+   "duration_sec": 272,
+   "spotify_track_id": "1uUzPCn8zokwtQnZV8iapv",
+   "spotify_uri": "spotify:track:1uUzPCn8zokwtQnZV8iapv",
+   "spotify_url": "https://open.spotify.com/track/1uUzPCn8zokwtQnZV8iapv",
+   "genres": [
+    "soulful-house",
+    "broken-beat"
+   ],
+   "genre_primary": "soulful-house",
+   "subgenres": [
+    "jazz-funk",
+    "acid jazz",
+    "nu-jazz",
+    "future soul"
+   ],
+   "mood": [
+    "uplifting",
+    "groovy",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.8,
+    "danceability": 0.78,
+    "acousticness": 0.2,
+    "instrumentalness": 0.2
+   },
+   "bpm": 112,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "position_in_playlist": 4,
+   "title": "You Don't Believe (I Couldn't Be)",
+   "artists": [
+    "Run Logan Run",
+    "BB.JAMES"
+   ],
+   "primary_artist": "Run Logan Run",
+   "duration": "4:35",
+   "duration_sec": 275,
+   "spotify_track_id": "4kXgUbtvJkTA2NFdA6j9X7",
+   "spotify_uri": "spotify:track:4kXgUbtvJkTA2NFdA6j9X7",
+   "spotify_url": "https://open.spotify.com/track/4kXgUbtvJkTA2NFdA6j9X7",
+   "genres": [
+    "uk-jazz",
+    "broken-beat"
+   ],
+   "genre_primary": "uk-jazz",
+   "subgenres": [
+    "jazz",
+    "spiritual jazz",
+    "jazz fusion",
+    "experimental jazz"
+   ],
+   "mood": [
+    "intense",
+    "expansive",
+    "raw"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.5,
+    "danceability": 0.55,
+    "acousticness": 0.3,
+    "instrumentalness": 0.6
+   },
+   "bpm": 128,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "position_in_playlist": 5,
+   "title": "American Dream - Herbert's Edibles Dub",
+   "artists": [
+    "eee gee",
+    "Matthew Herbert"
+   ],
+   "primary_artist": "eee gee",
+   "duration": "4:48",
+   "duration_sec": 288,
+   "spotify_track_id": "3noOA0EqHqdSDK1UTeHKlX",
+   "spotify_uri": "spotify:track:3noOA0EqHqdSDK1UTeHKlX",
+   "spotify_url": "https://open.spotify.com/track/3noOA0EqHqdSDK1UTeHKlX",
+   "genres": [
+    "electronic",
+    "downtempo"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "dub",
+    "art pop",
+    "leftfield"
+   ],
+   "mood": [
+    "hazy",
+    "hypnotic",
+    "moody"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.45,
+    "danceability": 0.6,
+    "acousticness": 0.3,
+    "instrumentalness": 0.4
+   },
+   "bpm": 110,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "position_in_playlist": 6,
+   "title": "Hummer",
+   "artists": [
+    "Tame Impala"
+   ],
+   "primary_artist": "Tame Impala",
+   "duration": "6:02",
+   "duration_sec": 362,
+   "spotify_track_id": "1GfEpihzfbV6HFt21JA1dz",
+   "spotify_uri": "spotify:track:1GfEpihzfbV6HFt21JA1dz",
+   "spotify_url": "https://open.spotify.com/track/1GfEpihzfbV6HFt21JA1dz",
+   "genres": [
+    "alt",
+    "electronic"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "psychedelic rock",
+    "psych-pop",
+    "neo-psychedelia",
+    "synth rock"
+   ],
+   "mood": [
+    "trippy",
+    "driving",
+    "dreamy"
+   ],
+   "mood_parameters": {
+    "energy": 0.75,
+    "valence": 0.6,
+    "danceability": 0.65,
+    "acousticness": 0.15,
+    "instrumentalness": 0.35
+   },
+   "bpm": 120,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "position_in_playlist": 7,
+   "title": "intrusive thoughts",
+   "artists": [
+    "Greg Spero",
+    "Noah Allen",
+    "Mattia Muller",
+    "Jack Kuelling",
+    "Joav Ganor"
+   ],
+   "primary_artist": "Greg Spero",
+   "duration": "6:50",
+   "duration_sec": 410,
+   "spotify_track_id": "5k5hCtJkpC2eKjVtYRe0Xa",
+   "spotify_uri": "spotify:track:5k5hCtJkpC2eKjVtYRe0Xa",
+   "spotify_url": "https://open.spotify.com/track/5k5hCtJkpC2eKjVtYRe0Xa",
+   "genres": [
+    "jazz",
+    "uk-jazz"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "contemporary jazz",
+    "jazz fusion",
+    "improvisation"
+   ],
+   "mood": [
+    "contemplative",
+    "intricate",
+    "immersive"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.5,
+    "danceability": 0.45,
+    "acousticness": 0.35,
+    "instrumentalness": 0.7
+   },
+   "bpm": 96,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "position_in_playlist": 8,
+   "title": "RÀRECHE",
+   "artists": [
+    "LA NIÑA"
+   ],
+   "primary_artist": "LA NIÑA",
+   "duration": "2:51",
+   "duration_sec": 171,
+   "spotify_track_id": "5jZOwQ089xk0b3UUPK9169",
+   "spotify_uri": "spotify:track:5jZOwQ089xk0b3UUPK9169",
+   "spotify_url": "https://open.spotify.com/track/5jZOwQ089xk0b3UUPK9169",
+   "genres": [
+    "world",
+    "alt"
+   ],
+   "genre_primary": "world",
+   "subgenres": [
+    "mediterranean pop",
+    "neomelodic",
+    "electro-folk",
+    "napoli sound"
+   ],
+   "mood": [
+    "theatrical",
+    "urgent",
+    "intense"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.5,
+    "danceability": 0.6,
+    "acousticness": 0.3,
+    "instrumentalness": 0.1
+   },
+   "bpm": 125,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "position_in_playlist": 9,
+   "title": "2030 - Gemini Man",
+   "artists": [
+    "Wyclef Jean",
+    "Theo Croker"
+   ],
+   "primary_artist": "Wyclef Jean",
+   "duration": "4:25",
+   "duration_sec": 265,
+   "spotify_track_id": "0ztMGj7TJVLnBjCPtggeMr",
+   "spotify_uri": "spotify:track:0ztMGj7TJVLnBjCPtggeMr",
+   "spotify_url": "https://open.spotify.com/track/0ztMGj7TJVLnBjCPtggeMr",
+   "genres": [
+    "hip-hop",
+    "jazz"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "jazz rap",
+    "conscious hip-hop",
+    "trumpet-led"
+   ],
+   "mood": [
+    "reflective",
+    "smooth",
+    "soulful"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.55,
+    "danceability": 0.7,
+    "acousticness": 0.25,
+    "instrumentalness": 0.2
+   },
+   "bpm": 92,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "position_in_playlist": 10,
+   "title": "Made For Me",
+   "artists": [
+    "The Colleagues",
+    "Raheem DeVaughn"
+   ],
+   "primary_artist": "The Colleagues",
+   "duration": "5:05",
+   "duration_sec": 305,
+   "spotify_track_id": "1n5ZBlPEbyNPbYXcbqL9ET",
+   "spotify_uri": "spotify:track:1n5ZBlPEbyNPbYXcbqL9ET",
+   "spotify_url": "https://open.spotify.com/track/1n5ZBlPEbyNPbYXcbqL9ET",
+   "genres": [
+    "neo-soul",
+    "soul-funk"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "contemporary r&b",
+    "quiet storm",
+    "soul"
+   ],
+   "mood": [
+    "romantic",
+    "smooth",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.65,
+    "danceability": 0.6,
+    "acousticness": 0.35,
+    "instrumentalness": 0.05
+   },
+   "bpm": 88,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "position_in_playlist": 11,
+   "title": "What Is The Message",
+   "artists": [
+    "KRS-One"
+   ],
+   "primary_artist": "KRS-One",
+   "duration": "3:52",
+   "duration_sec": 232,
+   "spotify_track_id": "2pGRbFGXd3Si2knula2OjX",
+   "spotify_uri": "spotify:track:2pGRbFGXd3Si2knula2OjX",
+   "spotify_url": "https://open.spotify.com/track/2pGRbFGXd3Si2knula2OjX",
+   "genres": [
+    "hip-hop"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "boom bap",
+    "conscious hip-hop",
+    "east coast"
+   ],
+   "mood": [
+    "assertive",
+    "gritty",
+    "energetic"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.55,
+    "danceability": 0.75,
+    "acousticness": 0.15,
+    "instrumentalness": 0.05
+   },
+   "bpm": 94,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "position_in_playlist": 12,
+   "title": "Do Better",
+   "artists": [
+    "Jazzbois",
+    "Goya Gumbani",
+    "Franky Bones"
+   ],
+   "primary_artist": "Jazzbois",
+   "duration": "3:43",
+   "duration_sec": 223,
+   "spotify_track_id": "4SsbrLDtqf3PgO0JkdYEqa",
+   "spotify_uri": "spotify:track:4SsbrLDtqf3PgO0JkdYEqa",
+   "spotify_url": "https://open.spotify.com/track/4SsbrLDtqf3PgO0JkdYEqa",
+   "genres": [
+    "hip-hop",
+    "uk-jazz"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "jazz rap",
+    "uk hip-hop",
+    "lo-fi soul"
+   ],
+   "mood": [
+    "laid-back",
+    "smoky",
+    "groovy"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.55,
+    "danceability": 0.68,
+    "acousticness": 0.3,
+    "instrumentalness": 0.15
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "position_in_playlist": 13,
+   "title": "ON THE LOW feat tyler, the creator",
+   "artists": [
+    "YG",
+    "Tyler, The Creator"
+   ],
+   "primary_artist": "YG",
+   "duration": "3:04",
+   "duration_sec": 184,
+   "spotify_track_id": "09vUEGDPqHaMWxRSS6XPY1",
+   "spotify_uri": "spotify:track:09vUEGDPqHaMWxRSS6XPY1",
+   "spotify_url": "https://open.spotify.com/track/09vUEGDPqHaMWxRSS6XPY1",
+   "genres": [
+    "hip-hop"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "west coast",
+    "g-funk",
+    "trap"
+   ],
+   "mood": [
+    "laid-back",
+    "confident",
+    "smooth"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.6,
+    "danceability": 0.8,
+    "acousticness": 0.1,
+    "instrumentalness": 0.05
+   },
+   "bpm": 98,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "position_in_playlist": 14,
+   "title": "I Belong to the Sky - Bright-Side Mix",
+   "artists": [
+    "Peter Gabriel"
+   ],
+   "primary_artist": "Peter Gabriel",
+   "duration": "7:24",
+   "duration_sec": 444,
+   "spotify_track_id": "1yFOL8IHl4lhewcOgRvsaB",
+   "spotify_uri": "spotify:track:1yFOL8IHl4lhewcOgRvsaB",
+   "spotify_url": "https://open.spotify.com/track/1yFOL8IHl4lhewcOgRvsaB",
+   "genres": [
+    "alt",
+    "electronic"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "art rock",
+    "progressive pop",
+    "ambient rock",
+    "orchestral"
+   ],
+   "mood": [
+    "expansive",
+    "uplifting",
+    "cinematic"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.6,
+    "danceability": 0.5,
+    "acousticness": 0.35,
+    "instrumentalness": 0.25
+   },
+   "bpm": 100,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "position_in_playlist": 15,
+   "title": "Shake Down",
+   "artists": [
+    "Adrian Younge"
+   ],
+   "primary_artist": "Adrian Younge",
+   "duration": "4:22",
+   "duration_sec": 262,
+   "spotify_track_id": "6jQ2AEAq0BKtaYgKNb5Gdz",
+   "spotify_uri": "spotify:track:6jQ2AEAq0BKtaYgKNb5Gdz",
+   "spotify_url": "https://open.spotify.com/track/6jQ2AEAq0BKtaYgKNb5Gdz",
+   "genres": [
+    "soul-funk",
+    "neo-soul"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "soul-funk",
+    "cinematic soul",
+    "psychedelic soul",
+    "instrumental funk"
+   ],
+   "mood": [
+    "moody",
+    "cinematic",
+    "groovy"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.5,
+    "danceability": 0.68,
+    "acousticness": 0.3,
+    "instrumentalness": 0.55
+   },
+   "bpm": 102,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "position_in_playlist": 16,
+   "title": "Ride Lonesome (feat. Sierra Ferrell)",
+   "artists": [
+    "Beck",
+    "Sierra Ferrell"
+   ],
+   "primary_artist": "Beck",
+   "duration": "4:24",
+   "duration_sec": 264,
+   "spotify_track_id": "2lWk9Ik4LSAYKNGwBn86yJ",
+   "spotify_uri": "spotify:track:2lWk9Ik4LSAYKNGwBn86yJ",
+   "spotify_url": "https://open.spotify.com/track/2lWk9Ik4LSAYKNGwBn86yJ",
+   "genres": [
+    "alt",
+    "world"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "alternative",
+    "alt-country",
+    "folk rock",
+    "americana"
+   ],
+   "mood": [
+    "rootsy",
+    "wistful",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.55,
+    "danceability": 0.55,
+    "acousticness": 0.5,
+    "instrumentalness": 0.15
+   },
+   "bpm": 108,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "position_in_playlist": 17,
+   "title": "Beyond the Miles - Fink Remix",
+   "artists": [
+    "Remy Van Kesteren",
+    "Fink",
+    "Nana Adjoa"
+   ],
+   "primary_artist": "Remy Van Kesteren",
+   "duration": "5:57",
+   "duration_sec": 357,
+   "spotify_track_id": "1NTTEmniu6QgLQsBfoS0ex",
+   "spotify_uri": "spotify:track:1NTTEmniu6QgLQsBfoS0ex",
+   "spotify_url": "https://open.spotify.com/track/1NTTEmniu6QgLQsBfoS0ex",
+   "genres": [
+    "downtempo",
+    "electronic"
+   ],
+   "genre_primary": "downtempo",
+   "subgenres": [
+    "electronic",
+    "nu-classical",
+    "ambient electronic",
+    "chillout"
+   ],
+   "mood": [
+    "serene",
+    "melancholic",
+    "atmospheric"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.4,
+    "danceability": 0.5,
+    "acousticness": 0.5,
+    "instrumentalness": 0.6
+   },
+   "bpm": 105,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 38,
+   "playlist_name": "New Release Friday #38",
+   "playlist_id": "5YPuh3jq2w4gTwxLEdUMfG",
+   "position_in_playlist": 18,
+   "title": "Velvet Lathe - Nathan Fake Remix",
+   "artists": [
+    "Bar.ba",
+    "Nathan Fake"
+   ],
+   "primary_artist": "Bar.ba",
+   "duration": "6:46",
+   "duration_sec": 406,
+   "spotify_track_id": "6ibBeqIvDca2Ie7qJyhU0Q",
+   "spotify_uri": "spotify:track:6ibBeqIvDca2Ie7qJyhU0Q",
+   "spotify_url": "https://open.spotify.com/track/6ibBeqIvDca2Ie7qJyhU0Q",
+   "genres": [
+    "electronic",
+    "downtempo"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "idm",
+    "melodic techno",
+    "ambient techno"
+   ],
+   "mood": [
+    "hypnotic",
+    "textured",
+    "introspective"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.45,
+    "danceability": 0.62,
+    "acousticness": 0.25,
+    "instrumentalness": 0.75
+   },
+   "bpm": 122,
    "bpm_source": "estimated"
   }
  ]
