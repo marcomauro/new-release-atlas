@@ -26,4 +26,23 @@ export const MUTED = "#9a938a";
 // line. Bright azure -> azure = whatever is active / playing.
 export const ACCENT = "#1fb6e8";
 
-export const gColor = (g) => GENRE_COLOR[g] || MUTED;
+// Deterministic fallback colour for genres OUTSIDE the hand-picked palette:
+// a muted, editorial hue derived from the slug's hash. A newly adopted genre
+// is born distinguishable on the map (cluster, legend, chips) instead of
+// grey; the add_playlist WARN stays as the reminder to pick a definitive
+// colour here and a label/synonyms in playlist.js.
+const _autoColor = new Map();
+function autoColor(g) {
+  if (!g) return MUTED;
+  let c = _autoColor.get(g);
+  if (!c) {
+    let h = 0;
+    for (let i = 0; i < g.length; i++) h = (h * 31 + g.charCodeAt(i)) | 0;
+    // saturation/lightness sit in the same range as the curated palette
+    c = `hsl(${(h >>> 0) % 360}, 38%, 52%)`;
+    _autoColor.set(g, c);
+  }
+  return c;
+}
+
+export const gColor = (g) => GENRE_COLOR[g] || autoColor(g);

@@ -139,11 +139,14 @@ git push                              # GitHub Actions rebuilds graph.json and r
   occurrences; note it in `metadata`.
 - **False duplicate** (same title, **different id** = another recording/edit) →
   keep them as separate tracks.
-- **New `genre_primary` outside the 12-taxonomy** (as `downtempo` was) → your call:
-  remap it to an existing macro, **or** adopt it as a new genre — which also means
-  adding a colour + label in [`src/MusicNetwork.jsx`](../src/MusicNetwork.jsx)
-  (`GENRE_COLOR`, `GENRE_LABEL`) and a label/synonyms in
-  [`src/playlist.js`](../src/playlist.js).
+- **New `genre_primary` outside the 12-taxonomy** (as `downtempo` was) →
+  nothing breaks: the map picks the genre up automatically (cluster, legend,
+  anchor territory) with a **deterministic auto-colour** derived from the slug,
+  and `add_playlist.py` prints a WARN as a reminder. Your call then: remap it
+  to an existing macro, **or** adopt it — i.e. give it a definitive colour in
+  [`src/theme.js`](../src/theme.js) (`GENRE_COLOR`) and a label/synonyms in
+  [`src/playlist.js`](../src/playlist.js) (`GENRE_LABEL`), so it becomes
+  requestable from the Playlist Hub prompt too.
 
 ## Validation (must pass before commit)
 
