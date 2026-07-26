@@ -14,13 +14,17 @@ export function playlistLinks(res) {
 }
 
 // CSV con titolo/artista/link (per Soundiiz, fogli di calcolo, archivio).
+// Prefissato da BOM UTF-8: senza di esso Excel legge il file in ANSI e
+// sballa TUTTE le righe non-ASCII (accenti, titoli con Unicode esotico),
+// non solo quella incriminata.
+export const CSV_BOM = "\uFEFF";
 export function playlistCsv(res) {
   const esc = (s) => `"${String(s ?? "").replace(/"/g, '""')}"`;
   const rows = ["title,artist,spotify_url"];
   (res.tracks || []).forEach((t) =>
     rows.push([esc(t.title), esc((t.artists || [t.artist]).join(", ")), esc(t.url)].join(","))
   );
-  return rows.join("\n");
+  return CSV_BOM + rows.join("\n");
 }
 
 export function exportFilename(res, ext) {

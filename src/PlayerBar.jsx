@@ -438,7 +438,7 @@ function Marquee({ text }) {
     </>
   );
   return (
-    <div ref={outerRef} style={{ overflow: "hidden", whiteSpace: "nowrap", fontSize: 12.5 }}>
+    <div ref={outerRef} style={{ overflow: "hidden", whiteSpace: "nowrap", fontSize: 12.5, lineHeight: 1.25 }}>
       <div
         ref={innerRef}
         className={scroll ? "mn-marquee" : undefined}

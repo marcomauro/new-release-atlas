@@ -4,7 +4,7 @@
   "source_account": "Spotify",
   "generated_at": "2026-05-23T12:27:11.266084",
   "description": "Archivio strutturato delle 'New Release Playlist' di Marco Mauro, da consultare via AI per generare playlist tematiche o effettuare analisi.",
-  "playlist_range": "#1 - #38 (38 New Release Playlist consecutive) + 1 extra (#101)",
+  "playlist_range": "#1 - #39 (39 New Release Playlist consecutive) + 1 extra (#101)",
   "note_on_gaps": "Nessuno: il dataset copre integralmente le New Release Playlist da #12 a #36. Le #1-#11 e #13-#17 si chiamano 'New Release Friday #N', dalla #12 e #18 in poi 'New Release Playlist #N'. La '2025 Fav Album Playlist' e' una compilation tematica (extra), spostata fuori dalla sequenza NRP al playlist_number 101.",
   "schema_per_track": {
    "playlist_number": "int (numero progressivo della playlist di origine)",
@@ -27,9 +27,9 @@
    "bpm": "int | null (null = non verificabile, mai inventato)",
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
-  "total_tracks_with_duplicates": 871,
-  "unique_tracks": 851,
-  "unique_artists": 835,
+  "total_tracks_with_duplicates": 893,
+  "unique_tracks": 873,
+  "unique_artists": 851,
   "top_artists": [
    [
     "Brian Jackson",
@@ -88,6 +88,14 @@
     7
    ],
    [
+    "Nate Smith",
+    7
+   ],
+   [
+    "Kokoroko",
+    7
+   ],
+   [
     "Jorja Smith",
     6
    ],
@@ -100,15 +108,7 @@
     6
    ],
    [
-    "Greg Spero",
-    6
-   ],
-   [
-    "Nate Smith",
-    6
-   ],
-   [
-    "Kokoroko",
+    "Ezra Collective",
     6
    ]
   ],
@@ -166,8 +166,8 @@
   "enrichment_note": "Caratterizzazione musicale esperta aggiunta da Claude (giugno 2026): subgenres granulari, mood, mood_parameters (energy/valence/danceability/acousticness/instrumentalness, scala 0-1, stime qualitative da esperto), bpm (int o null) e bpm_source. bpm_source='verified' = confermato da fonti web DJ-pool (Beatsource, BPM Supreme, SongBPM, Tunebat); 'estimated' = stima fondata sul tempo tipico del brano/genere (presente solo dove molto affidabile, es. house 120-126); bpm=null dove non verificabile, mai inventato. I campi 'genres' e 'genre_primary' preesistenti (tassonomia a 12 macro-generi della pipeline new-release-atlas) sono INTOCCATI e restano la classificazione di riferimento.",
   "extended_at": "2026-06-11T09:12:01.887032",
   "extension_note": "Playlist #33 e #34 aggiunte a giugno 2026 con caratterizzazione esperta completa. Per queste 2 playlist anche genres/genre_primary sono assegnati dall'AI (coerenti con la tassonomia a 12 macro-generi della pipeline). Nota: 'Fainted Light' (Indra Lesmana) in #34 è un duplicato cross-playlist di #32 (stesso track ID).",
-  "merged_at": "2026-07-14T22:55:18Z",
-  "merge_note": "add_playlist.py: aggiunte ['#38'] (18 occorrenze, 18 brani nuovi)",
+  "merged_at": "2026-07-26T22:55:24Z",
+  "merge_note": "add_playlist.py: aggiunte ['#39'] (22 occorrenze, 22 brani nuovi)",
   "cross_playlist_duplicates": [
    {
     "spotify_track_id": "3wIMAdnBrA4Mtb6WB2B4YT",
@@ -34172,6 +34172,872 @@
       "instrumentalness": 0.75
      },
      "bpm": 122,
+     "bpm_source": "estimated"
+    }
+   ]
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "spotify_url": "https://open.spotify.com/playlist/3ITS6CNVydHTHL8ML39CEi",
+   "description": "",
+   "date": null,
+   "track_count": 22,
+   "tracks": [
+    {
+     "position_in_playlist": 1,
+     "title": "Drift",
+     "artists": [
+      "Bonobo"
+     ],
+     "primary_artist": "Bonobo",
+     "duration": "4:30",
+     "duration_sec": 270,
+     "spotify_track_id": "3v6NLDBeSPq8RT1QPB3tZo",
+     "spotify_uri": "spotify:track:3v6NLDBeSPq8RT1QPB3tZo",
+     "spotify_url": "https://open.spotify.com/track/3v6NLDBeSPq8RT1QPB3tZo",
+     "genres": [
+      "downtempo",
+      "electronic"
+     ],
+     "genre_primary": "downtempo",
+     "subgenres": [
+      "electronica",
+      "organic house",
+      "chillout",
+      "atmospheric electronica"
+     ],
+     "mood": [
+      "hypnotic",
+      "warm",
+      "reflective"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.5,
+      "danceability": 0.62,
+      "acousticness": 0.35,
+      "instrumentalness": 0.85
+     },
+     "bpm": 112,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 2,
+     "title": "Better",
+     "artists": [
+      "Baby Rose"
+     ],
+     "primary_artist": "Baby Rose",
+     "duration": "3:40",
+     "duration_sec": 220,
+     "spotify_track_id": "0gC4LKvKNxHTcpzlli1pfo",
+     "spotify_uri": "spotify:track:0gC4LKvKNxHTcpzlli1pfo",
+     "spotify_url": "https://open.spotify.com/track/0gC4LKvKNxHTcpzlli1pfo",
+     "genres": [
+      "neo-soul",
+      "soul-funk"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "dark r&b",
+      "alternative r&b",
+      "slow-burn soul"
+     ],
+     "mood": [
+      "brooding",
+      "sensual",
+      "vulnerable"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.3,
+      "danceability": 0.45,
+      "acousticness": 0.55,
+      "instrumentalness": 0.05
+     },
+     "bpm": 78,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 3,
+     "title": "(̸̢̛̼̞̭͋ͅ)̸͚̰͛̔̾̀̿͒͂v̴̢͚͚͎ȯ̶̞̮͖̑̈́OOOOOOOooo☼⃝☼⃝◉࿃ूੂ࿃ूੂੂ ʅ͡͡͡͡͡͡͡͡͡͡͡()ʃ͡͡͡͡͡͡͡͡͡͡ ꐑ(ఠీੂȯ̶̞̮͖̑̈́̿)̸̳̥̰̜̥̺̐ͅ࿃ूੂ✧⃛✧⃛)̴͎̜͍̱̋̌͋̓̾̚͜ ̷̨̢̥̅͝ͅ(̸̢̛̼̞̭͋ͅ)̸͚̰͛̔̾̀̿͒͂:̴͓̞̑̌̂̆̊͋̀:̸͎̟̯̂̓̌:̶̢͙͙͕̠̩͆(̷̮͍͚̫͚͂̍̒̋̕)̵̳̗̊̍̽́ ̵͍̪̲̀̍ ̴̤̚ ̴̹̙͙̻̓̉̚͝ ̟̞̝̜̙̘̗̖҉̵̴̨̧̢̡̼̻̺̹̳̲̱̰̯̮̭̬̫̪̩",
+     "artists": [
+      "⣎⡇ꉺლ༽இ•̛)ྀ◞ ༎ຶ ༽ৣৢ؞ৢ؞ؖ ꉺლ",
+      "Four Tet"
+     ],
+     "primary_artist": "⣎⡇ꉺლ༽இ•̛)ྀ◞ ༎ຶ ༽ৣৢ؞ৢ؞ؖ ꉺლ",
+     "duration": "5:38",
+     "duration_sec": 338,
+     "spotify_track_id": "68ozhSrI4eLbnUgih1SlOT",
+     "spotify_uri": "spotify:track:68ozhSrI4eLbnUgih1SlOT",
+     "spotify_url": "https://open.spotify.com/track/68ozhSrI4eLbnUgih1SlOT",
+     "genres": [
+      "electronic",
+      "downtempo"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronica",
+      "idm",
+      "folktronica",
+      "ambient techno"
+     ],
+     "mood": [
+      "hypnotic",
+      "shimmering",
+      "meditative"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.55,
+      "danceability": 0.6,
+      "acousticness": 0.25,
+      "instrumentalness": 0.95
+     },
+     "bpm": 130,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 4,
+     "title": "Sunshine",
+     "artists": [
+      "anaiis"
+     ],
+     "primary_artist": "anaiis",
+     "duration": "3:40",
+     "duration_sec": 220,
+     "spotify_track_id": "561OEU7Zw4rHfDTzoUyJWa",
+     "spotify_uri": "spotify:track:561OEU7Zw4rHfDTzoUyJWa",
+     "spotify_url": "https://open.spotify.com/track/561OEU7Zw4rHfDTzoUyJWa",
+     "genres": [
+      "neo-soul",
+      "downtempo"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "alternative r&b",
+      "alt-r&b",
+      "bedroom soul",
+      "jazz-inflected pop"
+     ],
+     "mood": [
+      "airy",
+      "tender",
+      "sunlit"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.65,
+      "danceability": 0.55,
+      "acousticness": 0.45,
+      "instrumentalness": 0.1
+     },
+     "bpm": 92,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 5,
+     "title": "Never Lost (Luedji Luna Remix)",
+     "artists": [
+      "Kokoroko",
+      "Luedji Luna"
+     ],
+     "primary_artist": "Kokoroko",
+     "duration": "3:49",
+     "duration_sec": 229,
+     "spotify_track_id": "6Gx9kudkqhg3LVPkUFtIVy",
+     "spotify_uri": "spotify:track:6Gx9kudkqhg3LVPkUFtIVy",
+     "spotify_url": "https://open.spotify.com/track/6Gx9kudkqhg3LVPkUFtIVy",
+     "genres": [
+      "uk-jazz",
+      "world"
+     ],
+     "genre_primary": "uk-jazz",
+     "subgenres": [
+      "jazz",
+      "afrobeat",
+      "brazilian mpb",
+      "spiritual jazz"
+     ],
+     "mood": [
+      "sunny",
+      "hypnotic",
+      "soulful"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.7,
+      "danceability": 0.65,
+      "acousticness": 0.4,
+      "instrumentalness": 0.35
+     },
+     "bpm": 100,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 6,
+     "title": "Well Organised (feat. Lila Iké)",
+     "artists": [
+      "Ezra Collective",
+      "Lila Iké"
+     ],
+     "primary_artist": "Ezra Collective",
+     "duration": "3:32",
+     "duration_sec": 212,
+     "spotify_track_id": "6bYQZWdJMKimn0VTXhMwd6",
+     "spotify_uri": "spotify:track:6bYQZWdJMKimn0VTXhMwd6",
+     "spotify_url": "https://open.spotify.com/track/6bYQZWdJMKimn0VTXhMwd6",
+     "genres": [
+      "uk-jazz",
+      "world"
+     ],
+     "genre_primary": "uk-jazz",
+     "subgenres": [
+      "jazz",
+      "afro-jazz",
+      "reggae",
+      "dancehall-jazz"
+     ],
+     "mood": [
+      "joyful",
+      "uplifting",
+      "groovy"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.85,
+      "danceability": 0.8,
+      "acousticness": 0.25,
+      "instrumentalness": 0.3
+     },
+     "bpm": 96,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 7,
+     "title": "Never Come Down (feat. Meshell Ndegeocello & Mark Guiliana)",
+     "artists": [
+      "Gretchen Parlato",
+      "Meshell Ndegeocello",
+      "Mark Guiliana"
+     ],
+     "primary_artist": "Gretchen Parlato",
+     "duration": "5:05",
+     "duration_sec": 305,
+     "spotify_track_id": "6mUgpfqrQQVr8YInOlXBQv",
+     "spotify_uri": "spotify:track:6mUgpfqrQQVr8YInOlXBQv",
+     "spotify_url": "https://open.spotify.com/track/6mUgpfqrQQVr8YInOlXBQv",
+     "genres": [
+      "jazz",
+      "neo-soul"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "contemporary vocal jazz",
+      "chamber jazz",
+      "jazz-soul"
+     ],
+     "mood": [
+      "intimate",
+      "hypnotic",
+      "meditative"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.45,
+      "danceability": 0.42,
+      "acousticness": 0.55,
+      "instrumentalness": 0.15
+     },
+     "bpm": 85,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 8,
+     "title": "I Feel Hope Coming",
+     "artists": [
+      "Alabama Shakes"
+     ],
+     "primary_artist": "Alabama Shakes",
+     "duration": "5:12",
+     "duration_sec": 312,
+     "spotify_track_id": "6yFkQeeTv3DDhTQynN2WVV",
+     "spotify_uri": "spotify:track:6yFkQeeTv3DDhTQynN2WVV",
+     "spotify_url": "https://open.spotify.com/track/6yFkQeeTv3DDhTQynN2WVV",
+     "genres": [
+      "alt",
+      "soul-funk"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "rock",
+      "southern soul",
+      "gospel rock",
+      "psychedelic soul"
+     ],
+     "mood": [
+      "uplifting",
+      "anthemic",
+      "cathartic"
+     ],
+     "mood_parameters": {
+      "energy": 0.68,
+      "valence": 0.8,
+      "danceability": 0.45,
+      "acousticness": 0.3,
+      "instrumentalness": 0.05
+     },
+     "bpm": 84,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 9,
+     "title": "Los Ojos Del Cóndor",
+     "artists": [
+      "Hermanos Gutiérrez"
+     ],
+     "primary_artist": "Hermanos Gutiérrez",
+     "duration": "3:33",
+     "duration_sec": 213,
+     "spotify_track_id": "7kDWwFekRc1ZlzNX0VTjfr",
+     "spotify_uri": "spotify:track:7kDWwFekRc1ZlzNX0VTjfr",
+     "spotify_url": "https://open.spotify.com/track/7kDWwFekRc1ZlzNX0VTjfr",
+     "genres": [
+      "world",
+      "alt"
+     ],
+     "genre_primary": "world",
+     "subgenres": [
+      "latin instrumental",
+      "desert blues",
+      "latin folk",
+      "cinematic guitar"
+     ],
+     "mood": [
+      "cinematic",
+      "melancholic",
+      "sultry"
+     ],
+     "mood_parameters": {
+      "energy": 0.3,
+      "valence": 0.4,
+      "danceability": 0.35,
+      "acousticness": 0.8,
+      "instrumentalness": 0.95
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 10,
+     "title": "Someday, Somewhere",
+     "artists": [
+      "Jungle"
+     ],
+     "primary_artist": "Jungle",
+     "duration": "2:32",
+     "duration_sec": 152,
+     "spotify_track_id": "20FqWsyuUaQTU5tk4nP6eN",
+     "spotify_uri": "spotify:track:20FqWsyuUaQTU5tk4nP6eN",
+     "spotify_url": "https://open.spotify.com/track/20FqWsyuUaQTU5tk4nP6eN",
+     "genres": [
+      "electronic",
+      "soul-funk"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic soul",
+      "neo-disco",
+      "modern funk",
+      "nu-soul"
+     ],
+     "mood": [
+      "breezy",
+      "nostalgic",
+      "bittersweet"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.6,
+      "danceability": 0.75,
+      "acousticness": 0.2,
+      "instrumentalness": 0.2
+     },
+     "bpm": 110,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 11,
+     "title": "Fingers",
+     "artists": [
+      "Joyce Moreno",
+      "Adrian Younge",
+      "Tutty Moreno"
+     ],
+     "primary_artist": "Joyce Moreno",
+     "duration": "6:30",
+     "duration_sec": 390,
+     "spotify_track_id": "2MdZhlkXAFpI3kFFrfnWcQ",
+     "spotify_uri": "spotify:track:2MdZhlkXAFpI3kFFrfnWcQ",
+     "spotify_url": "https://open.spotify.com/track/2MdZhlkXAFpI3kFFrfnWcQ",
+     "genres": [
+      "jazz",
+      "world"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "brazilian jazz",
+      "mpb",
+      "bossa nova",
+      "samba-jazz",
+      "soul jazz"
+     ],
+     "mood": [
+      "warm",
+      "groovy",
+      "nostalgic"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.7,
+      "danceability": 0.6,
+      "acousticness": 0.65,
+      "instrumentalness": 0.45
+     },
+     "bpm": 104,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 12,
+     "title": "Recommend",
+     "artists": [
+      "Masego"
+     ],
+     "primary_artist": "Masego",
+     "duration": "2:38",
+     "duration_sec": 158,
+     "spotify_track_id": "5AKMns2BAQCuZUlVZr5GGD",
+     "spotify_uri": "spotify:track:5AKMns2BAQCuZUlVZr5GGD",
+     "spotify_url": "https://open.spotify.com/track/5AKMns2BAQCuZUlVZr5GGD",
+     "genres": [
+      "neo-soul",
+      "hip-hop"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "trap-house-jazz",
+      "alt-r&b",
+      "sax-led soul"
+     ],
+     "mood": [
+      "playful",
+      "flirtatious",
+      "smooth"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.7,
+      "danceability": 0.75,
+      "acousticness": 0.25,
+      "instrumentalness": 0.15
+     },
+     "bpm": 100,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 13,
+     "title": "I Came from the Block",
+     "artists": [
+      "logan uncharted",
+      "Guru"
+     ],
+     "primary_artist": "logan uncharted",
+     "duration": "2:18",
+     "duration_sec": 138,
+     "spotify_track_id": "2q4Wh9p5uozc27WW431sFM",
+     "spotify_uri": "spotify:track:2q4Wh9p5uozc27WW431sFM",
+     "spotify_url": "https://open.spotify.com/track/2q4Wh9p5uozc27WW431sFM",
+     "genres": [
+      "hip-hop",
+      "jazz"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "boom bap",
+      "jazz rap",
+      "east coast"
+     ],
+     "mood": [
+      "nostalgic",
+      "gritty",
+      "head-nodding"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.5,
+      "danceability": 0.7,
+      "acousticness": 0.2,
+      "instrumentalness": 0.1
+     },
+     "bpm": 92,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 14,
+     "title": "Go",
+     "artists": [
+      "DJ Scratch",
+      "Q-Tip"
+     ],
+     "primary_artist": "DJ Scratch",
+     "duration": "5:51",
+     "duration_sec": 351,
+     "spotify_track_id": "08PPY3tOnM3EQFBoHeisM3",
+     "spotify_uri": "spotify:track:08PPY3tOnM3EQFBoHeisM3",
+     "spotify_url": "https://open.spotify.com/track/08PPY3tOnM3EQFBoHeisM3",
+     "genres": [
+      "hip-hop"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "boom bap",
+      "turntablism",
+      "east coast"
+     ],
+     "mood": [
+      "confident",
+      "raw",
+      "groovy"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.6,
+      "danceability": 0.78,
+      "acousticness": 0.15,
+      "instrumentalness": 0.15
+     },
+     "bpm": 94,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 15,
+     "title": "PATCHWORK",
+     "artists": [
+      "Nate Smith",
+      "Kiefer",
+      "CARRTOONS",
+      "Kenny Beats"
+     ],
+     "primary_artist": "Nate Smith",
+     "duration": "2:38",
+     "duration_sec": 158,
+     "spotify_track_id": "38HigDpo88ILLFU2zhzRT6",
+     "spotify_uri": "spotify:track:38HigDpo88ILLFU2zhzRT6",
+     "spotify_url": "https://open.spotify.com/track/38HigDpo88ILLFU2zhzRT6",
+     "genres": [
+      "broken-beat",
+      "jazz"
+     ],
+     "genre_primary": "broken-beat",
+     "subgenres": [
+      "beat music",
+      "jazz-hop",
+      "future beats",
+      "fusion"
+     ],
+     "mood": [
+      "playful",
+      "kinetic",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.65,
+      "valence": 0.7,
+      "danceability": 0.72,
+      "acousticness": 0.2,
+      "instrumentalness": 0.9
+     },
+     "bpm": 96,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 16,
+     "title": "Wasting Time (feat. Anderson .Paak)",
+     "artists": [
+      "Juicy J",
+      "Project Pat",
+      "Anderson .Paak"
+     ],
+     "primary_artist": "Juicy J",
+     "duration": "3:10",
+     "duration_sec": 190,
+     "spotify_track_id": "2G4y316Kk8FNcH0pf3mjBY",
+     "spotify_uri": "spotify:track:2G4y316Kk8FNcH0pf3mjBY",
+     "spotify_url": "https://open.spotify.com/track/2G4y316Kk8FNcH0pf3mjBY",
+     "genres": [
+      "hip-hop",
+      "soul-funk"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "memphis rap",
+      "funk-rap",
+      "southern hip-hop"
+     ],
+     "mood": [
+      "swaggering",
+      "playful",
+      "hedonistic"
+     ],
+     "mood_parameters": {
+      "energy": 0.75,
+      "valence": 0.65,
+      "danceability": 0.8,
+      "acousticness": 0.1,
+      "instrumentalness": 0.05
+     },
+     "bpm": 140,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 17,
+     "title": "Funk Drunk",
+     "artists": [
+      "Felix Da Housecat",
+      "Fatboy Slim",
+      "Carola",
+      "7KY"
+     ],
+     "primary_artist": "Felix Da Housecat",
+     "duration": "3:22",
+     "duration_sec": 202,
+     "spotify_track_id": "19h72fx2iP7Y4Xvct4x7Fs",
+     "spotify_uri": "spotify:track:19h72fx2iP7Y4Xvct4x7Fs",
+     "spotify_url": "https://open.spotify.com/track/19h72fx2iP7Y4Xvct4x7Fs",
+     "genres": [
+      "electronic",
+      "soulful-house"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "house",
+      "tech-house",
+      "big beat",
+      "funky house"
+     ],
+     "mood": [
+      "hedonistic",
+      "punchy",
+      "late-night"
+     ],
+     "mood_parameters": {
+      "energy": 0.85,
+      "valence": 0.7,
+      "danceability": 0.9,
+      "acousticness": 0.05,
+      "instrumentalness": 0.6
+     },
+     "bpm": 126,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 18,
+     "title": "MORNING DEW (DONK)",
+     "artists": [
+      "Beyoncé"
+     ],
+     "primary_artist": "Beyoncé",
+     "duration": "4:04",
+     "duration_sec": 244,
+     "spotify_track_id": "4ZYlzwjjAJrflwWg4DJTlT",
+     "spotify_uri": "spotify:track:4ZYlzwjjAJrflwWg4DJTlT",
+     "spotify_url": "https://open.spotify.com/track/4ZYlzwjjAJrflwWg4DJTlT",
+     "genres": [
+      "electronic",
+      "soul-funk"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "dance-pop",
+      "donk",
+      "bounce",
+      "club pop"
+     ],
+     "mood": [
+      "brash",
+      "euphoric",
+      "playful"
+     ],
+     "mood_parameters": {
+      "energy": 0.85,
+      "valence": 0.75,
+      "danceability": 0.85,
+      "acousticness": 0.1,
+      "instrumentalness": 0.05
+     },
+     "bpm": 150,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 19,
+     "title": "Abbeycwmhir",
+     "artists": [
+      "Ed O'Brien"
+     ],
+     "primary_artist": "Ed O'Brien",
+     "duration": "3:30",
+     "duration_sec": 210,
+     "spotify_track_id": "1JxboUHhRV1ZVmZlUPMc4G",
+     "spotify_uri": "spotify:track:1JxboUHhRV1ZVmZlUPMc4G",
+     "spotify_url": "https://open.spotify.com/track/1JxboUHhRV1ZVmZlUPMc4G",
+     "genres": [
+      "alt",
+      "electronic"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "alternative rock",
+      "art rock",
+      "ambient rock",
+      "krautrock"
+     ],
+     "mood": [
+      "pastoral",
+      "hypnotic",
+      "wistful"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.45,
+      "danceability": 0.42,
+      "acousticness": 0.4,
+      "instrumentalness": 0.6
+     },
+     "bpm": 108,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 20,
+     "title": "Stella 'e mare - La canzone di lui",
+     "artists": [
+      "Daniele Sepe",
+      "Gnut",
+      "Stefano Bollani"
+     ],
+     "primary_artist": "Daniele Sepe",
+     "duration": "3:41",
+     "duration_sec": 221,
+     "spotify_track_id": "1zI48PQjr2Y8vmpNVKF2Zg",
+     "spotify_uri": "spotify:track:1zI48PQjr2Y8vmpNVKF2Zg",
+     "spotify_url": "https://open.spotify.com/track/1zI48PQjr2Y8vmpNVKF2Zg",
+     "genres": [
+      "world",
+      "jazz"
+     ],
+     "genre_primary": "world",
+     "subgenres": [
+      "canzone napoletana",
+      "neapolitan song",
+      "mediterranean jazz",
+      "folk-jazz"
+     ],
+     "mood": [
+      "nostalgic",
+      "melancholic",
+      "lyrical"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.4,
+      "danceability": 0.35,
+      "acousticness": 0.7,
+      "instrumentalness": 0.2
+     },
+     "bpm": 76,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 21,
+     "title": "Fire on the Water",
+     "artists": [
+      "Bonobo",
+      "Arooj Aftab"
+     ],
+     "primary_artist": "Bonobo",
+     "duration": "3:03",
+     "duration_sec": 183,
+     "spotify_track_id": "0dU2ZpIcqiV55L16TZfSE8",
+     "spotify_uri": "spotify:track:0dU2ZpIcqiV55L16TZfSE8",
+     "spotify_url": "https://open.spotify.com/track/0dU2ZpIcqiV55L16TZfSE8",
+     "genres": [
+      "downtempo",
+      "world"
+     ],
+     "genre_primary": "downtempo",
+     "subgenres": [
+      "electronic",
+      "ambient electronica",
+      "sufi-inflected vocal",
+      "chamber electronic"
+     ],
+     "mood": [
+      "ethereal",
+      "solemn",
+      "spacious"
+     ],
+     "mood_parameters": {
+      "energy": 0.3,
+      "valence": 0.35,
+      "danceability": 0.35,
+      "acousticness": 0.6,
+      "instrumentalness": 0.3
+     },
+     "bpm": 80,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 22,
+     "title": "In Your Own Sweet Way - March 16, 1956 Version / Remastered 2026",
+     "artists": [
+      "Miles Davis"
+     ],
+     "primary_artist": "Miles Davis",
+     "duration": "4:34",
+     "duration_sec": 274,
+     "spotify_track_id": "7M4Z7u7wzsOsXDfACgDuo8",
+     "spotify_uri": "spotify:track:7M4Z7u7wzsOsXDfACgDuo8",
+     "spotify_url": "https://open.spotify.com/track/7M4Z7u7wzsOsXDfACgDuo8",
+     "genres": [
+      "jazz"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "hard bop",
+      "cool jazz",
+      "standards"
+     ],
+     "mood": [
+      "laid-back",
+      "elegant",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.6,
+      "danceability": 0.45,
+      "acousticness": 0.75,
+      "instrumentalness": 0.95
+     },
+     "bpm": 132,
      "bpm_source": "estimated"
     }
    ]
@@ -70221,6 +71087,927 @@
     "instrumentalness": 0.75
    },
    "bpm": 122,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 1,
+   "title": "Drift",
+   "artists": [
+    "Bonobo"
+   ],
+   "primary_artist": "Bonobo",
+   "duration": "4:30",
+   "duration_sec": 270,
+   "spotify_track_id": "3v6NLDBeSPq8RT1QPB3tZo",
+   "spotify_uri": "spotify:track:3v6NLDBeSPq8RT1QPB3tZo",
+   "spotify_url": "https://open.spotify.com/track/3v6NLDBeSPq8RT1QPB3tZo",
+   "genres": [
+    "downtempo",
+    "electronic"
+   ],
+   "genre_primary": "downtempo",
+   "subgenres": [
+    "electronica",
+    "organic house",
+    "chillout",
+    "atmospheric electronica"
+   ],
+   "mood": [
+    "hypnotic",
+    "warm",
+    "reflective"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.5,
+    "danceability": 0.62,
+    "acousticness": 0.35,
+    "instrumentalness": 0.85
+   },
+   "bpm": 112,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 2,
+   "title": "Better",
+   "artists": [
+    "Baby Rose"
+   ],
+   "primary_artist": "Baby Rose",
+   "duration": "3:40",
+   "duration_sec": 220,
+   "spotify_track_id": "0gC4LKvKNxHTcpzlli1pfo",
+   "spotify_uri": "spotify:track:0gC4LKvKNxHTcpzlli1pfo",
+   "spotify_url": "https://open.spotify.com/track/0gC4LKvKNxHTcpzlli1pfo",
+   "genres": [
+    "neo-soul",
+    "soul-funk"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "dark r&b",
+    "alternative r&b",
+    "slow-burn soul"
+   ],
+   "mood": [
+    "brooding",
+    "sensual",
+    "vulnerable"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.3,
+    "danceability": 0.45,
+    "acousticness": 0.55,
+    "instrumentalness": 0.05
+   },
+   "bpm": 78,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 3,
+   "title": "(̸̢̛̼̞̭͋ͅ)̸͚̰͛̔̾̀̿͒͂v̴̢͚͚͎ȯ̶̞̮͖̑̈́OOOOOOOooo☼⃝☼⃝◉࿃ूੂ࿃ूੂੂ ʅ͡͡͡͡͡͡͡͡͡͡͡()ʃ͡͡͡͡͡͡͡͡͡͡ ꐑ(ఠీੂȯ̶̞̮͖̑̈́̿)̸̳̥̰̜̥̺̐ͅ࿃ूੂ✧⃛✧⃛)̴͎̜͍̱̋̌͋̓̾̚͜ ̷̨̢̥̅͝ͅ(̸̢̛̼̞̭͋ͅ)̸͚̰͛̔̾̀̿͒͂:̴͓̞̑̌̂̆̊͋̀:̸͎̟̯̂̓̌:̶̢͙͙͕̠̩͆(̷̮͍͚̫͚͂̍̒̋̕)̵̳̗̊̍̽́ ̵͍̪̲̀̍ ̴̤̚ ̴̹̙͙̻̓̉̚͝ ̟̞̝̜̙̘̗̖҉̵̴̨̧̢̡̼̻̺̹̳̲̱̰̯̮̭̬̫̪̩",
+   "artists": [
+    "⣎⡇ꉺლ༽இ•̛)ྀ◞ ༎ຶ ༽ৣৢ؞ৢ؞ؖ ꉺლ",
+    "Four Tet"
+   ],
+   "primary_artist": "⣎⡇ꉺლ༽இ•̛)ྀ◞ ༎ຶ ༽ৣৢ؞ৢ؞ؖ ꉺლ",
+   "duration": "5:38",
+   "duration_sec": 338,
+   "spotify_track_id": "68ozhSrI4eLbnUgih1SlOT",
+   "spotify_uri": "spotify:track:68ozhSrI4eLbnUgih1SlOT",
+   "spotify_url": "https://open.spotify.com/track/68ozhSrI4eLbnUgih1SlOT",
+   "genres": [
+    "electronic",
+    "downtempo"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronica",
+    "idm",
+    "folktronica",
+    "ambient techno"
+   ],
+   "mood": [
+    "hypnotic",
+    "shimmering",
+    "meditative"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.55,
+    "danceability": 0.6,
+    "acousticness": 0.25,
+    "instrumentalness": 0.95
+   },
+   "bpm": 130,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 4,
+   "title": "Sunshine",
+   "artists": [
+    "anaiis"
+   ],
+   "primary_artist": "anaiis",
+   "duration": "3:40",
+   "duration_sec": 220,
+   "spotify_track_id": "561OEU7Zw4rHfDTzoUyJWa",
+   "spotify_uri": "spotify:track:561OEU7Zw4rHfDTzoUyJWa",
+   "spotify_url": "https://open.spotify.com/track/561OEU7Zw4rHfDTzoUyJWa",
+   "genres": [
+    "neo-soul",
+    "downtempo"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "alternative r&b",
+    "alt-r&b",
+    "bedroom soul",
+    "jazz-inflected pop"
+   ],
+   "mood": [
+    "airy",
+    "tender",
+    "sunlit"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.65,
+    "danceability": 0.55,
+    "acousticness": 0.45,
+    "instrumentalness": 0.1
+   },
+   "bpm": 92,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 5,
+   "title": "Never Lost (Luedji Luna Remix)",
+   "artists": [
+    "Kokoroko",
+    "Luedji Luna"
+   ],
+   "primary_artist": "Kokoroko",
+   "duration": "3:49",
+   "duration_sec": 229,
+   "spotify_track_id": "6Gx9kudkqhg3LVPkUFtIVy",
+   "spotify_uri": "spotify:track:6Gx9kudkqhg3LVPkUFtIVy",
+   "spotify_url": "https://open.spotify.com/track/6Gx9kudkqhg3LVPkUFtIVy",
+   "genres": [
+    "uk-jazz",
+    "world"
+   ],
+   "genre_primary": "uk-jazz",
+   "subgenres": [
+    "jazz",
+    "afrobeat",
+    "brazilian mpb",
+    "spiritual jazz"
+   ],
+   "mood": [
+    "sunny",
+    "hypnotic",
+    "soulful"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.7,
+    "danceability": 0.65,
+    "acousticness": 0.4,
+    "instrumentalness": 0.35
+   },
+   "bpm": 100,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 6,
+   "title": "Well Organised (feat. Lila Iké)",
+   "artists": [
+    "Ezra Collective",
+    "Lila Iké"
+   ],
+   "primary_artist": "Ezra Collective",
+   "duration": "3:32",
+   "duration_sec": 212,
+   "spotify_track_id": "6bYQZWdJMKimn0VTXhMwd6",
+   "spotify_uri": "spotify:track:6bYQZWdJMKimn0VTXhMwd6",
+   "spotify_url": "https://open.spotify.com/track/6bYQZWdJMKimn0VTXhMwd6",
+   "genres": [
+    "uk-jazz",
+    "world"
+   ],
+   "genre_primary": "uk-jazz",
+   "subgenres": [
+    "jazz",
+    "afro-jazz",
+    "reggae",
+    "dancehall-jazz"
+   ],
+   "mood": [
+    "joyful",
+    "uplifting",
+    "groovy"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.85,
+    "danceability": 0.8,
+    "acousticness": 0.25,
+    "instrumentalness": 0.3
+   },
+   "bpm": 96,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 7,
+   "title": "Never Come Down (feat. Meshell Ndegeocello & Mark Guiliana)",
+   "artists": [
+    "Gretchen Parlato",
+    "Meshell Ndegeocello",
+    "Mark Guiliana"
+   ],
+   "primary_artist": "Gretchen Parlato",
+   "duration": "5:05",
+   "duration_sec": 305,
+   "spotify_track_id": "6mUgpfqrQQVr8YInOlXBQv",
+   "spotify_uri": "spotify:track:6mUgpfqrQQVr8YInOlXBQv",
+   "spotify_url": "https://open.spotify.com/track/6mUgpfqrQQVr8YInOlXBQv",
+   "genres": [
+    "jazz",
+    "neo-soul"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "contemporary vocal jazz",
+    "chamber jazz",
+    "jazz-soul"
+   ],
+   "mood": [
+    "intimate",
+    "hypnotic",
+    "meditative"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.45,
+    "danceability": 0.42,
+    "acousticness": 0.55,
+    "instrumentalness": 0.15
+   },
+   "bpm": 85,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 8,
+   "title": "I Feel Hope Coming",
+   "artists": [
+    "Alabama Shakes"
+   ],
+   "primary_artist": "Alabama Shakes",
+   "duration": "5:12",
+   "duration_sec": 312,
+   "spotify_track_id": "6yFkQeeTv3DDhTQynN2WVV",
+   "spotify_uri": "spotify:track:6yFkQeeTv3DDhTQynN2WVV",
+   "spotify_url": "https://open.spotify.com/track/6yFkQeeTv3DDhTQynN2WVV",
+   "genres": [
+    "alt",
+    "soul-funk"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "rock",
+    "southern soul",
+    "gospel rock",
+    "psychedelic soul"
+   ],
+   "mood": [
+    "uplifting",
+    "anthemic",
+    "cathartic"
+   ],
+   "mood_parameters": {
+    "energy": 0.68,
+    "valence": 0.8,
+    "danceability": 0.45,
+    "acousticness": 0.3,
+    "instrumentalness": 0.05
+   },
+   "bpm": 84,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 9,
+   "title": "Los Ojos Del Cóndor",
+   "artists": [
+    "Hermanos Gutiérrez"
+   ],
+   "primary_artist": "Hermanos Gutiérrez",
+   "duration": "3:33",
+   "duration_sec": 213,
+   "spotify_track_id": "7kDWwFekRc1ZlzNX0VTjfr",
+   "spotify_uri": "spotify:track:7kDWwFekRc1ZlzNX0VTjfr",
+   "spotify_url": "https://open.spotify.com/track/7kDWwFekRc1ZlzNX0VTjfr",
+   "genres": [
+    "world",
+    "alt"
+   ],
+   "genre_primary": "world",
+   "subgenres": [
+    "latin instrumental",
+    "desert blues",
+    "latin folk",
+    "cinematic guitar"
+   ],
+   "mood": [
+    "cinematic",
+    "melancholic",
+    "sultry"
+   ],
+   "mood_parameters": {
+    "energy": 0.3,
+    "valence": 0.4,
+    "danceability": 0.35,
+    "acousticness": 0.8,
+    "instrumentalness": 0.95
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 10,
+   "title": "Someday, Somewhere",
+   "artists": [
+    "Jungle"
+   ],
+   "primary_artist": "Jungle",
+   "duration": "2:32",
+   "duration_sec": 152,
+   "spotify_track_id": "20FqWsyuUaQTU5tk4nP6eN",
+   "spotify_uri": "spotify:track:20FqWsyuUaQTU5tk4nP6eN",
+   "spotify_url": "https://open.spotify.com/track/20FqWsyuUaQTU5tk4nP6eN",
+   "genres": [
+    "electronic",
+    "soul-funk"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic soul",
+    "neo-disco",
+    "modern funk",
+    "nu-soul"
+   ],
+   "mood": [
+    "breezy",
+    "nostalgic",
+    "bittersweet"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.6,
+    "danceability": 0.75,
+    "acousticness": 0.2,
+    "instrumentalness": 0.2
+   },
+   "bpm": 110,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 11,
+   "title": "Fingers",
+   "artists": [
+    "Joyce Moreno",
+    "Adrian Younge",
+    "Tutty Moreno"
+   ],
+   "primary_artist": "Joyce Moreno",
+   "duration": "6:30",
+   "duration_sec": 390,
+   "spotify_track_id": "2MdZhlkXAFpI3kFFrfnWcQ",
+   "spotify_uri": "spotify:track:2MdZhlkXAFpI3kFFrfnWcQ",
+   "spotify_url": "https://open.spotify.com/track/2MdZhlkXAFpI3kFFrfnWcQ",
+   "genres": [
+    "jazz",
+    "world"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "brazilian jazz",
+    "mpb",
+    "bossa nova",
+    "samba-jazz",
+    "soul jazz"
+   ],
+   "mood": [
+    "warm",
+    "groovy",
+    "nostalgic"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.7,
+    "danceability": 0.6,
+    "acousticness": 0.65,
+    "instrumentalness": 0.45
+   },
+   "bpm": 104,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 12,
+   "title": "Recommend",
+   "artists": [
+    "Masego"
+   ],
+   "primary_artist": "Masego",
+   "duration": "2:38",
+   "duration_sec": 158,
+   "spotify_track_id": "5AKMns2BAQCuZUlVZr5GGD",
+   "spotify_uri": "spotify:track:5AKMns2BAQCuZUlVZr5GGD",
+   "spotify_url": "https://open.spotify.com/track/5AKMns2BAQCuZUlVZr5GGD",
+   "genres": [
+    "neo-soul",
+    "hip-hop"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "trap-house-jazz",
+    "alt-r&b",
+    "sax-led soul"
+   ],
+   "mood": [
+    "playful",
+    "flirtatious",
+    "smooth"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.7,
+    "danceability": 0.75,
+    "acousticness": 0.25,
+    "instrumentalness": 0.15
+   },
+   "bpm": 100,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 13,
+   "title": "I Came from the Block",
+   "artists": [
+    "logan uncharted",
+    "Guru"
+   ],
+   "primary_artist": "logan uncharted",
+   "duration": "2:18",
+   "duration_sec": 138,
+   "spotify_track_id": "2q4Wh9p5uozc27WW431sFM",
+   "spotify_uri": "spotify:track:2q4Wh9p5uozc27WW431sFM",
+   "spotify_url": "https://open.spotify.com/track/2q4Wh9p5uozc27WW431sFM",
+   "genres": [
+    "hip-hop",
+    "jazz"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "boom bap",
+    "jazz rap",
+    "east coast"
+   ],
+   "mood": [
+    "nostalgic",
+    "gritty",
+    "head-nodding"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.5,
+    "danceability": 0.7,
+    "acousticness": 0.2,
+    "instrumentalness": 0.1
+   },
+   "bpm": 92,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 14,
+   "title": "Go",
+   "artists": [
+    "DJ Scratch",
+    "Q-Tip"
+   ],
+   "primary_artist": "DJ Scratch",
+   "duration": "5:51",
+   "duration_sec": 351,
+   "spotify_track_id": "08PPY3tOnM3EQFBoHeisM3",
+   "spotify_uri": "spotify:track:08PPY3tOnM3EQFBoHeisM3",
+   "spotify_url": "https://open.spotify.com/track/08PPY3tOnM3EQFBoHeisM3",
+   "genres": [
+    "hip-hop"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "boom bap",
+    "turntablism",
+    "east coast"
+   ],
+   "mood": [
+    "confident",
+    "raw",
+    "groovy"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.6,
+    "danceability": 0.78,
+    "acousticness": 0.15,
+    "instrumentalness": 0.15
+   },
+   "bpm": 94,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 15,
+   "title": "PATCHWORK",
+   "artists": [
+    "Nate Smith",
+    "Kiefer",
+    "CARRTOONS",
+    "Kenny Beats"
+   ],
+   "primary_artist": "Nate Smith",
+   "duration": "2:38",
+   "duration_sec": 158,
+   "spotify_track_id": "38HigDpo88ILLFU2zhzRT6",
+   "spotify_uri": "spotify:track:38HigDpo88ILLFU2zhzRT6",
+   "spotify_url": "https://open.spotify.com/track/38HigDpo88ILLFU2zhzRT6",
+   "genres": [
+    "broken-beat",
+    "jazz"
+   ],
+   "genre_primary": "broken-beat",
+   "subgenres": [
+    "beat music",
+    "jazz-hop",
+    "future beats",
+    "fusion"
+   ],
+   "mood": [
+    "playful",
+    "kinetic",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.65,
+    "valence": 0.7,
+    "danceability": 0.72,
+    "acousticness": 0.2,
+    "instrumentalness": 0.9
+   },
+   "bpm": 96,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 16,
+   "title": "Wasting Time (feat. Anderson .Paak)",
+   "artists": [
+    "Juicy J",
+    "Project Pat",
+    "Anderson .Paak"
+   ],
+   "primary_artist": "Juicy J",
+   "duration": "3:10",
+   "duration_sec": 190,
+   "spotify_track_id": "2G4y316Kk8FNcH0pf3mjBY",
+   "spotify_uri": "spotify:track:2G4y316Kk8FNcH0pf3mjBY",
+   "spotify_url": "https://open.spotify.com/track/2G4y316Kk8FNcH0pf3mjBY",
+   "genres": [
+    "hip-hop",
+    "soul-funk"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "memphis rap",
+    "funk-rap",
+    "southern hip-hop"
+   ],
+   "mood": [
+    "swaggering",
+    "playful",
+    "hedonistic"
+   ],
+   "mood_parameters": {
+    "energy": 0.75,
+    "valence": 0.65,
+    "danceability": 0.8,
+    "acousticness": 0.1,
+    "instrumentalness": 0.05
+   },
+   "bpm": 140,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 17,
+   "title": "Funk Drunk",
+   "artists": [
+    "Felix Da Housecat",
+    "Fatboy Slim",
+    "Carola",
+    "7KY"
+   ],
+   "primary_artist": "Felix Da Housecat",
+   "duration": "3:22",
+   "duration_sec": 202,
+   "spotify_track_id": "19h72fx2iP7Y4Xvct4x7Fs",
+   "spotify_uri": "spotify:track:19h72fx2iP7Y4Xvct4x7Fs",
+   "spotify_url": "https://open.spotify.com/track/19h72fx2iP7Y4Xvct4x7Fs",
+   "genres": [
+    "electronic",
+    "soulful-house"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "house",
+    "tech-house",
+    "big beat",
+    "funky house"
+   ],
+   "mood": [
+    "hedonistic",
+    "punchy",
+    "late-night"
+   ],
+   "mood_parameters": {
+    "energy": 0.85,
+    "valence": 0.7,
+    "danceability": 0.9,
+    "acousticness": 0.05,
+    "instrumentalness": 0.6
+   },
+   "bpm": 126,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 18,
+   "title": "MORNING DEW (DONK)",
+   "artists": [
+    "Beyoncé"
+   ],
+   "primary_artist": "Beyoncé",
+   "duration": "4:04",
+   "duration_sec": 244,
+   "spotify_track_id": "4ZYlzwjjAJrflwWg4DJTlT",
+   "spotify_uri": "spotify:track:4ZYlzwjjAJrflwWg4DJTlT",
+   "spotify_url": "https://open.spotify.com/track/4ZYlzwjjAJrflwWg4DJTlT",
+   "genres": [
+    "electronic",
+    "soul-funk"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "dance-pop",
+    "donk",
+    "bounce",
+    "club pop"
+   ],
+   "mood": [
+    "brash",
+    "euphoric",
+    "playful"
+   ],
+   "mood_parameters": {
+    "energy": 0.85,
+    "valence": 0.75,
+    "danceability": 0.85,
+    "acousticness": 0.1,
+    "instrumentalness": 0.05
+   },
+   "bpm": 150,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 19,
+   "title": "Abbeycwmhir",
+   "artists": [
+    "Ed O'Brien"
+   ],
+   "primary_artist": "Ed O'Brien",
+   "duration": "3:30",
+   "duration_sec": 210,
+   "spotify_track_id": "1JxboUHhRV1ZVmZlUPMc4G",
+   "spotify_uri": "spotify:track:1JxboUHhRV1ZVmZlUPMc4G",
+   "spotify_url": "https://open.spotify.com/track/1JxboUHhRV1ZVmZlUPMc4G",
+   "genres": [
+    "alt",
+    "electronic"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "alternative rock",
+    "art rock",
+    "ambient rock",
+    "krautrock"
+   ],
+   "mood": [
+    "pastoral",
+    "hypnotic",
+    "wistful"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.45,
+    "danceability": 0.42,
+    "acousticness": 0.4,
+    "instrumentalness": 0.6
+   },
+   "bpm": 108,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 20,
+   "title": "Stella 'e mare - La canzone di lui",
+   "artists": [
+    "Daniele Sepe",
+    "Gnut",
+    "Stefano Bollani"
+   ],
+   "primary_artist": "Daniele Sepe",
+   "duration": "3:41",
+   "duration_sec": 221,
+   "spotify_track_id": "1zI48PQjr2Y8vmpNVKF2Zg",
+   "spotify_uri": "spotify:track:1zI48PQjr2Y8vmpNVKF2Zg",
+   "spotify_url": "https://open.spotify.com/track/1zI48PQjr2Y8vmpNVKF2Zg",
+   "genres": [
+    "world",
+    "jazz"
+   ],
+   "genre_primary": "world",
+   "subgenres": [
+    "canzone napoletana",
+    "neapolitan song",
+    "mediterranean jazz",
+    "folk-jazz"
+   ],
+   "mood": [
+    "nostalgic",
+    "melancholic",
+    "lyrical"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.4,
+    "danceability": 0.35,
+    "acousticness": 0.7,
+    "instrumentalness": 0.2
+   },
+   "bpm": 76,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 21,
+   "title": "Fire on the Water",
+   "artists": [
+    "Bonobo",
+    "Arooj Aftab"
+   ],
+   "primary_artist": "Bonobo",
+   "duration": "3:03",
+   "duration_sec": 183,
+   "spotify_track_id": "0dU2ZpIcqiV55L16TZfSE8",
+   "spotify_uri": "spotify:track:0dU2ZpIcqiV55L16TZfSE8",
+   "spotify_url": "https://open.spotify.com/track/0dU2ZpIcqiV55L16TZfSE8",
+   "genres": [
+    "downtempo",
+    "world"
+   ],
+   "genre_primary": "downtempo",
+   "subgenres": [
+    "electronic",
+    "ambient electronica",
+    "sufi-inflected vocal",
+    "chamber electronic"
+   ],
+   "mood": [
+    "ethereal",
+    "solemn",
+    "spacious"
+   ],
+   "mood_parameters": {
+    "energy": 0.3,
+    "valence": 0.35,
+    "danceability": 0.35,
+    "acousticness": 0.6,
+    "instrumentalness": 0.3
+   },
+   "bpm": 80,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 39,
+   "playlist_name": "New Release Playlist #39",
+   "playlist_id": "3ITS6CNVydHTHL8ML39CEi",
+   "position_in_playlist": 22,
+   "title": "In Your Own Sweet Way - March 16, 1956 Version / Remastered 2026",
+   "artists": [
+    "Miles Davis"
+   ],
+   "primary_artist": "Miles Davis",
+   "duration": "4:34",
+   "duration_sec": 274,
+   "spotify_track_id": "7M4Z7u7wzsOsXDfACgDuo8",
+   "spotify_uri": "spotify:track:7M4Z7u7wzsOsXDfACgDuo8",
+   "spotify_url": "https://open.spotify.com/track/7M4Z7u7wzsOsXDfACgDuo8",
+   "genres": [
+    "jazz"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "hard bop",
+    "cool jazz",
+    "standards"
+   ],
+   "mood": [
+    "laid-back",
+    "elegant",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.6,
+    "danceability": 0.45,
+    "acousticness": 0.75,
+    "instrumentalness": 0.95
+   },
+   "bpm": 132,
    "bpm_source": "estimated"
   }
  ]

@@ -9,7 +9,7 @@ Static app: **Vite + React + D3**, with automatic deploy to **GitHub Pages**.
 Data is loaded **at runtime** via `fetch` from `graph.json` (not inlined in the
 bundle).
 
-Current state: **851 tracks · 7464 edges · 12 genres** (playlists #1–#38 + 1 extra, updated 2026-07-14).
+Current state: **873 tracks · 7667 edges · 12 genres** (playlists #1–#39 + 1 extra, updated 2026-07-14).
 
 Live: https://marcomauro.github.io/new-release-atlas/
 
@@ -235,7 +235,11 @@ reads). Every track carries the full enrichment: `genres`/`genre_primary`
 - **`scripts/check_docs.py`** — CI guard: fails the build if this README's
   "Current state" line drifts from the freshly regenerated `graph.json`.
 - **`tests/`** — stdlib `unittest` suite for the data pipeline
-  (`python3 -m unittest discover -s tests`), also run in CI.
+  (`python3 -m unittest discover -s tests`), also run in CI. It includes
+  `test_unicode_safety.py`: the archive holds titles published under
+  Zalgo-style pseudonyms (one is 255 code points / 501 UTF-8 bytes with
+  hundreds of combining marks), and those tests fail if any future refactor
+  normalizes, truncates or regex-cleans a title anywhere in the pipeline.
 - The classic enrichment scripts (`enrich_genres.py`, `enrich_audio.py`,
   `genre_map.py`) are archived in [`legacy/scripts/`](legacy/README.md).
 
