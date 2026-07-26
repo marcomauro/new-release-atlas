@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import WeightControls from "../WeightControls.jsx";
 import { INK, PAPER, MUTED } from "../theme.js";
+import { truncateGraphemes } from "../text.js";
 
 const font = "Inter, system-ui, sans-serif";
 
@@ -38,7 +39,7 @@ export default function PlaylistHub({
   };
 
   if (!open) {
-    const label = active ? `♫ ${truncate(active.res.theme, 26)}` : "Playlist";
+    const label = active ? `♫ ${truncateGraphemes(active.res.theme, 26)}` : "Playlist";
     return (
       <button
         onClick={() => setOpen(true)}
@@ -147,7 +148,7 @@ export default function PlaylistHub({
               {active.res.tracks.length} tracks · {active.res.totalLabel}
             </span>
           </div>
-          <div style={{ fontFamily: "'Spectral', serif", fontSize: 16, fontWeight: 500, color: INK, textTransform: "capitalize", marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flexShrink: 0 }}>
+          <div style={{ fontFamily: "'Spectral', serif", fontSize: 16, fontWeight: 500, color: INK, textTransform: "capitalize", marginTop: 2, lineHeight: 1.25, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flexShrink: 0 }}>
             {active.res.theme}
           </div>
 
@@ -197,7 +198,9 @@ export default function PlaylistHub({
                   style={{
                     display: "flex", alignItems: "center", gap: 8,
                     padding: "4px 6px", borderRadius: 4, cursor: "pointer",
-                    fontSize: 12.5,
+                    // lineHeight + overflow keep a Zalgo-style title (hundreds
+                    // of stacked combining marks) from blowing up the row.
+                    fontSize: 12.5, lineHeight: 1.25, overflow: "hidden",
                   }}
                   onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(43,39,36,0.05)")}
                   onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
@@ -258,9 +261,7 @@ function Notice({ notice }) {
   );
 }
 
-function truncate(s, n) {
-  return s && s.length > n ? s.slice(0, n - 1) + "…" : s;
-}
+
 
 const iconBtn = {
   fontFamily: font, fontSize: 11, color: MUTED,
