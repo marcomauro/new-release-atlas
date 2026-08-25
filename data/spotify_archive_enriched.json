@@ -4,7 +4,7 @@
   "source_account": "Spotify",
   "generated_at": "2026-05-23T12:27:11.266084",
   "description": "Archivio strutturato delle 'New Release Playlist' di Marco Mauro, da consultare via AI per generare playlist tematiche o effettuare analisi.",
-  "playlist_range": "#1 - #39 (39 New Release Playlist consecutive) + 1 extra (#101)",
+  "playlist_range": "#1 - #40 (40 New Release Playlist consecutive) + 1 extra (#101)",
   "note_on_gaps": "Nessuno: il dataset copre integralmente le New Release Playlist da #12 a #36. Le #1-#11 e #13-#17 si chiamano 'New Release Friday #N', dalla #12 e #18 in poi 'New Release Playlist #N'. La '2025 Fav Album Playlist' e' una compilation tematica (extra), spostata fuori dalla sequenza NRP al playlist_number 101.",
   "schema_per_track": {
    "playlist_number": "int (numero progressivo della playlist di origine)",
@@ -27,9 +27,9 @@
    "bpm": "int | null (null = non verificabile, mai inventato)",
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
-  "total_tracks_with_duplicates": 893,
-  "unique_tracks": 873,
-  "unique_artists": 851,
+  "total_tracks_with_duplicates": 914,
+  "unique_tracks": 894,
+  "unique_artists": 861,
   "top_artists": [
    [
     "Brian Jackson",
@@ -60,6 +60,10 @@
     8
    ],
    [
+    "Jordan Rakei",
+    8
+   ],
+   [
     "Peter Gabriel",
     8
    ],
@@ -77,10 +81,6 @@
    ],
    [
     "Run Logan Run",
-    7
-   ],
-   [
-    "Jordan Rakei",
     7
    ],
    [
@@ -166,8 +166,8 @@
   "enrichment_note": "Caratterizzazione musicale esperta aggiunta da Claude (giugno 2026): subgenres granulari, mood, mood_parameters (energy/valence/danceability/acousticness/instrumentalness, scala 0-1, stime qualitative da esperto), bpm (int o null) e bpm_source. bpm_source='verified' = confermato da fonti web DJ-pool (Beatsource, BPM Supreme, SongBPM, Tunebat); 'estimated' = stima fondata sul tempo tipico del brano/genere (presente solo dove molto affidabile, es. house 120-126); bpm=null dove non verificabile, mai inventato. I campi 'genres' e 'genre_primary' preesistenti (tassonomia a 12 macro-generi della pipeline new-release-atlas) sono INTOCCATI e restano la classificazione di riferimento.",
   "extended_at": "2026-06-11T09:12:01.887032",
   "extension_note": "Playlist #33 e #34 aggiunte a giugno 2026 con caratterizzazione esperta completa. Per queste 2 playlist anche genres/genre_primary sono assegnati dall'AI (coerenti con la tassonomia a 12 macro-generi della pipeline). Nota: 'Fainted Light' (Indra Lesmana) in #34 è un duplicato cross-playlist di #32 (stesso track ID).",
-  "merged_at": "2026-07-26T22:55:24Z",
-  "merge_note": "add_playlist.py: aggiunte ['#39'] (22 occorrenze, 22 brani nuovi)",
+  "merged_at": "2026-08-25T12:09:26Z",
+  "merge_note": "add_playlist.py: aggiunte ['#40'] (21 occorrenze, 21 brani nuovi)",
   "cross_playlist_duplicates": [
    {
     "spotify_track_id": "3wIMAdnBrA4Mtb6WB2B4YT",
@@ -35038,6 +35038,828 @@
       "instrumentalness": 0.95
      },
      "bpm": 132,
+     "bpm_source": "estimated"
+    }
+   ]
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "spotify_url": "https://open.spotify.com/playlist/3hS2rEmjY2QPRmbPiz9VYG",
+   "description": "",
+   "date": null,
+   "track_count": 21,
+   "tracks": [
+    {
+     "position_in_playlist": 1,
+     "title": "Tender (feat. Sampha)",
+     "artists": [
+      "Nia Archives",
+      "Sampha"
+     ],
+     "primary_artist": "Nia Archives",
+     "duration": "2:22",
+     "duration_sec": 142,
+     "spotify_track_id": "208t36wBB22OOCi1eG4rI3",
+     "spotify_uri": "spotify:track:208t36wBB22OOCi1eG4rI3",
+     "spotify_url": "https://open.spotify.com/track/208t36wBB22OOCi1eG4rI3",
+     "genres": [
+      "electronic",
+      "neo-soul"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "jungle / drum & bass",
+      "jungle",
+      "liquid drum and bass",
+      "uk soul"
+     ],
+     "mood": [
+      "euphoric",
+      "yearning",
+      "nocturnal"
+     ],
+     "mood_parameters": {
+      "energy": 0.85,
+      "valence": 0.55,
+      "danceability": 0.8,
+      "acousticness": 0.15,
+      "instrumentalness": 0.1
+     },
+     "bpm": 170,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 2,
+     "title": "Enemies",
+     "artists": [
+      "Jordan Rakei"
+     ],
+     "primary_artist": "Jordan Rakei",
+     "duration": "2:47",
+     "duration_sec": 167,
+     "spotify_track_id": "0X9GwAax0c0HPe3iIoDVW6",
+     "spotify_uri": "spotify:track:0X9GwAax0c0HPe3iIoDVW6",
+     "spotify_url": "https://open.spotify.com/track/0X9GwAax0c0HPe3iIoDVW6",
+     "genres": [
+      "neo-soul",
+      "uk-jazz"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "neo-soul",
+      "alternative r&b",
+      "jazz-soul",
+      "electronic soul"
+     ],
+     "mood": [
+      "introspective",
+      "warm",
+      "melancholic"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.4,
+      "danceability": 0.5,
+      "acousticness": 0.35,
+      "instrumentalness": 0.15
+     },
+     "bpm": 92,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 3,
+     "title": "Summer Haze",
+     "artists": [
+      "Yazmin Lacey"
+     ],
+     "primary_artist": "Yazmin Lacey",
+     "duration": "2:54",
+     "duration_sec": 174,
+     "spotify_track_id": "465QjZo1z1JAuLTTC7DnuK",
+     "spotify_uri": "spotify:track:465QjZo1z1JAuLTTC7DnuK",
+     "spotify_url": "https://open.spotify.com/track/465QjZo1z1JAuLTTC7DnuK",
+     "genres": [
+      "neo-soul",
+      "uk-jazz"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "uk soul",
+      "jazz-soul",
+      "slow soul",
+      "bedroom soul"
+     ],
+     "mood": [
+      "hazy",
+      "laid-back",
+      "sensual"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.55,
+      "danceability": 0.5,
+      "acousticness": 0.4,
+      "instrumentalness": 0.1
+     },
+     "bpm": 84,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 4,
+     "title": "I Knew You Were Waiting (For Me) (with Cynthia Erivo)",
+     "artists": [
+      "Meshell Ndegeocello",
+      "Cynthia Erivo"
+     ],
+     "primary_artist": "Meshell Ndegeocello",
+     "duration": "4:46",
+     "duration_sec": 286,
+     "spotify_track_id": "7fq9tnk9YZVEwt65d4HO8g",
+     "spotify_uri": "spotify:track:7fq9tnk9YZVEwt65d4HO8g",
+     "spotify_url": "https://open.spotify.com/track/7fq9tnk9YZVEwt65d4HO8g",
+     "genres": [
+      "soul-funk",
+      "neo-soul"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "soul",
+      "gospel-soul",
+      "art soul",
+      "classic soul cover"
+     ],
+     "mood": [
+      "uplifting",
+      "soaring",
+      "reverent"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.72,
+      "danceability": 0.52,
+      "acousticness": 0.3,
+      "instrumentalness": 0.05
+     },
+     "bpm": 105,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 5,
+     "title": "When I’m Home",
+     "artists": [
+      "James Blake",
+      "Travis Scott",
+      "Ludwig Göransson"
+     ],
+     "primary_artist": "James Blake",
+     "duration": "5:27",
+     "duration_sec": 327,
+     "spotify_track_id": "5nigMKgXqeNvaiqEBWwo9s",
+     "spotify_uri": "spotify:track:5nigMKgXqeNvaiqEBWwo9s",
+     "spotify_url": "https://open.spotify.com/track/5nigMKgXqeNvaiqEBWwo9s",
+     "genres": [
+      "electronic",
+      "alt"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic / alt r&b",
+      "experimental pop",
+      "ambient r&b",
+      "cinematic electronica"
+     ],
+     "mood": [
+      "brooding",
+      "spacious",
+      "melancholic"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.25,
+      "danceability": 0.4,
+      "acousticness": 0.25,
+      "instrumentalness": 0.2
+     },
+     "bpm": 70,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 6,
+     "title": "P4P",
+     "artists": [
+      "anaiis"
+     ],
+     "primary_artist": "anaiis",
+     "duration": "4:01",
+     "duration_sec": 241,
+     "spotify_track_id": "0ylLwO5GE2ld7gHdriTrU6",
+     "spotify_uri": "spotify:track:0ylLwO5GE2ld7gHdriTrU6",
+     "spotify_url": "https://open.spotify.com/track/0ylLwO5GE2ld7gHdriTrU6",
+     "genres": [
+      "neo-soul",
+      "alt"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "alt r&b",
+      "experimental soul",
+      "downtempo r&b",
+      "spoken-word soul"
+     ],
+     "mood": [
+      "intimate",
+      "sultry",
+      "hypnotic"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.45,
+      "danceability": 0.55,
+      "acousticness": 0.3,
+      "instrumentalness": 0.1
+     },
+     "bpm": 96,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 7,
+     "title": "In The Night",
+     "artists": [
+      "Beck"
+     ],
+     "primary_artist": "Beck",
+     "duration": "2:59",
+     "duration_sec": 179,
+     "spotify_track_id": "2bZfAudzSHbqXRS1o9BBu7",
+     "spotify_uri": "spotify:track:2bZfAudzSHbqXRS1o9BBu7",
+     "spotify_url": "https://open.spotify.com/track/2bZfAudzSHbqXRS1o9BBu7",
+     "genres": [
+      "alt"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "alternative rock",
+      "psychedelic pop",
+      "indie rock",
+      "folk-rock"
+     ],
+     "mood": [
+      "wistful",
+      "warm",
+      "dreamy"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.5,
+      "danceability": 0.45,
+      "acousticness": 0.4,
+      "instrumentalness": 0.05
+     },
+     "bpm": 112,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 8,
+     "title": "Conversation 3",
+     "artists": [
+      "alva noto",
+      "Ryuichi Sakamoto"
+     ],
+     "primary_artist": "alva noto",
+     "duration": "5:53",
+     "duration_sec": 353,
+     "spotify_track_id": "0nIbSZ4o2L2gtwWtKwmnZP",
+     "spotify_uri": "spotify:track:0nIbSZ4o2L2gtwWtKwmnZP",
+     "spotify_url": "https://open.spotify.com/track/0nIbSZ4o2L2gtwWtKwmnZP",
+     "genres": [
+      "classical",
+      "electronic"
+     ],
+     "genre_primary": "classical",
+     "subgenres": [
+      "ambient / modern classical",
+      "glitch",
+      "minimalism",
+      "electroacoustic",
+      "ambient"
+     ],
+     "mood": [
+      "contemplative",
+      "austere",
+      "spacious"
+     ],
+     "mood_parameters": {
+      "energy": 0.15,
+      "valence": 0.25,
+      "danceability": 0.1,
+      "acousticness": 0.6,
+      "instrumentalness": 0.95
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 9,
+     "title": "Piano",
+     "artists": [
+      "Tricky",
+      "Mitch Sanders"
+     ],
+     "primary_artist": "Tricky",
+     "duration": "2:43",
+     "duration_sec": 163,
+     "spotify_track_id": "0fdAzUvqxbD6QFkZRiKOVS",
+     "spotify_uri": "spotify:track:0fdAzUvqxbD6QFkZRiKOVS",
+     "spotify_url": "https://open.spotify.com/track/0fdAzUvqxbD6QFkZRiKOVS",
+     "genres": [
+      "downtempo",
+      "alt"
+     ],
+     "genre_primary": "downtempo",
+     "subgenres": [
+      "trip-hop",
+      "dark ambient",
+      "lo-fi"
+     ],
+     "mood": [
+      "brooding",
+      "claustrophobic",
+      "sombre"
+     ],
+     "mood_parameters": {
+      "energy": 0.3,
+      "valence": 0.2,
+      "danceability": 0.4,
+      "acousticness": 0.4,
+      "instrumentalness": 0.3
+     },
+     "bpm": 88,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 10,
+     "title": "Afro-Disco Makossa",
+     "artists": [
+      "Adrian Younge"
+     ],
+     "primary_artist": "Adrian Younge",
+     "duration": "4:35",
+     "duration_sec": 275,
+     "spotify_track_id": "0Z84DGwD7GhT2sbwui9KEU",
+     "spotify_uri": "spotify:track:0Z84DGwD7GhT2sbwui9KEU",
+     "spotify_url": "https://open.spotify.com/track/0Z84DGwD7GhT2sbwui9KEU",
+     "genres": [
+      "world",
+      "soul-funk"
+     ],
+     "genre_primary": "world",
+     "subgenres": [
+      "afro-funk",
+      "makossa",
+      "afro-disco",
+      "psychedelic soul"
+     ],
+     "mood": [
+      "groovy",
+      "celebratory",
+      "retro"
+     ],
+     "mood_parameters": {
+      "energy": 0.75,
+      "valence": 0.8,
+      "danceability": 0.85,
+      "acousticness": 0.25,
+      "instrumentalness": 0.5
+     },
+     "bpm": 118,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 11,
+     "title": "MORE",
+     "artists": [
+      "Tiana Major9"
+     ],
+     "primary_artist": "Tiana Major9",
+     "duration": "2:28",
+     "duration_sec": 148,
+     "spotify_track_id": "42ytAVcWCLJuaY7wGCbi5Y",
+     "spotify_uri": "spotify:track:42ytAVcWCLJuaY7wGCbi5Y",
+     "spotify_url": "https://open.spotify.com/track/42ytAVcWCLJuaY7wGCbi5Y",
+     "genres": [
+      "neo-soul",
+      "uk-jazz"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "jazz-r&b",
+      "uk soul",
+      "contemporary r&b"
+     ],
+     "mood": [
+      "soulful",
+      "confident",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.62,
+      "danceability": 0.6,
+      "acousticness": 0.3,
+      "instrumentalness": 0.05
+     },
+     "bpm": 100,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 12,
+     "title": "Ignorance Was Never Bliss (feat. Loyle Carner)",
+     "artists": [
+      "Joe James",
+      "Loyle Carner"
+     ],
+     "primary_artist": "Joe James",
+     "duration": "4:05",
+     "duration_sec": 245,
+     "spotify_track_id": "4tEzafwhpsMj1zNlQ6JfaC",
+     "spotify_uri": "spotify:track:4tEzafwhpsMj1zNlQ6JfaC",
+     "spotify_url": "https://open.spotify.com/track/4tEzafwhpsMj1zNlQ6JfaC",
+     "genres": [
+      "uk-jazz",
+      "hip-hop"
+     ],
+     "genre_primary": "uk-jazz",
+     "subgenres": [
+      "uk jazz / rap",
+      "jazz-rap",
+      "soul-jazz",
+      "spoken word"
+     ],
+     "mood": [
+      "reflective",
+      "melancholic",
+      "earnest"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.35,
+      "danceability": 0.55,
+      "acousticness": 0.4,
+      "instrumentalness": 0.1
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 13,
+     "title": "Satisfy Me (feat. Ari Lennox)",
+     "artists": [
+      "Buju Banton",
+      "Ari Lennox"
+     ],
+     "primary_artist": "Buju Banton",
+     "duration": "2:41",
+     "duration_sec": 161,
+     "spotify_track_id": "1K0xROvNycpdtPL8aynDAJ",
+     "spotify_uri": "spotify:track:1K0xROvNycpdtPL8aynDAJ",
+     "spotify_url": "https://open.spotify.com/track/1K0xROvNycpdtPL8aynDAJ",
+     "genres": [
+      "world",
+      "neo-soul"
+     ],
+     "genre_primary": "world",
+     "subgenres": [
+      "reggae / dancehall",
+      "reggae",
+      "lovers rock",
+      "r&b crossover"
+     ],
+     "mood": [
+      "sensual",
+      "sunny",
+      "laid-back"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.75,
+      "danceability": 0.75,
+      "acousticness": 0.2,
+      "instrumentalness": 0.05
+     },
+     "bpm": 96,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 14,
+     "title": "Heaven",
+     "artists": [
+      "Masego"
+     ],
+     "primary_artist": "Masego",
+     "duration": "2:54",
+     "duration_sec": 174,
+     "spotify_track_id": "6O26k1i1HcmtDYX3sjBMAZ",
+     "spotify_uri": "spotify:track:6O26k1i1HcmtDYX3sjBMAZ",
+     "spotify_url": "https://open.spotify.com/track/6O26k1i1HcmtDYX3sjBMAZ",
+     "genres": [
+      "neo-soul",
+      "jazz"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "traphousejazz",
+      "saxophone-led r&b",
+      "alternative r&b"
+     ],
+     "mood": [
+      "breezy",
+      "romantic",
+      "playful"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.7,
+      "danceability": 0.7,
+      "acousticness": 0.25,
+      "instrumentalness": 0.15
+     },
+     "bpm": 105,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 15,
+     "title": "The Magic River",
+     "artists": [
+      "JW Francis",
+      "Sharada Shashidhar"
+     ],
+     "primary_artist": "JW Francis",
+     "duration": "6:56",
+     "duration_sec": 416,
+     "spotify_track_id": "65hZxmgwy5fVaT5Adm8svh",
+     "spotify_uri": "spotify:track:65hZxmgwy5fVaT5Adm8svh",
+     "spotify_url": "https://open.spotify.com/track/65hZxmgwy5fVaT5Adm8svh",
+     "genres": [
+      "alt",
+      "downtempo"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "indie / psych-folk",
+      "psychedelic folk",
+      "dream pop",
+      "raga-inflected"
+     ],
+     "mood": [
+      "dreamy",
+      "meditative",
+      "expansive"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.5,
+      "danceability": 0.35,
+      "acousticness": 0.55,
+      "instrumentalness": 0.3
+     },
+     "bpm": 92,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 16,
+     "title": "Don't Need It",
+     "artists": [
+      "MorMor"
+     ],
+     "primary_artist": "MorMor",
+     "duration": "5:27",
+     "duration_sec": 327,
+     "spotify_track_id": "5s4w6GiwjRSxH2Wx9MzsTT",
+     "spotify_uri": "spotify:track:5s4w6GiwjRSxH2Wx9MzsTT",
+     "spotify_url": "https://open.spotify.com/track/5s4w6GiwjRSxH2Wx9MzsTT",
+     "genres": [
+      "alt",
+      "neo-soul"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "alt r&b",
+      "dream pop",
+      "bedroom r&b",
+      "psychedelic soul"
+     ],
+     "mood": [
+      "wistful",
+      "hazy",
+      "yearning"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.4,
+      "danceability": 0.5,
+      "acousticness": 0.3,
+      "instrumentalness": 0.15
+     },
+     "bpm": 104,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 17,
+     "title": "Easy Street",
+     "artists": [
+      "Queens of the Stone Age"
+     ],
+     "primary_artist": "Queens of the Stone Age",
+     "duration": "3:51",
+     "duration_sec": 231,
+     "spotify_track_id": "415xhtL862VVvSiKWuS2SW",
+     "spotify_uri": "spotify:track:415xhtL862VVvSiKWuS2SW",
+     "spotify_url": "https://open.spotify.com/track/415xhtL862VVvSiKWuS2SW",
+     "genres": [
+      "alt"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "rock",
+      "desert rock",
+      "stoner rock",
+      "alternative rock"
+     ],
+     "mood": [
+      "swaggering",
+      "gritty",
+      "driving"
+     ],
+     "mood_parameters": {
+      "energy": 0.8,
+      "valence": 0.5,
+      "danceability": 0.5,
+      "acousticness": 0.1,
+      "instrumentalness": 0.15
+     },
+     "bpm": 128,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 18,
+     "title": "Same Emotions (feat. Dave)",
+     "artists": [
+      "Joe James",
+      "Dave"
+     ],
+     "primary_artist": "Joe James",
+     "duration": "3:59",
+     "duration_sec": 239,
+     "spotify_track_id": "6ziVoEtF0YbFWOlO0nc45H",
+     "spotify_uri": "spotify:track:6ziVoEtF0YbFWOlO0nc45H",
+     "spotify_url": "https://open.spotify.com/track/6ziVoEtF0YbFWOlO0nc45H",
+     "genres": [
+      "uk-jazz",
+      "hip-hop"
+     ],
+     "genre_primary": "uk-jazz",
+     "subgenres": [
+      "uk rap / jazz",
+      "jazz-rap",
+      "piano-led",
+      "uk rap"
+     ],
+     "mood": [
+      "introspective",
+      "cinematic",
+      "sombre"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.3,
+      "danceability": 0.55,
+      "acousticness": 0.45,
+      "instrumentalness": 0.1
+     },
+     "bpm": 84,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 19,
+     "title": "pure colour (feat. Erykah Badu)",
+     "artists": [
+      "Steve Lacy",
+      "Erykah Badu"
+     ],
+     "primary_artist": "Steve Lacy",
+     "duration": "3:07",
+     "duration_sec": 187,
+     "spotify_track_id": "4BgZNZ8hKrfyU4jiCKoAIg",
+     "spotify_uri": "spotify:track:4BgZNZ8hKrfyU4jiCKoAIg",
+     "spotify_url": "https://open.spotify.com/track/4BgZNZ8hKrfyU4jiCKoAIg",
+     "genres": [
+      "neo-soul",
+      "alt"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "alt r&b",
+      "psychedelic soul",
+      "bedroom funk",
+      "guitar r&b"
+     ],
+     "mood": [
+      "woozy",
+      "sensual",
+      "hypnotic"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.55,
+      "danceability": 0.65,
+      "acousticness": 0.3,
+      "instrumentalness": 0.1
+     },
+     "bpm": 98,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 20,
+     "title": "Fool4u",
+     "artists": [
+      "Kara-do",
+      "Kelly Moonstone"
+     ],
+     "primary_artist": "Kara-do",
+     "duration": "3:10",
+     "duration_sec": 190,
+     "spotify_track_id": "36l1mbu5OIHxq8UGzXYZwG",
+     "spotify_uri": "spotify:track:36l1mbu5OIHxq8UGzXYZwG",
+     "spotify_url": "https://open.spotify.com/track/36l1mbu5OIHxq8UGzXYZwG",
+     "genres": [
+      "neo-soul",
+      "hip-hop"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "future soul / la beat scene",
+      "la beat scene",
+      "future soul",
+      "jazz-r&b",
+      "alternative r&b"
+     ],
+     "mood": [
+      "woozy",
+      "tender",
+      "nocturnal",
+      "lovelorn"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.55,
+      "danceability": 0.62,
+      "acousticness": 0.3,
+      "instrumentalness": 0.1
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 21,
+     "title": "Nobody Wants To Die",
+     "artists": [
+      "DJ Shadow",
+      "Ice Cube"
+     ],
+     "primary_artist": "DJ Shadow",
+     "duration": "3:10",
+     "duration_sec": 190,
+     "spotify_track_id": "625QwvEZMdOjVEGJdkMqoo",
+     "spotify_uri": "spotify:track:625QwvEZMdOjVEGJdkMqoo",
+     "spotify_url": "https://open.spotify.com/track/625QwvEZMdOjVEGJdkMqoo",
+     "genres": [
+      "hip-hop",
+      "electronic"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "sample-based hip-hop",
+      "boom bap",
+      "turntablism"
+     ],
+     "mood": [
+      "ominous",
+      "hard-hitting",
+      "cinematic"
+     ],
+     "mood_parameters": {
+      "energy": 0.8,
+      "valence": 0.35,
+      "danceability": 0.7,
+      "acousticness": 0.15,
+      "instrumentalness": 0.1
+     },
+     "bpm": 94,
      "bpm_source": "estimated"
     }
    ]
@@ -72008,6 +72830,880 @@
     "instrumentalness": 0.95
    },
    "bpm": 132,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 1,
+   "title": "Tender (feat. Sampha)",
+   "artists": [
+    "Nia Archives",
+    "Sampha"
+   ],
+   "primary_artist": "Nia Archives",
+   "duration": "2:22",
+   "duration_sec": 142,
+   "spotify_track_id": "208t36wBB22OOCi1eG4rI3",
+   "spotify_uri": "spotify:track:208t36wBB22OOCi1eG4rI3",
+   "spotify_url": "https://open.spotify.com/track/208t36wBB22OOCi1eG4rI3",
+   "genres": [
+    "electronic",
+    "neo-soul"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "jungle / drum & bass",
+    "jungle",
+    "liquid drum and bass",
+    "uk soul"
+   ],
+   "mood": [
+    "euphoric",
+    "yearning",
+    "nocturnal"
+   ],
+   "mood_parameters": {
+    "energy": 0.85,
+    "valence": 0.55,
+    "danceability": 0.8,
+    "acousticness": 0.15,
+    "instrumentalness": 0.1
+   },
+   "bpm": 170,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 2,
+   "title": "Enemies",
+   "artists": [
+    "Jordan Rakei"
+   ],
+   "primary_artist": "Jordan Rakei",
+   "duration": "2:47",
+   "duration_sec": 167,
+   "spotify_track_id": "0X9GwAax0c0HPe3iIoDVW6",
+   "spotify_uri": "spotify:track:0X9GwAax0c0HPe3iIoDVW6",
+   "spotify_url": "https://open.spotify.com/track/0X9GwAax0c0HPe3iIoDVW6",
+   "genres": [
+    "neo-soul",
+    "uk-jazz"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "neo-soul",
+    "alternative r&b",
+    "jazz-soul",
+    "electronic soul"
+   ],
+   "mood": [
+    "introspective",
+    "warm",
+    "melancholic"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.4,
+    "danceability": 0.5,
+    "acousticness": 0.35,
+    "instrumentalness": 0.15
+   },
+   "bpm": 92,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 3,
+   "title": "Summer Haze",
+   "artists": [
+    "Yazmin Lacey"
+   ],
+   "primary_artist": "Yazmin Lacey",
+   "duration": "2:54",
+   "duration_sec": 174,
+   "spotify_track_id": "465QjZo1z1JAuLTTC7DnuK",
+   "spotify_uri": "spotify:track:465QjZo1z1JAuLTTC7DnuK",
+   "spotify_url": "https://open.spotify.com/track/465QjZo1z1JAuLTTC7DnuK",
+   "genres": [
+    "neo-soul",
+    "uk-jazz"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "uk soul",
+    "jazz-soul",
+    "slow soul",
+    "bedroom soul"
+   ],
+   "mood": [
+    "hazy",
+    "laid-back",
+    "sensual"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.55,
+    "danceability": 0.5,
+    "acousticness": 0.4,
+    "instrumentalness": 0.1
+   },
+   "bpm": 84,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 4,
+   "title": "I Knew You Were Waiting (For Me) (with Cynthia Erivo)",
+   "artists": [
+    "Meshell Ndegeocello",
+    "Cynthia Erivo"
+   ],
+   "primary_artist": "Meshell Ndegeocello",
+   "duration": "4:46",
+   "duration_sec": 286,
+   "spotify_track_id": "7fq9tnk9YZVEwt65d4HO8g",
+   "spotify_uri": "spotify:track:7fq9tnk9YZVEwt65d4HO8g",
+   "spotify_url": "https://open.spotify.com/track/7fq9tnk9YZVEwt65d4HO8g",
+   "genres": [
+    "soul-funk",
+    "neo-soul"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "soul",
+    "gospel-soul",
+    "art soul",
+    "classic soul cover"
+   ],
+   "mood": [
+    "uplifting",
+    "soaring",
+    "reverent"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.72,
+    "danceability": 0.52,
+    "acousticness": 0.3,
+    "instrumentalness": 0.05
+   },
+   "bpm": 105,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 5,
+   "title": "When I’m Home",
+   "artists": [
+    "James Blake",
+    "Travis Scott",
+    "Ludwig Göransson"
+   ],
+   "primary_artist": "James Blake",
+   "duration": "5:27",
+   "duration_sec": 327,
+   "spotify_track_id": "5nigMKgXqeNvaiqEBWwo9s",
+   "spotify_uri": "spotify:track:5nigMKgXqeNvaiqEBWwo9s",
+   "spotify_url": "https://open.spotify.com/track/5nigMKgXqeNvaiqEBWwo9s",
+   "genres": [
+    "electronic",
+    "alt"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic / alt r&b",
+    "experimental pop",
+    "ambient r&b",
+    "cinematic electronica"
+   ],
+   "mood": [
+    "brooding",
+    "spacious",
+    "melancholic"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.25,
+    "danceability": 0.4,
+    "acousticness": 0.25,
+    "instrumentalness": 0.2
+   },
+   "bpm": 70,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 6,
+   "title": "P4P",
+   "artists": [
+    "anaiis"
+   ],
+   "primary_artist": "anaiis",
+   "duration": "4:01",
+   "duration_sec": 241,
+   "spotify_track_id": "0ylLwO5GE2ld7gHdriTrU6",
+   "spotify_uri": "spotify:track:0ylLwO5GE2ld7gHdriTrU6",
+   "spotify_url": "https://open.spotify.com/track/0ylLwO5GE2ld7gHdriTrU6",
+   "genres": [
+    "neo-soul",
+    "alt"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "alt r&b",
+    "experimental soul",
+    "downtempo r&b",
+    "spoken-word soul"
+   ],
+   "mood": [
+    "intimate",
+    "sultry",
+    "hypnotic"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.45,
+    "danceability": 0.55,
+    "acousticness": 0.3,
+    "instrumentalness": 0.1
+   },
+   "bpm": 96,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 7,
+   "title": "In The Night",
+   "artists": [
+    "Beck"
+   ],
+   "primary_artist": "Beck",
+   "duration": "2:59",
+   "duration_sec": 179,
+   "spotify_track_id": "2bZfAudzSHbqXRS1o9BBu7",
+   "spotify_uri": "spotify:track:2bZfAudzSHbqXRS1o9BBu7",
+   "spotify_url": "https://open.spotify.com/track/2bZfAudzSHbqXRS1o9BBu7",
+   "genres": [
+    "alt"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "alternative rock",
+    "psychedelic pop",
+    "indie rock",
+    "folk-rock"
+   ],
+   "mood": [
+    "wistful",
+    "warm",
+    "dreamy"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.5,
+    "danceability": 0.45,
+    "acousticness": 0.4,
+    "instrumentalness": 0.05
+   },
+   "bpm": 112,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 8,
+   "title": "Conversation 3",
+   "artists": [
+    "alva noto",
+    "Ryuichi Sakamoto"
+   ],
+   "primary_artist": "alva noto",
+   "duration": "5:53",
+   "duration_sec": 353,
+   "spotify_track_id": "0nIbSZ4o2L2gtwWtKwmnZP",
+   "spotify_uri": "spotify:track:0nIbSZ4o2L2gtwWtKwmnZP",
+   "spotify_url": "https://open.spotify.com/track/0nIbSZ4o2L2gtwWtKwmnZP",
+   "genres": [
+    "classical",
+    "electronic"
+   ],
+   "genre_primary": "classical",
+   "subgenres": [
+    "ambient / modern classical",
+    "glitch",
+    "minimalism",
+    "electroacoustic",
+    "ambient"
+   ],
+   "mood": [
+    "contemplative",
+    "austere",
+    "spacious"
+   ],
+   "mood_parameters": {
+    "energy": 0.15,
+    "valence": 0.25,
+    "danceability": 0.1,
+    "acousticness": 0.6,
+    "instrumentalness": 0.95
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 9,
+   "title": "Piano",
+   "artists": [
+    "Tricky",
+    "Mitch Sanders"
+   ],
+   "primary_artist": "Tricky",
+   "duration": "2:43",
+   "duration_sec": 163,
+   "spotify_track_id": "0fdAzUvqxbD6QFkZRiKOVS",
+   "spotify_uri": "spotify:track:0fdAzUvqxbD6QFkZRiKOVS",
+   "spotify_url": "https://open.spotify.com/track/0fdAzUvqxbD6QFkZRiKOVS",
+   "genres": [
+    "downtempo",
+    "alt"
+   ],
+   "genre_primary": "downtempo",
+   "subgenres": [
+    "trip-hop",
+    "dark ambient",
+    "lo-fi"
+   ],
+   "mood": [
+    "brooding",
+    "claustrophobic",
+    "sombre"
+   ],
+   "mood_parameters": {
+    "energy": 0.3,
+    "valence": 0.2,
+    "danceability": 0.4,
+    "acousticness": 0.4,
+    "instrumentalness": 0.3
+   },
+   "bpm": 88,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 10,
+   "title": "Afro-Disco Makossa",
+   "artists": [
+    "Adrian Younge"
+   ],
+   "primary_artist": "Adrian Younge",
+   "duration": "4:35",
+   "duration_sec": 275,
+   "spotify_track_id": "0Z84DGwD7GhT2sbwui9KEU",
+   "spotify_uri": "spotify:track:0Z84DGwD7GhT2sbwui9KEU",
+   "spotify_url": "https://open.spotify.com/track/0Z84DGwD7GhT2sbwui9KEU",
+   "genres": [
+    "world",
+    "soul-funk"
+   ],
+   "genre_primary": "world",
+   "subgenres": [
+    "afro-funk",
+    "makossa",
+    "afro-disco",
+    "psychedelic soul"
+   ],
+   "mood": [
+    "groovy",
+    "celebratory",
+    "retro"
+   ],
+   "mood_parameters": {
+    "energy": 0.75,
+    "valence": 0.8,
+    "danceability": 0.85,
+    "acousticness": 0.25,
+    "instrumentalness": 0.5
+   },
+   "bpm": 118,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 11,
+   "title": "MORE",
+   "artists": [
+    "Tiana Major9"
+   ],
+   "primary_artist": "Tiana Major9",
+   "duration": "2:28",
+   "duration_sec": 148,
+   "spotify_track_id": "42ytAVcWCLJuaY7wGCbi5Y",
+   "spotify_uri": "spotify:track:42ytAVcWCLJuaY7wGCbi5Y",
+   "spotify_url": "https://open.spotify.com/track/42ytAVcWCLJuaY7wGCbi5Y",
+   "genres": [
+    "neo-soul",
+    "uk-jazz"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "jazz-r&b",
+    "uk soul",
+    "contemporary r&b"
+   ],
+   "mood": [
+    "soulful",
+    "confident",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.62,
+    "danceability": 0.6,
+    "acousticness": 0.3,
+    "instrumentalness": 0.05
+   },
+   "bpm": 100,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 12,
+   "title": "Ignorance Was Never Bliss (feat. Loyle Carner)",
+   "artists": [
+    "Joe James",
+    "Loyle Carner"
+   ],
+   "primary_artist": "Joe James",
+   "duration": "4:05",
+   "duration_sec": 245,
+   "spotify_track_id": "4tEzafwhpsMj1zNlQ6JfaC",
+   "spotify_uri": "spotify:track:4tEzafwhpsMj1zNlQ6JfaC",
+   "spotify_url": "https://open.spotify.com/track/4tEzafwhpsMj1zNlQ6JfaC",
+   "genres": [
+    "uk-jazz",
+    "hip-hop"
+   ],
+   "genre_primary": "uk-jazz",
+   "subgenres": [
+    "uk jazz / rap",
+    "jazz-rap",
+    "soul-jazz",
+    "spoken word"
+   ],
+   "mood": [
+    "reflective",
+    "melancholic",
+    "earnest"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.35,
+    "danceability": 0.55,
+    "acousticness": 0.4,
+    "instrumentalness": 0.1
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 13,
+   "title": "Satisfy Me (feat. Ari Lennox)",
+   "artists": [
+    "Buju Banton",
+    "Ari Lennox"
+   ],
+   "primary_artist": "Buju Banton",
+   "duration": "2:41",
+   "duration_sec": 161,
+   "spotify_track_id": "1K0xROvNycpdtPL8aynDAJ",
+   "spotify_uri": "spotify:track:1K0xROvNycpdtPL8aynDAJ",
+   "spotify_url": "https://open.spotify.com/track/1K0xROvNycpdtPL8aynDAJ",
+   "genres": [
+    "world",
+    "neo-soul"
+   ],
+   "genre_primary": "world",
+   "subgenres": [
+    "reggae / dancehall",
+    "reggae",
+    "lovers rock",
+    "r&b crossover"
+   ],
+   "mood": [
+    "sensual",
+    "sunny",
+    "laid-back"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.75,
+    "danceability": 0.75,
+    "acousticness": 0.2,
+    "instrumentalness": 0.05
+   },
+   "bpm": 96,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 14,
+   "title": "Heaven",
+   "artists": [
+    "Masego"
+   ],
+   "primary_artist": "Masego",
+   "duration": "2:54",
+   "duration_sec": 174,
+   "spotify_track_id": "6O26k1i1HcmtDYX3sjBMAZ",
+   "spotify_uri": "spotify:track:6O26k1i1HcmtDYX3sjBMAZ",
+   "spotify_url": "https://open.spotify.com/track/6O26k1i1HcmtDYX3sjBMAZ",
+   "genres": [
+    "neo-soul",
+    "jazz"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "traphousejazz",
+    "saxophone-led r&b",
+    "alternative r&b"
+   ],
+   "mood": [
+    "breezy",
+    "romantic",
+    "playful"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.7,
+    "danceability": 0.7,
+    "acousticness": 0.25,
+    "instrumentalness": 0.15
+   },
+   "bpm": 105,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 15,
+   "title": "The Magic River",
+   "artists": [
+    "JW Francis",
+    "Sharada Shashidhar"
+   ],
+   "primary_artist": "JW Francis",
+   "duration": "6:56",
+   "duration_sec": 416,
+   "spotify_track_id": "65hZxmgwy5fVaT5Adm8svh",
+   "spotify_uri": "spotify:track:65hZxmgwy5fVaT5Adm8svh",
+   "spotify_url": "https://open.spotify.com/track/65hZxmgwy5fVaT5Adm8svh",
+   "genres": [
+    "alt",
+    "downtempo"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "indie / psych-folk",
+    "psychedelic folk",
+    "dream pop",
+    "raga-inflected"
+   ],
+   "mood": [
+    "dreamy",
+    "meditative",
+    "expansive"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.5,
+    "danceability": 0.35,
+    "acousticness": 0.55,
+    "instrumentalness": 0.3
+   },
+   "bpm": 92,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 16,
+   "title": "Don't Need It",
+   "artists": [
+    "MorMor"
+   ],
+   "primary_artist": "MorMor",
+   "duration": "5:27",
+   "duration_sec": 327,
+   "spotify_track_id": "5s4w6GiwjRSxH2Wx9MzsTT",
+   "spotify_uri": "spotify:track:5s4w6GiwjRSxH2Wx9MzsTT",
+   "spotify_url": "https://open.spotify.com/track/5s4w6GiwjRSxH2Wx9MzsTT",
+   "genres": [
+    "alt",
+    "neo-soul"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "alt r&b",
+    "dream pop",
+    "bedroom r&b",
+    "psychedelic soul"
+   ],
+   "mood": [
+    "wistful",
+    "hazy",
+    "yearning"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.4,
+    "danceability": 0.5,
+    "acousticness": 0.3,
+    "instrumentalness": 0.15
+   },
+   "bpm": 104,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 17,
+   "title": "Easy Street",
+   "artists": [
+    "Queens of the Stone Age"
+   ],
+   "primary_artist": "Queens of the Stone Age",
+   "duration": "3:51",
+   "duration_sec": 231,
+   "spotify_track_id": "415xhtL862VVvSiKWuS2SW",
+   "spotify_uri": "spotify:track:415xhtL862VVvSiKWuS2SW",
+   "spotify_url": "https://open.spotify.com/track/415xhtL862VVvSiKWuS2SW",
+   "genres": [
+    "alt"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "rock",
+    "desert rock",
+    "stoner rock",
+    "alternative rock"
+   ],
+   "mood": [
+    "swaggering",
+    "gritty",
+    "driving"
+   ],
+   "mood_parameters": {
+    "energy": 0.8,
+    "valence": 0.5,
+    "danceability": 0.5,
+    "acousticness": 0.1,
+    "instrumentalness": 0.15
+   },
+   "bpm": 128,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 18,
+   "title": "Same Emotions (feat. Dave)",
+   "artists": [
+    "Joe James",
+    "Dave"
+   ],
+   "primary_artist": "Joe James",
+   "duration": "3:59",
+   "duration_sec": 239,
+   "spotify_track_id": "6ziVoEtF0YbFWOlO0nc45H",
+   "spotify_uri": "spotify:track:6ziVoEtF0YbFWOlO0nc45H",
+   "spotify_url": "https://open.spotify.com/track/6ziVoEtF0YbFWOlO0nc45H",
+   "genres": [
+    "uk-jazz",
+    "hip-hop"
+   ],
+   "genre_primary": "uk-jazz",
+   "subgenres": [
+    "uk rap / jazz",
+    "jazz-rap",
+    "piano-led",
+    "uk rap"
+   ],
+   "mood": [
+    "introspective",
+    "cinematic",
+    "sombre"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.3,
+    "danceability": 0.55,
+    "acousticness": 0.45,
+    "instrumentalness": 0.1
+   },
+   "bpm": 84,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 19,
+   "title": "pure colour (feat. Erykah Badu)",
+   "artists": [
+    "Steve Lacy",
+    "Erykah Badu"
+   ],
+   "primary_artist": "Steve Lacy",
+   "duration": "3:07",
+   "duration_sec": 187,
+   "spotify_track_id": "4BgZNZ8hKrfyU4jiCKoAIg",
+   "spotify_uri": "spotify:track:4BgZNZ8hKrfyU4jiCKoAIg",
+   "spotify_url": "https://open.spotify.com/track/4BgZNZ8hKrfyU4jiCKoAIg",
+   "genres": [
+    "neo-soul",
+    "alt"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "alt r&b",
+    "psychedelic soul",
+    "bedroom funk",
+    "guitar r&b"
+   ],
+   "mood": [
+    "woozy",
+    "sensual",
+    "hypnotic"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.55,
+    "danceability": 0.65,
+    "acousticness": 0.3,
+    "instrumentalness": 0.1
+   },
+   "bpm": 98,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 20,
+   "title": "Fool4u",
+   "artists": [
+    "Kara-do",
+    "Kelly Moonstone"
+   ],
+   "primary_artist": "Kara-do",
+   "duration": "3:10",
+   "duration_sec": 190,
+   "spotify_track_id": "36l1mbu5OIHxq8UGzXYZwG",
+   "spotify_uri": "spotify:track:36l1mbu5OIHxq8UGzXYZwG",
+   "spotify_url": "https://open.spotify.com/track/36l1mbu5OIHxq8UGzXYZwG",
+   "genres": [
+    "neo-soul",
+    "hip-hop"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "future soul / la beat scene",
+    "la beat scene",
+    "future soul",
+    "jazz-r&b",
+    "alternative r&b"
+   ],
+   "mood": [
+    "woozy",
+    "tender",
+    "nocturnal",
+    "lovelorn"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.55,
+    "danceability": 0.62,
+    "acousticness": 0.3,
+    "instrumentalness": 0.1
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 40,
+   "playlist_name": "New Release Playlist #40",
+   "playlist_id": "3hS2rEmjY2QPRmbPiz9VYG",
+   "position_in_playlist": 21,
+   "title": "Nobody Wants To Die",
+   "artists": [
+    "DJ Shadow",
+    "Ice Cube"
+   ],
+   "primary_artist": "DJ Shadow",
+   "duration": "3:10",
+   "duration_sec": 190,
+   "spotify_track_id": "625QwvEZMdOjVEGJdkMqoo",
+   "spotify_uri": "spotify:track:625QwvEZMdOjVEGJdkMqoo",
+   "spotify_url": "https://open.spotify.com/track/625QwvEZMdOjVEGJdkMqoo",
+   "genres": [
+    "hip-hop",
+    "electronic"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "sample-based hip-hop",
+    "boom bap",
+    "turntablism"
+   ],
+   "mood": [
+    "ominous",
+    "hard-hitting",
+    "cinematic"
+   ],
+   "mood_parameters": {
+    "energy": 0.8,
+    "valence": 0.35,
+    "danceability": 0.7,
+    "acousticness": 0.15,
+    "instrumentalness": 0.1
+   },
+   "bpm": 94,
    "bpm_source": "estimated"
   }
  ]
