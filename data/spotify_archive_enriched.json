@@ -4,7 +4,7 @@
   "source_account": "Spotify",
   "generated_at": "2026-05-23T12:27:11.266084",
   "description": "Archivio strutturato delle 'New Release Playlist' di Marco Mauro, da consultare via AI per generare playlist tematiche o effettuare analisi.",
-  "playlist_range": "#1 - #40 (40 New Release Playlist consecutive) + 1 extra (#101)",
+  "playlist_range": "#1 - #41 (41 New Release Playlist consecutive) + 1 extra (#101)",
   "note_on_gaps": "Nessuno: il dataset copre integralmente le New Release Playlist da #12 a #36. Le #1-#11 e #13-#17 si chiamano 'New Release Friday #N', dalla #12 e #18 in poi 'New Release Playlist #N'. La '2025 Fav Album Playlist' e' una compilation tematica (extra), spostata fuori dalla sequenza NRP al playlist_number 101.",
   "schema_per_track": {
    "playlist_number": "int (numero progressivo della playlist di origine)",
@@ -27,9 +27,9 @@
    "bpm": "int | null (null = non verificabile, mai inventato)",
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
-  "total_tracks_with_duplicates": 914,
-  "unique_tracks": 894,
-  "unique_artists": 861,
+  "total_tracks_with_duplicates": 935,
+  "unique_tracks": 915,
+  "unique_artists": 874,
   "top_artists": [
    [
     "Brian Jackson",
@@ -64,7 +64,15 @@
     8
    ],
    [
+    "TOMORA",
+    8
+   ],
+   [
     "Peter Gabriel",
+    8
+   ],
+   [
+    "Nate Smith",
     8
    ],
    [
@@ -81,14 +89,6 @@
    ],
    [
     "Run Logan Run",
-    7
-   ],
-   [
-    "TOMORA",
-    7
-   ],
-   [
-    "Nate Smith",
     7
    ],
    [
@@ -166,8 +166,8 @@
   "enrichment_note": "Caratterizzazione musicale esperta aggiunta da Claude (giugno 2026): subgenres granulari, mood, mood_parameters (energy/valence/danceability/acousticness/instrumentalness, scala 0-1, stime qualitative da esperto), bpm (int o null) e bpm_source. bpm_source='verified' = confermato da fonti web DJ-pool (Beatsource, BPM Supreme, SongBPM, Tunebat); 'estimated' = stima fondata sul tempo tipico del brano/genere (presente solo dove molto affidabile, es. house 120-126); bpm=null dove non verificabile, mai inventato. I campi 'genres' e 'genre_primary' preesistenti (tassonomia a 12 macro-generi della pipeline new-release-atlas) sono INTOCCATI e restano la classificazione di riferimento.",
   "extended_at": "2026-06-11T09:12:01.887032",
   "extension_note": "Playlist #33 e #34 aggiunte a giugno 2026 con caratterizzazione esperta completa. Per queste 2 playlist anche genres/genre_primary sono assegnati dall'AI (coerenti con la tassonomia a 12 macro-generi della pipeline). Nota: 'Fainted Light' (Indra Lesmana) in #34 è un duplicato cross-playlist di #32 (stesso track ID).",
-  "merged_at": "2026-08-25T12:09:26Z",
-  "merge_note": "add_playlist.py: aggiunte ['#40'] (21 occorrenze, 21 brani nuovi)",
+  "merged_at": "2026-08-31T14:46:40Z",
+  "merge_note": "add_playlist.py: aggiunte ['#41'] (21 occorrenze, 21 brani nuovi)",
   "cross_playlist_duplicates": [
    {
     "spotify_track_id": "3wIMAdnBrA4Mtb6WB2B4YT",
@@ -35860,6 +35860,835 @@
       "instrumentalness": 0.1
      },
      "bpm": 94,
+     "bpm_source": "estimated"
+    }
+   ]
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "spotify_url": "https://open.spotify.com/playlist/1vJ48VuzqiO6Z6sm8EXW6u",
+   "description": "",
+   "date": null,
+   "track_count": 21,
+   "tracks": [
+    {
+     "position_in_playlist": 1,
+     "title": "Talk On The Hill",
+     "artists": [
+      "WILLOW"
+     ],
+     "primary_artist": "WILLOW",
+     "duration": "3:28",
+     "duration_sec": 208,
+     "spotify_track_id": "1TAMOyFIwavNrf3c8XtI00",
+     "spotify_uri": "spotify:track:1TAMOyFIwavNrf3c8XtI00",
+     "spotify_url": "https://open.spotify.com/track/1TAMOyFIwavNrf3c8XtI00",
+     "genres": [
+      "alt",
+      "neo-soul"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "alternative",
+      "art pop",
+      "alt-r&b",
+      "indie soul"
+     ],
+     "mood": [
+      "introspective",
+      "airy",
+      "yearning"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.4,
+      "danceability": 0.4,
+      "acousticness": 0.4,
+      "instrumentalness": 0.05
+     },
+     "bpm": 108,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 2,
+     "title": "P.LAY",
+     "artists": [
+      "Mark Guiliana"
+     ],
+     "primary_artist": "Mark Guiliana",
+     "duration": "5:32",
+     "duration_sec": 332,
+     "spotify_track_id": "1dTzldD9EBvVixfFlmEc9K",
+     "spotify_uri": "spotify:track:1dTzldD9EBvVixfFlmEc9K",
+     "spotify_url": "https://open.spotify.com/track/1dTzldD9EBvVixfFlmEc9K",
+     "genres": [
+      "jazz",
+      "electronic"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "modern jazz",
+      "electronic jazz",
+      "drum-led",
+      "jazz fusion"
+     ],
+     "mood": [
+      "kinetic",
+      "cerebral",
+      "propulsive"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.45,
+      "danceability": 0.5,
+      "acousticness": 0.2,
+      "instrumentalness": 0.85
+     },
+     "bpm": 132,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 3,
+     "title": "Movement 5 - Pandora’s Creation",
+     "artists": [
+      "Floating Points",
+      "San Francisco Ballet Orchestra"
+     ],
+     "primary_artist": "Floating Points",
+     "duration": "6:42",
+     "duration_sec": 402,
+     "spotify_track_id": "26E33Y7uGTfGBOLGbum1bZ",
+     "spotify_uri": "spotify:track:26E33Y7uGTfGBOLGbum1bZ",
+     "spotify_url": "https://open.spotify.com/track/26E33Y7uGTfGBOLGbum1bZ",
+     "genres": [
+      "classical",
+      "electronic"
+     ],
+     "genre_primary": "classical",
+     "subgenres": [
+      "contemporary classical",
+      "ballet score",
+      "orchestral",
+      "electroacoustic",
+      "minimalism"
+     ],
+     "mood": [
+      "cinematic",
+      "ominous",
+      "expansive"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.25,
+      "danceability": 0.15,
+      "acousticness": 0.6,
+      "instrumentalness": 0.95
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 4,
+     "title": "Slower",
+     "artists": [
+      "Dragonflies",
+      "Dhani Harrison",
+      "Nigel Godrich"
+     ],
+     "primary_artist": "Dragonflies",
+     "duration": "5:01",
+     "duration_sec": 301,
+     "spotify_track_id": "2zncCWS6vnHusCrrWa3k7M",
+     "spotify_uri": "spotify:track:2zncCWS6vnHusCrrWa3k7M",
+     "spotify_url": "https://open.spotify.com/track/2zncCWS6vnHusCrrWa3k7M",
+     "genres": [
+      "alt",
+      "electronic"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "alternative",
+      "art rock",
+      "psychedelic rock",
+      "electronic rock"
+     ],
+     "mood": [
+      "hazy",
+      "brooding",
+      "hypnotic"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.35,
+      "danceability": 0.4,
+      "acousticness": 0.3,
+      "instrumentalness": 0.3
+     },
+     "bpm": 96,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 5,
+     "title": "Peace of Mind (feat. 9th Wonder)",
+     "artists": [
+      "Dinner Party",
+      "Terrace Martin",
+      "Robert Glasper",
+      "Kamasi Washington",
+      "9th Wonder"
+     ],
+     "primary_artist": "Dinner Party",
+     "duration": "3:30",
+     "duration_sec": 210,
+     "spotify_track_id": "21EuwZ7A0SxwVKNHXNF7ed",
+     "spotify_uri": "spotify:track:21EuwZ7A0SxwVKNHXNF7ed",
+     "spotify_url": "https://open.spotify.com/track/21EuwZ7A0SxwVKNHXNF7ed",
+     "genres": [
+      "neo-soul",
+      "jazz"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "jazz-soul",
+      "jazz-hop",
+      "spiritual jazz",
+      "west coast soul"
+     ],
+     "mood": [
+      "laid-back",
+      "warm",
+      "meditative"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.55,
+      "danceability": 0.6,
+      "acousticness": 0.3,
+      "instrumentalness": 0.35
+     },
+     "bpm": 88,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 6,
+     "title": "Bond Girl",
+     "artists": [
+      "John Glacier"
+     ],
+     "primary_artist": "John Glacier",
+     "duration": "2:31",
+     "duration_sec": 151,
+     "spotify_track_id": "0t4r8UtTpyhTHflgKoyRsZ",
+     "spotify_uri": "spotify:track:0t4r8UtTpyhTHflgKoyRsZ",
+     "spotify_url": "https://open.spotify.com/track/0t4r8UtTpyhTHflgKoyRsZ",
+     "genres": [
+      "hip-hop",
+      "alt"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "uk rap",
+      "experimental hip-hop",
+      "cloud rap"
+     ],
+     "mood": [
+      "detached",
+      "murky",
+      "dreamy"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.35,
+      "danceability": 0.55,
+      "acousticness": 0.15,
+      "instrumentalness": 0.1
+     },
+     "bpm": 84,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 7,
+     "title": "Easy",
+     "artists": [
+      "Gotts Street Park",
+      "Celeste"
+     ],
+     "primary_artist": "Gotts Street Park",
+     "duration": "4:45",
+     "duration_sec": 285,
+     "spotify_track_id": "4phV08Ytfo4eSiHqahFhJo",
+     "spotify_uri": "spotify:track:4phV08Ytfo4eSiHqahFhJo",
+     "spotify_url": "https://open.spotify.com/track/4phV08Ytfo4eSiHqahFhJo",
+     "genres": [
+      "soul-funk",
+      "neo-soul"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "soul",
+      "vintage soul",
+      "british soul",
+      "psychedelic soul"
+     ],
+     "mood": [
+      "languid",
+      "romantic",
+      "smoky"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.45,
+      "danceability": 0.45,
+      "acousticness": 0.5,
+      "instrumentalness": 0.05
+     },
+     "bpm": 78,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 8,
+     "title": "Through the Fire - A COLORS SHOW",
+     "artists": [
+      "Chaka Khan",
+      "COLORS"
+     ],
+     "primary_artist": "Chaka Khan",
+     "duration": "5:23",
+     "duration_sec": 323,
+     "spotify_track_id": "0wfPnXPDYfSOMKhY2n3D6j",
+     "spotify_uri": "spotify:track:0wfPnXPDYfSOMKhY2n3D6j",
+     "spotify_url": "https://open.spotify.com/track/0wfPnXPDYfSOMKhY2n3D6j",
+     "genres": [
+      "soul-funk"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "soul",
+      "classic soul",
+      "r&b ballad",
+      "live session"
+     ],
+     "mood": [
+      "soaring",
+      "nostalgic",
+      "tender"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.6,
+      "danceability": 0.35,
+      "acousticness": 0.4,
+      "instrumentalness": 0.03
+     },
+     "bpm": 68,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 9,
+     "title": "Carousel (feat. Kelly Moonstone)",
+     "artists": [
+      "insyt.",
+      "Kelly Moonstone"
+     ],
+     "primary_artist": "insyt.",
+     "duration": "1:53",
+     "duration_sec": 113,
+     "spotify_track_id": "3ntCLmnXcx112uBaUcu2j8",
+     "spotify_uri": "spotify:track:3ntCLmnXcx112uBaUcu2j8",
+     "spotify_url": "https://open.spotify.com/track/3ntCLmnXcx112uBaUcu2j8",
+     "genres": [
+      "downtempo",
+      "neo-soul"
+     ],
+     "genre_primary": "downtempo",
+     "subgenres": [
+      "beats",
+      "lo-fi beats",
+      "bedroom soul",
+      "chillhop"
+     ],
+     "mood": [
+      "wistful",
+      "cozy",
+      "hazy"
+     ],
+     "mood_parameters": {
+      "energy": 0.3,
+      "valence": 0.5,
+      "danceability": 0.5,
+      "acousticness": 0.4,
+      "instrumentalness": 0.2
+     },
+     "bpm": 80,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 10,
+     "title": "TOMORROW, AGAIN",
+     "artists": [
+      "Nate Smith",
+      "Kiefer",
+      "CARRTOONS",
+      "Kenny Beats"
+     ],
+     "primary_artist": "Nate Smith",
+     "duration": "2:12",
+     "duration_sec": 132,
+     "spotify_track_id": "5cwVn0gsUolBOrbbb9QL8I",
+     "spotify_uri": "spotify:track:5cwVn0gsUolBOrbbb9QL8I",
+     "spotify_url": "https://open.spotify.com/track/5cwVn0gsUolBOrbbb9QL8I",
+     "genres": [
+      "hip-hop",
+      "jazz"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "beats",
+      "jazz-hop",
+      "instrumental hip-hop",
+      "nu-jazz"
+     ],
+     "mood": [
+      "playful",
+      "bouncy",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.65,
+      "danceability": 0.7,
+      "acousticness": 0.2,
+      "instrumentalness": 0.8
+     },
+     "bpm": 92,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 11,
+     "title": "Childish Things",
+     "artists": [
+      "Nostalgia 77",
+      "Richie"
+     ],
+     "primary_artist": "Nostalgia 77",
+     "duration": "3:09",
+     "duration_sec": 189,
+     "spotify_track_id": "4TSenK9oPcOKrjzRVRgtEJ",
+     "spotify_uri": "spotify:track:4TSenK9oPcOKrjzRVRgtEJ",
+     "spotify_url": "https://open.spotify.com/track/4TSenK9oPcOKrjzRVRgtEJ",
+     "genres": [
+      "uk-jazz",
+      "soul-funk"
+     ],
+     "genre_primary": "uk-jazz",
+     "subgenres": [
+      "jazz",
+      "nu-jazz",
+      "jazz-funk",
+      "tru thoughts soul"
+     ],
+     "mood": [
+      "soulful",
+      "mellow",
+      "groovy"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.55,
+      "danceability": 0.6,
+      "acousticness": 0.35,
+      "instrumentalness": 0.2
+     },
+     "bpm": 96,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 12,
+     "title": "Distant Signal",
+     "artists": [
+      "Richard Spaven"
+     ],
+     "primary_artist": "Richard Spaven",
+     "duration": "4:03",
+     "duration_sec": 243,
+     "spotify_track_id": "4PPNZ0vUnjCcsc3OmT0pou",
+     "spotify_uri": "spotify:track:4PPNZ0vUnjCcsc3OmT0pou",
+     "spotify_url": "https://open.spotify.com/track/4PPNZ0vUnjCcsc3OmT0pou",
+     "genres": [
+      "broken-beat",
+      "uk-jazz"
+     ],
+     "genre_primary": "broken-beat",
+     "subgenres": [
+      "broken beat",
+      "future jazz",
+      "west london",
+      "drum-led electronic"
+     ],
+     "mood": [
+      "intricate",
+      "cool",
+      "propulsive"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.45,
+      "danceability": 0.65,
+      "acousticness": 0.15,
+      "instrumentalness": 0.9
+     },
+     "bpm": 120,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 13,
+     "title": "Acknowledgement",
+     "artists": [
+      "Nicholas Payton",
+      "Butcher Brown"
+     ],
+     "primary_artist": "Nicholas Payton",
+     "duration": "7:47",
+     "duration_sec": 467,
+     "spotify_track_id": "4IjZDtzKy4udPAXl8t8NqL",
+     "spotify_uri": "spotify:track:4IjZDtzKy4udPAXl8t8NqL",
+     "spotify_url": "https://open.spotify.com/track/4IjZDtzKy4udPAXl8t8NqL",
+     "genres": [
+      "jazz"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "spiritual jazz",
+      "modern jazz",
+      "jazz-funk"
+     ],
+     "mood": [
+      "reverent",
+      "intense",
+      "expansive"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.45,
+      "danceability": 0.4,
+      "acousticness": 0.3,
+      "instrumentalness": 0.9
+     },
+     "bpm": 128,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 14,
+     "title": "Ghibli Freestyle",
+     "artists": [
+      "Apsilon",
+      "Levin Liam",
+      "Chilly Gonzales"
+     ],
+     "primary_artist": "Apsilon",
+     "duration": "2:14",
+     "duration_sec": 134,
+     "spotify_track_id": "7DA5sIs4siDZiLbuUaxXHN",
+     "spotify_uri": "spotify:track:7DA5sIs4siDZiLbuUaxXHN",
+     "spotify_url": "https://open.spotify.com/track/7DA5sIs4siDZiLbuUaxXHN",
+     "genres": [
+      "hip-hop"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "german rap",
+      "piano rap",
+      "conscious hip-hop"
+     ],
+     "mood": [
+      "reflective",
+      "cinematic",
+      "understated"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.4,
+      "danceability": 0.55,
+      "acousticness": 0.5,
+      "instrumentalness": 0.05
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 15,
+     "title": "Birds",
+     "artists": [
+      "Yo Gabba Gabba",
+      "Erykah Badu"
+     ],
+     "primary_artist": "Yo Gabba Gabba",
+     "duration": "2:11",
+     "duration_sec": 131,
+     "spotify_track_id": "5XTsHbRzj5fqu0Ol7xqXAR",
+     "spotify_uri": "spotify:track:5XTsHbRzj5fqu0Ol7xqXAR",
+     "spotify_url": "https://open.spotify.com/track/5XTsHbRzj5fqu0Ol7xqXAR",
+     "genres": [
+      "neo-soul",
+      "alt"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "soul",
+      "children's music",
+      "neo-soul",
+      "playful pop"
+     ],
+     "mood": [
+      "whimsical",
+      "sunny",
+      "gentle"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.8,
+      "danceability": 0.55,
+      "acousticness": 0.4,
+      "instrumentalness": 0.05
+     },
+     "bpm": 100,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 16,
+     "title": "Exit Music (for a Film) [Arr. for Piano by Christopher O'Riley]",
+     "artists": [
+      "Sergei Kvitko"
+     ],
+     "primary_artist": "Sergei Kvitko",
+     "duration": "4:34",
+     "duration_sec": 274,
+     "spotify_track_id": "76Sinkgtxl6ioLx6HQqo9i",
+     "spotify_uri": "spotify:track:76Sinkgtxl6ioLx6HQqo9i",
+     "spotify_url": "https://open.spotify.com/track/76Sinkgtxl6ioLx6HQqo9i",
+     "genres": [
+      "classical"
+     ],
+     "genre_primary": "classical",
+     "subgenres": [
+      "classical",
+      "solo piano",
+      "crossover classical",
+      "contemporary arrangement"
+     ],
+     "mood": [
+      "somber",
+      "delicate",
+      "haunting"
+     ],
+     "mood_parameters": {
+      "energy": 0.2,
+      "valence": 0.15,
+      "danceability": 0.15,
+      "acousticness": 0.95,
+      "instrumentalness": 1.0
+     },
+     "bpm": 63,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 17,
+     "title": "Xtroverted Soul",
+     "artists": [
+      "Mohini Dey",
+      "WILLOW"
+     ],
+     "primary_artist": "Mohini Dey",
+     "duration": "5:23",
+     "duration_sec": 323,
+     "spotify_track_id": "7ERm873p00qKShB7QAbNKj",
+     "spotify_uri": "spotify:track:7ERm873p00qKShB7QAbNKj",
+     "spotify_url": "https://open.spotify.com/track/7ERm873p00qKShB7QAbNKj",
+     "genres": [
+      "jazz",
+      "alt"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "fusion",
+      "jazz fusion",
+      "prog fusion",
+      "bass-led"
+     ],
+     "mood": [
+      "virtuosic",
+      "restless",
+      "bright"
+     ],
+     "mood_parameters": {
+      "energy": 0.75,
+      "valence": 0.55,
+      "danceability": 0.45,
+      "acousticness": 0.15,
+      "instrumentalness": 0.55
+     },
+     "bpm": 138,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 18,
+     "title": "IN A MINUTE - LIVE FROM THE STUDIO VERSION",
+     "artists": [
+      "TOMORA",
+      "AURORA",
+      "Tom Rowlands"
+     ],
+     "primary_artist": "TOMORA",
+     "duration": "10:02",
+     "duration_sec": 602,
+     "spotify_track_id": "49Svtm8RA6SWUHO5Fiv7uv",
+     "spotify_uri": "spotify:track:49Svtm8RA6SWUHO5Fiv7uv",
+     "spotify_url": "https://open.spotify.com/track/49Svtm8RA6SWUHO5Fiv7uv",
+     "genres": [
+      "electronic",
+      "alt"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "psychedelic electronica",
+      "electronic pop",
+      "live electronics"
+     ],
+     "mood": [
+      "hypnotic",
+      "expansive",
+      "euphoric"
+     ],
+     "mood_parameters": {
+      "energy": 0.65,
+      "valence": 0.5,
+      "danceability": 0.6,
+      "acousticness": 0.15,
+      "instrumentalness": 0.5
+     },
+     "bpm": 120,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 19,
+     "title": "110% Juice",
+     "artists": [
+      "Snoop Dogg",
+      "Boo Love"
+     ],
+     "primary_artist": "Snoop Dogg",
+     "duration": "2:32",
+     "duration_sec": 152,
+     "spotify_track_id": "0p8112XhSS7yS1tPxg0SwO",
+     "spotify_uri": "spotify:track:0p8112XhSS7yS1tPxg0SwO",
+     "spotify_url": "https://open.spotify.com/track/0p8112XhSS7yS1tPxg0SwO",
+     "genres": [
+      "hip-hop",
+      "soul-funk"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "g-funk",
+      "west coast rap",
+      "funk rap"
+     ],
+     "mood": [
+      "laid-back",
+      "swaggering",
+      "sunny"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.7,
+      "danceability": 0.8,
+      "acousticness": 0.1,
+      "instrumentalness": 0.05
+     },
+     "bpm": 94,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 20,
+     "title": "Unconditional",
+     "artists": [
+      "WILLOW"
+     ],
+     "primary_artist": "WILLOW",
+     "duration": "3:26",
+     "duration_sec": 206,
+     "spotify_track_id": "7CKFCwz9YDrT8c9Fi2LLsP",
+     "spotify_uri": "spotify:track:7CKFCwz9YDrT8c9Fi2LLsP",
+     "spotify_url": "https://open.spotify.com/track/7CKFCwz9YDrT8c9Fi2LLsP",
+     "genres": [
+      "alt",
+      "neo-soul"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "alternative",
+      "art pop",
+      "alt-r&b",
+      "indie soul"
+     ],
+     "mood": [
+      "tender",
+      "intimate",
+      "ethereal"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.5,
+      "danceability": 0.4,
+      "acousticness": 0.5,
+      "instrumentalness": 0.05
+     },
+     "bpm": 100,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 21,
+     "title": "Cold Little Heart - Live In Session At RAK Studios / 2016",
+     "artists": [
+      "Michael Kiwanuka"
+     ],
+     "primary_artist": "Michael Kiwanuka",
+     "duration": "11:08",
+     "duration_sec": 668,
+     "spotify_track_id": "0dNfhhgRZWN7BEN1LdZ2MH",
+     "spotify_uri": "spotify:track:0dNfhhgRZWN7BEN1LdZ2MH",
+     "spotify_url": "https://open.spotify.com/track/0dNfhhgRZWN7BEN1LdZ2MH",
+     "genres": [
+      "soul-funk",
+      "alt"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "soul",
+      "psychedelic soul",
+      "british soul",
+      "live session"
+     ],
+     "mood": [
+      "slow-burning",
+      "melancholic",
+      "expansive"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.35,
+      "danceability": 0.3,
+      "acousticness": 0.5,
+      "instrumentalness": 0.35
+     },
+     "bpm": 72,
      "bpm_source": "estimated"
     }
    ]
@@ -73704,6 +74533,887 @@
     "instrumentalness": 0.1
    },
    "bpm": 94,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 1,
+   "title": "Talk On The Hill",
+   "artists": [
+    "WILLOW"
+   ],
+   "primary_artist": "WILLOW",
+   "duration": "3:28",
+   "duration_sec": 208,
+   "spotify_track_id": "1TAMOyFIwavNrf3c8XtI00",
+   "spotify_uri": "spotify:track:1TAMOyFIwavNrf3c8XtI00",
+   "spotify_url": "https://open.spotify.com/track/1TAMOyFIwavNrf3c8XtI00",
+   "genres": [
+    "alt",
+    "neo-soul"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "alternative",
+    "art pop",
+    "alt-r&b",
+    "indie soul"
+   ],
+   "mood": [
+    "introspective",
+    "airy",
+    "yearning"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.4,
+    "danceability": 0.4,
+    "acousticness": 0.4,
+    "instrumentalness": 0.05
+   },
+   "bpm": 108,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 2,
+   "title": "P.LAY",
+   "artists": [
+    "Mark Guiliana"
+   ],
+   "primary_artist": "Mark Guiliana",
+   "duration": "5:32",
+   "duration_sec": 332,
+   "spotify_track_id": "1dTzldD9EBvVixfFlmEc9K",
+   "spotify_uri": "spotify:track:1dTzldD9EBvVixfFlmEc9K",
+   "spotify_url": "https://open.spotify.com/track/1dTzldD9EBvVixfFlmEc9K",
+   "genres": [
+    "jazz",
+    "electronic"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "modern jazz",
+    "electronic jazz",
+    "drum-led",
+    "jazz fusion"
+   ],
+   "mood": [
+    "kinetic",
+    "cerebral",
+    "propulsive"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.45,
+    "danceability": 0.5,
+    "acousticness": 0.2,
+    "instrumentalness": 0.85
+   },
+   "bpm": 132,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 3,
+   "title": "Movement 5 - Pandora’s Creation",
+   "artists": [
+    "Floating Points",
+    "San Francisco Ballet Orchestra"
+   ],
+   "primary_artist": "Floating Points",
+   "duration": "6:42",
+   "duration_sec": 402,
+   "spotify_track_id": "26E33Y7uGTfGBOLGbum1bZ",
+   "spotify_uri": "spotify:track:26E33Y7uGTfGBOLGbum1bZ",
+   "spotify_url": "https://open.spotify.com/track/26E33Y7uGTfGBOLGbum1bZ",
+   "genres": [
+    "classical",
+    "electronic"
+   ],
+   "genre_primary": "classical",
+   "subgenres": [
+    "contemporary classical",
+    "ballet score",
+    "orchestral",
+    "electroacoustic",
+    "minimalism"
+   ],
+   "mood": [
+    "cinematic",
+    "ominous",
+    "expansive"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.25,
+    "danceability": 0.15,
+    "acousticness": 0.6,
+    "instrumentalness": 0.95
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 4,
+   "title": "Slower",
+   "artists": [
+    "Dragonflies",
+    "Dhani Harrison",
+    "Nigel Godrich"
+   ],
+   "primary_artist": "Dragonflies",
+   "duration": "5:01",
+   "duration_sec": 301,
+   "spotify_track_id": "2zncCWS6vnHusCrrWa3k7M",
+   "spotify_uri": "spotify:track:2zncCWS6vnHusCrrWa3k7M",
+   "spotify_url": "https://open.spotify.com/track/2zncCWS6vnHusCrrWa3k7M",
+   "genres": [
+    "alt",
+    "electronic"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "alternative",
+    "art rock",
+    "psychedelic rock",
+    "electronic rock"
+   ],
+   "mood": [
+    "hazy",
+    "brooding",
+    "hypnotic"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.35,
+    "danceability": 0.4,
+    "acousticness": 0.3,
+    "instrumentalness": 0.3
+   },
+   "bpm": 96,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 5,
+   "title": "Peace of Mind (feat. 9th Wonder)",
+   "artists": [
+    "Dinner Party",
+    "Terrace Martin",
+    "Robert Glasper",
+    "Kamasi Washington",
+    "9th Wonder"
+   ],
+   "primary_artist": "Dinner Party",
+   "duration": "3:30",
+   "duration_sec": 210,
+   "spotify_track_id": "21EuwZ7A0SxwVKNHXNF7ed",
+   "spotify_uri": "spotify:track:21EuwZ7A0SxwVKNHXNF7ed",
+   "spotify_url": "https://open.spotify.com/track/21EuwZ7A0SxwVKNHXNF7ed",
+   "genres": [
+    "neo-soul",
+    "jazz"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "jazz-soul",
+    "jazz-hop",
+    "spiritual jazz",
+    "west coast soul"
+   ],
+   "mood": [
+    "laid-back",
+    "warm",
+    "meditative"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.55,
+    "danceability": 0.6,
+    "acousticness": 0.3,
+    "instrumentalness": 0.35
+   },
+   "bpm": 88,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 6,
+   "title": "Bond Girl",
+   "artists": [
+    "John Glacier"
+   ],
+   "primary_artist": "John Glacier",
+   "duration": "2:31",
+   "duration_sec": 151,
+   "spotify_track_id": "0t4r8UtTpyhTHflgKoyRsZ",
+   "spotify_uri": "spotify:track:0t4r8UtTpyhTHflgKoyRsZ",
+   "spotify_url": "https://open.spotify.com/track/0t4r8UtTpyhTHflgKoyRsZ",
+   "genres": [
+    "hip-hop",
+    "alt"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "uk rap",
+    "experimental hip-hop",
+    "cloud rap"
+   ],
+   "mood": [
+    "detached",
+    "murky",
+    "dreamy"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.35,
+    "danceability": 0.55,
+    "acousticness": 0.15,
+    "instrumentalness": 0.1
+   },
+   "bpm": 84,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 7,
+   "title": "Easy",
+   "artists": [
+    "Gotts Street Park",
+    "Celeste"
+   ],
+   "primary_artist": "Gotts Street Park",
+   "duration": "4:45",
+   "duration_sec": 285,
+   "spotify_track_id": "4phV08Ytfo4eSiHqahFhJo",
+   "spotify_uri": "spotify:track:4phV08Ytfo4eSiHqahFhJo",
+   "spotify_url": "https://open.spotify.com/track/4phV08Ytfo4eSiHqahFhJo",
+   "genres": [
+    "soul-funk",
+    "neo-soul"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "soul",
+    "vintage soul",
+    "british soul",
+    "psychedelic soul"
+   ],
+   "mood": [
+    "languid",
+    "romantic",
+    "smoky"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.45,
+    "danceability": 0.45,
+    "acousticness": 0.5,
+    "instrumentalness": 0.05
+   },
+   "bpm": 78,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 8,
+   "title": "Through the Fire - A COLORS SHOW",
+   "artists": [
+    "Chaka Khan",
+    "COLORS"
+   ],
+   "primary_artist": "Chaka Khan",
+   "duration": "5:23",
+   "duration_sec": 323,
+   "spotify_track_id": "0wfPnXPDYfSOMKhY2n3D6j",
+   "spotify_uri": "spotify:track:0wfPnXPDYfSOMKhY2n3D6j",
+   "spotify_url": "https://open.spotify.com/track/0wfPnXPDYfSOMKhY2n3D6j",
+   "genres": [
+    "soul-funk"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "soul",
+    "classic soul",
+    "r&b ballad",
+    "live session"
+   ],
+   "mood": [
+    "soaring",
+    "nostalgic",
+    "tender"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.6,
+    "danceability": 0.35,
+    "acousticness": 0.4,
+    "instrumentalness": 0.03
+   },
+   "bpm": 68,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 9,
+   "title": "Carousel (feat. Kelly Moonstone)",
+   "artists": [
+    "insyt.",
+    "Kelly Moonstone"
+   ],
+   "primary_artist": "insyt.",
+   "duration": "1:53",
+   "duration_sec": 113,
+   "spotify_track_id": "3ntCLmnXcx112uBaUcu2j8",
+   "spotify_uri": "spotify:track:3ntCLmnXcx112uBaUcu2j8",
+   "spotify_url": "https://open.spotify.com/track/3ntCLmnXcx112uBaUcu2j8",
+   "genres": [
+    "downtempo",
+    "neo-soul"
+   ],
+   "genre_primary": "downtempo",
+   "subgenres": [
+    "beats",
+    "lo-fi beats",
+    "bedroom soul",
+    "chillhop"
+   ],
+   "mood": [
+    "wistful",
+    "cozy",
+    "hazy"
+   ],
+   "mood_parameters": {
+    "energy": 0.3,
+    "valence": 0.5,
+    "danceability": 0.5,
+    "acousticness": 0.4,
+    "instrumentalness": 0.2
+   },
+   "bpm": 80,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 10,
+   "title": "TOMORROW, AGAIN",
+   "artists": [
+    "Nate Smith",
+    "Kiefer",
+    "CARRTOONS",
+    "Kenny Beats"
+   ],
+   "primary_artist": "Nate Smith",
+   "duration": "2:12",
+   "duration_sec": 132,
+   "spotify_track_id": "5cwVn0gsUolBOrbbb9QL8I",
+   "spotify_uri": "spotify:track:5cwVn0gsUolBOrbbb9QL8I",
+   "spotify_url": "https://open.spotify.com/track/5cwVn0gsUolBOrbbb9QL8I",
+   "genres": [
+    "hip-hop",
+    "jazz"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "beats",
+    "jazz-hop",
+    "instrumental hip-hop",
+    "nu-jazz"
+   ],
+   "mood": [
+    "playful",
+    "bouncy",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.65,
+    "danceability": 0.7,
+    "acousticness": 0.2,
+    "instrumentalness": 0.8
+   },
+   "bpm": 92,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 11,
+   "title": "Childish Things",
+   "artists": [
+    "Nostalgia 77",
+    "Richie"
+   ],
+   "primary_artist": "Nostalgia 77",
+   "duration": "3:09",
+   "duration_sec": 189,
+   "spotify_track_id": "4TSenK9oPcOKrjzRVRgtEJ",
+   "spotify_uri": "spotify:track:4TSenK9oPcOKrjzRVRgtEJ",
+   "spotify_url": "https://open.spotify.com/track/4TSenK9oPcOKrjzRVRgtEJ",
+   "genres": [
+    "uk-jazz",
+    "soul-funk"
+   ],
+   "genre_primary": "uk-jazz",
+   "subgenres": [
+    "jazz",
+    "nu-jazz",
+    "jazz-funk",
+    "tru thoughts soul"
+   ],
+   "mood": [
+    "soulful",
+    "mellow",
+    "groovy"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.55,
+    "danceability": 0.6,
+    "acousticness": 0.35,
+    "instrumentalness": 0.2
+   },
+   "bpm": 96,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 12,
+   "title": "Distant Signal",
+   "artists": [
+    "Richard Spaven"
+   ],
+   "primary_artist": "Richard Spaven",
+   "duration": "4:03",
+   "duration_sec": 243,
+   "spotify_track_id": "4PPNZ0vUnjCcsc3OmT0pou",
+   "spotify_uri": "spotify:track:4PPNZ0vUnjCcsc3OmT0pou",
+   "spotify_url": "https://open.spotify.com/track/4PPNZ0vUnjCcsc3OmT0pou",
+   "genres": [
+    "broken-beat",
+    "uk-jazz"
+   ],
+   "genre_primary": "broken-beat",
+   "subgenres": [
+    "broken beat",
+    "future jazz",
+    "west london",
+    "drum-led electronic"
+   ],
+   "mood": [
+    "intricate",
+    "cool",
+    "propulsive"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.45,
+    "danceability": 0.65,
+    "acousticness": 0.15,
+    "instrumentalness": 0.9
+   },
+   "bpm": 120,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 13,
+   "title": "Acknowledgement",
+   "artists": [
+    "Nicholas Payton",
+    "Butcher Brown"
+   ],
+   "primary_artist": "Nicholas Payton",
+   "duration": "7:47",
+   "duration_sec": 467,
+   "spotify_track_id": "4IjZDtzKy4udPAXl8t8NqL",
+   "spotify_uri": "spotify:track:4IjZDtzKy4udPAXl8t8NqL",
+   "spotify_url": "https://open.spotify.com/track/4IjZDtzKy4udPAXl8t8NqL",
+   "genres": [
+    "jazz"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "spiritual jazz",
+    "modern jazz",
+    "jazz-funk"
+   ],
+   "mood": [
+    "reverent",
+    "intense",
+    "expansive"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.45,
+    "danceability": 0.4,
+    "acousticness": 0.3,
+    "instrumentalness": 0.9
+   },
+   "bpm": 128,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 14,
+   "title": "Ghibli Freestyle",
+   "artists": [
+    "Apsilon",
+    "Levin Liam",
+    "Chilly Gonzales"
+   ],
+   "primary_artist": "Apsilon",
+   "duration": "2:14",
+   "duration_sec": 134,
+   "spotify_track_id": "7DA5sIs4siDZiLbuUaxXHN",
+   "spotify_uri": "spotify:track:7DA5sIs4siDZiLbuUaxXHN",
+   "spotify_url": "https://open.spotify.com/track/7DA5sIs4siDZiLbuUaxXHN",
+   "genres": [
+    "hip-hop"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "german rap",
+    "piano rap",
+    "conscious hip-hop"
+   ],
+   "mood": [
+    "reflective",
+    "cinematic",
+    "understated"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.4,
+    "danceability": 0.55,
+    "acousticness": 0.5,
+    "instrumentalness": 0.05
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 15,
+   "title": "Birds",
+   "artists": [
+    "Yo Gabba Gabba",
+    "Erykah Badu"
+   ],
+   "primary_artist": "Yo Gabba Gabba",
+   "duration": "2:11",
+   "duration_sec": 131,
+   "spotify_track_id": "5XTsHbRzj5fqu0Ol7xqXAR",
+   "spotify_uri": "spotify:track:5XTsHbRzj5fqu0Ol7xqXAR",
+   "spotify_url": "https://open.spotify.com/track/5XTsHbRzj5fqu0Ol7xqXAR",
+   "genres": [
+    "neo-soul",
+    "alt"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "soul",
+    "children's music",
+    "neo-soul",
+    "playful pop"
+   ],
+   "mood": [
+    "whimsical",
+    "sunny",
+    "gentle"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.8,
+    "danceability": 0.55,
+    "acousticness": 0.4,
+    "instrumentalness": 0.05
+   },
+   "bpm": 100,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 16,
+   "title": "Exit Music (for a Film) [Arr. for Piano by Christopher O'Riley]",
+   "artists": [
+    "Sergei Kvitko"
+   ],
+   "primary_artist": "Sergei Kvitko",
+   "duration": "4:34",
+   "duration_sec": 274,
+   "spotify_track_id": "76Sinkgtxl6ioLx6HQqo9i",
+   "spotify_uri": "spotify:track:76Sinkgtxl6ioLx6HQqo9i",
+   "spotify_url": "https://open.spotify.com/track/76Sinkgtxl6ioLx6HQqo9i",
+   "genres": [
+    "classical"
+   ],
+   "genre_primary": "classical",
+   "subgenres": [
+    "classical",
+    "solo piano",
+    "crossover classical",
+    "contemporary arrangement"
+   ],
+   "mood": [
+    "somber",
+    "delicate",
+    "haunting"
+   ],
+   "mood_parameters": {
+    "energy": 0.2,
+    "valence": 0.15,
+    "danceability": 0.15,
+    "acousticness": 0.95,
+    "instrumentalness": 1.0
+   },
+   "bpm": 63,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 17,
+   "title": "Xtroverted Soul",
+   "artists": [
+    "Mohini Dey",
+    "WILLOW"
+   ],
+   "primary_artist": "Mohini Dey",
+   "duration": "5:23",
+   "duration_sec": 323,
+   "spotify_track_id": "7ERm873p00qKShB7QAbNKj",
+   "spotify_uri": "spotify:track:7ERm873p00qKShB7QAbNKj",
+   "spotify_url": "https://open.spotify.com/track/7ERm873p00qKShB7QAbNKj",
+   "genres": [
+    "jazz",
+    "alt"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "fusion",
+    "jazz fusion",
+    "prog fusion",
+    "bass-led"
+   ],
+   "mood": [
+    "virtuosic",
+    "restless",
+    "bright"
+   ],
+   "mood_parameters": {
+    "energy": 0.75,
+    "valence": 0.55,
+    "danceability": 0.45,
+    "acousticness": 0.15,
+    "instrumentalness": 0.55
+   },
+   "bpm": 138,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 18,
+   "title": "IN A MINUTE - LIVE FROM THE STUDIO VERSION",
+   "artists": [
+    "TOMORA",
+    "AURORA",
+    "Tom Rowlands"
+   ],
+   "primary_artist": "TOMORA",
+   "duration": "10:02",
+   "duration_sec": 602,
+   "spotify_track_id": "49Svtm8RA6SWUHO5Fiv7uv",
+   "spotify_uri": "spotify:track:49Svtm8RA6SWUHO5Fiv7uv",
+   "spotify_url": "https://open.spotify.com/track/49Svtm8RA6SWUHO5Fiv7uv",
+   "genres": [
+    "electronic",
+    "alt"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "psychedelic electronica",
+    "electronic pop",
+    "live electronics"
+   ],
+   "mood": [
+    "hypnotic",
+    "expansive",
+    "euphoric"
+   ],
+   "mood_parameters": {
+    "energy": 0.65,
+    "valence": 0.5,
+    "danceability": 0.6,
+    "acousticness": 0.15,
+    "instrumentalness": 0.5
+   },
+   "bpm": 120,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 19,
+   "title": "110% Juice",
+   "artists": [
+    "Snoop Dogg",
+    "Boo Love"
+   ],
+   "primary_artist": "Snoop Dogg",
+   "duration": "2:32",
+   "duration_sec": 152,
+   "spotify_track_id": "0p8112XhSS7yS1tPxg0SwO",
+   "spotify_uri": "spotify:track:0p8112XhSS7yS1tPxg0SwO",
+   "spotify_url": "https://open.spotify.com/track/0p8112XhSS7yS1tPxg0SwO",
+   "genres": [
+    "hip-hop",
+    "soul-funk"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "g-funk",
+    "west coast rap",
+    "funk rap"
+   ],
+   "mood": [
+    "laid-back",
+    "swaggering",
+    "sunny"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.7,
+    "danceability": 0.8,
+    "acousticness": 0.1,
+    "instrumentalness": 0.05
+   },
+   "bpm": 94,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 20,
+   "title": "Unconditional",
+   "artists": [
+    "WILLOW"
+   ],
+   "primary_artist": "WILLOW",
+   "duration": "3:26",
+   "duration_sec": 206,
+   "spotify_track_id": "7CKFCwz9YDrT8c9Fi2LLsP",
+   "spotify_uri": "spotify:track:7CKFCwz9YDrT8c9Fi2LLsP",
+   "spotify_url": "https://open.spotify.com/track/7CKFCwz9YDrT8c9Fi2LLsP",
+   "genres": [
+    "alt",
+    "neo-soul"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "alternative",
+    "art pop",
+    "alt-r&b",
+    "indie soul"
+   ],
+   "mood": [
+    "tender",
+    "intimate",
+    "ethereal"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.5,
+    "danceability": 0.4,
+    "acousticness": 0.5,
+    "instrumentalness": 0.05
+   },
+   "bpm": 100,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 41,
+   "playlist_name": "New Release Playlist #41",
+   "playlist_id": "1vJ48VuzqiO6Z6sm8EXW6u",
+   "position_in_playlist": 21,
+   "title": "Cold Little Heart - Live In Session At RAK Studios / 2016",
+   "artists": [
+    "Michael Kiwanuka"
+   ],
+   "primary_artist": "Michael Kiwanuka",
+   "duration": "11:08",
+   "duration_sec": 668,
+   "spotify_track_id": "0dNfhhgRZWN7BEN1LdZ2MH",
+   "spotify_uri": "spotify:track:0dNfhhgRZWN7BEN1LdZ2MH",
+   "spotify_url": "https://open.spotify.com/track/0dNfhhgRZWN7BEN1LdZ2MH",
+   "genres": [
+    "soul-funk",
+    "alt"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "soul",
+    "psychedelic soul",
+    "british soul",
+    "live session"
+   ],
+   "mood": [
+    "slow-burning",
+    "melancholic",
+    "expansive"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.35,
+    "danceability": 0.3,
+    "acousticness": 0.5,
+    "instrumentalness": 0.35
+   },
+   "bpm": 72,
    "bpm_source": "estimated"
   }
  ]
