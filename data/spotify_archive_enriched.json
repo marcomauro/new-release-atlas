@@ -4,7 +4,7 @@
   "source_account": "Spotify",
   "generated_at": "2026-05-23T12:27:11.266084",
   "description": "Archivio strutturato delle 'New Release Playlist' di Marco Mauro, da consultare via AI per generare playlist tematiche o effettuare analisi.",
-  "playlist_range": "#1 - #41 (41 New Release Playlist consecutive) + 1 extra (#101)",
+  "playlist_range": "#1 - #42 (42 New Release Playlist consecutive) + 1 extra (#101)",
   "note_on_gaps": "Nessuno: il dataset copre integralmente le New Release Playlist da #12 a #36. Le #1-#11 e #13-#17 si chiamano 'New Release Friday #N', dalla #12 e #18 in poi 'New Release Playlist #N'. La '2025 Fav Album Playlist' e' una compilation tematica (extra), spostata fuori dalla sequenza NRP al playlist_number 101.",
   "schema_per_track": {
    "playlist_number": "int (numero progressivo della playlist di origine)",
@@ -27,9 +27,9 @@
    "bpm": "int | null (null = non verificabile, mai inventato)",
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
-  "total_tracks_with_duplicates": 935,
-  "unique_tracks": 913,
-  "unique_artists": 874,
+  "total_tracks_with_duplicates": 954,
+  "unique_tracks": 932,
+  "unique_artists": 884,
   "top_artists": [
    [
     "Brian Jackson",
@@ -48,7 +48,15 @@
     10
    ],
    [
+    "Peter Gabriel",
+    9
+   ],
+   [
     "Koralle",
+    8
+   ],
+   [
+    "Masters At Work",
     8
    ],
    [
@@ -64,10 +72,6 @@
     8
    ],
    [
-    "Peter Gabriel",
-    8
-   ],
-   [
     "Nate Smith",
     8
    ],
@@ -77,10 +81,6 @@
    ],
    [
     "Matthew Herbert",
-    7
-   ],
-   [
-    "Masters At Work",
     7
    ],
    [
@@ -96,6 +96,10 @@
     7
    ],
    [
+    "Nicholas Payton",
+    7
+   ],
+   [
     "Jorja Smith",
     6
    ],
@@ -105,10 +109,6 @@
    ],
    [
     "Puma Blue",
-    6
-   ],
-   [
-    "Ezra Collective",
     6
    ]
   ],
@@ -166,8 +166,8 @@
   "enrichment_note": "Caratterizzazione musicale esperta aggiunta da Claude (giugno 2026): subgenres granulari, mood, mood_parameters (energy/valence/danceability/acousticness/instrumentalness, scala 0-1, stime qualitative da esperto), bpm (int o null) e bpm_source. bpm_source='verified' = confermato da fonti web DJ-pool (Beatsource, BPM Supreme, SongBPM, Tunebat); 'estimated' = stima fondata sul tempo tipico del brano/genere (presente solo dove molto affidabile, es. house 120-126); bpm=null dove non verificabile, mai inventato. I campi 'genres' e 'genre_primary' preesistenti (tassonomia a 12 macro-generi della pipeline new-release-atlas) sono INTOCCATI e restano la classificazione di riferimento.",
   "extended_at": "2026-06-11T09:12:01.887032",
   "extension_note": "Playlist #33 e #34 aggiunte a giugno 2026 con caratterizzazione esperta completa. Per queste 2 playlist anche genres/genre_primary sono assegnati dall'AI (coerenti con la tassonomia a 12 macro-generi della pipeline). Nota: 'Fainted Light' (Indra Lesmana) in #34 è un duplicato cross-playlist di #32 (stesso track ID).",
-  "merged_at": "2026-08-31T14:46:40Z",
-  "merge_note": "add_playlist.py: aggiunte ['#41'] (21 occorrenze, 21 brani nuovi)",
+  "merged_at": "2026-08-31T15:07:26Z",
+  "merge_note": "add_playlist.py: aggiunte ['#42'] (19 occorrenze, 19 brani nuovi)",
   "cross_playlist_duplicates": [
    {
     "spotify_track_id": "0ACrjHByr2GzPVTxKbDBix",
@@ -36757,6 +36757,745 @@
       "instrumentalness": 0.35
      },
      "bpm": 72,
+     "bpm_source": "estimated"
+    }
+   ]
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "spotify_url": "https://open.spotify.com/playlist/0DJ22Zb8u5XEejAYvRX3bL",
+   "description": "",
+   "date": null,
+   "track_count": 19,
+   "tracks": [
+    {
+     "position_in_playlist": 1,
+     "title": "Reverse",
+     "artists": [
+      "Marla Kether",
+      "Sofia Grant"
+     ],
+     "primary_artist": "Marla Kether",
+     "duration": "3:17",
+     "duration_sec": 197,
+     "spotify_track_id": "3JD2p4jLnXYpTfNw6Toz2Y",
+     "spotify_uri": "spotify:track:3JD2p4jLnXYpTfNw6Toz2Y",
+     "spotify_url": "https://open.spotify.com/track/3JD2p4jLnXYpTfNw6Toz2Y",
+     "genres": [
+      "broken-beat",
+      "uk-jazz"
+     ],
+     "genre_primary": "broken-beat",
+     "subgenres": [
+      "broken beat",
+      "future soul",
+      "west london",
+      "nu-jazz"
+     ],
+     "mood": [
+      "warm",
+      "groovy",
+      "futuristic"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.6,
+      "danceability": 0.7,
+      "acousticness": 0.2,
+      "instrumentalness": 0.3
+     },
+     "bpm": 112,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 2,
+     "title": "Human Voice",
+     "artists": [
+      "Four Tet"
+     ],
+     "primary_artist": "Four Tet",
+     "duration": "6:36",
+     "duration_sec": 396,
+     "spotify_track_id": "5Lh2zmWu8BecY2l9Upggm9",
+     "spotify_uri": "spotify:track:5Lh2zmWu8BecY2l9Upggm9",
+     "spotify_url": "https://open.spotify.com/track/5Lh2zmWu8BecY2l9Upggm9",
+     "genres": [
+      "electronic"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "idm",
+      "folktronica",
+      "deep house"
+     ],
+     "mood": [
+      "hypnotic",
+      "shimmering",
+      "euphoric"
+     ],
+     "mood_parameters": {
+      "energy": 0.65,
+      "valence": 0.6,
+      "danceability": 0.65,
+      "acousticness": 0.2,
+      "instrumentalness": 0.9
+     },
+     "bpm": 125,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 3,
+     "title": "I Know You (feat. Foggieraw)",
+     "artists": [
+      "Masego",
+      "Foggieraw"
+     ],
+     "primary_artist": "Masego",
+     "duration": "3:06",
+     "duration_sec": 186,
+     "spotify_track_id": "5YjGI575XupXyz62RYznjF",
+     "spotify_uri": "spotify:track:5YjGI575XupXyz62RYznjF",
+     "spotify_url": "https://open.spotify.com/track/5YjGI575XupXyz62RYznjF",
+     "genres": [
+      "neo-soul",
+      "hip-hop"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "trap-house",
+      "alt-r&b",
+      "jazz-rap"
+     ],
+     "mood": [
+      "flirty",
+      "playful",
+      "smooth"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.7,
+      "danceability": 0.75,
+      "acousticness": 0.2,
+      "instrumentalness": 0.05
+     },
+     "bpm": 100,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 4,
+     "title": "One by One - Bright-Side Mix",
+     "artists": [
+      "Peter Gabriel"
+     ],
+     "primary_artist": "Peter Gabriel",
+     "duration": "9:38",
+     "duration_sec": 578,
+     "spotify_track_id": "3GvZPjuZbPMOSeLqMEf9Pn",
+     "spotify_uri": "spotify:track:3GvZPjuZbPMOSeLqMEf9Pn",
+     "spotify_url": "https://open.spotify.com/track/3GvZPjuZbPMOSeLqMEf9Pn",
+     "genres": [
+      "alt"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "progressive pop",
+      "art rock",
+      "worldbeat"
+     ],
+     "mood": [
+      "uplifting",
+      "expansive",
+      "contemplative"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.6,
+      "danceability": 0.4,
+      "acousticness": 0.35,
+      "instrumentalness": 0.15
+     },
+     "bpm": 100,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 5,
+     "title": "Problems",
+     "artists": [
+      "Seun Kuti",
+      "Egypt 80",
+      "Kabaka Pyramid"
+     ],
+     "primary_artist": "Seun Kuti",
+     "duration": "3:02",
+     "duration_sec": 182,
+     "spotify_track_id": "1pNCxe8nFv47ygGW6G89Py",
+     "spotify_uri": "spotify:track:1pNCxe8nFv47ygGW6G89Py",
+     "spotify_url": "https://open.spotify.com/track/1pNCxe8nFv47ygGW6G89Py",
+     "genres": [
+      "world",
+      "soul-funk"
+     ],
+     "genre_primary": "world",
+     "subgenres": [
+      "afrobeat",
+      "afro-funk",
+      "reggae"
+     ],
+     "mood": [
+      "defiant",
+      "driving",
+      "political"
+     ],
+     "mood_parameters": {
+      "energy": 0.75,
+      "valence": 0.55,
+      "danceability": 0.75,
+      "acousticness": 0.2,
+      "instrumentalness": 0.15
+     },
+     "bpm": 108,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 6,
+     "title": "Cant Always Be The Winner, Argentina",
+     "artists": [
+      "Benjamin Clementine"
+     ],
+     "primary_artist": "Benjamin Clementine",
+     "duration": "5:15",
+     "duration_sec": 315,
+     "spotify_track_id": "0iPBEaFM9MLEiPk6LM9mEA",
+     "spotify_uri": "spotify:track:0iPBEaFM9MLEiPk6LM9mEA",
+     "spotify_url": "https://open.spotify.com/track/0iPBEaFM9MLEiPk6LM9mEA",
+     "genres": [
+      "alt",
+      "classical"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "art pop",
+      "chamber pop",
+      "avant-garde piano",
+      "spoken word"
+     ],
+     "mood": [
+      "theatrical",
+      "melancholic",
+      "idiosyncratic"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.35,
+      "danceability": 0.25,
+      "acousticness": 0.7,
+      "instrumentalness": 0.1
+     },
+     "bpm": 80,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 7,
+     "title": "Touch",
+     "artists": [
+      "MorMor"
+     ],
+     "primary_artist": "MorMor",
+     "duration": "4:04",
+     "duration_sec": 244,
+     "spotify_track_id": "0Aabc7E09wBe1Qv9WtUtkL",
+     "spotify_uri": "spotify:track:0Aabc7E09wBe1Qv9WtUtkL",
+     "spotify_url": "https://open.spotify.com/track/0Aabc7E09wBe1Qv9WtUtkL",
+     "genres": [
+      "alt",
+      "neo-soul"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "alternative r&b",
+      "indie r&b",
+      "dream pop",
+      "bedroom soul"
+     ],
+     "mood": [
+      "wistful",
+      "ethereal",
+      "yearning"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.4,
+      "danceability": 0.5,
+      "acousticness": 0.3,
+      "instrumentalness": 0.1
+     },
+     "bpm": 105,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 8,
+     "title": "Body Action",
+     "artists": [
+      "Groove Armada"
+     ],
+     "primary_artist": "Groove Armada",
+     "duration": "5:32",
+     "duration_sec": 332,
+     "spotify_track_id": "2ehc5VYZ2ktmEQO90cYjnG",
+     "spotify_uri": "spotify:track:2ehc5VYZ2ktmEQO90cYjnG",
+     "spotify_url": "https://open.spotify.com/track/2ehc5VYZ2ktmEQO90cYjnG",
+     "genres": [
+      "electronic",
+      "soulful-house"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "house",
+      "nu-disco",
+      "big beat"
+     ],
+     "mood": [
+      "groovy",
+      "hedonistic",
+      "driving"
+     ],
+     "mood_parameters": {
+      "energy": 0.75,
+      "valence": 0.7,
+      "danceability": 0.85,
+      "acousticness": 0.1,
+      "instrumentalness": 0.5
+     },
+     "bpm": 124,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 9,
+     "title": "Coming Home (feat. Jorja Smith)",
+     "artists": [
+      "Odeal",
+      "Jorja Smith"
+     ],
+     "primary_artist": "Odeal",
+     "duration": "3:43",
+     "duration_sec": 223,
+     "spotify_track_id": "0KUHECqcYMQGsPkfsWLUo6",
+     "spotify_uri": "spotify:track:0KUHECqcYMQGsPkfsWLUo6",
+     "spotify_url": "https://open.spotify.com/track/0KUHECqcYMQGsPkfsWLUo6",
+     "genres": [
+      "neo-soul"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "uk r&b",
+      "afroswing",
+      "alt-r&b"
+     ],
+     "mood": [
+      "tender",
+      "breezy",
+      "romantic"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.6,
+      "danceability": 0.7,
+      "acousticness": 0.2,
+      "instrumentalness": 0.05
+     },
+     "bpm": 102,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 10,
+     "title": "FIREFLIES",
+     "artists": [
+      "Annatoria",
+      "PJ Morton"
+     ],
+     "primary_artist": "Annatoria",
+     "duration": "2:27",
+     "duration_sec": 147,
+     "spotify_track_id": "4nXHlDDuYwu1FHjqqtQoKa",
+     "spotify_uri": "spotify:track:4nXHlDDuYwu1FHjqqtQoKa",
+     "spotify_url": "https://open.spotify.com/track/4nXHlDDuYwu1FHjqqtQoKa",
+     "genres": [
+      "neo-soul",
+      "soul-funk"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "soul",
+      "contemporary soul",
+      "gospel-soul",
+      "r&b duet"
+     ],
+     "mood": [
+      "warm",
+      "uplifting",
+      "intimate"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.7,
+      "danceability": 0.5,
+      "acousticness": 0.4,
+      "instrumentalness": 0.03
+     },
+     "bpm": 92,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 11,
+     "title": "Blueshift",
+     "artists": [
+      "Bear McCreary",
+      "Steve Vai",
+      "Tim Henson",
+      "Brendan McCreary"
+     ],
+     "primary_artist": "Bear McCreary",
+     "duration": "4:17",
+     "duration_sec": 257,
+     "spotify_track_id": "7gIz1mswppk7VQEeMOyZwc",
+     "spotify_uri": "spotify:track:7gIz1mswppk7VQEeMOyZwc",
+     "spotify_url": "https://open.spotify.com/track/7gIz1mswppk7VQEeMOyZwc",
+     "genres": [
+      "alt",
+      "classical"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "cinematic rock",
+      "prog metal",
+      "guitar virtuoso",
+      "orchestral rock"
+     ],
+     "mood": [
+      "epic",
+      "intense",
+      "virtuosic"
+     ],
+     "mood_parameters": {
+      "energy": 0.85,
+      "valence": 0.45,
+      "danceability": 0.35,
+      "acousticness": 0.1,
+      "instrumentalness": 0.7
+     },
+     "bpm": 140,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 12,
+     "title": "Think about us",
+     "artists": [
+      "Ebony Rose"
+     ],
+     "primary_artist": "Ebony Rose",
+     "duration": "3:09",
+     "duration_sec": 189,
+     "spotify_track_id": "6tGkLcPGX0mXhQBqG6rgpx",
+     "spotify_uri": "spotify:track:6tGkLcPGX0mXhQBqG6rgpx",
+     "spotify_url": "https://open.spotify.com/track/6tGkLcPGX0mXhQBqG6rgpx",
+     "genres": [
+      "neo-soul",
+      "hip-hop"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "uk soul",
+      "west london soul",
+      "spoken word",
+      "jazz-soul",
+      "alt-r&b"
+     ],
+     "mood": [
+      "candid",
+      "brooding",
+      "intimate"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.4,
+      "danceability": 0.5,
+      "acousticness": 0.3,
+      "instrumentalness": 0.03
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 13,
+     "title": "Moons of Temper",
+     "artists": [
+      "Clark"
+     ],
+     "primary_artist": "Clark",
+     "duration": "5:55",
+     "duration_sec": 355,
+     "spotify_track_id": "74RgR65ziwEmo4mbbLF0of",
+     "spotify_uri": "spotify:track:74RgR65ziwEmo4mbbLF0of",
+     "spotify_url": "https://open.spotify.com/track/74RgR65ziwEmo4mbbLF0of",
+     "genres": [
+      "electronic"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "idm",
+      "braindance",
+      "experimental techno"
+     ],
+     "mood": [
+      "brooding",
+      "cinematic",
+      "restless"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.3,
+      "danceability": 0.45,
+      "acousticness": 0.15,
+      "instrumentalness": 0.95
+     },
+     "bpm": 130,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 14,
+     "title": "soul reply",
+     "artists": [
+      "salute",
+      "Riva Starr"
+     ],
+     "primary_artist": "salute",
+     "duration": "2:59",
+     "duration_sec": 179,
+     "spotify_track_id": "4Txm1bcmxUS0h7fRhnhfa8",
+     "spotify_uri": "spotify:track:4Txm1bcmxUS0h7fRhnhfa8",
+     "spotify_url": "https://open.spotify.com/track/4Txm1bcmxUS0h7fRhnhfa8",
+     "genres": [
+      "electronic",
+      "soulful-house"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "house",
+      "uk garage",
+      "tech house",
+      "vocal house"
+     ],
+     "mood": [
+      "euphoric",
+      "propulsive",
+      "nocturnal"
+     ],
+     "mood_parameters": {
+      "energy": 0.8,
+      "valence": 0.65,
+      "danceability": 0.85,
+      "acousticness": 0.05,
+      "instrumentalness": 0.7
+     },
+     "bpm": 128,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 15,
+     "title": "MAW Hop",
+     "artists": [
+      "Masters At Work",
+      "Louie Vega",
+      "Kenny Dope"
+     ],
+     "primary_artist": "Masters At Work",
+     "duration": "3:24",
+     "duration_sec": 204,
+     "spotify_track_id": "45PRSu8w5VAulCjEus30i3",
+     "spotify_uri": "spotify:track:45PRSu8w5VAulCjEus30i3",
+     "spotify_url": "https://open.spotify.com/track/45PRSu8w5VAulCjEus30i3",
+     "genres": [
+      "soulful-house"
+     ],
+     "genre_primary": "soulful-house",
+     "subgenres": [
+      "house",
+      "latin house",
+      "nuyorican",
+      "deep house"
+     ],
+     "mood": [
+      "groovy",
+      "percussive",
+      "joyful"
+     ],
+     "mood_parameters": {
+      "energy": 0.75,
+      "valence": 0.7,
+      "danceability": 0.85,
+      "acousticness": 0.1,
+      "instrumentalness": 0.8
+     },
+     "bpm": 122,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 16,
+     "title": "Hang Up (Pt 2)",
+     "artists": [
+      "Los Bitchos",
+      "Adrian Quesada",
+      "Sinkane"
+     ],
+     "primary_artist": "Los Bitchos",
+     "duration": "2:59",
+     "duration_sec": 179,
+     "spotify_track_id": "6rv94zY6aBygtbk1XpeTu7",
+     "spotify_uri": "spotify:track:6rv94zY6aBygtbk1XpeTu7",
+     "spotify_url": "https://open.spotify.com/track/6rv94zY6aBygtbk1XpeTu7",
+     "genres": [
+      "world",
+      "alt"
+     ],
+     "genre_primary": "world",
+     "subgenres": [
+      "psych cumbia",
+      "cumbia",
+      "psychedelic rock",
+      "tropicalia"
+     ],
+     "mood": [
+      "playful",
+      "sunny",
+      "hypnotic"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.75,
+      "danceability": 0.7,
+      "acousticness": 0.25,
+      "instrumentalness": 0.6
+     },
+     "bpm": 108,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 17,
+     "title": "Hookah Baby",
+     "artists": [
+      "Ari Lennox"
+     ],
+     "primary_artist": "Ari Lennox",
+     "duration": "2:56",
+     "duration_sec": 176,
+     "spotify_track_id": "5K32Q21Oc1weiMtLDqVULI",
+     "spotify_uri": "spotify:track:5K32Q21Oc1weiMtLDqVULI",
+     "spotify_url": "https://open.spotify.com/track/5K32Q21Oc1weiMtLDqVULI",
+     "genres": [
+      "neo-soul"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "contemporary r&b",
+      "sultry soul",
+      "dreamville"
+     ],
+     "mood": [
+      "sultry",
+      "laid-back",
+      "sensual"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.55,
+      "danceability": 0.65,
+      "acousticness": 0.2,
+      "instrumentalness": 0.03
+     },
+     "bpm": 88,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 18,
+     "title": "Lafiténia",
+     "artists": [
+      "FloFilz"
+     ],
+     "primary_artist": "FloFilz",
+     "duration": "2:09",
+     "duration_sec": 129,
+     "spotify_track_id": "6Y6JjI0n77oFSDJAddJiKH",
+     "spotify_uri": "spotify:track:6Y6JjI0n77oFSDJAddJiKH",
+     "spotify_url": "https://open.spotify.com/track/6Y6JjI0n77oFSDJAddJiKH",
+     "genres": [
+      "hip-hop",
+      "downtempo"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "beats",
+      "instrumental hip-hop",
+      "jazz-hop",
+      "boom bap"
+     ],
+     "mood": [
+      "mellow",
+      "nostalgic",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.6,
+      "danceability": 0.6,
+      "acousticness": 0.4,
+      "instrumentalness": 0.95
+     },
+     "bpm": 88,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 19,
+     "title": "Flamenco Sketches",
+     "artists": [
+      "Nicholas Payton",
+      "Butcher Brown"
+     ],
+     "primary_artist": "Nicholas Payton",
+     "duration": "6:30",
+     "duration_sec": 390,
+     "spotify_track_id": "7idEBpl5KAuvyY2F1Mb2Cx",
+     "spotify_uri": "spotify:track:7idEBpl5KAuvyY2F1Mb2Cx",
+     "spotify_url": "https://open.spotify.com/track/7idEBpl5KAuvyY2F1Mb2Cx",
+     "genres": [
+      "jazz"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "modal jazz",
+      "modern jazz",
+      "jazz-funk"
+     ],
+     "mood": [
+      "contemplative",
+      "spacious",
+      "cool"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.4,
+      "danceability": 0.3,
+      "acousticness": 0.4,
+      "instrumentalness": 0.95
+     },
+     "bpm": 60,
      "bpm_source": "estimated"
     }
    ]
@@ -75481,6 +76220,791 @@
     "instrumentalness": 0.35
    },
    "bpm": 72,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 1,
+   "title": "Reverse",
+   "artists": [
+    "Marla Kether",
+    "Sofia Grant"
+   ],
+   "primary_artist": "Marla Kether",
+   "duration": "3:17",
+   "duration_sec": 197,
+   "spotify_track_id": "3JD2p4jLnXYpTfNw6Toz2Y",
+   "spotify_uri": "spotify:track:3JD2p4jLnXYpTfNw6Toz2Y",
+   "spotify_url": "https://open.spotify.com/track/3JD2p4jLnXYpTfNw6Toz2Y",
+   "genres": [
+    "broken-beat",
+    "uk-jazz"
+   ],
+   "genre_primary": "broken-beat",
+   "subgenres": [
+    "broken beat",
+    "future soul",
+    "west london",
+    "nu-jazz"
+   ],
+   "mood": [
+    "warm",
+    "groovy",
+    "futuristic"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.6,
+    "danceability": 0.7,
+    "acousticness": 0.2,
+    "instrumentalness": 0.3
+   },
+   "bpm": 112,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 2,
+   "title": "Human Voice",
+   "artists": [
+    "Four Tet"
+   ],
+   "primary_artist": "Four Tet",
+   "duration": "6:36",
+   "duration_sec": 396,
+   "spotify_track_id": "5Lh2zmWu8BecY2l9Upggm9",
+   "spotify_uri": "spotify:track:5Lh2zmWu8BecY2l9Upggm9",
+   "spotify_url": "https://open.spotify.com/track/5Lh2zmWu8BecY2l9Upggm9",
+   "genres": [
+    "electronic"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "idm",
+    "folktronica",
+    "deep house"
+   ],
+   "mood": [
+    "hypnotic",
+    "shimmering",
+    "euphoric"
+   ],
+   "mood_parameters": {
+    "energy": 0.65,
+    "valence": 0.6,
+    "danceability": 0.65,
+    "acousticness": 0.2,
+    "instrumentalness": 0.9
+   },
+   "bpm": 125,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 3,
+   "title": "I Know You (feat. Foggieraw)",
+   "artists": [
+    "Masego",
+    "Foggieraw"
+   ],
+   "primary_artist": "Masego",
+   "duration": "3:06",
+   "duration_sec": 186,
+   "spotify_track_id": "5YjGI575XupXyz62RYznjF",
+   "spotify_uri": "spotify:track:5YjGI575XupXyz62RYznjF",
+   "spotify_url": "https://open.spotify.com/track/5YjGI575XupXyz62RYznjF",
+   "genres": [
+    "neo-soul",
+    "hip-hop"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "trap-house",
+    "alt-r&b",
+    "jazz-rap"
+   ],
+   "mood": [
+    "flirty",
+    "playful",
+    "smooth"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.7,
+    "danceability": 0.75,
+    "acousticness": 0.2,
+    "instrumentalness": 0.05
+   },
+   "bpm": 100,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 4,
+   "title": "One by One - Bright-Side Mix",
+   "artists": [
+    "Peter Gabriel"
+   ],
+   "primary_artist": "Peter Gabriel",
+   "duration": "9:38",
+   "duration_sec": 578,
+   "spotify_track_id": "3GvZPjuZbPMOSeLqMEf9Pn",
+   "spotify_uri": "spotify:track:3GvZPjuZbPMOSeLqMEf9Pn",
+   "spotify_url": "https://open.spotify.com/track/3GvZPjuZbPMOSeLqMEf9Pn",
+   "genres": [
+    "alt"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "progressive pop",
+    "art rock",
+    "worldbeat"
+   ],
+   "mood": [
+    "uplifting",
+    "expansive",
+    "contemplative"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.6,
+    "danceability": 0.4,
+    "acousticness": 0.35,
+    "instrumentalness": 0.15
+   },
+   "bpm": 100,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 5,
+   "title": "Problems",
+   "artists": [
+    "Seun Kuti",
+    "Egypt 80",
+    "Kabaka Pyramid"
+   ],
+   "primary_artist": "Seun Kuti",
+   "duration": "3:02",
+   "duration_sec": 182,
+   "spotify_track_id": "1pNCxe8nFv47ygGW6G89Py",
+   "spotify_uri": "spotify:track:1pNCxe8nFv47ygGW6G89Py",
+   "spotify_url": "https://open.spotify.com/track/1pNCxe8nFv47ygGW6G89Py",
+   "genres": [
+    "world",
+    "soul-funk"
+   ],
+   "genre_primary": "world",
+   "subgenres": [
+    "afrobeat",
+    "afro-funk",
+    "reggae"
+   ],
+   "mood": [
+    "defiant",
+    "driving",
+    "political"
+   ],
+   "mood_parameters": {
+    "energy": 0.75,
+    "valence": 0.55,
+    "danceability": 0.75,
+    "acousticness": 0.2,
+    "instrumentalness": 0.15
+   },
+   "bpm": 108,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 6,
+   "title": "Cant Always Be The Winner, Argentina",
+   "artists": [
+    "Benjamin Clementine"
+   ],
+   "primary_artist": "Benjamin Clementine",
+   "duration": "5:15",
+   "duration_sec": 315,
+   "spotify_track_id": "0iPBEaFM9MLEiPk6LM9mEA",
+   "spotify_uri": "spotify:track:0iPBEaFM9MLEiPk6LM9mEA",
+   "spotify_url": "https://open.spotify.com/track/0iPBEaFM9MLEiPk6LM9mEA",
+   "genres": [
+    "alt",
+    "classical"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "art pop",
+    "chamber pop",
+    "avant-garde piano",
+    "spoken word"
+   ],
+   "mood": [
+    "theatrical",
+    "melancholic",
+    "idiosyncratic"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.35,
+    "danceability": 0.25,
+    "acousticness": 0.7,
+    "instrumentalness": 0.1
+   },
+   "bpm": 80,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 7,
+   "title": "Touch",
+   "artists": [
+    "MorMor"
+   ],
+   "primary_artist": "MorMor",
+   "duration": "4:04",
+   "duration_sec": 244,
+   "spotify_track_id": "0Aabc7E09wBe1Qv9WtUtkL",
+   "spotify_uri": "spotify:track:0Aabc7E09wBe1Qv9WtUtkL",
+   "spotify_url": "https://open.spotify.com/track/0Aabc7E09wBe1Qv9WtUtkL",
+   "genres": [
+    "alt",
+    "neo-soul"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "alternative r&b",
+    "indie r&b",
+    "dream pop",
+    "bedroom soul"
+   ],
+   "mood": [
+    "wistful",
+    "ethereal",
+    "yearning"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.4,
+    "danceability": 0.5,
+    "acousticness": 0.3,
+    "instrumentalness": 0.1
+   },
+   "bpm": 105,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 8,
+   "title": "Body Action",
+   "artists": [
+    "Groove Armada"
+   ],
+   "primary_artist": "Groove Armada",
+   "duration": "5:32",
+   "duration_sec": 332,
+   "spotify_track_id": "2ehc5VYZ2ktmEQO90cYjnG",
+   "spotify_uri": "spotify:track:2ehc5VYZ2ktmEQO90cYjnG",
+   "spotify_url": "https://open.spotify.com/track/2ehc5VYZ2ktmEQO90cYjnG",
+   "genres": [
+    "electronic",
+    "soulful-house"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "house",
+    "nu-disco",
+    "big beat"
+   ],
+   "mood": [
+    "groovy",
+    "hedonistic",
+    "driving"
+   ],
+   "mood_parameters": {
+    "energy": 0.75,
+    "valence": 0.7,
+    "danceability": 0.85,
+    "acousticness": 0.1,
+    "instrumentalness": 0.5
+   },
+   "bpm": 124,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 9,
+   "title": "Coming Home (feat. Jorja Smith)",
+   "artists": [
+    "Odeal",
+    "Jorja Smith"
+   ],
+   "primary_artist": "Odeal",
+   "duration": "3:43",
+   "duration_sec": 223,
+   "spotify_track_id": "0KUHECqcYMQGsPkfsWLUo6",
+   "spotify_uri": "spotify:track:0KUHECqcYMQGsPkfsWLUo6",
+   "spotify_url": "https://open.spotify.com/track/0KUHECqcYMQGsPkfsWLUo6",
+   "genres": [
+    "neo-soul"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "uk r&b",
+    "afroswing",
+    "alt-r&b"
+   ],
+   "mood": [
+    "tender",
+    "breezy",
+    "romantic"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.6,
+    "danceability": 0.7,
+    "acousticness": 0.2,
+    "instrumentalness": 0.05
+   },
+   "bpm": 102,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 10,
+   "title": "FIREFLIES",
+   "artists": [
+    "Annatoria",
+    "PJ Morton"
+   ],
+   "primary_artist": "Annatoria",
+   "duration": "2:27",
+   "duration_sec": 147,
+   "spotify_track_id": "4nXHlDDuYwu1FHjqqtQoKa",
+   "spotify_uri": "spotify:track:4nXHlDDuYwu1FHjqqtQoKa",
+   "spotify_url": "https://open.spotify.com/track/4nXHlDDuYwu1FHjqqtQoKa",
+   "genres": [
+    "neo-soul",
+    "soul-funk"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "soul",
+    "contemporary soul",
+    "gospel-soul",
+    "r&b duet"
+   ],
+   "mood": [
+    "warm",
+    "uplifting",
+    "intimate"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.7,
+    "danceability": 0.5,
+    "acousticness": 0.4,
+    "instrumentalness": 0.03
+   },
+   "bpm": 92,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 11,
+   "title": "Blueshift",
+   "artists": [
+    "Bear McCreary",
+    "Steve Vai",
+    "Tim Henson",
+    "Brendan McCreary"
+   ],
+   "primary_artist": "Bear McCreary",
+   "duration": "4:17",
+   "duration_sec": 257,
+   "spotify_track_id": "7gIz1mswppk7VQEeMOyZwc",
+   "spotify_uri": "spotify:track:7gIz1mswppk7VQEeMOyZwc",
+   "spotify_url": "https://open.spotify.com/track/7gIz1mswppk7VQEeMOyZwc",
+   "genres": [
+    "alt",
+    "classical"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "cinematic rock",
+    "prog metal",
+    "guitar virtuoso",
+    "orchestral rock"
+   ],
+   "mood": [
+    "epic",
+    "intense",
+    "virtuosic"
+   ],
+   "mood_parameters": {
+    "energy": 0.85,
+    "valence": 0.45,
+    "danceability": 0.35,
+    "acousticness": 0.1,
+    "instrumentalness": 0.7
+   },
+   "bpm": 140,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 12,
+   "title": "Think about us",
+   "artists": [
+    "Ebony Rose"
+   ],
+   "primary_artist": "Ebony Rose",
+   "duration": "3:09",
+   "duration_sec": 189,
+   "spotify_track_id": "6tGkLcPGX0mXhQBqG6rgpx",
+   "spotify_uri": "spotify:track:6tGkLcPGX0mXhQBqG6rgpx",
+   "spotify_url": "https://open.spotify.com/track/6tGkLcPGX0mXhQBqG6rgpx",
+   "genres": [
+    "neo-soul",
+    "hip-hop"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "uk soul",
+    "west london soul",
+    "spoken word",
+    "jazz-soul",
+    "alt-r&b"
+   ],
+   "mood": [
+    "candid",
+    "brooding",
+    "intimate"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.4,
+    "danceability": 0.5,
+    "acousticness": 0.3,
+    "instrumentalness": 0.03
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 13,
+   "title": "Moons of Temper",
+   "artists": [
+    "Clark"
+   ],
+   "primary_artist": "Clark",
+   "duration": "5:55",
+   "duration_sec": 355,
+   "spotify_track_id": "74RgR65ziwEmo4mbbLF0of",
+   "spotify_uri": "spotify:track:74RgR65ziwEmo4mbbLF0of",
+   "spotify_url": "https://open.spotify.com/track/74RgR65ziwEmo4mbbLF0of",
+   "genres": [
+    "electronic"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "idm",
+    "braindance",
+    "experimental techno"
+   ],
+   "mood": [
+    "brooding",
+    "cinematic",
+    "restless"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.3,
+    "danceability": 0.45,
+    "acousticness": 0.15,
+    "instrumentalness": 0.95
+   },
+   "bpm": 130,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 14,
+   "title": "soul reply",
+   "artists": [
+    "salute",
+    "Riva Starr"
+   ],
+   "primary_artist": "salute",
+   "duration": "2:59",
+   "duration_sec": 179,
+   "spotify_track_id": "4Txm1bcmxUS0h7fRhnhfa8",
+   "spotify_uri": "spotify:track:4Txm1bcmxUS0h7fRhnhfa8",
+   "spotify_url": "https://open.spotify.com/track/4Txm1bcmxUS0h7fRhnhfa8",
+   "genres": [
+    "electronic",
+    "soulful-house"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "house",
+    "uk garage",
+    "tech house",
+    "vocal house"
+   ],
+   "mood": [
+    "euphoric",
+    "propulsive",
+    "nocturnal"
+   ],
+   "mood_parameters": {
+    "energy": 0.8,
+    "valence": 0.65,
+    "danceability": 0.85,
+    "acousticness": 0.05,
+    "instrumentalness": 0.7
+   },
+   "bpm": 128,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 15,
+   "title": "MAW Hop",
+   "artists": [
+    "Masters At Work",
+    "Louie Vega",
+    "Kenny Dope"
+   ],
+   "primary_artist": "Masters At Work",
+   "duration": "3:24",
+   "duration_sec": 204,
+   "spotify_track_id": "45PRSu8w5VAulCjEus30i3",
+   "spotify_uri": "spotify:track:45PRSu8w5VAulCjEus30i3",
+   "spotify_url": "https://open.spotify.com/track/45PRSu8w5VAulCjEus30i3",
+   "genres": [
+    "soulful-house"
+   ],
+   "genre_primary": "soulful-house",
+   "subgenres": [
+    "house",
+    "latin house",
+    "nuyorican",
+    "deep house"
+   ],
+   "mood": [
+    "groovy",
+    "percussive",
+    "joyful"
+   ],
+   "mood_parameters": {
+    "energy": 0.75,
+    "valence": 0.7,
+    "danceability": 0.85,
+    "acousticness": 0.1,
+    "instrumentalness": 0.8
+   },
+   "bpm": 122,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 16,
+   "title": "Hang Up (Pt 2)",
+   "artists": [
+    "Los Bitchos",
+    "Adrian Quesada",
+    "Sinkane"
+   ],
+   "primary_artist": "Los Bitchos",
+   "duration": "2:59",
+   "duration_sec": 179,
+   "spotify_track_id": "6rv94zY6aBygtbk1XpeTu7",
+   "spotify_uri": "spotify:track:6rv94zY6aBygtbk1XpeTu7",
+   "spotify_url": "https://open.spotify.com/track/6rv94zY6aBygtbk1XpeTu7",
+   "genres": [
+    "world",
+    "alt"
+   ],
+   "genre_primary": "world",
+   "subgenres": [
+    "psych cumbia",
+    "cumbia",
+    "psychedelic rock",
+    "tropicalia"
+   ],
+   "mood": [
+    "playful",
+    "sunny",
+    "hypnotic"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.75,
+    "danceability": 0.7,
+    "acousticness": 0.25,
+    "instrumentalness": 0.6
+   },
+   "bpm": 108,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 17,
+   "title": "Hookah Baby",
+   "artists": [
+    "Ari Lennox"
+   ],
+   "primary_artist": "Ari Lennox",
+   "duration": "2:56",
+   "duration_sec": 176,
+   "spotify_track_id": "5K32Q21Oc1weiMtLDqVULI",
+   "spotify_uri": "spotify:track:5K32Q21Oc1weiMtLDqVULI",
+   "spotify_url": "https://open.spotify.com/track/5K32Q21Oc1weiMtLDqVULI",
+   "genres": [
+    "neo-soul"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "contemporary r&b",
+    "sultry soul",
+    "dreamville"
+   ],
+   "mood": [
+    "sultry",
+    "laid-back",
+    "sensual"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.55,
+    "danceability": 0.65,
+    "acousticness": 0.2,
+    "instrumentalness": 0.03
+   },
+   "bpm": 88,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 18,
+   "title": "Lafiténia",
+   "artists": [
+    "FloFilz"
+   ],
+   "primary_artist": "FloFilz",
+   "duration": "2:09",
+   "duration_sec": 129,
+   "spotify_track_id": "6Y6JjI0n77oFSDJAddJiKH",
+   "spotify_uri": "spotify:track:6Y6JjI0n77oFSDJAddJiKH",
+   "spotify_url": "https://open.spotify.com/track/6Y6JjI0n77oFSDJAddJiKH",
+   "genres": [
+    "hip-hop",
+    "downtempo"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "beats",
+    "instrumental hip-hop",
+    "jazz-hop",
+    "boom bap"
+   ],
+   "mood": [
+    "mellow",
+    "nostalgic",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.6,
+    "danceability": 0.6,
+    "acousticness": 0.4,
+    "instrumentalness": 0.95
+   },
+   "bpm": 88,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 42,
+   "playlist_name": "New Release Playlist #42",
+   "playlist_id": "0DJ22Zb8u5XEejAYvRX3bL",
+   "position_in_playlist": 19,
+   "title": "Flamenco Sketches",
+   "artists": [
+    "Nicholas Payton",
+    "Butcher Brown"
+   ],
+   "primary_artist": "Nicholas Payton",
+   "duration": "6:30",
+   "duration_sec": 390,
+   "spotify_track_id": "7idEBpl5KAuvyY2F1Mb2Cx",
+   "spotify_uri": "spotify:track:7idEBpl5KAuvyY2F1Mb2Cx",
+   "spotify_url": "https://open.spotify.com/track/7idEBpl5KAuvyY2F1Mb2Cx",
+   "genres": [
+    "jazz"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "modal jazz",
+    "modern jazz",
+    "jazz-funk"
+   ],
+   "mood": [
+    "contemplative",
+    "spacious",
+    "cool"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.4,
+    "danceability": 0.3,
+    "acousticness": 0.4,
+    "instrumentalness": 0.95
+   },
+   "bpm": 60,
    "bpm_source": "estimated"
   }
  ]
