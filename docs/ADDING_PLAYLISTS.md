@@ -138,7 +138,13 @@ git push                              # GitHub Actions rebuilds graph.json and r
 - **Cross-playlist duplicate** (same id in 2+ playlists) → 1 unique track, N
   occurrences; note it in `metadata`.
 - **False duplicate** (same title, **different id** = another recording/edit) →
-  keep them as separate tracks.
+  the script keeps them as separate tracks and prints a WARN. If the pair turns
+  out to be the **same recording** re-released (same artists *and* same duration
+  are the tell), unify it with
+  [`scripts/dedupe_tracks.py`](../scripts/dedupe_tracks.py):
+  `python3 scripts/dedupe_tracks.py --pair <id-first-appearance> <id-reissue> --build`
+  — occurrences are preserved (the track stays in every playlist it appeared in)
+  and the retired id is logged in `metadata.deduped_reissues`.
 - **New `genre_primary` outside the 12-taxonomy** (as `downtempo` was) →
   nothing breaks: the map picks the genre up automatically (cluster, legend,
   anchor territory) with a **deterministic auto-colour** derived from the slug,

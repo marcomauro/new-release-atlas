@@ -28,7 +28,7 @@
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
   "total_tracks_with_duplicates": 935,
-  "unique_tracks": 915,
+  "unique_tracks": 913,
   "unique_artists": 874,
   "top_artists": [
    [
@@ -46,10 +46,6 @@
    [
     "Tame Impala",
     10
-   ],
-   [
-    "Matthew Herbert",
-    8
    ],
    [
     "Koralle",
@@ -78,6 +74,10 @@
    [
     "Terrace Martin",
     8
+   ],
+   [
+    "Matthew Herbert",
+    7
    ],
    [
     "Masters At Work",
@@ -170,19 +170,19 @@
   "merge_note": "add_playlist.py: aggiunte ['#41'] (21 occorrenze, 21 brani nuovi)",
   "cross_playlist_duplicates": [
    {
-    "spotify_track_id": "3wIMAdnBrA4Mtb6WB2B4YT",
-    "title": "Touching God (Feat. Yebba & Blood Orange)",
+    "spotify_track_id": "0ACrjHByr2GzPVTxKbDBix",
+    "title": "Gnu Blue",
     "playlists": [
      5,
-     6
+     101
     ]
    },
    {
-    "spotify_track_id": "7LVELzFyelYS0Bc4pDogzO",
-    "title": "The Ecstasy Of Gold",
+    "spotify_track_id": "0SU1P7VuVWc9BsMv98o7Lf",
+    "title": "Cold Zone",
     "playlists": [
-     5,
-     6
+     3,
+     101
     ]
    },
    {
@@ -199,8 +199,7 @@
     "playlists": [
      7,
      17
-    ],
-    "note": "cross-range; caratterizzazione dal master"
+    ]
    },
    {
     "spotify_track_id": "3cTNfXrRPF5LMKZ61dkSJ0",
@@ -211,10 +210,18 @@
     ]
    },
    {
-    "spotify_track_id": "5ot3orDL0gg1uGrhEoZAjq",
-    "title": "Amore, vedrai - sampled from \"5 bambole per la luna d'agosto\"",
+    "spotify_track_id": "3wIMAdnBrA4Mtb6WB2B4YT",
+    "title": "Touching God (Feat. Yebba & Blood Orange)",
     "playlists": [
-     7,
+     5,
+     6
+    ]
+   },
+   {
+    "spotify_track_id": "3xI6Rzk8MVtHuIXeM9TIPD",
+    "title": "The Package",
+    "playlists": [
+     6,
      101
     ]
    },
@@ -227,19 +234,75 @@
     ]
    },
    {
-    "spotify_track_id": "0ACrjHByr2GzPVTxKbDBix",
-    "title": "Gnu Blue",
+    "spotify_track_id": "4MxzL8jmOxjconLzZGAs9z",
+    "title": "Time Will Tell",
+    "playlists": [
+     7,
+     101
+    ]
+   },
+   {
+    "spotify_track_id": "4POZ7rt05ZOcZCO8MwNDDa",
+    "title": "Stop Counting My Poccets",
+    "playlists": [
+     24,
+     26
+    ]
+   },
+   {
+    "spotify_track_id": "4S56Igb4jNtyRs2ckvKSpO",
+    "title": "elsewhere",
+    "playlists": [
+     24,
+     30
+    ]
+   },
+   {
+    "spotify_track_id": "4lhOzoYujY5YD3anyw68hp",
+    "title": "Selfish (feat. James Blake)",
     "playlists": [
      5,
      101
     ]
    },
    {
-    "spotify_track_id": "7xA1LjXxm8a1XJZx4MnAiR",
-    "title": "OYSTRI (feat. Richard Spaven)",
+    "spotify_track_id": "5ELfCceY987QoEi4hfS5PI",
+    "title": "Babystar - Momoko Gill Remix",
     "playlists": [
-     3,
+     1,
+     37
+    ]
+   },
+   {
+    "spotify_track_id": "5XAilDhslmDyV1iCXJAblR",
+    "title": "Fainted Light",
+    "playlists": [
+     32,
+     34
+    ]
+   },
+   {
+    "spotify_track_id": "5ot3orDL0gg1uGrhEoZAjq",
+    "title": "Amore, vedrai - sampled from \"5 bambole per la luna d'agosto\"",
+    "playlists": [
+     7,
      101
+    ]
+   },
+   {
+    "spotify_track_id": "5qoiAW2WK3b7Ncm3W9HkTL",
+    "title": "Talk On The Hill",
+    "playlists": [
+     33,
+     41
+    ]
+   },
+   {
+    "spotify_track_id": "72fSEYOXmccGvk5GjiNtKX",
+    "title": "tell me what you want",
+    "playlists": [
+     16,
+     17
     ]
    },
    {
@@ -251,35 +314,11 @@
     ]
    },
    {
-    "spotify_track_id": "4MxzL8jmOxjconLzZGAs9z",
-    "title": "Time Will Tell",
-    "playlists": [
-     7,
-     101
-    ]
-   },
-   {
-    "spotify_track_id": "3xI6Rzk8MVtHuIXeM9TIPD",
-    "title": "The Package",
-    "playlists": [
-     6,
-     101
-    ]
-   },
-   {
-    "spotify_track_id": "0SU1P7VuVWc9BsMv98o7Lf",
-    "title": "Cold Zone",
-    "playlists": [
-     3,
-     101
-    ]
-   },
-   {
-    "spotify_track_id": "4lhOzoYujY5YD3anyw68hp",
-    "title": "Selfish (feat. James Blake)",
+    "spotify_track_id": "7LVELzFyelYS0Bc4pDogzO",
+    "title": "The Ecstasy Of Gold",
     "playlists": [
      5,
-     101
+     6
     ]
    },
    {
@@ -295,6 +334,14 @@
     "title": "Here Comes The Sun",
     "playlists": [
      9,
+     101
+    ]
+   },
+   {
+    "spotify_track_id": "7xA1LjXxm8a1XJZx4MnAiR",
+    "title": "OYSTRI (feat. Richard Spaven)",
+    "playlists": [
+     3,
      101
     ]
    }
@@ -343,7 +390,29 @@
   "extension_note_36": "Playlist #36 '2025 Fav Album Playlist' (compilation tematica, 83 brani) aggiunta a giugno 2026. 71 brani nuovi con caratterizzazione esperta completa; 12 brani gia' presenti nell'archivio riusano la caratterizzazione esistente (duplicati cross-playlist, era = playlist originale). Non e' una 'New Release #N': numerata #36 perche' il grafo usa il numero playlist come era cronologica e per gli archi di co-occorrenza.",
   "extended_at_36nrp": "2026-06-30T00:38:06.459512",
   "extension_note_36nrp": "New Release Playlist #36 (20 brani, id 4PMKaFt96XtkVpc4Ufj055) aggiunta a giugno 2026. Tutti i 20 brani sono nuovi e unici (nessun duplicato cross-playlist per id). Caratterizzazione esperta (subgenres/mood/mood_parameters; bpm verified solo dove disponibile, altrimenti null/estimated). genres/genre_primary generati per-artista da genre_map.py + data/genre_overrides.json (24 artisti nuovi classificati nella tassonomia a 12 macro-generi); le caratterizzazioni #1-#35 e dell'extra sono INVARIATE. Nota: PJ Morton ha 2 brani distinti in #36 ('Protect My Heart' pos.1 / 'Mercy' pos.20, id diversi).",
-  "renumber_note_extra1": "La '2025 Fav Album Playlist' (compilation, 83 brani) era erroneamente al playlist_number 36; rinumerata a 101 come 'extra #1' (non e' una New Release #N). I riferimenti in cross_playlist_duplicates sono stati aggiornati 36->101."
+  "renumber_note_extra1": "La '2025 Fav Album Playlist' (compilation, 83 brani) era erroneamente al playlist_number 36; rinumerata a 101 come 'extra #1' (non e' una New Release #N). I riferimenti in cross_playlist_duplicates sono stati aggiornati 36->101.",
+  "deduped_reissues": [
+   {
+    "kept": "5qoiAW2WK3b7Ncm3W9HkTL",
+    "merged": "1TAMOyFIwavNrf3c8XtI00",
+    "title": "Talk On The Hill",
+    "filled_from_merged": [
+     "bpm"
+    ],
+    "at": "2026-08-31T14:56:45Z"
+   },
+   {
+    "kept": "5ELfCceY987QoEi4hfS5PI",
+    "merged": "2Q4512lklTzO1xFYrG8wLS",
+    "title": "Babystar - Momoko Gill Remix",
+    "filled_from_merged": [
+     "bpm"
+    ],
+    "at": "2026-08-31T14:56:45Z"
+   }
+  ],
+  "deduped_at": "2026-08-31T14:56:45Z",
+  "dedup_note": "dedupe_tracks.py: unificati 2 id Spotify della stessa registrazione (riedizioni); occorrenze preservate"
  },
  "playlists": [
   {
@@ -589,7 +658,7 @@
       "acousticness": 0.15,
       "instrumentalness": 0.3
      },
-     "bpm": null,
+     "bpm": 120,
      "bpm_source": "estimated"
     },
     {
@@ -26764,7 +26833,7 @@
       "acousticness": 0.35,
       "instrumentalness": 0.1
      },
-     "bpm": null,
+     "bpm": 108,
      "bpm_source": "estimated"
     },
     {
@@ -32807,31 +32876,31 @@
      "primary_artist": "Matthew Herbert",
      "duration": "3:57",
      "duration_sec": 237,
-     "spotify_track_id": "2Q4512lklTzO1xFYrG8wLS",
-     "spotify_uri": "spotify:track:2Q4512lklTzO1xFYrG8wLS",
-     "spotify_url": "https://open.spotify.com/track/2Q4512lklTzO1xFYrG8wLS",
+     "spotify_track_id": "5ELfCceY987QoEi4hfS5PI",
+     "spotify_uri": "spotify:track:5ELfCceY987QoEi4hfS5PI",
+     "spotify_url": "https://open.spotify.com/track/5ELfCceY987QoEi4hfS5PI",
      "genres": [
       "electronic",
-      "downtempo"
+      "neo-soul"
      ],
      "genre_primary": "electronic",
      "subgenres": [
-      "house",
-      "deep house",
-      "art pop",
-      "electronica"
+      "electronic",
+      "microhouse",
+      "electronic soul",
+      "remix"
      ],
      "mood": [
-      "hazy",
-      "sensual",
-      "hypnotic"
+      "playful",
+      "intimate",
+      "groovy"
      ],
      "mood_parameters": {
-      "energy": 0.6,
-      "valence": 0.5,
-      "danceability": 0.7,
-      "acousticness": 0.2,
-      "instrumentalness": 0.6
+      "energy": 0.55,
+      "valence": 0.55,
+      "danceability": 0.68,
+      "acousticness": 0.15,
+      "instrumentalness": 0.3
      },
      "bpm": 120,
      "bpm_source": "estimated"
@@ -35882,31 +35951,30 @@
      "primary_artist": "WILLOW",
      "duration": "3:28",
      "duration_sec": 208,
-     "spotify_track_id": "1TAMOyFIwavNrf3c8XtI00",
-     "spotify_uri": "spotify:track:1TAMOyFIwavNrf3c8XtI00",
-     "spotify_url": "https://open.spotify.com/track/1TAMOyFIwavNrf3c8XtI00",
+     "spotify_track_id": "5qoiAW2WK3b7Ncm3W9HkTL",
+     "spotify_uri": "spotify:track:5qoiAW2WK3b7Ncm3W9HkTL",
+     "spotify_url": "https://open.spotify.com/track/5qoiAW2WK3b7Ncm3W9HkTL",
      "genres": [
       "alt",
       "neo-soul"
      ],
      "genre_primary": "alt",
      "subgenres": [
-      "alternative",
+      "alternative r&b",
       "art pop",
-      "alt-r&b",
       "indie soul"
      ],
      "mood": [
-      "introspective",
-      "airy",
-      "yearning"
+      "emotional",
+      "atmospheric",
+      "intimate"
      ],
      "mood_parameters": {
       "energy": 0.5,
-      "valence": 0.4,
-      "danceability": 0.4,
-      "acousticness": 0.4,
-      "instrumentalness": 0.05
+      "valence": 0.45,
+      "danceability": 0.55,
+      "acousticness": 0.35,
+      "instrumentalness": 0.1
      },
      "bpm": 108,
      "bpm_source": "estimated"
@@ -36947,7 +37015,7 @@
     "acousticness": 0.15,
     "instrumentalness": 0.3
    },
-   "bpm": null,
+   "bpm": 120,
    "bpm_source": "estimated"
   },
   {
@@ -64809,7 +64877,7 @@
     "acousticness": 0.35,
     "instrumentalness": 0.1
    },
-   "bpm": null,
+   "bpm": 108,
    "bpm_source": "estimated"
   },
   {
@@ -71282,31 +71350,31 @@
    "primary_artist": "Matthew Herbert",
    "duration": "3:57",
    "duration_sec": 237,
-   "spotify_track_id": "2Q4512lklTzO1xFYrG8wLS",
-   "spotify_uri": "spotify:track:2Q4512lklTzO1xFYrG8wLS",
-   "spotify_url": "https://open.spotify.com/track/2Q4512lklTzO1xFYrG8wLS",
+   "spotify_track_id": "5ELfCceY987QoEi4hfS5PI",
+   "spotify_uri": "spotify:track:5ELfCceY987QoEi4hfS5PI",
+   "spotify_url": "https://open.spotify.com/track/5ELfCceY987QoEi4hfS5PI",
    "genres": [
     "electronic",
-    "downtempo"
+    "neo-soul"
    ],
    "genre_primary": "electronic",
    "subgenres": [
-    "house",
-    "deep house",
-    "art pop",
-    "electronica"
+    "electronic",
+    "microhouse",
+    "electronic soul",
+    "remix"
    ],
    "mood": [
-    "hazy",
-    "sensual",
-    "hypnotic"
+    "playful",
+    "intimate",
+    "groovy"
    ],
    "mood_parameters": {
-    "energy": 0.6,
-    "valence": 0.5,
-    "danceability": 0.7,
-    "acousticness": 0.2,
-    "instrumentalness": 0.6
+    "energy": 0.55,
+    "valence": 0.55,
+    "danceability": 0.68,
+    "acousticness": 0.15,
+    "instrumentalness": 0.3
    },
    "bpm": 120,
    "bpm_source": "estimated"
@@ -74547,31 +74615,30 @@
    "primary_artist": "WILLOW",
    "duration": "3:28",
    "duration_sec": 208,
-   "spotify_track_id": "1TAMOyFIwavNrf3c8XtI00",
-   "spotify_uri": "spotify:track:1TAMOyFIwavNrf3c8XtI00",
-   "spotify_url": "https://open.spotify.com/track/1TAMOyFIwavNrf3c8XtI00",
+   "spotify_track_id": "5qoiAW2WK3b7Ncm3W9HkTL",
+   "spotify_uri": "spotify:track:5qoiAW2WK3b7Ncm3W9HkTL",
+   "spotify_url": "https://open.spotify.com/track/5qoiAW2WK3b7Ncm3W9HkTL",
    "genres": [
     "alt",
     "neo-soul"
    ],
    "genre_primary": "alt",
    "subgenres": [
-    "alternative",
+    "alternative r&b",
     "art pop",
-    "alt-r&b",
     "indie soul"
    ],
    "mood": [
-    "introspective",
-    "airy",
-    "yearning"
+    "emotional",
+    "atmospheric",
+    "intimate"
    ],
    "mood_parameters": {
     "energy": 0.5,
-    "valence": 0.4,
-    "danceability": 0.4,
-    "acousticness": 0.4,
-    "instrumentalness": 0.05
+    "valence": 0.45,
+    "danceability": 0.55,
+    "acousticness": 0.35,
+    "instrumentalness": 0.1
    },
    "bpm": 108,
    "bpm_source": "estimated"

@@ -9,7 +9,7 @@ Static app: **Vite + React + D3**, with automatic deploy to **GitHub Pages**.
 Data is loaded **at runtime** via `fetch` from `graph.json` (not inlined in the
 bundle).
 
-Current state: **915 tracks · 8147 edges · 12 genres** (playlists #1–#41 + 1 extra, updated 2026-08-31).
+Current state: **913 tracks · 8095 edges · 12 genres** (playlists #1–#41 + 1 extra, updated 2026-08-31).
 
 Live: https://marcomauro.github.io/new-release-atlas/
 
@@ -227,6 +227,12 @@ reads). Every track carries the full enrichment: `genres`/`genre_primary`
   `char.json`), validates, merges into the enriched archive with backup, updates
   `metadata`, annotates duplicates, and optionally rebuilds the graph (`--build`).
   Stops with a to-do report if any new track lacks a characterization.
+- **`scripts/dedupe_tracks.py`** — unifies two Spotify ids that are the *same
+  recording* (single vs album re-release), which `add_playlist.py` keeps
+  separate by policy: occurrences are rewritten onto the canonical id, empty
+  fields (typically `bpm`) are filled from the merged entry, no track is
+  removed from any playlist, and the retired id stays traceable in
+  `metadata.deduped_reissues`. `--dry-run` / `--build` like the others.
 - **`scripts/build_graph.py`** — builds `public/graph.json`. Idempotent: it
   regenerates the whole graph from the archive's current state.
 - **`scripts/check_archive.py`** — CI guard: verifies the enriched archive's
