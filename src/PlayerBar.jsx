@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import {
-  spotifyPlay, spotifyPause, spotifyResume, spotifyDevices, spotifyState, spotifyTransfer,
-  spotifyNext, spotifyPrevious, spotifySeek, spotifyShuffle, spotifyRepeat,
+  spotifyStartOn, spotifyPause, spotifyResume, spotifyDevices, spotifyState, spotifyTransfer,
+  spotifyNext, spotifyPrevious, spotifySeek, spotifyShuffle, spotifyRepeat, connectBusy,
 } from "./spotifyConnect.js";
 import { INK, PAPER, MUTED } from "./theme.js";
 
@@ -70,61 +70,67 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
   const [, force] = useState(0);
   const pickedRef = useRef(false);       // did the user pick a device manually?
   const auth401Ref = useRef(0);          // consecutive 401s from the state poll
+  const deviceIdRef = useRef(null);      // latest deviceId, for async closures
+  const startGenRef = useRef(0);         // start-sequence generation: stale starts bail out
+  useEffect(() => { deviceIdRef.current = deviceId; }, [deviceId]);
 
   const refreshDevices = useCallback(async () => {
     try { const ds = await spotifyDevices(); setDevices(ds); return ds; }
     catch (e) { return []; }
   }, []);
 
-  // Scelta iniziale del device: su mobile preferisci lo Smartphone.
-  useEffect(() => {
-    (async () => {
-      const ds = await refreshDevices();
-      if (!ds.length || pickedRef.current) return;
-      const phone = ds.find((d) => d.type === "Smartphone");
-      const active = ds.find((d) => d.is_active);
-      const chosen = (isMobile && phone) || active || ds[0];
-      setDeviceId(chosen.id);
-    })();
+  // Which device should play? A manual pick always wins. Otherwise: on mobile
+  // the phone (it is in the user's hand), else whatever is already active,
+  // else — on desktop — a computer, else the first one listed.
+  const resolveDevice = useCallback(async () => {
+    const ds = await refreshDevices();
+    if (pickedRef.current) {
+      const picked = ds.find((d) => d.id === deviceIdRef.current);
+      if (picked) return picked;
+    }
+    const phone = ds.find((d) => d.type === "Smartphone");
+    const active = ds.find((d) => d.is_active);
+    const computer = ds.find((d) => d.type === "Computer");
+    return (isMobile && phone) || active || (!isMobile && computer) || ds[0] || null;
   }, [refreshDevices, isMobile]);
 
-  const playFrom = useCallback(
-    async (pos) => {
-      setMsg("");
-      try {
-        await spotifyPlay(uris, pos, deviceId || undefined);
-        setPaused(false);
-      } catch (e) {
-        if (e.status === 404 || e.reason === "NO_ACTIVE_DEVICE") {
-          const ds = await refreshDevices();
-          const target =
-            ds.find((d) => d.id === deviceId) ||
-            (isMobile && ds.find((d) => d.type === "Smartphone")) || ds[0];
-          if (target) {
-            try { await spotifyPlay(uris, pos, target.id); setDeviceId(target.id); setPaused(false); return; }
-            catch (e2) { /* fallthrough */ }
-          }
-          setMsg("Open Spotify on the device and play a track for a moment, then press ⟳.");
-          setDevicesOpen(true); // surface the device picker: that's what needs fixing
-        } else if (e.status === 403) {
-          setMsg("Full playback requires Spotify Premium.");
-        } else if (e.status === 401) {
-          setMsg("Spotify session expired — reconnect.");
-        } else {
-          setMsg("Couldn't start playback on Spotify.");
-        }
+  // Start (or restart) the route from `pos`: resolve the target device FIRST,
+  // then hand off to spotifyStartOn (wake-then-play, serialized with every
+  // other command). No play is ever fired blind before the device is known:
+  // that blind play used to 404 and fall back to a direct play?device_id on
+  // the inactive desktop client — the sequence that froze it. A newer start
+  // (Regenerate pressed twice, ▶ Play right after Generate) supersedes one
+  // that is still resolving its device.
+  const playFrom = useCallback(async (pos) => {
+    const gen = ++startGenRef.current;
+    setMsg("");
+    let dev = null;
+    try {
+      dev = await resolveDevice();
+      if (gen !== startGenRef.current) return;
+      if (!dev) {
+        setMsg("Open Spotify on a device and play a track there for a moment, then press ⟳.");
+        setDevicesOpen(true); // surface the device picker: that's what needs fixing
+        return;
       }
-    },
-    [uris, deviceId, isMobile, refreshDevices]
-  );
+      setDeviceId(dev.id);
+      await spotifyStartOn(dev, uris, pos);
+      if (gen === startGenRef.current) setPaused(false);
+    } catch (e) {
+      if (gen !== startGenRef.current) return;
+      setMsg(describeError(e, dev, "start"));
+      if (e.status === 404 || e.reason === "NO_ACTIVE_DEVICE") { refreshDevices(); setDevicesOpen(true); }
+    }
+  }, [uris, resolveDevice, refreshDevices]);
 
-  // Ogni attivazione di playlist (generazione / ▶ Play / switch / regen) crea un
-  // NUOVO array di tracce → nuovo `uris`. Quando `uris` cambia, parti SEMPRE dal
-  // brano 0 (riproduzione immediata del primo brano, anche ri-premendo Play).
+  // Every playlist activation (generate / ▶ Play / restore / regenerate)
+  // yields a new `uris` → always restart from track 0. Debounced a little so
+  // two activations in the same breath send ONE start, not two overlapping.
   useEffect(() => {
     setLiveIdx(0);
     setProg({ pos: 0, dur: 0, at: Date.now(), playing: true });
-    playFrom(0);
+    const t = setTimeout(() => playFrom(0), 150);
+    return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uris]);
 
@@ -134,6 +140,10 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
   useEffect(() => {
     let stop = false;
     const tick = async () => {
+      // Skip the read while a command is in flight: the answer would describe
+      // the state the device is leaving, and stacking requests on a client
+      // that is switching context is what makes the desktop app freeze.
+      if (connectBusy()) return;
       try {
         const c = await spotifyState();
         if (stop || !c) return;
@@ -181,21 +191,23 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
   const cur = tracks[shown];
 
   // A transport command that fails would otherwise LOOK like it worked
-  // (optimistic UI) until the next poll: surface a hint instead.
-  const cmdFail = () => setMsg("Command didn't reach Spotify — check the device, then press ⟳.");
+  // (optimistic UI) until the next poll: surface a hint naming the device.
+  // Commands are serialized by the Connect layer, so a click during a start
+  // waits its turn instead of colliding with it.
+  const deviceById = (id) => devices.find((d) => d.id === id) || null;
+  const cmd = (fn, dev = deviceById(deviceId)) =>
+    fn().then(() => setMsg("")).catch((e) => setMsg(describeError(e, dev, "command")));
 
-  const toggle = async () => {
-    try {
-      if (paused) { await spotifyResume(); setPaused(false); }
-      else { await spotifyPause(); setPaused(true); }
-    } catch (e) { cmdFail(); }
-  };
-  const goPrev = () => { spotifyPrevious().then(() => setMsg("")).catch(cmdFail); };
-  const goNext = () => { spotifyNext().then(() => setMsg("")).catch(cmdFail); };
+  const toggle = () => cmd(async () => {
+    if (paused) { await spotifyResume(); setPaused(false); }
+    else { await spotifyPause(); setPaused(true); }
+  });
+  const goPrev = () => cmd(spotifyPrevious);
+  const goNext = () => cmd(spotifyNext);
   const onPickDevice = (id) => {
     pickedRef.current = true;
     setDeviceId(id);
-    spotifyTransfer(id, true).catch(cmdFail); // move current playback (no restart)
+    cmd(() => spotifyTransfer(id, true), deviceById(id)); // move current playback (no restart)
   };
 
   const toggleShuffle = async () => {
@@ -212,7 +224,8 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
   };
 
   // ✕ = silence, not just "hide the panel": pause the device before closing
-  // (best effort — the panel closes regardless).
+  // (best effort — the panel closes regardless). The pause is queued like any
+  // command, so a playlist started right after cannot be overtaken by it.
   const closePlayer = () => {
     spotifyPause().catch(() => {});
     onClose();
@@ -497,6 +510,30 @@ function Shell({ children, bottomGap, onHeight }) {
       {children}
     </div>
   );
+}
+
+// Error → one actionable line. A timeout or 502/503/504 means the Connect
+// backend got no answer from the client: on macOS that is typically the
+// Spotify app napping in the background, or still busy switching context.
+function describeError(e, dev, kind) {
+  const name = dev && dev.name ? `“${dev.name}”` : "the device";
+  if (!e) return "Couldn't reach Spotify.";
+  if (e.reason === "TIMEOUT" || e.status === 502 || e.status === 503 || e.status === 504) {
+    return `Spotify on ${name} isn't responding — bring the Spotify window to the front (or play a track there once), then press ⟳.`;
+  }
+  if (e.status === 404 || e.reason === "NO_ACTIVE_DEVICE") {
+    return `Open Spotify on ${name} and play a track for a moment, then press ⟳.`;
+  }
+  if (e.status === 403) {
+    return e.reason === "PREMIUM_REQUIRED" || kind === "start"
+      ? "Full playback requires Spotify Premium."
+      : "Spotify refused that command — try again in a moment.";
+  }
+  if (e.status === 401) return "Spotify session expired — reconnect.";
+  if (e.reason === "NETWORK") return "No connection to Spotify — check the network, then press ⟳.";
+  return kind === "start"
+    ? "Couldn't start playback on Spotify."
+    : "Command didn't reach Spotify — check the device, then press ⟳.";
 }
 
 function fmtTime(ms) {
