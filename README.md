@@ -122,6 +122,13 @@ A persistent mini-player follows the generated **route** and works in two modes:
   your Spotify device via the Web API, playing **full tracks** in sequence (also
   on mobile). Login is **OAuth Authorization Code + PKCE, 100% client-side** — no
   secret in the bundle. A device selector (“Play on …”) lets you pick the target.
+  Commands are **serialized** and **deadline-bound** (8 s reads, 10 s play /
+  transfer, one retry on 502/503/504/timeout — [`src/connectTransport.js`](src/connectTransport.js)),
+  and a route starts with a **wake-then-play** sequence — transfer *without*
+  autoplay, wait until the device reports active, then play with an explicit
+  `device_id` — because firing play straight at an inactive desktop client
+  freezes it (macOS). Request-by-request trace in the browser console:
+  `localStorage.nra_debug = "1"`, then reload.
 - **Embed mode** (not logged in): the official Spotify embed plays a **~30s
   preview** and auto-advances along the route, with an opt-in
   **“Listen full · Spotify Premium”** button to switch to Connect mode.
