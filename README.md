@@ -121,7 +121,10 @@ A persistent mini-player follows the generated **route** and works in two modes:
 - **Connect mode** (Spotify Premium): the app acts as a **remote control** for
   your Spotify device via the Web API, playing **full tracks** in sequence (also
   on mobile). Login is **OAuth Authorization Code + PKCE, 100% client-side** — no
-  secret in the bundle. A device selector (“Play on …”) lets you pick the target.
+  secret in the bundle. A device selector (“Play on …”) lets you pick the target,
+  and that choice is **remembered across sessions** and beats the automatic
+  pick, so “always play on the phone” survives a reload when a given machine's
+  own Spotify client misbehaves.
   Commands are **serialized** and **deadline-bound** (8 s reads, 10 s play /
   transfer, one retry on 502/503/504/timeout — [`src/connectTransport.js`](src/connectTransport.js)),
   and a route starts with a **wake-then-play** sequence — transfer *without*

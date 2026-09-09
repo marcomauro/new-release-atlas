@@ -7,6 +7,17 @@ import { INK, PAPER, MUTED } from "./theme.js";
 
 const GREEN = "#1db954";
 
+// The device the user last picked by hand, remembered across sessions: when a
+// machine's own Spotify client misbehaves, "always play on the phone" has to
+// survive a reload and every new playlist, not just the current player.
+const LS_DEVICE = "nra_device";
+const readDevicePref = () => {
+  try { return localStorage.getItem(LS_DEVICE) || null; } catch (e) { return null; }
+};
+const writeDevicePref = (id) => {
+  try { localStorage.setItem(LS_DEVICE, id); } catch (e) { /* private mode */ }
+};
+
 // Carica una sola volta l'API iFrame ufficiale di Spotify (per l'embed 30s).
 let _api = null;
 let _apiPromise = null;
@@ -88,15 +99,15 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
     catch (e) { return []; }
   }, []);
 
-  // Which device should play? A manual pick always wins. Otherwise: on mobile
-  // the phone (it is in the user's hand), else whatever is already active,
-  // else — on desktop — a computer, else the first one listed.
+  // Which device should play? A pick made by hand always wins, this session or
+  // a previous one, as long as that device is still around. Otherwise: on
+  // mobile the phone (it is in the user's hand), else whatever is already
+  // active, else — on desktop — a computer, else the first one listed.
   const resolveDevice = useCallback(async () => {
     const ds = await refreshDevices();
-    if (pickedRef.current) {
-      const picked = ds.find((d) => d.id === deviceIdRef.current);
-      if (picked) return picked;
-    }
+    const wanted = (pickedRef.current && deviceIdRef.current) || readDevicePref();
+    const picked = wanted ? ds.find((d) => d.id === wanted) : null;
+    if (picked) return picked;
     const phone = ds.find((d) => d.type === "Smartphone");
     const active = ds.find((d) => d.is_active);
     const computer = ds.find((d) => d.type === "Computer");
@@ -232,6 +243,7 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
   const onPickDevice = (id) => {
     pickedRef.current = true;
     setDeviceId(id);
+    writeDevicePref(id);                                 // every later route starts here too
     cmd(() => spotifyTransfer(id, true), deviceById(id)); // move current playback (no restart)
   };
 
@@ -343,6 +355,7 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
           <span style={{ fontSize: 11, color: MUTED, whiteSpace: "nowrap" }}>Play on</span>
           <select
             value={deviceId || ""}
+            title="Remembered for the next playlists too"
             onChange={(e) => onPickDevice(e.target.value)}
             style={{
               flex: 1, minWidth: 0, fontFamily: "Inter, sans-serif", fontSize: 12, color: INK,
