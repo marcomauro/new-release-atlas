@@ -63,6 +63,11 @@ export async function withRetry(fn, { retries = 1, delayMs = 1200, shouldRetry =
 // Serial queue: tasks run one at a time, in submission order, each one
 // starting only after the previous has settled (fulfilled, rejected or timed
 // out). `busy` is true while anything is queued or running.
+//
+// NOT re-entrant: a task must never await another run() on the same queue.
+// The inner task is appended behind the outer one, which is itself waiting for
+// it, so both hang forever. A composite command (read the state, then act)
+// must therefore call the raw, unqueued helpers inside its own slot.
 export function createQueue() {
   let tail = Promise.resolve();
   let pending = 0;

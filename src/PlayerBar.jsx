@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import {
-  spotifyStartOn, spotifyPause, spotifyResume, spotifyDevices, spotifyState, spotifyTransfer,
+  spotifyStartOn, spotifyPause, spotifyToggle, spotifyDevices, spotifyState, spotifyTransfer,
   spotifyNext, spotifyPrevious, spotifySeek, spotifyShuffle, spotifyRepeat, connectBusy,
 } from "./spotifyConnect.js";
 import { INK, PAPER, MUTED } from "./theme.js";
@@ -67,12 +67,21 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState("off"); // off | all | one
   const [prog, setProg] = useState({ pos: 0, dur: 0, at: 0, playing: false });
+  const [starting, setStarting] = useState(true); // a route start is in flight
   const [, force] = useState(0);
   const pickedRef = useRef(false);       // did the user pick a device manually?
   const auth401Ref = useRef(0);          // consecutive 401s from the state poll
   const deviceIdRef = useRef(null);      // latest deviceId, for async closures
   const startGenRef = useRef(0);         // start-sequence generation: stale starts bail out
+  const syncRef = useRef(null);          // the state poll's tick, to resync on demand
   useEffect(() => { deviceIdRef.current = deviceId; }, [deviceId]);
+
+  // Read the real state back shortly after any command: the poll is skipped
+  // while a command is in flight, so without this the UI would keep showing
+  // what it optimistically assumed until the next tick.
+  const resync = useCallback(() => {
+    setTimeout(() => { if (syncRef.current) syncRef.current(); }, 400);
+  }, []);
 
   const refreshDevices = useCallback(async () => {
     try { const ds = await spotifyDevices(); setDevices(ds); return ds; }
@@ -104,6 +113,7 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
   const playFrom = useCallback(async (pos) => {
     const gen = ++startGenRef.current;
     setMsg("");
+    setStarting(true);
     let dev = null;
     try {
       dev = await resolveDevice();
@@ -120,8 +130,12 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
       if (gen !== startGenRef.current) return;
       setMsg(describeError(e, dev, "start"));
       if (e.status === 404 || e.reason === "NO_ACTIVE_DEVICE") { refreshDevices(); setDevicesOpen(true); }
+    } finally {
+      // Only the newest start owns the UI: an superseded one must not clear the
+      // flag while its successor is still working.
+      if (gen === startGenRef.current) { setStarting(false); resync(); }
     }
-  }, [uris, resolveDevice, refreshDevices]);
+  }, [uris, resolveDevice, refreshDevices, resync]);
 
   // Every playlist activation (generate / ▶ Play / restore / regenerate)
   // yields a new `uris` → always restart from track 0. Debounced a little so
@@ -176,8 +190,13 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
     const id = setInterval(() => { if (!document.hidden) tick(); }, 3000);
     const onVis = () => { if (!document.hidden) tick(); };
     document.addEventListener("visibilitychange", onVis);
+    syncRef.current = tick;   // let commands force a resync when they settle
     tick();
-    return () => { stop = true; clearInterval(id); document.removeEventListener("visibilitychange", onVis); };
+    return () => {
+      stop = true; clearInterval(id);
+      document.removeEventListener("visibilitychange", onVis);
+      syncRef.current = null;
+    };
   }, [uris, setIndex]);
 
   // Local ticker: animates the bar between polls — only while playing.
@@ -196,11 +215,17 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
   // waits its turn instead of colliding with it.
   const deviceById = (id) => devices.find((d) => d.id === id) || null;
   const cmd = (fn, dev = deviceById(deviceId)) =>
-    fn().then(() => setMsg("")).catch((e) => setMsg(describeError(e, dev, "command")));
+    fn().then(() => setMsg(""))
+      .catch((e) => setMsg(describeError(e, dev, "command")))
+      .finally(resync);
 
+  // Never guess pause-vs-resume from the local flag: spotifyToggle decides from
+  // the device's real state, inside its queue slot. Guessing sent a resume to a
+  // device already playing (403 "Restriction violated") or, worse, a pause that
+  // stopped the track the route had just started.
   const toggle = () => cmd(async () => {
-    if (paused) { await spotifyResume(); setPaused(false); }
-    else { await spotifyPause(); setPaused(true); }
+    const playing = await spotifyToggle(deviceId || undefined, !paused);
+    setPaused(!playing);
   });
   const goPrev = () => cmd(spotifyPrevious);
   const goNext = () => cmd(spotifyNext);
@@ -293,7 +318,18 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 4px" }}>
             <button onClick={toggleShuffle} title="Shuffle the route" aria-label="Shuffle" style={tglBtn(shuffle)}>⇄</button>
             <button onClick={goPrev} disabled={!many} title="Previous" aria-label="Previous track" style={{ ...navBtn, opacity: many ? 1 : 0.35 }}>‹</button>
-            <button onClick={toggle} title={paused ? "Resume" : "Pause"} aria-label={paused ? "Resume" : "Pause"} style={playBtn}>{paused ? "▶" : "❚❚"}</button>
+            {/* While a start is in flight the true state is unknown, so the
+                button says so instead of showing an icon that would send the
+                opposite command to the one it depicts. */}
+            <button
+              onClick={toggle}
+              disabled={starting}
+              title={starting ? "Starting…" : paused ? "Resume" : "Pause"}
+              aria-label={starting ? "Starting" : paused ? "Resume" : "Pause"}
+              style={{ ...playBtn, opacity: starting ? 0.45 : 1, cursor: starting ? "default" : "pointer" }}
+            >
+              {starting ? "⋯" : paused ? "▶" : "❚❚"}
+            </button>
             <button onClick={goNext} disabled={!many} title="Next" aria-label="Next track" style={{ ...navBtn, opacity: many ? 1 : 0.35 }}>›</button>
             <button onClick={cycleRepeat} title={`Repeat: ${repeat}`} aria-label={`Repeat: ${repeat}`} style={tglBtn(repeat !== "off")}>{repeat === "one" ? "₁⟲" : "⟲"}</button>
           </div>
@@ -525,9 +561,11 @@ function describeError(e, dev, kind) {
     return `Open Spotify on ${name} and play a track for a moment, then press ⟳.`;
   }
   if (e.status === 403) {
-    return e.reason === "PREMIUM_REQUIRED" || kind === "start"
-      ? "Full playback requires Spotify Premium."
-      : "Spotify refused that command — try again in a moment.";
+    if (e.reason === "PREMIUM_REQUIRED") return "Full playback requires Spotify Premium.";
+    if (kind === "start") return "Full playback requires Spotify Premium.";
+    // Carry Spotify's own wording: "Restriction violated" and friends say far
+    // more about what went wrong than any phrasing invented here.
+    return `Spotify refused that command${e.message ? `: ${e.message}` : ""}.`;
   }
   if (e.status === 401) return "Spotify session expired — reconnect.";
   if (e.reason === "NETWORK") return "No connection to Spotify — check the network, then press ⟳.";

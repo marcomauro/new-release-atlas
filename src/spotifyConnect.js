@@ -289,8 +289,32 @@ export function spotifyStartOn(device, uris, offset = 0) {
 export function spotifyPause() {
   return queue.run(() => apiCall("/me/player/pause", "PUT"));
 }
-export function spotifyResume() {
-  return queue.run(() => apiCall("/me/player/play", "PUT"));
+// Resume whatever the device already has queued (no body = no new context).
+export function spotifyResume(deviceId) {
+  return queue.run(() => putResume(deviceId));
+}
+const putResume = (deviceId) =>
+  apiCall("/me/player/play" + (deviceId ? `?device_id=${deviceId}` : ""), "PUT");
+
+// Pause or resume according to what the player is ACTUALLY doing, deciding
+// inside the queue slot so the answer cannot go stale between the read and the
+// command. Returns the resulting is_playing.
+//
+// Guessing from local UI state is not harmless: Spotify answers 403 "Restriction
+// violated" to a resume while already playing and to a pause while idle, and a
+// pause sent by mistake stops the track the route just started. The UI flag is
+// only the fallback for when the state read itself fails.
+export function spotifyToggle(deviceId, assumePlaying) {
+  return queue.run(async () => {
+    let playing = !!assumePlaying;
+    try {
+      const c = await spotifyState();     // a read: bypasses this queue, no deadlock
+      if (c) playing = !!c.is_playing;
+    } catch (e) { /* fall back to what the UI believed */ }
+    if (playing) { await apiCall("/me/player/pause", "PUT"); return false; }
+    await putResume(deviceId);
+    return true;
+  });
 }
 export function spotifyNext() {
   return queue.run(() => apiCall("/me/player/next", "POST"));

@@ -127,7 +127,12 @@ A persistent mini-player follows the generated **route** and works in two modes:
   and a route starts with a **wake-then-play** sequence — transfer *without*
   autoplay, wait until the device reports active, then play with an explicit
   `device_id` — because firing play straight at an inactive desktop client
-  freezes it (macOS). Request-by-request trace in the browser console:
+  freezes it (macOS). Play/pause asks the device what it is **actually** doing
+  before picking the command: a resume sent to a device already playing (or a
+  pause sent to an idle one) comes back `403 Restriction violated`, and a stray
+  pause would stop the track the route just started. While a start is in flight
+  the transport button says so rather than showing an icon it cannot honour.
+  Request-by-request trace in the browser console:
   `localStorage.nra_debug = "1"`, then reload.
 - **Embed mode** (not logged in): the official Spotify embed plays a **~30s
   preview** and auto-advances along the route, with an opt-in
