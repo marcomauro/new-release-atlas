@@ -28,7 +28,7 @@
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
   "total_tracks_with_duplicates": 975,
-  "unique_tracks": 953,
+  "unique_tracks": 952,
   "unique_artists": 896,
   "top_artists": [
    [
@@ -191,6 +191,14 @@
     "playlists": [
      4,
      10
+    ]
+   },
+   {
+    "spotify_track_id": "1uUzPCn8zokwtQnZV8iapv",
+    "title": "Let the Music Find You",
+    "playlists": [
+     38,
+     43
     ]
    },
    {
@@ -409,10 +417,17 @@
      "bpm"
     ],
     "at": "2026-08-31T14:56:45Z"
+   },
+   {
+    "kept": "1uUzPCn8zokwtQnZV8iapv",
+    "merged": "10Md5THD3YHrYcPHQ6BFPg",
+    "title": "Let the Music Find You",
+    "filled_from_merged": [],
+    "at": "2026-09-13T21:28:51Z"
    }
   ],
-  "deduped_at": "2026-08-31T14:56:45Z",
-  "dedup_note": "dedupe_tracks.py: unificati 2 id Spotify della stessa registrazione (riedizioni); occorrenze preservate"
+  "deduped_at": "2026-09-13T21:28:51Z",
+  "dedup_note": "dedupe_tracks.py: unificati 1 id Spotify della stessa registrazione (riedizioni); occorrenze preservate"
  },
  "playlists": [
   {
@@ -37713,30 +37728,31 @@
      "primary_artist": "Galliano",
      "duration": "4:32",
      "duration_sec": 272,
-     "spotify_track_id": "10Md5THD3YHrYcPHQ6BFPg",
-     "spotify_uri": "spotify:track:10Md5THD3YHrYcPHQ6BFPg",
-     "spotify_url": "https://open.spotify.com/track/10Md5THD3YHrYcPHQ6BFPg",
+     "spotify_track_id": "1uUzPCn8zokwtQnZV8iapv",
+     "spotify_uri": "spotify:track:1uUzPCn8zokwtQnZV8iapv",
+     "spotify_url": "https://open.spotify.com/track/1uUzPCn8zokwtQnZV8iapv",
      "genres": [
-      "broken-beat",
-      "uk-jazz"
+      "soulful-house",
+      "broken-beat"
      ],
-     "genre_primary": "broken-beat",
+     "genre_primary": "soulful-house",
      "subgenres": [
+      "jazz-funk",
       "acid jazz",
       "nu-jazz",
-      "jazz-funk"
+      "future soul"
      ],
      "mood": [
       "uplifting",
       "groovy",
-      "soulful"
+      "warm"
      ],
      "mood_parameters": {
-      "energy": 0.65,
-      "valence": 0.7,
-      "danceability": 0.75,
-      "acousticness": 0.3,
-      "instrumentalness": 0.3
+      "energy": 0.7,
+      "valence": 0.8,
+      "danceability": 0.78,
+      "acousticness": 0.2,
+      "instrumentalness": 0.2
      },
      "bpm": 112,
      "bpm_source": "estimated"
@@ -78054,30 +78070,31 @@
    "primary_artist": "Galliano",
    "duration": "4:32",
    "duration_sec": 272,
-   "spotify_track_id": "10Md5THD3YHrYcPHQ6BFPg",
-   "spotify_uri": "spotify:track:10Md5THD3YHrYcPHQ6BFPg",
-   "spotify_url": "https://open.spotify.com/track/10Md5THD3YHrYcPHQ6BFPg",
+   "spotify_track_id": "1uUzPCn8zokwtQnZV8iapv",
+   "spotify_uri": "spotify:track:1uUzPCn8zokwtQnZV8iapv",
+   "spotify_url": "https://open.spotify.com/track/1uUzPCn8zokwtQnZV8iapv",
    "genres": [
-    "broken-beat",
-    "uk-jazz"
+    "soulful-house",
+    "broken-beat"
    ],
-   "genre_primary": "broken-beat",
+   "genre_primary": "soulful-house",
    "subgenres": [
+    "jazz-funk",
     "acid jazz",
     "nu-jazz",
-    "jazz-funk"
+    "future soul"
    ],
    "mood": [
     "uplifting",
     "groovy",
-    "soulful"
+    "warm"
    ],
    "mood_parameters": {
-    "energy": 0.65,
-    "valence": 0.7,
-    "danceability": 0.75,
-    "acousticness": 0.3,
-    "instrumentalness": 0.3
+    "energy": 0.7,
+    "valence": 0.8,
+    "danceability": 0.78,
+    "acousticness": 0.2,
+    "instrumentalness": 0.2
    },
    "bpm": 112,
    "bpm_source": "estimated"
