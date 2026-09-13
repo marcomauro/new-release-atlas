@@ -4,7 +4,7 @@
   "source_account": "Spotify",
   "generated_at": "2026-05-23T12:27:11.266084",
   "description": "Archivio strutturato delle 'New Release Playlist' di Marco Mauro, da consultare via AI per generare playlist tematiche o effettuare analisi.",
-  "playlist_range": "#1 - #42 (42 New Release Playlist consecutive) + 1 extra (#101)",
+  "playlist_range": "#1 - #43 (43 New Release Playlist consecutive) + 1 extra (#101)",
   "note_on_gaps": "Nessuno: il dataset copre integralmente le New Release Playlist da #12 a #36. Le #1-#11 e #13-#17 si chiamano 'New Release Friday #N', dalla #12 e #18 in poi 'New Release Playlist #N'. La '2025 Fav Album Playlist' e' una compilation tematica (extra), spostata fuori dalla sequenza NRP al playlist_number 101.",
   "schema_per_track": {
    "playlist_number": "int (numero progressivo della playlist di origine)",
@@ -27,9 +27,9 @@
    "bpm": "int | null (null = non verificabile, mai inventato)",
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
-  "total_tracks_with_duplicates": 954,
-  "unique_tracks": 932,
-  "unique_artists": 884,
+  "total_tracks_with_duplicates": 975,
+  "unique_tracks": 953,
+  "unique_artists": 896,
   "top_artists": [
    [
     "Brian Jackson",
@@ -60,6 +60,10 @@
     8
    ],
    [
+    "Fred again..",
+    8
+   ],
+   [
     "Charles Webster",
     8
    ],
@@ -80,19 +84,15 @@
     8
    ],
    [
+    "Kokoroko",
+    8
+   ],
+   [
     "Matthew Herbert",
     7
    ],
    [
-    "Fred again..",
-    7
-   ],
-   [
     "Run Logan Run",
-    7
-   ],
-   [
-    "Kokoroko",
     7
    ],
    [
@@ -166,8 +166,8 @@
   "enrichment_note": "Caratterizzazione musicale esperta aggiunta da Claude (giugno 2026): subgenres granulari, mood, mood_parameters (energy/valence/danceability/acousticness/instrumentalness, scala 0-1, stime qualitative da esperto), bpm (int o null) e bpm_source. bpm_source='verified' = confermato da fonti web DJ-pool (Beatsource, BPM Supreme, SongBPM, Tunebat); 'estimated' = stima fondata sul tempo tipico del brano/genere (presente solo dove molto affidabile, es. house 120-126); bpm=null dove non verificabile, mai inventato. I campi 'genres' e 'genre_primary' preesistenti (tassonomia a 12 macro-generi della pipeline new-release-atlas) sono INTOCCATI e restano la classificazione di riferimento.",
   "extended_at": "2026-06-11T09:12:01.887032",
   "extension_note": "Playlist #33 e #34 aggiunte a giugno 2026 con caratterizzazione esperta completa. Per queste 2 playlist anche genres/genre_primary sono assegnati dall'AI (coerenti con la tassonomia a 12 macro-generi della pipeline). Nota: 'Fainted Light' (Indra Lesmana) in #34 è un duplicato cross-playlist di #32 (stesso track ID).",
-  "merged_at": "2026-08-31T15:07:26Z",
-  "merge_note": "add_playlist.py: aggiunte ['#42'] (19 occorrenze, 19 brani nuovi)",
+  "merged_at": "2026-09-13T21:25:34Z",
+  "merge_note": "add_playlist.py: aggiunte ['#43'] (21 occorrenze, 21 brani nuovi)",
   "cross_playlist_duplicates": [
    {
     "spotify_track_id": "0ACrjHByr2GzPVTxKbDBix",
@@ -37496,6 +37496,831 @@
       "instrumentalness": 0.95
      },
      "bpm": 60,
+     "bpm_source": "estimated"
+    }
+   ]
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "spotify_url": "https://open.spotify.com/playlist/0JmuaCzd4rGTMVg0UYuc0O",
+   "description": "",
+   "date": null,
+   "track_count": 21,
+   "tracks": [
+    {
+     "position_in_playlist": 1,
+     "title": "If It Ain't Broke (Love Wins) (feat. Phoelix & 9th Wonder)",
+     "artists": [
+      "Dinner Party",
+      "Terrace Martin",
+      "Robert Glasper",
+      "Kamasi Washington",
+      "Phoelix",
+      "9th Wonder"
+     ],
+     "primary_artist": "Dinner Party",
+     "duration": "2:25",
+     "duration_sec": 145,
+     "spotify_track_id": "0qge34yTt15XkmvX4XIuha",
+     "spotify_uri": "spotify:track:0qge34yTt15XkmvX4XIuha",
+     "spotify_url": "https://open.spotify.com/track/0qge34yTt15XkmvX4XIuha",
+     "genres": [
+      "neo-soul",
+      "jazz"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "jazz-soul",
+      "jazz-rap",
+      "spiritual jazz",
+      "alternative r&b"
+     ],
+     "mood": [
+      "soulful",
+      "warm",
+      "laid-back"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.6,
+      "danceability": 0.55,
+      "acousticness": 0.4,
+      "instrumentalness": 0.3
+     },
+     "bpm": 85,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 2,
+     "title": "Always on Your Side",
+     "artists": [
+      "Bonobo",
+      "Joy Crookes"
+     ],
+     "primary_artist": "Bonobo",
+     "duration": "3:29",
+     "duration_sec": 209,
+     "spotify_track_id": "6jJTpzMquQLVuUkM2vVEIF",
+     "spotify_uri": "spotify:track:6jJTpzMquQLVuUkM2vVEIF",
+     "spotify_url": "https://open.spotify.com/track/6jJTpzMquQLVuUkM2vVEIF",
+     "genres": [
+      "electronic",
+      "neo-soul"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "downtempo",
+      "organic house",
+      "trip-hop"
+     ],
+     "mood": [
+      "lush",
+      "melancholic",
+      "hypnotic"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.45,
+      "danceability": 0.6,
+      "acousticness": 0.3,
+      "instrumentalness": 0.2
+     },
+     "bpm": 110,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 3,
+     "title": "Ana Maria",
+     "artists": [
+      "Orchestra Baobab"
+     ],
+     "primary_artist": "Orchestra Baobab",
+     "duration": "5:34",
+     "duration_sec": 334,
+     "spotify_track_id": "7mNW931E1aNdMgaWxmHlzS",
+     "spotify_uri": "spotify:track:7mNW931E1aNdMgaWxmHlzS",
+     "spotify_url": "https://open.spotify.com/track/7mNW931E1aNdMgaWxmHlzS",
+     "genres": [
+      "world"
+     ],
+     "genre_primary": "world",
+     "subgenres": [
+      "senegalese",
+      "afro-cuban",
+      "salsa africana"
+     ],
+     "mood": [
+      "breezy",
+      "nostalgic",
+      "sunny"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.75,
+      "danceability": 0.65,
+      "acousticness": 0.6,
+      "instrumentalness": 0.25
+     },
+     "bpm": 100,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 4,
+     "title": "Don’t You Want Me (with Cat Power)",
+     "artists": [
+      "Meshell Ndegeocello",
+      "Cat Power"
+     ],
+     "primary_artist": "Meshell Ndegeocello",
+     "duration": "4:36",
+     "duration_sec": 276,
+     "spotify_track_id": "2uadrfFrPg8kQccUr36aEc",
+     "spotify_uri": "spotify:track:2uadrfFrPg8kQccUr36aEc",
+     "spotify_url": "https://open.spotify.com/track/2uadrfFrPg8kQccUr36aEc",
+     "genres": [
+      "neo-soul",
+      "alt"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "art r&b",
+      "alternative soul",
+      "jazz-funk"
+     ],
+     "mood": [
+      "intimate",
+      "brooding",
+      "sensual"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.4,
+      "danceability": 0.45,
+      "acousticness": 0.45,
+      "instrumentalness": 0.2
+     },
+     "bpm": 92,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 5,
+     "title": "Take Us",
+     "artists": [
+      "Romare"
+     ],
+     "primary_artist": "Romare",
+     "duration": "4:39",
+     "duration_sec": 279,
+     "spotify_track_id": "2T1jX8AiuTv9obQXyqIZx4",
+     "spotify_uri": "spotify:track:2T1jX8AiuTv9obQXyqIZx4",
+     "spotify_url": "https://open.spotify.com/track/2T1jX8AiuTv9obQXyqIZx4",
+     "genres": [
+      "electronic",
+      "soulful-house"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "house",
+      "sample house",
+      "afro house",
+      "deep house"
+     ],
+     "mood": [
+      "groovy",
+      "hypnotic",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.6,
+      "danceability": 0.8,
+      "acousticness": 0.2,
+      "instrumentalness": 0.7
+     },
+     "bpm": 120,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 6,
+     "title": "Let the Music Find You",
+     "artists": [
+      "Galliano"
+     ],
+     "primary_artist": "Galliano",
+     "duration": "4:32",
+     "duration_sec": 272,
+     "spotify_track_id": "10Md5THD3YHrYcPHQ6BFPg",
+     "spotify_uri": "spotify:track:10Md5THD3YHrYcPHQ6BFPg",
+     "spotify_url": "https://open.spotify.com/track/10Md5THD3YHrYcPHQ6BFPg",
+     "genres": [
+      "broken-beat",
+      "uk-jazz"
+     ],
+     "genre_primary": "broken-beat",
+     "subgenres": [
+      "acid jazz",
+      "nu-jazz",
+      "jazz-funk"
+     ],
+     "mood": [
+      "uplifting",
+      "groovy",
+      "soulful"
+     ],
+     "mood_parameters": {
+      "energy": 0.65,
+      "valence": 0.7,
+      "danceability": 0.75,
+      "acousticness": 0.3,
+      "instrumentalness": 0.3
+     },
+     "bpm": 112,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 7,
+     "title": "Floette ft. John Glacier",
+     "artists": [
+      "Arlo Parks",
+      "John Glacier"
+     ],
+     "primary_artist": "Arlo Parks",
+     "duration": "3:12",
+     "duration_sec": 192,
+     "spotify_track_id": "2f5pyfkPX3cOeSdXBS07J9",
+     "spotify_uri": "spotify:track:2f5pyfkPX3cOeSdXBS07J9",
+     "spotify_url": "https://open.spotify.com/track/2f5pyfkPX3cOeSdXBS07J9",
+     "genres": [
+      "alt",
+      "neo-soul"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "indie soul",
+      "bedroom pop",
+      "alternative r&b",
+      "indie pop"
+     ],
+     "mood": [
+      "dreamy",
+      "wistful",
+      "tender"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.45,
+      "danceability": 0.5,
+      "acousticness": 0.4,
+      "instrumentalness": 0.15
+     },
+     "bpm": 95,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 8,
+     "title": "Garden",
+     "artists": [
+      "Alabama Shakes"
+     ],
+     "primary_artist": "Alabama Shakes",
+     "duration": "4:59",
+     "duration_sec": 299,
+     "spotify_track_id": "10PoXrzxGD2WaWTRuYU7VE",
+     "spotify_uri": "spotify:track:10PoXrzxGD2WaWTRuYU7VE",
+     "spotify_url": "https://open.spotify.com/track/10PoXrzxGD2WaWTRuYU7VE",
+     "genres": [
+      "alt",
+      "soul-funk"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "soul rock",
+      "southern soul",
+      "blues rock",
+      "psychedelic soul"
+     ],
+     "mood": [
+      "raw",
+      "yearning",
+      "dramatic"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.45,
+      "danceability": 0.45,
+      "acousticness": 0.35,
+      "instrumentalness": 0.1
+     },
+     "bpm": 78,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 9,
+     "title": "Da Du Dah (Onome Remix) [feat. Nyron Higor]",
+     "artists": [
+      "Kokoroko",
+      "Nyron Higor",
+      "Onome Edgeworth"
+     ],
+     "primary_artist": "Kokoroko",
+     "duration": "3:44",
+     "duration_sec": 224,
+     "spotify_track_id": "3vpofdXzaAiGOUcXZ5fRCM",
+     "spotify_uri": "spotify:track:3vpofdXzaAiGOUcXZ5fRCM",
+     "spotify_url": "https://open.spotify.com/track/3vpofdXzaAiGOUcXZ5fRCM",
+     "genres": [
+      "uk-jazz",
+      "broken-beat"
+     ],
+     "genre_primary": "uk-jazz",
+     "subgenres": [
+      "afro-jazz",
+      "afrobeat",
+      "broken beat",
+      "uk jazz"
+     ],
+     "mood": [
+      "percussive",
+      "joyful",
+      "groovy"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.75,
+      "danceability": 0.8,
+      "acousticness": 0.25,
+      "instrumentalness": 0.5
+     },
+     "bpm": 116,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 10,
+     "title": "SPAZZZ",
+     "artists": [
+      "Busta Rhymes",
+      "J Dilla"
+     ],
+     "primary_artist": "Busta Rhymes",
+     "duration": "3:15",
+     "duration_sec": 195,
+     "spotify_track_id": "4k6nh37udZhR3kUm9PR0bJ",
+     "spotify_uri": "spotify:track:4k6nh37udZhR3kUm9PR0bJ",
+     "spotify_url": "https://open.spotify.com/track/4k6nh37udZhR3kUm9PR0bJ",
+     "genres": [
+      "hip-hop"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "boom bap",
+      "east coast hip-hop",
+      "dilla beats"
+     ],
+     "mood": [
+      "energetic",
+      "raw",
+      "braggadocious"
+     ],
+     "mood_parameters": {
+      "energy": 0.85,
+      "valence": 0.6,
+      "danceability": 0.75,
+      "acousticness": 0.15,
+      "instrumentalness": 0.05
+     },
+     "bpm": 96,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 11,
+     "title": "D.RUM",
+     "artists": [
+      "Mark Guiliana"
+     ],
+     "primary_artist": "Mark Guiliana",
+     "duration": "4:57",
+     "duration_sec": 297,
+     "spotify_track_id": "1KKVztvKOb7QCa4teSQiAN",
+     "spotify_uri": "spotify:track:1KKVztvKOb7QCa4teSQiAN",
+     "spotify_url": "https://open.spotify.com/track/1KKVztvKOb7QCa4teSQiAN",
+     "genres": [
+      "jazz",
+      "electronic"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "nu-jazz",
+      "electro-jazz",
+      "drum-led"
+     ],
+     "mood": [
+      "propulsive",
+      "cerebral",
+      "hypnotic"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.45,
+      "danceability": 0.55,
+      "acousticness": 0.25,
+      "instrumentalness": 0.9
+     },
+     "bpm": 120,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 12,
+     "title": "Knee Deep",
+     "artists": [
+      "Jay Worthy",
+      "George Clinton",
+      "LNDN DRGS",
+      "Snoop Dogg"
+     ],
+     "primary_artist": "Jay Worthy",
+     "duration": "3:08",
+     "duration_sec": 188,
+     "spotify_track_id": "2AoTIIbQ4LjAFKIn8gziRm",
+     "spotify_uri": "spotify:track:2AoTIIbQ4LjAFKIn8gziRm",
+     "spotify_url": "https://open.spotify.com/track/2AoTIIbQ4LjAFKIn8gziRm",
+     "genres": [
+      "hip-hop",
+      "soul-funk"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "g-funk",
+      "west coast hip-hop",
+      "p-funk"
+     ],
+     "mood": [
+      "laid-back",
+      "sunny",
+      "swaggering"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.7,
+      "danceability": 0.8,
+      "acousticness": 0.15,
+      "instrumentalness": 0.05
+     },
+     "bpm": 94,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 13,
+     "title": "We're Gonna Dance - Remix",
+     "artists": [
+      "everyone",
+      "Lady Blackbird",
+      "Felix Da Housecat"
+     ],
+     "primary_artist": "everyone",
+     "duration": "7:02",
+     "duration_sec": 422,
+     "spotify_track_id": "7IbtAXW7NaTAJ1op98fZ0m",
+     "spotify_uri": "spotify:track:7IbtAXW7NaTAJ1op98fZ0m",
+     "spotify_url": "https://open.spotify.com/track/7IbtAXW7NaTAJ1op98fZ0m",
+     "genres": [
+      "soulful-house",
+      "electronic"
+     ],
+     "genre_primary": "soulful-house",
+     "subgenres": [
+      "house",
+      "vocal house",
+      "chicago house",
+      "disco house"
+     ],
+     "mood": [
+      "euphoric",
+      "driving",
+      "sultry"
+     ],
+     "mood_parameters": {
+      "energy": 0.8,
+      "valence": 0.7,
+      "danceability": 0.85,
+      "acousticness": 0.1,
+      "instrumentalness": 0.3
+     },
+     "bpm": 124,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 14,
+     "title": "Mandala",
+     "artists": [
+      "Joyce Moreno",
+      "Tutty Moreno",
+      "Adrian Younge"
+     ],
+     "primary_artist": "Joyce Moreno",
+     "duration": "4:06",
+     "duration_sec": 246,
+     "spotify_track_id": "1robNwXX7A6tRfMTscj1PL",
+     "spotify_uri": "spotify:track:1robNwXX7A6tRfMTscj1PL",
+     "spotify_url": "https://open.spotify.com/track/1robNwXX7A6tRfMTscj1PL",
+     "genres": [
+      "world",
+      "jazz"
+     ],
+     "genre_primary": "world",
+     "subgenres": [
+      "mpb",
+      "brazilian jazz",
+      "samba-jazz"
+     ],
+     "mood": [
+      "warm",
+      "breezy",
+      "nostalgic"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.7,
+      "danceability": 0.6,
+      "acousticness": 0.55,
+      "instrumentalness": 0.2
+     },
+     "bpm": 104,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 15,
+     "title": "47th Street",
+     "artists": [
+      "Lalah Hathaway",
+      "J. Ivy"
+     ],
+     "primary_artist": "Lalah Hathaway",
+     "duration": "3:49",
+     "duration_sec": 229,
+     "spotify_track_id": "6TYxWTo7vm5JdFuQnPtq1A",
+     "spotify_uri": "spotify:track:6TYxWTo7vm5JdFuQnPtq1A",
+     "spotify_url": "https://open.spotify.com/track/6TYxWTo7vm5JdFuQnPtq1A",
+     "genres": [
+      "neo-soul",
+      "soul-funk"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "contemporary r&b",
+      "spoken word",
+      "gospel soul"
+     ],
+     "mood": [
+      "soulful",
+      "reverent",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.6,
+      "danceability": 0.5,
+      "acousticness": 0.35,
+      "instrumentalness": 0.1
+     },
+     "bpm": 88,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 16,
+     "title": "Ain't It Nice - Merlin Bobb & Masaki Morii Dub Remix",
+     "artists": [
+      "Soul In The Horn",
+      "Madison McFerrin"
+     ],
+     "primary_artist": "Soul In The Horn",
+     "duration": "5:49",
+     "duration_sec": 349,
+     "spotify_track_id": "4v92oqyb8g10bMQxPt41uU",
+     "spotify_uri": "spotify:track:4v92oqyb8g10bMQxPt41uU",
+     "spotify_url": "https://open.spotify.com/track/4v92oqyb8g10bMQxPt41uU",
+     "genres": [
+      "soulful-house"
+     ],
+     "genre_primary": "soulful-house",
+     "subgenres": [
+      "house",
+      "deep house",
+      "dub remix",
+      "vocal house"
+     ],
+     "mood": [
+      "hypnotic",
+      "sultry",
+      "late-night"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.6,
+      "danceability": 0.85,
+      "acousticness": 0.1,
+      "instrumentalness": 0.6
+     },
+     "bpm": 122,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 17,
+     "title": "Estamos Listos",
+     "artists": [
+      "Cypress Hill"
+     ],
+     "primary_artist": "Cypress Hill",
+     "duration": "2:37",
+     "duration_sec": 157,
+     "spotify_track_id": "6ybJCiSbTxvLXWmgCIxtQJ",
+     "spotify_uri": "spotify:track:6ybJCiSbTxvLXWmgCIxtQJ",
+     "spotify_url": "https://open.spotify.com/track/6ybJCiSbTxvLXWmgCIxtQJ",
+     "genres": [
+      "hip-hop"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "latin rap",
+      "west coast hip-hop",
+      "boom bap"
+     ],
+     "mood": [
+      "gritty",
+      "defiant",
+      "energetic"
+     ],
+     "mood_parameters": {
+      "energy": 0.8,
+      "valence": 0.5,
+      "danceability": 0.7,
+      "acousticness": 0.1,
+      "instrumentalness": 0.05
+     },
+     "bpm": 92,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 18,
+     "title": "I Like It Hot - Hot Like Fire Remix",
+     "artists": [
+      "Honey Dijon",
+      "Greentea Peng"
+     ],
+     "primary_artist": "Honey Dijon",
+     "duration": "6:00",
+     "duration_sec": 360,
+     "spotify_track_id": "1602xT1tWRZwkB33iOyAPf",
+     "spotify_uri": "spotify:track:1602xT1tWRZwkB33iOyAPf",
+     "spotify_url": "https://open.spotify.com/track/1602xT1tWRZwkB33iOyAPf",
+     "genres": [
+      "electronic",
+      "soulful-house"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "house",
+      "tech house",
+      "chicago house",
+      "vocal house"
+     ],
+     "mood": [
+      "sultry",
+      "driving",
+      "hypnotic"
+     ],
+     "mood_parameters": {
+      "energy": 0.85,
+      "valence": 0.6,
+      "danceability": 0.9,
+      "acousticness": 0.05,
+      "instrumentalness": 0.4
+     },
+     "bpm": 126,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 19,
+     "title": "Cmon (LATIN MAFIA & Fred edit)",
+     "artists": [
+      "Fred again..",
+      "Brian Eno",
+      "LATIN MAFIA"
+     ],
+     "primary_artist": "Fred again..",
+     "duration": "4:15",
+     "duration_sec": 255,
+     "spotify_track_id": "6QvMHLFmp3sk707iQZhCfA",
+     "spotify_uri": "spotify:track:6QvMHLFmp3sk707iQZhCfA",
+     "spotify_url": "https://open.spotify.com/track/6QvMHLFmp3sk707iQZhCfA",
+     "genres": [
+      "electronic"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "uk garage",
+      "house",
+      "ambient pop"
+     ],
+     "mood": [
+      "euphoric",
+      "emotional",
+      "driving"
+     ],
+     "mood_parameters": {
+      "energy": 0.75,
+      "valence": 0.6,
+      "danceability": 0.75,
+      "acousticness": 0.15,
+      "instrumentalness": 0.3
+     },
+     "bpm": 130,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 20,
+     "title": "Open Eye Signal (under the fabric)",
+     "artists": [
+      "Jon Hopkins"
+     ],
+     "primary_artist": "Jon Hopkins",
+     "duration": "4:01",
+     "duration_sec": 241,
+     "spotify_track_id": "5lFNqg3eMNMuJsnFRKB460",
+     "spotify_uri": "spotify:track:5lFNqg3eMNMuJsnFRKB460",
+     "spotify_url": "https://open.spotify.com/track/5lFNqg3eMNMuJsnFRKB460",
+     "genres": [
+      "electronic",
+      "downtempo"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "ambient techno",
+      "idm",
+      "rework"
+     ],
+     "mood": [
+      "hypnotic",
+      "cinematic",
+      "brooding"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.35,
+      "danceability": 0.5,
+      "acousticness": 0.2,
+      "instrumentalness": 0.95
+     },
+     "bpm": 120,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 21,
+     "title": "Hand Tech",
+     "artists": [
+      "David Moss",
+      "John Zorn"
+     ],
+     "primary_artist": "David Moss",
+     "duration": "2:54",
+     "duration_sec": 174,
+     "spotify_track_id": "6mDN1AtBN0ZZ9C1aD80eId",
+     "spotify_uri": "spotify:track:6mDN1AtBN0ZZ9C1aD80eId",
+     "spotify_url": "https://open.spotify.com/track/6mDN1AtBN0ZZ9C1aD80eId",
+     "genres": [
+      "alt",
+      "jazz"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "avant-garde",
+      "free improvisation",
+      "experimental vocal",
+      "noise"
+     ],
+     "mood": [
+      "abrasive",
+      "unsettling",
+      "frenetic"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.25,
+      "danceability": 0.2,
+      "acousticness": 0.4,
+      "instrumentalness": 0.5
+     },
+     "bpm": null,
      "bpm_source": "estimated"
     }
    ]
@@ -77005,6 +77830,883 @@
     "instrumentalness": 0.95
    },
    "bpm": 60,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 1,
+   "title": "If It Ain't Broke (Love Wins) (feat. Phoelix & 9th Wonder)",
+   "artists": [
+    "Dinner Party",
+    "Terrace Martin",
+    "Robert Glasper",
+    "Kamasi Washington",
+    "Phoelix",
+    "9th Wonder"
+   ],
+   "primary_artist": "Dinner Party",
+   "duration": "2:25",
+   "duration_sec": 145,
+   "spotify_track_id": "0qge34yTt15XkmvX4XIuha",
+   "spotify_uri": "spotify:track:0qge34yTt15XkmvX4XIuha",
+   "spotify_url": "https://open.spotify.com/track/0qge34yTt15XkmvX4XIuha",
+   "genres": [
+    "neo-soul",
+    "jazz"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "jazz-soul",
+    "jazz-rap",
+    "spiritual jazz",
+    "alternative r&b"
+   ],
+   "mood": [
+    "soulful",
+    "warm",
+    "laid-back"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.6,
+    "danceability": 0.55,
+    "acousticness": 0.4,
+    "instrumentalness": 0.3
+   },
+   "bpm": 85,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 2,
+   "title": "Always on Your Side",
+   "artists": [
+    "Bonobo",
+    "Joy Crookes"
+   ],
+   "primary_artist": "Bonobo",
+   "duration": "3:29",
+   "duration_sec": 209,
+   "spotify_track_id": "6jJTpzMquQLVuUkM2vVEIF",
+   "spotify_uri": "spotify:track:6jJTpzMquQLVuUkM2vVEIF",
+   "spotify_url": "https://open.spotify.com/track/6jJTpzMquQLVuUkM2vVEIF",
+   "genres": [
+    "electronic",
+    "neo-soul"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "downtempo",
+    "organic house",
+    "trip-hop"
+   ],
+   "mood": [
+    "lush",
+    "melancholic",
+    "hypnotic"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.45,
+    "danceability": 0.6,
+    "acousticness": 0.3,
+    "instrumentalness": 0.2
+   },
+   "bpm": 110,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 3,
+   "title": "Ana Maria",
+   "artists": [
+    "Orchestra Baobab"
+   ],
+   "primary_artist": "Orchestra Baobab",
+   "duration": "5:34",
+   "duration_sec": 334,
+   "spotify_track_id": "7mNW931E1aNdMgaWxmHlzS",
+   "spotify_uri": "spotify:track:7mNW931E1aNdMgaWxmHlzS",
+   "spotify_url": "https://open.spotify.com/track/7mNW931E1aNdMgaWxmHlzS",
+   "genres": [
+    "world"
+   ],
+   "genre_primary": "world",
+   "subgenres": [
+    "senegalese",
+    "afro-cuban",
+    "salsa africana"
+   ],
+   "mood": [
+    "breezy",
+    "nostalgic",
+    "sunny"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.75,
+    "danceability": 0.65,
+    "acousticness": 0.6,
+    "instrumentalness": 0.25
+   },
+   "bpm": 100,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 4,
+   "title": "Don’t You Want Me (with Cat Power)",
+   "artists": [
+    "Meshell Ndegeocello",
+    "Cat Power"
+   ],
+   "primary_artist": "Meshell Ndegeocello",
+   "duration": "4:36",
+   "duration_sec": 276,
+   "spotify_track_id": "2uadrfFrPg8kQccUr36aEc",
+   "spotify_uri": "spotify:track:2uadrfFrPg8kQccUr36aEc",
+   "spotify_url": "https://open.spotify.com/track/2uadrfFrPg8kQccUr36aEc",
+   "genres": [
+    "neo-soul",
+    "alt"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "art r&b",
+    "alternative soul",
+    "jazz-funk"
+   ],
+   "mood": [
+    "intimate",
+    "brooding",
+    "sensual"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.4,
+    "danceability": 0.45,
+    "acousticness": 0.45,
+    "instrumentalness": 0.2
+   },
+   "bpm": 92,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 5,
+   "title": "Take Us",
+   "artists": [
+    "Romare"
+   ],
+   "primary_artist": "Romare",
+   "duration": "4:39",
+   "duration_sec": 279,
+   "spotify_track_id": "2T1jX8AiuTv9obQXyqIZx4",
+   "spotify_uri": "spotify:track:2T1jX8AiuTv9obQXyqIZx4",
+   "spotify_url": "https://open.spotify.com/track/2T1jX8AiuTv9obQXyqIZx4",
+   "genres": [
+    "electronic",
+    "soulful-house"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "house",
+    "sample house",
+    "afro house",
+    "deep house"
+   ],
+   "mood": [
+    "groovy",
+    "hypnotic",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.6,
+    "danceability": 0.8,
+    "acousticness": 0.2,
+    "instrumentalness": 0.7
+   },
+   "bpm": 120,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 6,
+   "title": "Let the Music Find You",
+   "artists": [
+    "Galliano"
+   ],
+   "primary_artist": "Galliano",
+   "duration": "4:32",
+   "duration_sec": 272,
+   "spotify_track_id": "10Md5THD3YHrYcPHQ6BFPg",
+   "spotify_uri": "spotify:track:10Md5THD3YHrYcPHQ6BFPg",
+   "spotify_url": "https://open.spotify.com/track/10Md5THD3YHrYcPHQ6BFPg",
+   "genres": [
+    "broken-beat",
+    "uk-jazz"
+   ],
+   "genre_primary": "broken-beat",
+   "subgenres": [
+    "acid jazz",
+    "nu-jazz",
+    "jazz-funk"
+   ],
+   "mood": [
+    "uplifting",
+    "groovy",
+    "soulful"
+   ],
+   "mood_parameters": {
+    "energy": 0.65,
+    "valence": 0.7,
+    "danceability": 0.75,
+    "acousticness": 0.3,
+    "instrumentalness": 0.3
+   },
+   "bpm": 112,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 7,
+   "title": "Floette ft. John Glacier",
+   "artists": [
+    "Arlo Parks",
+    "John Glacier"
+   ],
+   "primary_artist": "Arlo Parks",
+   "duration": "3:12",
+   "duration_sec": 192,
+   "spotify_track_id": "2f5pyfkPX3cOeSdXBS07J9",
+   "spotify_uri": "spotify:track:2f5pyfkPX3cOeSdXBS07J9",
+   "spotify_url": "https://open.spotify.com/track/2f5pyfkPX3cOeSdXBS07J9",
+   "genres": [
+    "alt",
+    "neo-soul"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "indie soul",
+    "bedroom pop",
+    "alternative r&b",
+    "indie pop"
+   ],
+   "mood": [
+    "dreamy",
+    "wistful",
+    "tender"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.45,
+    "danceability": 0.5,
+    "acousticness": 0.4,
+    "instrumentalness": 0.15
+   },
+   "bpm": 95,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 8,
+   "title": "Garden",
+   "artists": [
+    "Alabama Shakes"
+   ],
+   "primary_artist": "Alabama Shakes",
+   "duration": "4:59",
+   "duration_sec": 299,
+   "spotify_track_id": "10PoXrzxGD2WaWTRuYU7VE",
+   "spotify_uri": "spotify:track:10PoXrzxGD2WaWTRuYU7VE",
+   "spotify_url": "https://open.spotify.com/track/10PoXrzxGD2WaWTRuYU7VE",
+   "genres": [
+    "alt",
+    "soul-funk"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "soul rock",
+    "southern soul",
+    "blues rock",
+    "psychedelic soul"
+   ],
+   "mood": [
+    "raw",
+    "yearning",
+    "dramatic"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.45,
+    "danceability": 0.45,
+    "acousticness": 0.35,
+    "instrumentalness": 0.1
+   },
+   "bpm": 78,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 9,
+   "title": "Da Du Dah (Onome Remix) [feat. Nyron Higor]",
+   "artists": [
+    "Kokoroko",
+    "Nyron Higor",
+    "Onome Edgeworth"
+   ],
+   "primary_artist": "Kokoroko",
+   "duration": "3:44",
+   "duration_sec": 224,
+   "spotify_track_id": "3vpofdXzaAiGOUcXZ5fRCM",
+   "spotify_uri": "spotify:track:3vpofdXzaAiGOUcXZ5fRCM",
+   "spotify_url": "https://open.spotify.com/track/3vpofdXzaAiGOUcXZ5fRCM",
+   "genres": [
+    "uk-jazz",
+    "broken-beat"
+   ],
+   "genre_primary": "uk-jazz",
+   "subgenres": [
+    "afro-jazz",
+    "afrobeat",
+    "broken beat",
+    "uk jazz"
+   ],
+   "mood": [
+    "percussive",
+    "joyful",
+    "groovy"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.75,
+    "danceability": 0.8,
+    "acousticness": 0.25,
+    "instrumentalness": 0.5
+   },
+   "bpm": 116,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 10,
+   "title": "SPAZZZ",
+   "artists": [
+    "Busta Rhymes",
+    "J Dilla"
+   ],
+   "primary_artist": "Busta Rhymes",
+   "duration": "3:15",
+   "duration_sec": 195,
+   "spotify_track_id": "4k6nh37udZhR3kUm9PR0bJ",
+   "spotify_uri": "spotify:track:4k6nh37udZhR3kUm9PR0bJ",
+   "spotify_url": "https://open.spotify.com/track/4k6nh37udZhR3kUm9PR0bJ",
+   "genres": [
+    "hip-hop"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "boom bap",
+    "east coast hip-hop",
+    "dilla beats"
+   ],
+   "mood": [
+    "energetic",
+    "raw",
+    "braggadocious"
+   ],
+   "mood_parameters": {
+    "energy": 0.85,
+    "valence": 0.6,
+    "danceability": 0.75,
+    "acousticness": 0.15,
+    "instrumentalness": 0.05
+   },
+   "bpm": 96,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 11,
+   "title": "D.RUM",
+   "artists": [
+    "Mark Guiliana"
+   ],
+   "primary_artist": "Mark Guiliana",
+   "duration": "4:57",
+   "duration_sec": 297,
+   "spotify_track_id": "1KKVztvKOb7QCa4teSQiAN",
+   "spotify_uri": "spotify:track:1KKVztvKOb7QCa4teSQiAN",
+   "spotify_url": "https://open.spotify.com/track/1KKVztvKOb7QCa4teSQiAN",
+   "genres": [
+    "jazz",
+    "electronic"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "nu-jazz",
+    "electro-jazz",
+    "drum-led"
+   ],
+   "mood": [
+    "propulsive",
+    "cerebral",
+    "hypnotic"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.45,
+    "danceability": 0.55,
+    "acousticness": 0.25,
+    "instrumentalness": 0.9
+   },
+   "bpm": 120,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 12,
+   "title": "Knee Deep",
+   "artists": [
+    "Jay Worthy",
+    "George Clinton",
+    "LNDN DRGS",
+    "Snoop Dogg"
+   ],
+   "primary_artist": "Jay Worthy",
+   "duration": "3:08",
+   "duration_sec": 188,
+   "spotify_track_id": "2AoTIIbQ4LjAFKIn8gziRm",
+   "spotify_uri": "spotify:track:2AoTIIbQ4LjAFKIn8gziRm",
+   "spotify_url": "https://open.spotify.com/track/2AoTIIbQ4LjAFKIn8gziRm",
+   "genres": [
+    "hip-hop",
+    "soul-funk"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "g-funk",
+    "west coast hip-hop",
+    "p-funk"
+   ],
+   "mood": [
+    "laid-back",
+    "sunny",
+    "swaggering"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.7,
+    "danceability": 0.8,
+    "acousticness": 0.15,
+    "instrumentalness": 0.05
+   },
+   "bpm": 94,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 13,
+   "title": "We're Gonna Dance - Remix",
+   "artists": [
+    "everyone",
+    "Lady Blackbird",
+    "Felix Da Housecat"
+   ],
+   "primary_artist": "everyone",
+   "duration": "7:02",
+   "duration_sec": 422,
+   "spotify_track_id": "7IbtAXW7NaTAJ1op98fZ0m",
+   "spotify_uri": "spotify:track:7IbtAXW7NaTAJ1op98fZ0m",
+   "spotify_url": "https://open.spotify.com/track/7IbtAXW7NaTAJ1op98fZ0m",
+   "genres": [
+    "soulful-house",
+    "electronic"
+   ],
+   "genre_primary": "soulful-house",
+   "subgenres": [
+    "house",
+    "vocal house",
+    "chicago house",
+    "disco house"
+   ],
+   "mood": [
+    "euphoric",
+    "driving",
+    "sultry"
+   ],
+   "mood_parameters": {
+    "energy": 0.8,
+    "valence": 0.7,
+    "danceability": 0.85,
+    "acousticness": 0.1,
+    "instrumentalness": 0.3
+   },
+   "bpm": 124,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 14,
+   "title": "Mandala",
+   "artists": [
+    "Joyce Moreno",
+    "Tutty Moreno",
+    "Adrian Younge"
+   ],
+   "primary_artist": "Joyce Moreno",
+   "duration": "4:06",
+   "duration_sec": 246,
+   "spotify_track_id": "1robNwXX7A6tRfMTscj1PL",
+   "spotify_uri": "spotify:track:1robNwXX7A6tRfMTscj1PL",
+   "spotify_url": "https://open.spotify.com/track/1robNwXX7A6tRfMTscj1PL",
+   "genres": [
+    "world",
+    "jazz"
+   ],
+   "genre_primary": "world",
+   "subgenres": [
+    "mpb",
+    "brazilian jazz",
+    "samba-jazz"
+   ],
+   "mood": [
+    "warm",
+    "breezy",
+    "nostalgic"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.7,
+    "danceability": 0.6,
+    "acousticness": 0.55,
+    "instrumentalness": 0.2
+   },
+   "bpm": 104,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 15,
+   "title": "47th Street",
+   "artists": [
+    "Lalah Hathaway",
+    "J. Ivy"
+   ],
+   "primary_artist": "Lalah Hathaway",
+   "duration": "3:49",
+   "duration_sec": 229,
+   "spotify_track_id": "6TYxWTo7vm5JdFuQnPtq1A",
+   "spotify_uri": "spotify:track:6TYxWTo7vm5JdFuQnPtq1A",
+   "spotify_url": "https://open.spotify.com/track/6TYxWTo7vm5JdFuQnPtq1A",
+   "genres": [
+    "neo-soul",
+    "soul-funk"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "contemporary r&b",
+    "spoken word",
+    "gospel soul"
+   ],
+   "mood": [
+    "soulful",
+    "reverent",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.6,
+    "danceability": 0.5,
+    "acousticness": 0.35,
+    "instrumentalness": 0.1
+   },
+   "bpm": 88,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 16,
+   "title": "Ain't It Nice - Merlin Bobb & Masaki Morii Dub Remix",
+   "artists": [
+    "Soul In The Horn",
+    "Madison McFerrin"
+   ],
+   "primary_artist": "Soul In The Horn",
+   "duration": "5:49",
+   "duration_sec": 349,
+   "spotify_track_id": "4v92oqyb8g10bMQxPt41uU",
+   "spotify_uri": "spotify:track:4v92oqyb8g10bMQxPt41uU",
+   "spotify_url": "https://open.spotify.com/track/4v92oqyb8g10bMQxPt41uU",
+   "genres": [
+    "soulful-house"
+   ],
+   "genre_primary": "soulful-house",
+   "subgenres": [
+    "house",
+    "deep house",
+    "dub remix",
+    "vocal house"
+   ],
+   "mood": [
+    "hypnotic",
+    "sultry",
+    "late-night"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.6,
+    "danceability": 0.85,
+    "acousticness": 0.1,
+    "instrumentalness": 0.6
+   },
+   "bpm": 122,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 17,
+   "title": "Estamos Listos",
+   "artists": [
+    "Cypress Hill"
+   ],
+   "primary_artist": "Cypress Hill",
+   "duration": "2:37",
+   "duration_sec": 157,
+   "spotify_track_id": "6ybJCiSbTxvLXWmgCIxtQJ",
+   "spotify_uri": "spotify:track:6ybJCiSbTxvLXWmgCIxtQJ",
+   "spotify_url": "https://open.spotify.com/track/6ybJCiSbTxvLXWmgCIxtQJ",
+   "genres": [
+    "hip-hop"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "latin rap",
+    "west coast hip-hop",
+    "boom bap"
+   ],
+   "mood": [
+    "gritty",
+    "defiant",
+    "energetic"
+   ],
+   "mood_parameters": {
+    "energy": 0.8,
+    "valence": 0.5,
+    "danceability": 0.7,
+    "acousticness": 0.1,
+    "instrumentalness": 0.05
+   },
+   "bpm": 92,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 18,
+   "title": "I Like It Hot - Hot Like Fire Remix",
+   "artists": [
+    "Honey Dijon",
+    "Greentea Peng"
+   ],
+   "primary_artist": "Honey Dijon",
+   "duration": "6:00",
+   "duration_sec": 360,
+   "spotify_track_id": "1602xT1tWRZwkB33iOyAPf",
+   "spotify_uri": "spotify:track:1602xT1tWRZwkB33iOyAPf",
+   "spotify_url": "https://open.spotify.com/track/1602xT1tWRZwkB33iOyAPf",
+   "genres": [
+    "electronic",
+    "soulful-house"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "house",
+    "tech house",
+    "chicago house",
+    "vocal house"
+   ],
+   "mood": [
+    "sultry",
+    "driving",
+    "hypnotic"
+   ],
+   "mood_parameters": {
+    "energy": 0.85,
+    "valence": 0.6,
+    "danceability": 0.9,
+    "acousticness": 0.05,
+    "instrumentalness": 0.4
+   },
+   "bpm": 126,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 19,
+   "title": "Cmon (LATIN MAFIA & Fred edit)",
+   "artists": [
+    "Fred again..",
+    "Brian Eno",
+    "LATIN MAFIA"
+   ],
+   "primary_artist": "Fred again..",
+   "duration": "4:15",
+   "duration_sec": 255,
+   "spotify_track_id": "6QvMHLFmp3sk707iQZhCfA",
+   "spotify_uri": "spotify:track:6QvMHLFmp3sk707iQZhCfA",
+   "spotify_url": "https://open.spotify.com/track/6QvMHLFmp3sk707iQZhCfA",
+   "genres": [
+    "electronic"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "uk garage",
+    "house",
+    "ambient pop"
+   ],
+   "mood": [
+    "euphoric",
+    "emotional",
+    "driving"
+   ],
+   "mood_parameters": {
+    "energy": 0.75,
+    "valence": 0.6,
+    "danceability": 0.75,
+    "acousticness": 0.15,
+    "instrumentalness": 0.3
+   },
+   "bpm": 130,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 20,
+   "title": "Open Eye Signal (under the fabric)",
+   "artists": [
+    "Jon Hopkins"
+   ],
+   "primary_artist": "Jon Hopkins",
+   "duration": "4:01",
+   "duration_sec": 241,
+   "spotify_track_id": "5lFNqg3eMNMuJsnFRKB460",
+   "spotify_uri": "spotify:track:5lFNqg3eMNMuJsnFRKB460",
+   "spotify_url": "https://open.spotify.com/track/5lFNqg3eMNMuJsnFRKB460",
+   "genres": [
+    "electronic",
+    "downtempo"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "ambient techno",
+    "idm",
+    "rework"
+   ],
+   "mood": [
+    "hypnotic",
+    "cinematic",
+    "brooding"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.35,
+    "danceability": 0.5,
+    "acousticness": 0.2,
+    "instrumentalness": 0.95
+   },
+   "bpm": 120,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 43,
+   "playlist_name": "New Release Playlist #43",
+   "playlist_id": "0JmuaCzd4rGTMVg0UYuc0O",
+   "position_in_playlist": 21,
+   "title": "Hand Tech",
+   "artists": [
+    "David Moss",
+    "John Zorn"
+   ],
+   "primary_artist": "David Moss",
+   "duration": "2:54",
+   "duration_sec": 174,
+   "spotify_track_id": "6mDN1AtBN0ZZ9C1aD80eId",
+   "spotify_uri": "spotify:track:6mDN1AtBN0ZZ9C1aD80eId",
+   "spotify_url": "https://open.spotify.com/track/6mDN1AtBN0ZZ9C1aD80eId",
+   "genres": [
+    "alt",
+    "jazz"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "avant-garde",
+    "free improvisation",
+    "experimental vocal",
+    "noise"
+   ],
+   "mood": [
+    "abrasive",
+    "unsettling",
+    "frenetic"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.25,
+    "danceability": 0.2,
+    "acousticness": 0.4,
+    "instrumentalness": 0.5
+   },
+   "bpm": null,
    "bpm_source": "estimated"
   }
  ]
