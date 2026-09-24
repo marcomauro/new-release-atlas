@@ -4,7 +4,7 @@
   "source_account": "Spotify",
   "generated_at": "2026-05-23T12:27:11.266084",
   "description": "Archivio strutturato delle 'New Release Playlist' di Marco Mauro, da consultare via AI per generare playlist tematiche o effettuare analisi.",
-  "playlist_range": "#1 - #44 (44 New Release Playlist consecutive) + 1 extra (#101)",
+  "playlist_range": "#1 - #45 (45 New Release Playlist consecutive) + 1 extra (#101)",
   "note_on_gaps": "Nessuno: il dataset copre integralmente le New Release Playlist da #12 a #36. Le #1-#11 e #13-#17 si chiamano 'New Release Friday #N', dalla #12 e #18 in poi 'New Release Playlist #N'. La '2025 Fav Album Playlist' e' una compilation tematica (extra), spostata fuori dalla sequenza NRP al playlist_number 101.",
   "schema_per_track": {
    "playlist_number": "int (numero progressivo della playlist di origine)",
@@ -27,9 +27,9 @@
    "bpm": "int | null (null = non verificabile, mai inventato)",
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
-  "total_tracks_with_duplicates": 992,
-  "unique_tracks": 969,
-  "unique_artists": 900,
+  "total_tracks_with_duplicates": 1011,
+  "unique_tracks": 988,
+  "unique_artists": 915,
   "top_artists": [
    [
     "Brian Jackson",
@@ -72,6 +72,10 @@
     8
    ],
    [
+    "Jorja Smith",
+    8
+   ],
+   [
     "Charles Webster",
     8
    ],
@@ -93,10 +97,6 @@
    ],
    [
     "Run Logan Run",
-    7
-   ],
-   [
-    "Jorja Smith",
     7
    ],
    [
@@ -166,8 +166,8 @@
   "enrichment_note": "Caratterizzazione musicale esperta aggiunta da Claude (giugno 2026): subgenres granulari, mood, mood_parameters (energy/valence/danceability/acousticness/instrumentalness, scala 0-1, stime qualitative da esperto), bpm (int o null) e bpm_source. bpm_source='verified' = confermato da fonti web DJ-pool (Beatsource, BPM Supreme, SongBPM, Tunebat); 'estimated' = stima fondata sul tempo tipico del brano/genere (presente solo dove molto affidabile, es. house 120-126); bpm=null dove non verificabile, mai inventato. I campi 'genres' e 'genre_primary' preesistenti (tassonomia a 12 macro-generi della pipeline new-release-atlas) sono INTOCCATI e restano la classificazione di riferimento.",
   "extended_at": "2026-06-11T09:12:01.887032",
   "extension_note": "Playlist #33 e #34 aggiunte a giugno 2026 con caratterizzazione esperta completa. Per queste 2 playlist anche genres/genre_primary sono assegnati dall'AI (coerenti con la tassonomia a 12 macro-generi della pipeline). Nota: 'Fainted Light' (Indra Lesmana) in #34 è un duplicato cross-playlist di #32 (stesso track ID).",
-  "merged_at": "2026-09-24T21:50:27Z",
-  "merge_note": "add_playlist.py: aggiunte ['#44'] (17 occorrenze, 17 brani nuovi)",
+  "merged_at": "2026-09-24T22:08:37Z",
+  "merge_note": "add_playlist.py: aggiunte ['#45'] (19 occorrenze, 19 brani nuovi)",
   "cross_playlist_duplicates": [
    {
     "spotify_track_id": "0ACrjHByr2GzPVTxKbDBix",
@@ -39002,6 +39002,747 @@
       "instrumentalness": 0.6
      },
      "bpm": 123,
+     "bpm_source": "estimated"
+    }
+   ]
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "spotify_url": "https://open.spotify.com/playlist/1TKofsRgxbgEb6SHsbO5Pc",
+   "description": "",
+   "date": null,
+   "track_count": 19,
+   "tracks": [
+    {
+     "position_in_playlist": 1,
+     "title": "Leg Day",
+     "artists": [
+      "Surprise Chef"
+     ],
+     "primary_artist": "Surprise Chef",
+     "duration": "4:56",
+     "duration_sec": 296,
+     "spotify_track_id": "7yQxwSFoiAjvwDBvoJW455",
+     "spotify_uri": "spotify:track:7yQxwSFoiAjvwDBvoJW455",
+     "spotify_url": "https://open.spotify.com/track/7yQxwSFoiAjvwDBvoJW455",
+     "genres": [
+      "soul-funk",
+      "jazz"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "funk",
+      "instrumental soul",
+      "cinematic funk",
+      "library funk"
+     ],
+     "mood": [
+      "groovy",
+      "laid-back",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.6,
+      "danceability": 0.68,
+      "acousticness": 0.55,
+      "instrumentalness": 0.95
+     },
+     "bpm": 92,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 2,
+     "title": "Dancing",
+     "artists": [
+      "Jorja Smith"
+     ],
+     "primary_artist": "Jorja Smith",
+     "duration": "2:42",
+     "duration_sec": 162,
+     "spotify_track_id": "4rcF5dwIHEVOgQQhva1OOI",
+     "spotify_uri": "spotify:track:4rcF5dwIHEVOgQQhva1OOI",
+     "spotify_url": "https://open.spotify.com/track/4rcF5dwIHEVOgQQhva1OOI",
+     "genres": [
+      "neo-soul",
+      "electronic"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "uk r&b",
+      "dance-soul",
+      "alt-r&b"
+     ],
+     "mood": [
+      "breezy",
+      "carefree",
+      "sensual"
+     ],
+     "mood_parameters": {
+      "energy": 0.62,
+      "valence": 0.62,
+      "danceability": 0.72,
+      "acousticness": 0.2,
+      "instrumentalness": 0.02
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 3,
+     "title": "Sweet Thing",
+     "artists": [
+      "Cleo Sol"
+     ],
+     "primary_artist": "Cleo Sol",
+     "duration": "6:18",
+     "duration_sec": 378,
+     "spotify_track_id": "6DeYDFBS41W8IbJW9UNkRt",
+     "spotify_uri": "spotify:track:6DeYDFBS41W8IbJW9UNkRt",
+     "spotify_url": "https://open.spotify.com/track/6DeYDFBS41W8IbJW9UNkRt",
+     "genres": [
+      "neo-soul",
+      "soul-funk"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "soul",
+      "uk soul",
+      "70s soul revival",
+      "orchestral soul"
+     ],
+     "mood": [
+      "tender",
+      "spiritual",
+      "lush"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.6,
+      "danceability": 0.5,
+      "acousticness": 0.55,
+      "instrumentalness": 0.1
+     },
+     "bpm": 80,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 4,
+     "title": "Disappearing Act",
+     "artists": [
+      "Beck"
+     ],
+     "primary_artist": "Beck",
+     "duration": "2:59",
+     "duration_sec": 179,
+     "spotify_track_id": "5HzWItiJH85G6OSs9h81uY",
+     "spotify_uri": "spotify:track:5HzWItiJH85G6OSs9h81uY",
+     "spotify_url": "https://open.spotify.com/track/5HzWItiJH85G6OSs9h81uY",
+     "genres": [
+      "alt"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "alternative",
+      "indie rock",
+      "psych-pop",
+      "lo-fi"
+     ],
+     "mood": [
+      "wistful",
+      "detached",
+      "mellow"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.4,
+      "danceability": 0.52,
+      "acousticness": 0.45,
+      "instrumentalness": 0.05
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 5,
+     "title": "Los Andes",
+     "artists": [
+      "Hermanos Gutiérrez"
+     ],
+     "primary_artist": "Hermanos Gutiérrez",
+     "duration": "3:31",
+     "duration_sec": 211,
+     "spotify_track_id": "3HGlaKMMFsTEaat5TZ9vJF",
+     "spotify_uri": "spotify:track:3HGlaKMMFsTEaat5TZ9vJF",
+     "spotify_url": "https://open.spotify.com/track/3HGlaKMMFsTEaat5TZ9vJF",
+     "genres": [
+      "world",
+      "downtempo"
+     ],
+     "genre_primary": "world",
+     "subgenres": [
+      "instrumental",
+      "desert guitar",
+      "latin folk",
+      "cinematic western"
+     ],
+     "mood": [
+      "nostalgic",
+      "contemplative",
+      "expansive"
+     ],
+     "mood_parameters": {
+      "energy": 0.25,
+      "valence": 0.4,
+      "danceability": 0.35,
+      "acousticness": 0.85,
+      "instrumentalness": 0.97
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 6,
+     "title": "Now I’m Listening",
+     "artists": [
+      "Son Lux",
+      "Bilal"
+     ],
+     "primary_artist": "Son Lux",
+     "duration": "2:56",
+     "duration_sec": 176,
+     "spotify_track_id": "74y1RHNCy3nRyeBHsOSdh6",
+     "spotify_uri": "spotify:track:74y1RHNCy3nRyeBHsOSdh6",
+     "spotify_url": "https://open.spotify.com/track/74y1RHNCy3nRyeBHsOSdh6",
+     "genres": [
+      "alt",
+      "neo-soul"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "art pop",
+      "experimental soul",
+      "post-rock"
+     ],
+     "mood": [
+      "haunting",
+      "introspective",
+      "tense"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.3,
+      "danceability": 0.4,
+      "acousticness": 0.4,
+      "instrumentalness": 0.1
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 7,
+     "title": "Love It or Hate It",
+     "artists": [
+      "The Game",
+      "Snoop Dogg",
+      "Sela V",
+      "Cool & Dre"
+     ],
+     "primary_artist": "The Game",
+     "duration": "3:24",
+     "duration_sec": 204,
+     "spotify_track_id": "3K5uSjRcqHXY3Xi1SkSIjt",
+     "spotify_uri": "spotify:track:3K5uSjRcqHXY3Xi1SkSIjt",
+     "spotify_url": "https://open.spotify.com/track/3K5uSjRcqHXY3Xi1SkSIjt",
+     "genres": [
+      "hip-hop"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "west coast rap",
+      "g-funk",
+      "r&b hook"
+     ],
+     "mood": [
+      "confident",
+      "swaggering",
+      "smooth"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.55,
+      "danceability": 0.78,
+      "acousticness": 0.1,
+      "instrumentalness": 0.0
+     },
+     "bpm": 94,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 8,
+     "title": "Medieval Overture",
+     "artists": [
+      "Stanley Clarke"
+     ],
+     "primary_artist": "Stanley Clarke",
+     "duration": "5:25",
+     "duration_sec": 325,
+     "spotify_track_id": "6GXHtnpdKYlPzaHx45txEj",
+     "spotify_uri": "spotify:track:6GXHtnpdKYlPzaHx45txEj",
+     "spotify_url": "https://open.spotify.com/track/6GXHtnpdKYlPzaHx45txEj",
+     "genres": [
+      "jazz"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "jazz fusion",
+      "bass-led fusion",
+      "progressive jazz"
+     ],
+     "mood": [
+      "virtuosic",
+      "dramatic",
+      "intense"
+     ],
+     "mood_parameters": {
+      "energy": 0.72,
+      "valence": 0.5,
+      "danceability": 0.45,
+      "acousticness": 0.4,
+      "instrumentalness": 0.95
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 9,
+     "title": "Círculo Vicioso",
+     "artists": [
+      "Joyce Moreno",
+      "Tutty Moreno",
+      "Adrian Younge"
+     ],
+     "primary_artist": "Joyce Moreno",
+     "duration": "2:15",
+     "duration_sec": 135,
+     "spotify_track_id": "5z5RjpwWizbV3KB7ofC9Gp",
+     "spotify_uri": "spotify:track:5z5RjpwWizbV3KB7ofC9Gp",
+     "spotify_url": "https://open.spotify.com/track/5z5RjpwWizbV3KB7ofC9Gp",
+     "genres": [
+      "world",
+      "jazz"
+     ],
+     "genre_primary": "world",
+     "subgenres": [
+      "mpb",
+      "bossa jazz",
+      "jazz is dead"
+     ],
+     "mood": [
+      "breezy",
+      "nostalgic",
+      "elegant"
+     ],
+     "mood_parameters": {
+      "energy": 0.48,
+      "valence": 0.62,
+      "danceability": 0.58,
+      "acousticness": 0.7,
+      "instrumentalness": 0.2
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 10,
+     "title": "High - Mahogany Sessions",
+     "artists": [
+      "Nia Smith"
+     ],
+     "primary_artist": "Nia Smith",
+     "duration": "2:52",
+     "duration_sec": 172,
+     "spotify_track_id": "5H06IPUoi6d1OEgHcOvfOi",
+     "spotify_uri": "spotify:track:5H06IPUoi6d1OEgHcOvfOi",
+     "spotify_url": "https://open.spotify.com/track/5H06IPUoi6d1OEgHcOvfOi",
+     "genres": [
+      "neo-soul"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "acoustic soul",
+      "live session",
+      "vocal jazz"
+     ],
+     "mood": [
+      "intimate",
+      "soulful",
+      "tender"
+     ],
+     "mood_parameters": {
+      "energy": 0.28,
+      "valence": 0.5,
+      "danceability": 0.4,
+      "acousticness": 0.8,
+      "instrumentalness": 0.02
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 11,
+     "title": "DISGUISE",
+     "artists": [
+      "Tobe Nwigwe",
+      "Sia",
+      "Fat Nwigwe"
+     ],
+     "primary_artist": "Tobe Nwigwe",
+     "duration": "2:31",
+     "duration_sec": 151,
+     "spotify_track_id": "70NwUUeK2J8Y55QRUn8uM3",
+     "spotify_uri": "spotify:track:70NwUUeK2J8Y55QRUn8uM3",
+     "spotify_url": "https://open.spotify.com/track/70NwUUeK2J8Y55QRUn8uM3",
+     "genres": [
+      "hip-hop",
+      "neo-soul"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "southern rap",
+      "gospel rap",
+      "soul-rap"
+     ],
+     "mood": [
+      "empowering",
+      "bold",
+      "uplifting"
+     ],
+     "mood_parameters": {
+      "energy": 0.65,
+      "valence": 0.58,
+      "danceability": 0.68,
+      "acousticness": 0.2,
+      "instrumentalness": 0.0
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 12,
+     "title": "Summer Rain - Rework",
+     "artists": [
+      "Olive Jones"
+     ],
+     "primary_artist": "Olive Jones",
+     "duration": "4:35",
+     "duration_sec": 275,
+     "spotify_track_id": "0ZFDhrfPi5YPK1TvS0q1Av",
+     "spotify_uri": "spotify:track:0ZFDhrfPi5YPK1TvS0q1Av",
+     "spotify_url": "https://open.spotify.com/track/0ZFDhrfPi5YPK1TvS0q1Av",
+     "genres": [
+      "neo-soul",
+      "downtempo"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "soul",
+      "uk soul",
+      "rework",
+      "jazz-soul"
+     ],
+     "mood": [
+      "dreamy",
+      "warm",
+      "melancholic"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.5,
+      "danceability": 0.55,
+      "acousticness": 0.45,
+      "instrumentalness": 0.1
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 13,
+     "title": "Work Song - Antdot Remix",
+     "artists": [
+      "Nina Simone",
+      "Antdot"
+     ],
+     "primary_artist": "Nina Simone",
+     "duration": "3:38",
+     "duration_sec": 218,
+     "spotify_track_id": "07sLGxT6i39BRp26pTSIkg",
+     "spotify_uri": "spotify:track:07sLGxT6i39BRp26pTSIkg",
+     "spotify_url": "https://open.spotify.com/track/07sLGxT6i39BRp26pTSIkg",
+     "genres": [
+      "broken-beat",
+      "jazz"
+     ],
+     "genre_primary": "broken-beat",
+     "subgenres": [
+      "electronic",
+      "jazz remix",
+      "nu jazz",
+      "broken beat"
+     ],
+     "mood": [
+      "soulful",
+      "defiant",
+      "groovy"
+     ],
+     "mood_parameters": {
+      "energy": 0.68,
+      "valence": 0.45,
+      "danceability": 0.75,
+      "acousticness": 0.2,
+      "instrumentalness": 0.3
+     },
+     "bpm": 122,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 14,
+     "title": "Nobody Knows",
+     "artists": [
+      "LILJA",
+      "Beady Belle",
+      "Bugge Wesseltoft"
+     ],
+     "primary_artist": "LILJA",
+     "duration": "3:58",
+     "duration_sec": 238,
+     "spotify_track_id": "6oKP38a70tUwZ9mSPkDXtZ",
+     "spotify_uri": "spotify:track:6oKP38a70tUwZ9mSPkDXtZ",
+     "spotify_url": "https://open.spotify.com/track/6oKP38a70tUwZ9mSPkDXtZ",
+     "genres": [
+      "jazz",
+      "neo-soul"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "nordic jazz",
+      "vocal jazz",
+      "future jazz"
+     ],
+     "mood": [
+      "cool",
+      "reflective",
+      "airy"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.45,
+      "danceability": 0.45,
+      "acousticness": 0.6,
+      "instrumentalness": 0.1
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 15,
+     "title": "Tuck and Draw (feat. Takuya Kuroda & Eden Bareket)",
+     "artists": [
+      "Chris McCarthy",
+      "Takuya Kuroda",
+      "Eden Bareket"
+     ],
+     "primary_artist": "Chris McCarthy",
+     "duration": "3:45",
+     "duration_sec": 225,
+     "spotify_track_id": "4bOOenkqmtPgEHxN9ksU3T",
+     "spotify_uri": "spotify:track:4bOOenkqmtPgEHxN9ksU3T",
+     "spotify_url": "https://open.spotify.com/track/4bOOenkqmtPgEHxN9ksU3T",
+     "genres": [
+      "jazz"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "modern jazz",
+      "post-bop",
+      "piano trio"
+     ],
+     "mood": [
+      "lively",
+      "sophisticated",
+      "playful"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.55,
+      "danceability": 0.5,
+      "acousticness": 0.75,
+      "instrumentalness": 0.95
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 16,
+     "title": "MORNING DEW (DONK MIX)",
+     "artists": [
+      "Beyoncé"
+     ],
+     "primary_artist": "Beyoncé",
+     "duration": "4:04",
+     "duration_sec": 244,
+     "spotify_track_id": "4tc4fgwbPOvXyoZWZ7n6ep",
+     "spotify_uri": "spotify:track:4tc4fgwbPOvXyoZWZ7n6ep",
+     "spotify_url": "https://open.spotify.com/track/4tc4fgwbPOvXyoZWZ7n6ep",
+     "genres": [
+      "electronic",
+      "hip-hop"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "dance",
+      "donk",
+      "hard bounce",
+      "club remix"
+     ],
+     "mood": [
+      "energetic",
+      "bouncy",
+      "euphoric"
+     ],
+     "mood_parameters": {
+      "energy": 0.88,
+      "valence": 0.7,
+      "danceability": 0.82,
+      "acousticness": 0.05,
+      "instrumentalness": 0.1
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 17,
+     "title": "Push Your Luck",
+     "artists": [
+      "Riva Starr",
+      "Close Counters",
+      "Andre Espeut"
+     ],
+     "primary_artist": "Riva Starr",
+     "duration": "6:42",
+     "duration_sec": 402,
+     "spotify_track_id": "1pGQxA5WmastPlyeA8lehb",
+     "spotify_uri": "spotify:track:1pGQxA5WmastPlyeA8lehb",
+     "spotify_url": "https://open.spotify.com/track/1pGQxA5WmastPlyeA8lehb",
+     "genres": [
+      "soulful-house"
+     ],
+     "genre_primary": "soulful-house",
+     "subgenres": [
+      "house",
+      "vocal house",
+      "disco house",
+      "deep house"
+     ],
+     "mood": [
+      "uplifting",
+      "groovy",
+      "joyful"
+     ],
+     "mood_parameters": {
+      "energy": 0.78,
+      "valence": 0.72,
+      "danceability": 0.85,
+      "acousticness": 0.1,
+      "instrumentalness": 0.2
+     },
+     "bpm": 124,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 18,
+     "title": "Skein",
+     "artists": [
+      "Clark"
+     ],
+     "primary_artist": "Clark",
+     "duration": "2:06",
+     "duration_sec": 126,
+     "spotify_track_id": "5eUDvCotRznaXSa5TtOlma",
+     "spotify_uri": "spotify:track:5eUDvCotRznaXSa5TtOlma",
+     "spotify_url": "https://open.spotify.com/track/5eUDvCotRznaXSa5TtOlma",
+     "genres": [
+      "electronic",
+      "classical"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "ambient",
+      "neo-classical",
+      "idm"
+     ],
+     "mood": [
+      "ethereal",
+      "melancholic",
+      "fragile"
+     ],
+     "mood_parameters": {
+      "energy": 0.22,
+      "valence": 0.3,
+      "danceability": 0.25,
+      "acousticness": 0.5,
+      "instrumentalness": 0.95
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 19,
+     "title": "Veya, Pt. 2",
+     "artists": [
+      "fat jon",
+      "FloFilz"
+     ],
+     "primary_artist": "fat jon",
+     "duration": "1:45",
+     "duration_sec": 105,
+     "spotify_track_id": "62MUfj7Nn2elmjcBqecqkF",
+     "spotify_uri": "spotify:track:62MUfj7Nn2elmjcBqecqkF",
+     "spotify_url": "https://open.spotify.com/track/62MUfj7Nn2elmjcBqecqkF",
+     "genres": [
+      "hip-hop",
+      "downtempo"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "instrumental hip-hop",
+      "jazzy beats",
+      "lo-fi"
+     ],
+     "mood": [
+      "chill",
+      "nocturnal",
+      "mellow"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.45,
+      "danceability": 0.6,
+      "acousticness": 0.4,
+      "instrumentalness": 0.95
+     },
+     "bpm": 86,
      "bpm_source": "estimated"
     }
    ]
@@ -80094,6 +80835,793 @@
     "instrumentalness": 0.6
    },
    "bpm": 123,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 1,
+   "title": "Leg Day",
+   "artists": [
+    "Surprise Chef"
+   ],
+   "primary_artist": "Surprise Chef",
+   "duration": "4:56",
+   "duration_sec": 296,
+   "spotify_track_id": "7yQxwSFoiAjvwDBvoJW455",
+   "spotify_uri": "spotify:track:7yQxwSFoiAjvwDBvoJW455",
+   "spotify_url": "https://open.spotify.com/track/7yQxwSFoiAjvwDBvoJW455",
+   "genres": [
+    "soul-funk",
+    "jazz"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "funk",
+    "instrumental soul",
+    "cinematic funk",
+    "library funk"
+   ],
+   "mood": [
+    "groovy",
+    "laid-back",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.6,
+    "danceability": 0.68,
+    "acousticness": 0.55,
+    "instrumentalness": 0.95
+   },
+   "bpm": 92,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 2,
+   "title": "Dancing",
+   "artists": [
+    "Jorja Smith"
+   ],
+   "primary_artist": "Jorja Smith",
+   "duration": "2:42",
+   "duration_sec": 162,
+   "spotify_track_id": "4rcF5dwIHEVOgQQhva1OOI",
+   "spotify_uri": "spotify:track:4rcF5dwIHEVOgQQhva1OOI",
+   "spotify_url": "https://open.spotify.com/track/4rcF5dwIHEVOgQQhva1OOI",
+   "genres": [
+    "neo-soul",
+    "electronic"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "uk r&b",
+    "dance-soul",
+    "alt-r&b"
+   ],
+   "mood": [
+    "breezy",
+    "carefree",
+    "sensual"
+   ],
+   "mood_parameters": {
+    "energy": 0.62,
+    "valence": 0.62,
+    "danceability": 0.72,
+    "acousticness": 0.2,
+    "instrumentalness": 0.02
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 3,
+   "title": "Sweet Thing",
+   "artists": [
+    "Cleo Sol"
+   ],
+   "primary_artist": "Cleo Sol",
+   "duration": "6:18",
+   "duration_sec": 378,
+   "spotify_track_id": "6DeYDFBS41W8IbJW9UNkRt",
+   "spotify_uri": "spotify:track:6DeYDFBS41W8IbJW9UNkRt",
+   "spotify_url": "https://open.spotify.com/track/6DeYDFBS41W8IbJW9UNkRt",
+   "genres": [
+    "neo-soul",
+    "soul-funk"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "soul",
+    "uk soul",
+    "70s soul revival",
+    "orchestral soul"
+   ],
+   "mood": [
+    "tender",
+    "spiritual",
+    "lush"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.6,
+    "danceability": 0.5,
+    "acousticness": 0.55,
+    "instrumentalness": 0.1
+   },
+   "bpm": 80,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 4,
+   "title": "Disappearing Act",
+   "artists": [
+    "Beck"
+   ],
+   "primary_artist": "Beck",
+   "duration": "2:59",
+   "duration_sec": 179,
+   "spotify_track_id": "5HzWItiJH85G6OSs9h81uY",
+   "spotify_uri": "spotify:track:5HzWItiJH85G6OSs9h81uY",
+   "spotify_url": "https://open.spotify.com/track/5HzWItiJH85G6OSs9h81uY",
+   "genres": [
+    "alt"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "alternative",
+    "indie rock",
+    "psych-pop",
+    "lo-fi"
+   ],
+   "mood": [
+    "wistful",
+    "detached",
+    "mellow"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.4,
+    "danceability": 0.52,
+    "acousticness": 0.45,
+    "instrumentalness": 0.05
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 5,
+   "title": "Los Andes",
+   "artists": [
+    "Hermanos Gutiérrez"
+   ],
+   "primary_artist": "Hermanos Gutiérrez",
+   "duration": "3:31",
+   "duration_sec": 211,
+   "spotify_track_id": "3HGlaKMMFsTEaat5TZ9vJF",
+   "spotify_uri": "spotify:track:3HGlaKMMFsTEaat5TZ9vJF",
+   "spotify_url": "https://open.spotify.com/track/3HGlaKMMFsTEaat5TZ9vJF",
+   "genres": [
+    "world",
+    "downtempo"
+   ],
+   "genre_primary": "world",
+   "subgenres": [
+    "instrumental",
+    "desert guitar",
+    "latin folk",
+    "cinematic western"
+   ],
+   "mood": [
+    "nostalgic",
+    "contemplative",
+    "expansive"
+   ],
+   "mood_parameters": {
+    "energy": 0.25,
+    "valence": 0.4,
+    "danceability": 0.35,
+    "acousticness": 0.85,
+    "instrumentalness": 0.97
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 6,
+   "title": "Now I’m Listening",
+   "artists": [
+    "Son Lux",
+    "Bilal"
+   ],
+   "primary_artist": "Son Lux",
+   "duration": "2:56",
+   "duration_sec": 176,
+   "spotify_track_id": "74y1RHNCy3nRyeBHsOSdh6",
+   "spotify_uri": "spotify:track:74y1RHNCy3nRyeBHsOSdh6",
+   "spotify_url": "https://open.spotify.com/track/74y1RHNCy3nRyeBHsOSdh6",
+   "genres": [
+    "alt",
+    "neo-soul"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "art pop",
+    "experimental soul",
+    "post-rock"
+   ],
+   "mood": [
+    "haunting",
+    "introspective",
+    "tense"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.3,
+    "danceability": 0.4,
+    "acousticness": 0.4,
+    "instrumentalness": 0.1
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 7,
+   "title": "Love It or Hate It",
+   "artists": [
+    "The Game",
+    "Snoop Dogg",
+    "Sela V",
+    "Cool & Dre"
+   ],
+   "primary_artist": "The Game",
+   "duration": "3:24",
+   "duration_sec": 204,
+   "spotify_track_id": "3K5uSjRcqHXY3Xi1SkSIjt",
+   "spotify_uri": "spotify:track:3K5uSjRcqHXY3Xi1SkSIjt",
+   "spotify_url": "https://open.spotify.com/track/3K5uSjRcqHXY3Xi1SkSIjt",
+   "genres": [
+    "hip-hop"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "west coast rap",
+    "g-funk",
+    "r&b hook"
+   ],
+   "mood": [
+    "confident",
+    "swaggering",
+    "smooth"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.55,
+    "danceability": 0.78,
+    "acousticness": 0.1,
+    "instrumentalness": 0.0
+   },
+   "bpm": 94,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 8,
+   "title": "Medieval Overture",
+   "artists": [
+    "Stanley Clarke"
+   ],
+   "primary_artist": "Stanley Clarke",
+   "duration": "5:25",
+   "duration_sec": 325,
+   "spotify_track_id": "6GXHtnpdKYlPzaHx45txEj",
+   "spotify_uri": "spotify:track:6GXHtnpdKYlPzaHx45txEj",
+   "spotify_url": "https://open.spotify.com/track/6GXHtnpdKYlPzaHx45txEj",
+   "genres": [
+    "jazz"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "jazz fusion",
+    "bass-led fusion",
+    "progressive jazz"
+   ],
+   "mood": [
+    "virtuosic",
+    "dramatic",
+    "intense"
+   ],
+   "mood_parameters": {
+    "energy": 0.72,
+    "valence": 0.5,
+    "danceability": 0.45,
+    "acousticness": 0.4,
+    "instrumentalness": 0.95
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 9,
+   "title": "Círculo Vicioso",
+   "artists": [
+    "Joyce Moreno",
+    "Tutty Moreno",
+    "Adrian Younge"
+   ],
+   "primary_artist": "Joyce Moreno",
+   "duration": "2:15",
+   "duration_sec": 135,
+   "spotify_track_id": "5z5RjpwWizbV3KB7ofC9Gp",
+   "spotify_uri": "spotify:track:5z5RjpwWizbV3KB7ofC9Gp",
+   "spotify_url": "https://open.spotify.com/track/5z5RjpwWizbV3KB7ofC9Gp",
+   "genres": [
+    "world",
+    "jazz"
+   ],
+   "genre_primary": "world",
+   "subgenres": [
+    "mpb",
+    "bossa jazz",
+    "jazz is dead"
+   ],
+   "mood": [
+    "breezy",
+    "nostalgic",
+    "elegant"
+   ],
+   "mood_parameters": {
+    "energy": 0.48,
+    "valence": 0.62,
+    "danceability": 0.58,
+    "acousticness": 0.7,
+    "instrumentalness": 0.2
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 10,
+   "title": "High - Mahogany Sessions",
+   "artists": [
+    "Nia Smith"
+   ],
+   "primary_artist": "Nia Smith",
+   "duration": "2:52",
+   "duration_sec": 172,
+   "spotify_track_id": "5H06IPUoi6d1OEgHcOvfOi",
+   "spotify_uri": "spotify:track:5H06IPUoi6d1OEgHcOvfOi",
+   "spotify_url": "https://open.spotify.com/track/5H06IPUoi6d1OEgHcOvfOi",
+   "genres": [
+    "neo-soul"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "acoustic soul",
+    "live session",
+    "vocal jazz"
+   ],
+   "mood": [
+    "intimate",
+    "soulful",
+    "tender"
+   ],
+   "mood_parameters": {
+    "energy": 0.28,
+    "valence": 0.5,
+    "danceability": 0.4,
+    "acousticness": 0.8,
+    "instrumentalness": 0.02
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 11,
+   "title": "DISGUISE",
+   "artists": [
+    "Tobe Nwigwe",
+    "Sia",
+    "Fat Nwigwe"
+   ],
+   "primary_artist": "Tobe Nwigwe",
+   "duration": "2:31",
+   "duration_sec": 151,
+   "spotify_track_id": "70NwUUeK2J8Y55QRUn8uM3",
+   "spotify_uri": "spotify:track:70NwUUeK2J8Y55QRUn8uM3",
+   "spotify_url": "https://open.spotify.com/track/70NwUUeK2J8Y55QRUn8uM3",
+   "genres": [
+    "hip-hop",
+    "neo-soul"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "southern rap",
+    "gospel rap",
+    "soul-rap"
+   ],
+   "mood": [
+    "empowering",
+    "bold",
+    "uplifting"
+   ],
+   "mood_parameters": {
+    "energy": 0.65,
+    "valence": 0.58,
+    "danceability": 0.68,
+    "acousticness": 0.2,
+    "instrumentalness": 0.0
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 12,
+   "title": "Summer Rain - Rework",
+   "artists": [
+    "Olive Jones"
+   ],
+   "primary_artist": "Olive Jones",
+   "duration": "4:35",
+   "duration_sec": 275,
+   "spotify_track_id": "0ZFDhrfPi5YPK1TvS0q1Av",
+   "spotify_uri": "spotify:track:0ZFDhrfPi5YPK1TvS0q1Av",
+   "spotify_url": "https://open.spotify.com/track/0ZFDhrfPi5YPK1TvS0q1Av",
+   "genres": [
+    "neo-soul",
+    "downtempo"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "soul",
+    "uk soul",
+    "rework",
+    "jazz-soul"
+   ],
+   "mood": [
+    "dreamy",
+    "warm",
+    "melancholic"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.5,
+    "danceability": 0.55,
+    "acousticness": 0.45,
+    "instrumentalness": 0.1
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 13,
+   "title": "Work Song - Antdot Remix",
+   "artists": [
+    "Nina Simone",
+    "Antdot"
+   ],
+   "primary_artist": "Nina Simone",
+   "duration": "3:38",
+   "duration_sec": 218,
+   "spotify_track_id": "07sLGxT6i39BRp26pTSIkg",
+   "spotify_uri": "spotify:track:07sLGxT6i39BRp26pTSIkg",
+   "spotify_url": "https://open.spotify.com/track/07sLGxT6i39BRp26pTSIkg",
+   "genres": [
+    "broken-beat",
+    "jazz"
+   ],
+   "genre_primary": "broken-beat",
+   "subgenres": [
+    "electronic",
+    "jazz remix",
+    "nu jazz",
+    "broken beat"
+   ],
+   "mood": [
+    "soulful",
+    "defiant",
+    "groovy"
+   ],
+   "mood_parameters": {
+    "energy": 0.68,
+    "valence": 0.45,
+    "danceability": 0.75,
+    "acousticness": 0.2,
+    "instrumentalness": 0.3
+   },
+   "bpm": 122,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 14,
+   "title": "Nobody Knows",
+   "artists": [
+    "LILJA",
+    "Beady Belle",
+    "Bugge Wesseltoft"
+   ],
+   "primary_artist": "LILJA",
+   "duration": "3:58",
+   "duration_sec": 238,
+   "spotify_track_id": "6oKP38a70tUwZ9mSPkDXtZ",
+   "spotify_uri": "spotify:track:6oKP38a70tUwZ9mSPkDXtZ",
+   "spotify_url": "https://open.spotify.com/track/6oKP38a70tUwZ9mSPkDXtZ",
+   "genres": [
+    "jazz",
+    "neo-soul"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "nordic jazz",
+    "vocal jazz",
+    "future jazz"
+   ],
+   "mood": [
+    "cool",
+    "reflective",
+    "airy"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.45,
+    "danceability": 0.45,
+    "acousticness": 0.6,
+    "instrumentalness": 0.1
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 15,
+   "title": "Tuck and Draw (feat. Takuya Kuroda & Eden Bareket)",
+   "artists": [
+    "Chris McCarthy",
+    "Takuya Kuroda",
+    "Eden Bareket"
+   ],
+   "primary_artist": "Chris McCarthy",
+   "duration": "3:45",
+   "duration_sec": 225,
+   "spotify_track_id": "4bOOenkqmtPgEHxN9ksU3T",
+   "spotify_uri": "spotify:track:4bOOenkqmtPgEHxN9ksU3T",
+   "spotify_url": "https://open.spotify.com/track/4bOOenkqmtPgEHxN9ksU3T",
+   "genres": [
+    "jazz"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "modern jazz",
+    "post-bop",
+    "piano trio"
+   ],
+   "mood": [
+    "lively",
+    "sophisticated",
+    "playful"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.55,
+    "danceability": 0.5,
+    "acousticness": 0.75,
+    "instrumentalness": 0.95
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 16,
+   "title": "MORNING DEW (DONK MIX)",
+   "artists": [
+    "Beyoncé"
+   ],
+   "primary_artist": "Beyoncé",
+   "duration": "4:04",
+   "duration_sec": 244,
+   "spotify_track_id": "4tc4fgwbPOvXyoZWZ7n6ep",
+   "spotify_uri": "spotify:track:4tc4fgwbPOvXyoZWZ7n6ep",
+   "spotify_url": "https://open.spotify.com/track/4tc4fgwbPOvXyoZWZ7n6ep",
+   "genres": [
+    "electronic",
+    "hip-hop"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "dance",
+    "donk",
+    "hard bounce",
+    "club remix"
+   ],
+   "mood": [
+    "energetic",
+    "bouncy",
+    "euphoric"
+   ],
+   "mood_parameters": {
+    "energy": 0.88,
+    "valence": 0.7,
+    "danceability": 0.82,
+    "acousticness": 0.05,
+    "instrumentalness": 0.1
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 17,
+   "title": "Push Your Luck",
+   "artists": [
+    "Riva Starr",
+    "Close Counters",
+    "Andre Espeut"
+   ],
+   "primary_artist": "Riva Starr",
+   "duration": "6:42",
+   "duration_sec": 402,
+   "spotify_track_id": "1pGQxA5WmastPlyeA8lehb",
+   "spotify_uri": "spotify:track:1pGQxA5WmastPlyeA8lehb",
+   "spotify_url": "https://open.spotify.com/track/1pGQxA5WmastPlyeA8lehb",
+   "genres": [
+    "soulful-house"
+   ],
+   "genre_primary": "soulful-house",
+   "subgenres": [
+    "house",
+    "vocal house",
+    "disco house",
+    "deep house"
+   ],
+   "mood": [
+    "uplifting",
+    "groovy",
+    "joyful"
+   ],
+   "mood_parameters": {
+    "energy": 0.78,
+    "valence": 0.72,
+    "danceability": 0.85,
+    "acousticness": 0.1,
+    "instrumentalness": 0.2
+   },
+   "bpm": 124,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 18,
+   "title": "Skein",
+   "artists": [
+    "Clark"
+   ],
+   "primary_artist": "Clark",
+   "duration": "2:06",
+   "duration_sec": 126,
+   "spotify_track_id": "5eUDvCotRznaXSa5TtOlma",
+   "spotify_uri": "spotify:track:5eUDvCotRznaXSa5TtOlma",
+   "spotify_url": "https://open.spotify.com/track/5eUDvCotRznaXSa5TtOlma",
+   "genres": [
+    "electronic",
+    "classical"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "ambient",
+    "neo-classical",
+    "idm"
+   ],
+   "mood": [
+    "ethereal",
+    "melancholic",
+    "fragile"
+   ],
+   "mood_parameters": {
+    "energy": 0.22,
+    "valence": 0.3,
+    "danceability": 0.25,
+    "acousticness": 0.5,
+    "instrumentalness": 0.95
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 45,
+   "playlist_name": "New Release Playlist #45",
+   "playlist_id": "1TKofsRgxbgEb6SHsbO5Pc",
+   "position_in_playlist": 19,
+   "title": "Veya, Pt. 2",
+   "artists": [
+    "fat jon",
+    "FloFilz"
+   ],
+   "primary_artist": "fat jon",
+   "duration": "1:45",
+   "duration_sec": 105,
+   "spotify_track_id": "62MUfj7Nn2elmjcBqecqkF",
+   "spotify_uri": "spotify:track:62MUfj7Nn2elmjcBqecqkF",
+   "spotify_url": "https://open.spotify.com/track/62MUfj7Nn2elmjcBqecqkF",
+   "genres": [
+    "hip-hop",
+    "downtempo"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "instrumental hip-hop",
+    "jazzy beats",
+    "lo-fi"
+   ],
+   "mood": [
+    "chill",
+    "nocturnal",
+    "mellow"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.45,
+    "danceability": 0.6,
+    "acousticness": 0.4,
+    "instrumentalness": 0.95
+   },
+   "bpm": 86,
    "bpm_source": "estimated"
   }
  ]
