@@ -4,7 +4,7 @@
   "source_account": "Spotify",
   "generated_at": "2026-05-23T12:27:11.266084",
   "description": "Archivio strutturato delle 'New Release Playlist' di Marco Mauro, da consultare via AI per generare playlist tematiche o effettuare analisi.",
-  "playlist_range": "#1 - #43 (43 New Release Playlist consecutive) + 1 extra (#101)",
+  "playlist_range": "#1 - #44 (44 New Release Playlist consecutive) + 1 extra (#101)",
   "note_on_gaps": "Nessuno: il dataset copre integralmente le New Release Playlist da #12 a #36. Le #1-#11 e #13-#17 si chiamano 'New Release Friday #N', dalla #12 e #18 in poi 'New Release Playlist #N'. La '2025 Fav Album Playlist' e' una compilation tematica (extra), spostata fuori dalla sequenza NRP al playlist_number 101.",
   "schema_per_track": {
    "playlist_number": "int (numero progressivo della playlist di origine)",
@@ -27,9 +27,9 @@
    "bpm": "int | null (null = non verificabile, mai inventato)",
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
-  "total_tracks_with_duplicates": 975,
-  "unique_tracks": 952,
-  "unique_artists": 896,
+  "total_tracks_with_duplicates": 992,
+  "unique_tracks": 969,
+  "unique_artists": 900,
   "top_artists": [
    [
     "Brian Jackson",
@@ -48,15 +48,23 @@
     10
    ],
    [
+    "Masters At Work",
+    9
+   ],
+   [
+    "Jordan Rakei",
+    9
+   ],
+   [
     "Peter Gabriel",
     9
    ],
    [
-    "Koralle",
+    "Matthew Herbert",
     8
    ],
    [
-    "Masters At Work",
+    "Koralle",
     8
    ],
    [
@@ -65,10 +73,6 @@
    ],
    [
     "Charles Webster",
-    8
-   ],
-   [
-    "Jordan Rakei",
     8
    ],
    [
@@ -88,11 +92,11 @@
     8
    ],
    [
-    "Matthew Herbert",
+    "Run Logan Run",
     7
    ],
    [
-    "Run Logan Run",
+    "Jorja Smith",
     7
    ],
    [
@@ -100,15 +104,11 @@
     7
    ],
    [
-    "Jorja Smith",
+    "Alfa Mist",
     6
    ],
    [
     "Nubiyan Twist",
-    6
-   ],
-   [
-    "Puma Blue",
     6
    ]
   ],
@@ -166,8 +166,8 @@
   "enrichment_note": "Caratterizzazione musicale esperta aggiunta da Claude (giugno 2026): subgenres granulari, mood, mood_parameters (energy/valence/danceability/acousticness/instrumentalness, scala 0-1, stime qualitative da esperto), bpm (int o null) e bpm_source. bpm_source='verified' = confermato da fonti web DJ-pool (Beatsource, BPM Supreme, SongBPM, Tunebat); 'estimated' = stima fondata sul tempo tipico del brano/genere (presente solo dove molto affidabile, es. house 120-126); bpm=null dove non verificabile, mai inventato. I campi 'genres' e 'genre_primary' preesistenti (tassonomia a 12 macro-generi della pipeline new-release-atlas) sono INTOCCATI e restano la classificazione di riferimento.",
   "extended_at": "2026-06-11T09:12:01.887032",
   "extension_note": "Playlist #33 e #34 aggiunte a giugno 2026 con caratterizzazione esperta completa. Per queste 2 playlist anche genres/genre_primary sono assegnati dall'AI (coerenti con la tassonomia a 12 macro-generi della pipeline). Nota: 'Fainted Light' (Indra Lesmana) in #34 è un duplicato cross-playlist di #32 (stesso track ID).",
-  "merged_at": "2026-09-13T21:25:34Z",
-  "merge_note": "add_playlist.py: aggiunte ['#43'] (21 occorrenze, 21 brani nuovi)",
+  "merged_at": "2026-09-24T21:50:27Z",
+  "merge_note": "add_playlist.py: aggiunte ['#44'] (17 occorrenze, 17 brani nuovi)",
   "cross_playlist_duplicates": [
    {
     "spotify_track_id": "0ACrjHByr2GzPVTxKbDBix",
@@ -38337,6 +38337,671 @@
       "instrumentalness": 0.5
      },
      "bpm": null,
+     "bpm_source": "estimated"
+    }
+   ]
+  },
+  {
+   "playlist_number": 44,
+   "playlist_name": "New Release Playlist #44",
+   "playlist_id": "5cWaotN0LJBIH4T1T0HHeN",
+   "spotify_url": "https://open.spotify.com/playlist/5cWaotN0LJBIH4T1T0HHeN",
+   "description": "",
+   "date": null,
+   "track_count": 17,
+   "tracks": [
+    {
+     "position_in_playlist": 1,
+     "title": "Witch Doctor",
+     "artists": [
+      "Erykah Badu",
+      "The Alchemist"
+     ],
+     "primary_artist": "Erykah Badu",
+     "duration": "6:26",
+     "duration_sec": 386,
+     "spotify_track_id": "7H2FmMnHfLRj8yoJpdl6A6",
+     "spotify_uri": "spotify:track:7H2FmMnHfLRj8yoJpdl6A6",
+     "spotify_url": "https://open.spotify.com/track/7H2FmMnHfLRj8yoJpdl6A6",
+     "genres": [
+      "neo-soul",
+      "hip-hop"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "psychedelic soul",
+      "sample-based hip-hop",
+      "abstract soul"
+     ],
+     "mood": [
+      "hypnotic",
+      "mystical",
+      "smoky"
+     ],
+     "mood_parameters": {
+      "energy": 0.42,
+      "valence": 0.4,
+      "danceability": 0.58,
+      "acousticness": 0.35,
+      "instrumentalness": 0.25
+     },
+     "bpm": 86,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 2,
+     "title": "Promise",
+     "artists": [
+      "Jordan Rakei"
+     ],
+     "primary_artist": "Jordan Rakei",
+     "duration": "2:40",
+     "duration_sec": 160,
+     "spotify_track_id": "7xia6ZCAVUJv33LvFpcLig",
+     "spotify_uri": "spotify:track:7xia6ZCAVUJv33LvFpcLig",
+     "spotify_url": "https://open.spotify.com/track/7xia6ZCAVUJv33LvFpcLig",
+     "genres": [
+      "neo-soul",
+      "uk-jazz"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "uk soul",
+      "jazz-soul",
+      "singer-songwriter"
+     ],
+     "mood": [
+      "intimate",
+      "tender",
+      "reflective"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.45,
+      "danceability": 0.5,
+      "acousticness": 0.55,
+      "instrumentalness": 0.05
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 3,
+     "title": "Sunshine",
+     "artists": [
+      "Jungle"
+     ],
+     "primary_artist": "Jungle",
+     "duration": "3:11",
+     "duration_sec": 191,
+     "spotify_track_id": "07lwMZLo0Nxc01nMXuiVL8",
+     "spotify_uri": "spotify:track:07lwMZLo0Nxc01nMXuiVL8",
+     "spotify_url": "https://open.spotify.com/track/07lwMZLo0Nxc01nMXuiVL8",
+     "genres": [
+      "soul-funk",
+      "electronic"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "funk",
+      "modern disco",
+      "nu-funk",
+      "falsetto soul"
+     ],
+     "mood": [
+      "uplifting",
+      "sunny",
+      "groovy"
+     ],
+     "mood_parameters": {
+      "energy": 0.72,
+      "valence": 0.82,
+      "danceability": 0.8,
+      "acousticness": 0.15,
+      "instrumentalness": 0.1
+     },
+     "bpm": 118,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 4,
+     "title": "Cut Off Your Nose",
+     "artists": [
+      "Everything Is Recorded",
+      "Jah Wobble"
+     ],
+     "primary_artist": "Everything Is Recorded",
+     "duration": "2:32",
+     "duration_sec": 152,
+     "spotify_track_id": "2ioqznBYgAU8lo0tUgR71H",
+     "spotify_uri": "spotify:track:2ioqznBYgAU8lo0tUgR71H",
+     "spotify_url": "https://open.spotify.com/track/2ioqznBYgAU8lo0tUgR71H",
+     "genres": [
+      "alt",
+      "electronic"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "alternative",
+      "dub",
+      "post-punk",
+      "art electronica"
+     ],
+     "mood": [
+      "dark",
+      "brooding",
+      "heavy"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.3,
+      "danceability": 0.6,
+      "acousticness": 0.2,
+      "instrumentalness": 0.35
+     },
+     "bpm": 100,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 5,
+     "title": "Heaven",
+     "artists": [
+      "Tiana Major9"
+     ],
+     "primary_artist": "Tiana Major9",
+     "duration": "3:09",
+     "duration_sec": 189,
+     "spotify_track_id": "3hYN2nB4eiDKm2Wtan60Pb",
+     "spotify_uri": "spotify:track:3hYN2nB4eiDKm2Wtan60Pb",
+     "spotify_url": "https://open.spotify.com/track/3hYN2nB4eiDKm2Wtan60Pb",
+     "genres": [
+      "neo-soul"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "uk r&b",
+      "contemporary soul",
+      "jazz-inflected r&b"
+     ],
+     "mood": [
+      "warm",
+      "romantic",
+      "smooth"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.6,
+      "danceability": 0.62,
+      "acousticness": 0.3,
+      "instrumentalness": 0.02
+     },
+     "bpm": 94,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 6,
+     "title": "Generation Loss",
+     "artists": [
+      "Fabio Rondanini",
+      "Adriano Viterbini"
+     ],
+     "primary_artist": "Fabio Rondanini",
+     "duration": "2:20",
+     "duration_sec": 140,
+     "spotify_track_id": "3ev1I2ESs0VBIYuNK547Mp",
+     "spotify_uri": "spotify:track:3ev1I2ESs0VBIYuNK547Mp",
+     "spotify_url": "https://open.spotify.com/track/3ev1I2ESs0VBIYuNK547Mp",
+     "genres": [
+      "alt",
+      "downtempo"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "instrumental rock",
+      "cinematic",
+      "guitar-drums duo",
+      "experimental blues"
+     ],
+     "mood": [
+      "tense",
+      "cinematic",
+      "gritty"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.35,
+      "danceability": 0.45,
+      "acousticness": 0.4,
+      "instrumentalness": 0.92
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 7,
+     "title": "I Lied, You Lied",
+     "artists": [
+      "Jorja Smith"
+     ],
+     "primary_artist": "Jorja Smith",
+     "duration": "3:23",
+     "duration_sec": 203,
+     "spotify_track_id": "1s7NR9jm7NQKWYdw0JTUyT",
+     "spotify_uri": "spotify:track:1s7NR9jm7NQKWYdw0JTUyT",
+     "spotify_url": "https://open.spotify.com/track/1s7NR9jm7NQKWYdw0JTUyT",
+     "genres": [
+      "neo-soul",
+      "alt"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "uk r&b",
+      "alt-r&b",
+      "soul-pop"
+     ],
+     "mood": [
+      "bittersweet",
+      "confessional",
+      "moody"
+     ],
+     "mood_parameters": {
+      "energy": 0.48,
+      "valence": 0.38,
+      "danceability": 0.6,
+      "acousticness": 0.3,
+      "instrumentalness": 0.02
+     },
+     "bpm": 96,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 8,
+     "title": "T246 130ish Electribe Plaits",
+     "artists": [
+      "Four Tet"
+     ],
+     "primary_artist": "Four Tet",
+     "duration": "8:30",
+     "duration_sec": 510,
+     "spotify_track_id": "3nACE7TZ1lLCas8reiNRth",
+     "spotify_uri": "spotify:track:3nACE7TZ1lLCas8reiNRth",
+     "spotify_url": "https://open.spotify.com/track/3nACE7TZ1lLCas8reiNRth",
+     "genres": [
+      "electronic"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "hardware jam",
+      "modular techno",
+      "leftfield house"
+     ],
+     "mood": [
+      "hypnotic",
+      "propulsive",
+      "meditative"
+     ],
+     "mood_parameters": {
+      "energy": 0.68,
+      "valence": 0.5,
+      "danceability": 0.72,
+      "acousticness": 0.05,
+      "instrumentalness": 0.98
+     },
+     "bpm": 130,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 9,
+     "title": "Dersen Cafe - Live at Real World Studios",
+     "artists": [
+      "Alfa Mist"
+     ],
+     "primary_artist": "Alfa Mist",
+     "duration": "4:16",
+     "duration_sec": 256,
+     "spotify_track_id": "4mGhOFJdeIcMpiBVHOmpTu",
+     "spotify_uri": "spotify:track:4mGhOFJdeIcMpiBVHOmpTu",
+     "spotify_url": "https://open.spotify.com/track/4mGhOFJdeIcMpiBVHOmpTu",
+     "genres": [
+      "uk-jazz",
+      "jazz"
+     ],
+     "genre_primary": "uk-jazz",
+     "subgenres": [
+      "jazz",
+      "london jazz",
+      "live session",
+      "jazz-hip-hop"
+     ],
+     "mood": [
+      "mellow",
+      "introspective",
+      "melancholic"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.42,
+      "danceability": 0.5,
+      "acousticness": 0.7,
+      "instrumentalness": 0.9
+     },
+     "bpm": 88,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 10,
+     "title": "DIFFERENCE [Feat. Yebba]",
+     "artists": [
+      "Denzel Curry",
+      "Kenny Beats",
+      "Yebba"
+     ],
+     "primary_artist": "Denzel Curry",
+     "duration": "2:49",
+     "duration_sec": 169,
+     "spotify_track_id": "2o0quqVps5WtMhiuzswkV1",
+     "spotify_uri": "spotify:track:2o0quqVps5WtMhiuzswkV1",
+     "spotify_url": "https://open.spotify.com/track/2o0quqVps5WtMhiuzswkV1",
+     "genres": [
+      "hip-hop",
+      "neo-soul"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "conscious rap",
+      "soul-rap",
+      "alternative hip-hop"
+     ],
+     "mood": [
+      "reflective",
+      "earnest",
+      "soulful"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.45,
+      "danceability": 0.65,
+      "acousticness": 0.3,
+      "instrumentalness": 0.02
+     },
+     "bpm": 88,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 11,
+     "title": "El Sapo Argentino de Boca Ancha - Mix 2 Ambient Version",
+     "artists": [
+      "Esteban Sehinkman",
+      "Charles Webster"
+     ],
+     "primary_artist": "Esteban Sehinkman",
+     "duration": "5:42",
+     "duration_sec": 342,
+     "spotify_track_id": "3mD9V7MnXH4l5c7hTKRulg",
+     "spotify_uri": "spotify:track:3mD9V7MnXH4l5c7hTKRulg",
+     "spotify_url": "https://open.spotify.com/track/3mD9V7MnXH4l5c7hTKRulg",
+     "genres": [
+      "downtempo",
+      "world"
+     ],
+     "genre_primary": "downtempo",
+     "subgenres": [
+      "ambient",
+      "argentine jazz",
+      "deep electronica"
+     ],
+     "mood": [
+      "dreamy",
+      "floating",
+      "serene"
+     ],
+     "mood_parameters": {
+      "energy": 0.22,
+      "valence": 0.5,
+      "danceability": 0.3,
+      "acousticness": 0.55,
+      "instrumentalness": 0.9
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 12,
+     "title": "pasta (is not a luxury)",
+     "artists": [
+      "Matthew Herbert"
+     ],
+     "primary_artist": "Matthew Herbert",
+     "duration": "5:55",
+     "duration_sec": 355,
+     "spotify_track_id": "2X2uuLuCbPKU9985oqXQlW",
+     "spotify_uri": "spotify:track:2X2uuLuCbPKU9985oqXQlW",
+     "spotify_url": "https://open.spotify.com/track/2X2uuLuCbPKU9985oqXQlW",
+     "genres": [
+      "electronic",
+      "alt"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "musique concrète",
+      "microhouse",
+      "experimental"
+     ],
+     "mood": [
+      "playful",
+      "quirky",
+      "cerebral"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.55,
+      "danceability": 0.62,
+      "acousticness": 0.3,
+      "instrumentalness": 0.8
+     },
+     "bpm": 120,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 13,
+     "title": "Talk Ya Shit",
+     "artists": [
+      "Busta Rhymes",
+      "J Dilla",
+      "Lil Wayne"
+     ],
+     "primary_artist": "Busta Rhymes",
+     "duration": "2:25",
+     "duration_sec": 145,
+     "spotify_track_id": "4cD4hLdmLands2EQaBlvz8",
+     "spotify_uri": "spotify:track:4cD4hLdmLands2EQaBlvz8",
+     "spotify_url": "https://open.spotify.com/track/4cD4hLdmLands2EQaBlvz8",
+     "genres": [
+      "hip-hop"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "boom bap",
+      "dilla beats",
+      "east coast rap"
+     ],
+     "mood": [
+      "aggressive",
+      "swaggering",
+      "raw"
+     ],
+     "mood_parameters": {
+      "energy": 0.78,
+      "valence": 0.48,
+      "danceability": 0.72,
+      "acousticness": 0.1,
+      "instrumentalness": 0.0
+     },
+     "bpm": 92,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 14,
+     "title": "fukwitme (feat. Kelly Moonstone)",
+     "artists": [
+      "Cavalier",
+      "Kelly Moonstone"
+     ],
+     "primary_artist": "Cavalier",
+     "duration": "3:51",
+     "duration_sec": 231,
+     "spotify_track_id": "3RVnPDvnGlHsuIecySmhf5",
+     "spotify_uri": "spotify:track:3RVnPDvnGlHsuIecySmhf5",
+     "spotify_url": "https://open.spotify.com/track/3RVnPDvnGlHsuIecySmhf5",
+     "genres": [
+      "hip-hop",
+      "neo-soul"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "underground rap",
+      "jazz rap",
+      "lo-fi boom bap"
+     ],
+     "mood": [
+      "laid-back",
+      "introspective",
+      "smoky"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.45,
+      "danceability": 0.65,
+      "acousticness": 0.35,
+      "instrumentalness": 0.02
+     },
+     "bpm": 88,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 15,
+     "title": "Babygirl (feat. Doechii)",
+     "artists": [
+      "Ravyn Lenae",
+      "Doechii"
+     ],
+     "primary_artist": "Ravyn Lenae",
+     "duration": "3:43",
+     "duration_sec": 223,
+     "spotify_track_id": "7b1ue9M7mNskt86uE3TlN7",
+     "spotify_uri": "spotify:track:7b1ue9M7mNskt86uE3TlN7",
+     "spotify_url": "https://open.spotify.com/track/7b1ue9M7mNskt86uE3TlN7",
+     "genres": [
+      "neo-soul",
+      "hip-hop"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "alt-r&b",
+      "funk-r&b",
+      "rap feature"
+     ],
+     "mood": [
+      "sensual",
+      "flirty",
+      "confident"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.65,
+      "danceability": 0.75,
+      "acousticness": 0.15,
+      "instrumentalness": 0.0
+     },
+     "bpm": 100,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 16,
+     "title": "Nightmovin' Track",
+     "artists": [
+      "Masters At Work",
+      "Louie Vega",
+      "Kenny Dope"
+     ],
+     "primary_artist": "Masters At Work",
+     "duration": "4:01",
+     "duration_sec": 241,
+     "spotify_track_id": "6alvcDLb5CAZ9kbR8oP7On",
+     "spotify_uri": "spotify:track:6alvcDLb5CAZ9kbR8oP7On",
+     "spotify_url": "https://open.spotify.com/track/6alvcDLb5CAZ9kbR8oP7On",
+     "genres": [
+      "soulful-house"
+     ],
+     "genre_primary": "soulful-house",
+     "subgenres": [
+      "house",
+      "new york house",
+      "deep house",
+      "percussive house"
+     ],
+     "mood": [
+      "groovy",
+      "nocturnal",
+      "driving"
+     ],
+     "mood_parameters": {
+      "energy": 0.75,
+      "valence": 0.62,
+      "danceability": 0.85,
+      "acousticness": 0.1,
+      "instrumentalness": 0.85
+     },
+     "bpm": 124,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 17,
+     "title": "Superstylin' - Demi Riquísimo Remix",
+     "artists": [
+      "Groove Armada",
+      "Demi Riquísimo"
+     ],
+     "primary_artist": "Groove Armada",
+     "duration": "6:03",
+     "duration_sec": 363,
+     "spotify_track_id": "19CPJWc0obj8ptsoAnSiRc",
+     "spotify_uri": "spotify:track:19CPJWc0obj8ptsoAnSiRc",
+     "spotify_url": "https://open.spotify.com/track/19CPJWc0obj8ptsoAnSiRc",
+     "genres": [
+      "soulful-house",
+      "electronic"
+     ],
+     "genre_primary": "soulful-house",
+     "subgenres": [
+      "house",
+      "disco house",
+      "balearic",
+      "remix"
+     ],
+     "mood": [
+      "euphoric",
+      "sunny",
+      "danceable"
+     ],
+     "mood_parameters": {
+      "energy": 0.78,
+      "valence": 0.75,
+      "danceability": 0.86,
+      "acousticness": 0.1,
+      "instrumentalness": 0.6
+     },
+     "bpm": 123,
      "bpm_source": "estimated"
     }
    ]
@@ -78724,6 +79389,711 @@
     "instrumentalness": 0.5
    },
    "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 44,
+   "playlist_name": "New Release Playlist #44",
+   "playlist_id": "5cWaotN0LJBIH4T1T0HHeN",
+   "position_in_playlist": 1,
+   "title": "Witch Doctor",
+   "artists": [
+    "Erykah Badu",
+    "The Alchemist"
+   ],
+   "primary_artist": "Erykah Badu",
+   "duration": "6:26",
+   "duration_sec": 386,
+   "spotify_track_id": "7H2FmMnHfLRj8yoJpdl6A6",
+   "spotify_uri": "spotify:track:7H2FmMnHfLRj8yoJpdl6A6",
+   "spotify_url": "https://open.spotify.com/track/7H2FmMnHfLRj8yoJpdl6A6",
+   "genres": [
+    "neo-soul",
+    "hip-hop"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "psychedelic soul",
+    "sample-based hip-hop",
+    "abstract soul"
+   ],
+   "mood": [
+    "hypnotic",
+    "mystical",
+    "smoky"
+   ],
+   "mood_parameters": {
+    "energy": 0.42,
+    "valence": 0.4,
+    "danceability": 0.58,
+    "acousticness": 0.35,
+    "instrumentalness": 0.25
+   },
+   "bpm": 86,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 44,
+   "playlist_name": "New Release Playlist #44",
+   "playlist_id": "5cWaotN0LJBIH4T1T0HHeN",
+   "position_in_playlist": 2,
+   "title": "Promise",
+   "artists": [
+    "Jordan Rakei"
+   ],
+   "primary_artist": "Jordan Rakei",
+   "duration": "2:40",
+   "duration_sec": 160,
+   "spotify_track_id": "7xia6ZCAVUJv33LvFpcLig",
+   "spotify_uri": "spotify:track:7xia6ZCAVUJv33LvFpcLig",
+   "spotify_url": "https://open.spotify.com/track/7xia6ZCAVUJv33LvFpcLig",
+   "genres": [
+    "neo-soul",
+    "uk-jazz"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "uk soul",
+    "jazz-soul",
+    "singer-songwriter"
+   ],
+   "mood": [
+    "intimate",
+    "tender",
+    "reflective"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.45,
+    "danceability": 0.5,
+    "acousticness": 0.55,
+    "instrumentalness": 0.05
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 44,
+   "playlist_name": "New Release Playlist #44",
+   "playlist_id": "5cWaotN0LJBIH4T1T0HHeN",
+   "position_in_playlist": 3,
+   "title": "Sunshine",
+   "artists": [
+    "Jungle"
+   ],
+   "primary_artist": "Jungle",
+   "duration": "3:11",
+   "duration_sec": 191,
+   "spotify_track_id": "07lwMZLo0Nxc01nMXuiVL8",
+   "spotify_uri": "spotify:track:07lwMZLo0Nxc01nMXuiVL8",
+   "spotify_url": "https://open.spotify.com/track/07lwMZLo0Nxc01nMXuiVL8",
+   "genres": [
+    "soul-funk",
+    "electronic"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "funk",
+    "modern disco",
+    "nu-funk",
+    "falsetto soul"
+   ],
+   "mood": [
+    "uplifting",
+    "sunny",
+    "groovy"
+   ],
+   "mood_parameters": {
+    "energy": 0.72,
+    "valence": 0.82,
+    "danceability": 0.8,
+    "acousticness": 0.15,
+    "instrumentalness": 0.1
+   },
+   "bpm": 118,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 44,
+   "playlist_name": "New Release Playlist #44",
+   "playlist_id": "5cWaotN0LJBIH4T1T0HHeN",
+   "position_in_playlist": 4,
+   "title": "Cut Off Your Nose",
+   "artists": [
+    "Everything Is Recorded",
+    "Jah Wobble"
+   ],
+   "primary_artist": "Everything Is Recorded",
+   "duration": "2:32",
+   "duration_sec": 152,
+   "spotify_track_id": "2ioqznBYgAU8lo0tUgR71H",
+   "spotify_uri": "spotify:track:2ioqznBYgAU8lo0tUgR71H",
+   "spotify_url": "https://open.spotify.com/track/2ioqznBYgAU8lo0tUgR71H",
+   "genres": [
+    "alt",
+    "electronic"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "alternative",
+    "dub",
+    "post-punk",
+    "art electronica"
+   ],
+   "mood": [
+    "dark",
+    "brooding",
+    "heavy"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.3,
+    "danceability": 0.6,
+    "acousticness": 0.2,
+    "instrumentalness": 0.35
+   },
+   "bpm": 100,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 44,
+   "playlist_name": "New Release Playlist #44",
+   "playlist_id": "5cWaotN0LJBIH4T1T0HHeN",
+   "position_in_playlist": 5,
+   "title": "Heaven",
+   "artists": [
+    "Tiana Major9"
+   ],
+   "primary_artist": "Tiana Major9",
+   "duration": "3:09",
+   "duration_sec": 189,
+   "spotify_track_id": "3hYN2nB4eiDKm2Wtan60Pb",
+   "spotify_uri": "spotify:track:3hYN2nB4eiDKm2Wtan60Pb",
+   "spotify_url": "https://open.spotify.com/track/3hYN2nB4eiDKm2Wtan60Pb",
+   "genres": [
+    "neo-soul"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "uk r&b",
+    "contemporary soul",
+    "jazz-inflected r&b"
+   ],
+   "mood": [
+    "warm",
+    "romantic",
+    "smooth"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.6,
+    "danceability": 0.62,
+    "acousticness": 0.3,
+    "instrumentalness": 0.02
+   },
+   "bpm": 94,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 44,
+   "playlist_name": "New Release Playlist #44",
+   "playlist_id": "5cWaotN0LJBIH4T1T0HHeN",
+   "position_in_playlist": 6,
+   "title": "Generation Loss",
+   "artists": [
+    "Fabio Rondanini",
+    "Adriano Viterbini"
+   ],
+   "primary_artist": "Fabio Rondanini",
+   "duration": "2:20",
+   "duration_sec": 140,
+   "spotify_track_id": "3ev1I2ESs0VBIYuNK547Mp",
+   "spotify_uri": "spotify:track:3ev1I2ESs0VBIYuNK547Mp",
+   "spotify_url": "https://open.spotify.com/track/3ev1I2ESs0VBIYuNK547Mp",
+   "genres": [
+    "alt",
+    "downtempo"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "instrumental rock",
+    "cinematic",
+    "guitar-drums duo",
+    "experimental blues"
+   ],
+   "mood": [
+    "tense",
+    "cinematic",
+    "gritty"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.35,
+    "danceability": 0.45,
+    "acousticness": 0.4,
+    "instrumentalness": 0.92
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 44,
+   "playlist_name": "New Release Playlist #44",
+   "playlist_id": "5cWaotN0LJBIH4T1T0HHeN",
+   "position_in_playlist": 7,
+   "title": "I Lied, You Lied",
+   "artists": [
+    "Jorja Smith"
+   ],
+   "primary_artist": "Jorja Smith",
+   "duration": "3:23",
+   "duration_sec": 203,
+   "spotify_track_id": "1s7NR9jm7NQKWYdw0JTUyT",
+   "spotify_uri": "spotify:track:1s7NR9jm7NQKWYdw0JTUyT",
+   "spotify_url": "https://open.spotify.com/track/1s7NR9jm7NQKWYdw0JTUyT",
+   "genres": [
+    "neo-soul",
+    "alt"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "uk r&b",
+    "alt-r&b",
+    "soul-pop"
+   ],
+   "mood": [
+    "bittersweet",
+    "confessional",
+    "moody"
+   ],
+   "mood_parameters": {
+    "energy": 0.48,
+    "valence": 0.38,
+    "danceability": 0.6,
+    "acousticness": 0.3,
+    "instrumentalness": 0.02
+   },
+   "bpm": 96,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 44,
+   "playlist_name": "New Release Playlist #44",
+   "playlist_id": "5cWaotN0LJBIH4T1T0HHeN",
+   "position_in_playlist": 8,
+   "title": "T246 130ish Electribe Plaits",
+   "artists": [
+    "Four Tet"
+   ],
+   "primary_artist": "Four Tet",
+   "duration": "8:30",
+   "duration_sec": 510,
+   "spotify_track_id": "3nACE7TZ1lLCas8reiNRth",
+   "spotify_uri": "spotify:track:3nACE7TZ1lLCas8reiNRth",
+   "spotify_url": "https://open.spotify.com/track/3nACE7TZ1lLCas8reiNRth",
+   "genres": [
+    "electronic"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "hardware jam",
+    "modular techno",
+    "leftfield house"
+   ],
+   "mood": [
+    "hypnotic",
+    "propulsive",
+    "meditative"
+   ],
+   "mood_parameters": {
+    "energy": 0.68,
+    "valence": 0.5,
+    "danceability": 0.72,
+    "acousticness": 0.05,
+    "instrumentalness": 0.98
+   },
+   "bpm": 130,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 44,
+   "playlist_name": "New Release Playlist #44",
+   "playlist_id": "5cWaotN0LJBIH4T1T0HHeN",
+   "position_in_playlist": 9,
+   "title": "Dersen Cafe - Live at Real World Studios",
+   "artists": [
+    "Alfa Mist"
+   ],
+   "primary_artist": "Alfa Mist",
+   "duration": "4:16",
+   "duration_sec": 256,
+   "spotify_track_id": "4mGhOFJdeIcMpiBVHOmpTu",
+   "spotify_uri": "spotify:track:4mGhOFJdeIcMpiBVHOmpTu",
+   "spotify_url": "https://open.spotify.com/track/4mGhOFJdeIcMpiBVHOmpTu",
+   "genres": [
+    "uk-jazz",
+    "jazz"
+   ],
+   "genre_primary": "uk-jazz",
+   "subgenres": [
+    "jazz",
+    "london jazz",
+    "live session",
+    "jazz-hip-hop"
+   ],
+   "mood": [
+    "mellow",
+    "introspective",
+    "melancholic"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.42,
+    "danceability": 0.5,
+    "acousticness": 0.7,
+    "instrumentalness": 0.9
+   },
+   "bpm": 88,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 44,
+   "playlist_name": "New Release Playlist #44",
+   "playlist_id": "5cWaotN0LJBIH4T1T0HHeN",
+   "position_in_playlist": 10,
+   "title": "DIFFERENCE [Feat. Yebba]",
+   "artists": [
+    "Denzel Curry",
+    "Kenny Beats",
+    "Yebba"
+   ],
+   "primary_artist": "Denzel Curry",
+   "duration": "2:49",
+   "duration_sec": 169,
+   "spotify_track_id": "2o0quqVps5WtMhiuzswkV1",
+   "spotify_uri": "spotify:track:2o0quqVps5WtMhiuzswkV1",
+   "spotify_url": "https://open.spotify.com/track/2o0quqVps5WtMhiuzswkV1",
+   "genres": [
+    "hip-hop",
+    "neo-soul"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "conscious rap",
+    "soul-rap",
+    "alternative hip-hop"
+   ],
+   "mood": [
+    "reflective",
+    "earnest",
+    "soulful"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.45,
+    "danceability": 0.65,
+    "acousticness": 0.3,
+    "instrumentalness": 0.02
+   },
+   "bpm": 88,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 44,
+   "playlist_name": "New Release Playlist #44",
+   "playlist_id": "5cWaotN0LJBIH4T1T0HHeN",
+   "position_in_playlist": 11,
+   "title": "El Sapo Argentino de Boca Ancha - Mix 2 Ambient Version",
+   "artists": [
+    "Esteban Sehinkman",
+    "Charles Webster"
+   ],
+   "primary_artist": "Esteban Sehinkman",
+   "duration": "5:42",
+   "duration_sec": 342,
+   "spotify_track_id": "3mD9V7MnXH4l5c7hTKRulg",
+   "spotify_uri": "spotify:track:3mD9V7MnXH4l5c7hTKRulg",
+   "spotify_url": "https://open.spotify.com/track/3mD9V7MnXH4l5c7hTKRulg",
+   "genres": [
+    "downtempo",
+    "world"
+   ],
+   "genre_primary": "downtempo",
+   "subgenres": [
+    "ambient",
+    "argentine jazz",
+    "deep electronica"
+   ],
+   "mood": [
+    "dreamy",
+    "floating",
+    "serene"
+   ],
+   "mood_parameters": {
+    "energy": 0.22,
+    "valence": 0.5,
+    "danceability": 0.3,
+    "acousticness": 0.55,
+    "instrumentalness": 0.9
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 44,
+   "playlist_name": "New Release Playlist #44",
+   "playlist_id": "5cWaotN0LJBIH4T1T0HHeN",
+   "position_in_playlist": 12,
+   "title": "pasta (is not a luxury)",
+   "artists": [
+    "Matthew Herbert"
+   ],
+   "primary_artist": "Matthew Herbert",
+   "duration": "5:55",
+   "duration_sec": 355,
+   "spotify_track_id": "2X2uuLuCbPKU9985oqXQlW",
+   "spotify_uri": "spotify:track:2X2uuLuCbPKU9985oqXQlW",
+   "spotify_url": "https://open.spotify.com/track/2X2uuLuCbPKU9985oqXQlW",
+   "genres": [
+    "electronic",
+    "alt"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "musique concrète",
+    "microhouse",
+    "experimental"
+   ],
+   "mood": [
+    "playful",
+    "quirky",
+    "cerebral"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.55,
+    "danceability": 0.62,
+    "acousticness": 0.3,
+    "instrumentalness": 0.8
+   },
+   "bpm": 120,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 44,
+   "playlist_name": "New Release Playlist #44",
+   "playlist_id": "5cWaotN0LJBIH4T1T0HHeN",
+   "position_in_playlist": 13,
+   "title": "Talk Ya Shit",
+   "artists": [
+    "Busta Rhymes",
+    "J Dilla",
+    "Lil Wayne"
+   ],
+   "primary_artist": "Busta Rhymes",
+   "duration": "2:25",
+   "duration_sec": 145,
+   "spotify_track_id": "4cD4hLdmLands2EQaBlvz8",
+   "spotify_uri": "spotify:track:4cD4hLdmLands2EQaBlvz8",
+   "spotify_url": "https://open.spotify.com/track/4cD4hLdmLands2EQaBlvz8",
+   "genres": [
+    "hip-hop"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "boom bap",
+    "dilla beats",
+    "east coast rap"
+   ],
+   "mood": [
+    "aggressive",
+    "swaggering",
+    "raw"
+   ],
+   "mood_parameters": {
+    "energy": 0.78,
+    "valence": 0.48,
+    "danceability": 0.72,
+    "acousticness": 0.1,
+    "instrumentalness": 0.0
+   },
+   "bpm": 92,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 44,
+   "playlist_name": "New Release Playlist #44",
+   "playlist_id": "5cWaotN0LJBIH4T1T0HHeN",
+   "position_in_playlist": 14,
+   "title": "fukwitme (feat. Kelly Moonstone)",
+   "artists": [
+    "Cavalier",
+    "Kelly Moonstone"
+   ],
+   "primary_artist": "Cavalier",
+   "duration": "3:51",
+   "duration_sec": 231,
+   "spotify_track_id": "3RVnPDvnGlHsuIecySmhf5",
+   "spotify_uri": "spotify:track:3RVnPDvnGlHsuIecySmhf5",
+   "spotify_url": "https://open.spotify.com/track/3RVnPDvnGlHsuIecySmhf5",
+   "genres": [
+    "hip-hop",
+    "neo-soul"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "underground rap",
+    "jazz rap",
+    "lo-fi boom bap"
+   ],
+   "mood": [
+    "laid-back",
+    "introspective",
+    "smoky"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.45,
+    "danceability": 0.65,
+    "acousticness": 0.35,
+    "instrumentalness": 0.02
+   },
+   "bpm": 88,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 44,
+   "playlist_name": "New Release Playlist #44",
+   "playlist_id": "5cWaotN0LJBIH4T1T0HHeN",
+   "position_in_playlist": 15,
+   "title": "Babygirl (feat. Doechii)",
+   "artists": [
+    "Ravyn Lenae",
+    "Doechii"
+   ],
+   "primary_artist": "Ravyn Lenae",
+   "duration": "3:43",
+   "duration_sec": 223,
+   "spotify_track_id": "7b1ue9M7mNskt86uE3TlN7",
+   "spotify_uri": "spotify:track:7b1ue9M7mNskt86uE3TlN7",
+   "spotify_url": "https://open.spotify.com/track/7b1ue9M7mNskt86uE3TlN7",
+   "genres": [
+    "neo-soul",
+    "hip-hop"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "alt-r&b",
+    "funk-r&b",
+    "rap feature"
+   ],
+   "mood": [
+    "sensual",
+    "flirty",
+    "confident"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.65,
+    "danceability": 0.75,
+    "acousticness": 0.15,
+    "instrumentalness": 0.0
+   },
+   "bpm": 100,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 44,
+   "playlist_name": "New Release Playlist #44",
+   "playlist_id": "5cWaotN0LJBIH4T1T0HHeN",
+   "position_in_playlist": 16,
+   "title": "Nightmovin' Track",
+   "artists": [
+    "Masters At Work",
+    "Louie Vega",
+    "Kenny Dope"
+   ],
+   "primary_artist": "Masters At Work",
+   "duration": "4:01",
+   "duration_sec": 241,
+   "spotify_track_id": "6alvcDLb5CAZ9kbR8oP7On",
+   "spotify_uri": "spotify:track:6alvcDLb5CAZ9kbR8oP7On",
+   "spotify_url": "https://open.spotify.com/track/6alvcDLb5CAZ9kbR8oP7On",
+   "genres": [
+    "soulful-house"
+   ],
+   "genre_primary": "soulful-house",
+   "subgenres": [
+    "house",
+    "new york house",
+    "deep house",
+    "percussive house"
+   ],
+   "mood": [
+    "groovy",
+    "nocturnal",
+    "driving"
+   ],
+   "mood_parameters": {
+    "energy": 0.75,
+    "valence": 0.62,
+    "danceability": 0.85,
+    "acousticness": 0.1,
+    "instrumentalness": 0.85
+   },
+   "bpm": 124,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 44,
+   "playlist_name": "New Release Playlist #44",
+   "playlist_id": "5cWaotN0LJBIH4T1T0HHeN",
+   "position_in_playlist": 17,
+   "title": "Superstylin' - Demi Riquísimo Remix",
+   "artists": [
+    "Groove Armada",
+    "Demi Riquísimo"
+   ],
+   "primary_artist": "Groove Armada",
+   "duration": "6:03",
+   "duration_sec": 363,
+   "spotify_track_id": "19CPJWc0obj8ptsoAnSiRc",
+   "spotify_uri": "spotify:track:19CPJWc0obj8ptsoAnSiRc",
+   "spotify_url": "https://open.spotify.com/track/19CPJWc0obj8ptsoAnSiRc",
+   "genres": [
+    "soulful-house",
+    "electronic"
+   ],
+   "genre_primary": "soulful-house",
+   "subgenres": [
+    "house",
+    "disco house",
+    "balearic",
+    "remix"
+   ],
+   "mood": [
+    "euphoric",
+    "sunny",
+    "danceable"
+   ],
+   "mood_parameters": {
+    "energy": 0.78,
+    "valence": 0.75,
+    "danceability": 0.86,
+    "acousticness": 0.1,
+    "instrumentalness": 0.6
+   },
+   "bpm": 123,
    "bpm_source": "estimated"
   }
  ]
