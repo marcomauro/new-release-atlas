@@ -4,7 +4,7 @@
   "source_account": "Spotify",
   "generated_at": "2026-05-23T12:27:11.266084",
   "description": "Archivio strutturato delle 'New Release Playlist' di Marco Mauro, da consultare via AI per generare playlist tematiche o effettuare analisi.",
-  "playlist_range": "#1 - #46 (46 New Release Playlist consecutive) + 1 extra (#101)",
+  "playlist_range": "#1 - #47 (47 New Release Playlist consecutive) + 1 extra (#101)",
   "note_on_gaps": "Nessuno: il dataset copre integralmente le New Release Playlist da #12 a #36. Le #1-#11 e #13-#17 si chiamano 'New Release Friday #N', dalla #12 e #18 in poi 'New Release Playlist #N'. La '2025 Fav Album Playlist' e' una compilation tematica (extra), spostata fuori dalla sequenza NRP al playlist_number 101.",
   "schema_per_track": {
    "playlist_number": "int (numero progressivo della playlist di origine)",
@@ -27,21 +27,21 @@
    "bpm": "int | null (null = non verificabile, mai inventato)",
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
-  "total_tracks_with_duplicates": 1027,
-  "unique_tracks": 1004,
-  "unique_artists": 925,
+  "total_tracks_with_duplicates": 1045,
+  "unique_tracks": 1022,
+  "unique_artists": 942,
   "top_artists": [
    [
     "Brian Jackson",
     12
    ],
    [
-    "Momoko Gill",
+    "Nightmares On Wax",
     11
    ],
    [
-    "Nightmares On Wax",
-    10
+    "Momoko Gill",
+    11
    ],
    [
     "Tame Impala",
@@ -166,8 +166,8 @@
   "enrichment_note": "Caratterizzazione musicale esperta aggiunta da Claude (giugno 2026): subgenres granulari, mood, mood_parameters (energy/valence/danceability/acousticness/instrumentalness, scala 0-1, stime qualitative da esperto), bpm (int o null) e bpm_source. bpm_source='verified' = confermato da fonti web DJ-pool (Beatsource, BPM Supreme, SongBPM, Tunebat); 'estimated' = stima fondata sul tempo tipico del brano/genere (presente solo dove molto affidabile, es. house 120-126); bpm=null dove non verificabile, mai inventato. I campi 'genres' e 'genre_primary' preesistenti (tassonomia a 12 macro-generi della pipeline new-release-atlas) sono INTOCCATI e restano la classificazione di riferimento.",
   "extended_at": "2026-06-11T09:12:01.887032",
   "extension_note": "Playlist #33 e #34 aggiunte a giugno 2026 con caratterizzazione esperta completa. Per queste 2 playlist anche genres/genre_primary sono assegnati dall'AI (coerenti con la tassonomia a 12 macro-generi della pipeline). Nota: 'Fainted Light' (Indra Lesmana) in #34 è un duplicato cross-playlist di #32 (stesso track ID).",
-  "merged_at": "2026-10-04T21:26:22Z",
-  "merge_note": "add_playlist.py: aggiunte ['#46'] (16 occorrenze, 16 brani nuovi)",
+  "merged_at": "2026-10-04T21:51:11Z",
+  "merge_note": "add_playlist.py: aggiunte ['#47'] (18 occorrenze, 18 brani nuovi)",
   "cross_playlist_duplicates": [
    {
     "spotify_track_id": "0ACrjHByr2GzPVTxKbDBix",
@@ -40373,6 +40373,712 @@
       "danceability": 0.6,
       "acousticness": 0.35,
       "instrumentalness": 0.05
+     },
+     "bpm": 88,
+     "bpm_source": "estimated"
+    }
+   ]
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "spotify_url": "https://open.spotify.com/playlist/194ZB7AvrDLOXyj2SVyLys",
+   "description": "",
+   "date": null,
+   "track_count": 18,
+   "tracks": [
+    {
+     "position_in_playlist": 1,
+     "title": "Calabama",
+     "artists": [
+      "Prince"
+     ],
+     "primary_artist": "Prince",
+     "duration": "3:30",
+     "duration_sec": 210,
+     "spotify_track_id": "2IoJSDfNzVvj9nY74nunX0",
+     "spotify_uri": "spotify:track:2IoJSDfNzVvj9nY74nunX0",
+     "spotify_url": "https://open.spotify.com/track/2IoJSDfNzVvj9nY74nunX0",
+     "genres": [
+      "soul-funk",
+      "hip-hop"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "funk",
+      "soul jam",
+      "minneapolis sound",
+      "horn funk"
+     ],
+     "mood": [
+      "groovy",
+      "exuberant",
+      "loose"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.75,
+      "danceability": 0.75,
+      "acousticness": 0.3,
+      "instrumentalness": 0.1
+     },
+     "bpm": 105,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 2,
+     "title": "LOOK OUT FOR ME: FOUR TET VERSION",
+     "artists": [
+      "Turnstile",
+      "Four Tet"
+     ],
+     "primary_artist": "Turnstile",
+     "duration": "6:07",
+     "duration_sec": 367,
+     "spotify_track_id": "4VBtp8x78yDKANaTLm2cRl",
+     "spotify_uri": "spotify:track:4VBtp8x78yDKANaTLm2cRl",
+     "spotify_url": "https://open.spotify.com/track/4VBtp8x78yDKANaTLm2cRl",
+     "genres": [
+      "electronic",
+      "alt"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "electronica",
+      "melodic techno",
+      "remix"
+     ],
+     "mood": [
+      "euphoric",
+      "driving",
+      "hypnotic"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.55,
+      "danceability": 0.7,
+      "acousticness": 0.15,
+      "instrumentalness": 0.6
+     },
+     "bpm": 130,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 3,
+     "title": "You Wish - Abbey Road Fuzz Gospel Version",
+     "artists": [
+      "Nightmares On Wax",
+      "Mozez"
+     ],
+     "primary_artist": "Nightmares On Wax",
+     "duration": "4:48",
+     "duration_sec": 288,
+     "spotify_track_id": "4mj3S7W301jKpURJB5iveA",
+     "spotify_uri": "spotify:track:4mj3S7W301jKpURJB5iveA",
+     "spotify_url": "https://open.spotify.com/track/4mj3S7W301jKpURJB5iveA",
+     "genres": [
+      "downtempo",
+      "soul-funk"
+     ],
+     "genre_primary": "downtempo",
+     "subgenres": [
+      "downtempo",
+      "trip-hop",
+      "gospel soul",
+      "chillout"
+     ],
+     "mood": [
+      "warm",
+      "uplifting",
+      "laid-back"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.65,
+      "danceability": 0.6,
+      "acousticness": 0.45,
+      "instrumentalness": 0.2
+     },
+     "bpm": 92,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 4,
+     "title": "Hurt You",
+     "artists": [
+      "MorMor"
+     ],
+     "primary_artist": "MorMor",
+     "duration": "3:34",
+     "duration_sec": 214,
+     "spotify_track_id": "0I7o1tYYhqLpbiF6bHmaen",
+     "spotify_uri": "spotify:track:0I7o1tYYhqLpbiF6bHmaen",
+     "spotify_url": "https://open.spotify.com/track/0I7o1tYYhqLpbiF6bHmaen",
+     "genres": [
+      "alt",
+      "neo-soul"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "psychedelic soul",
+      "bedroom pop",
+      "alternative r&b"
+     ],
+     "mood": [
+      "melancholic",
+      "dreamy",
+      "vulnerable"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.35,
+      "danceability": 0.5,
+      "acousticness": 0.45,
+      "instrumentalness": 0.1
+     },
+     "bpm": 85,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 5,
+     "title": "Janis (Still Staring) - matthew herbert's spring remix",
+     "artists": [
+      "Croz Boyce",
+      "Avey Tare",
+      "Geologist",
+      "Matthew Herbert"
+     ],
+     "primary_artist": "Croz Boyce",
+     "duration": "5:10",
+     "duration_sec": 310,
+     "spotify_track_id": "4g9ZeNcw19ogcEZqEsxFLO",
+     "spotify_uri": "spotify:track:4g9ZeNcw19ogcEZqEsxFLO",
+     "spotify_url": "https://open.spotify.com/track/4g9ZeNcw19ogcEZqEsxFLO",
+     "genres": [
+      "electronic",
+      "alt"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "experimental electronic",
+      "neo-psychedelia",
+      "remix"
+     ],
+     "mood": [
+      "whimsical",
+      "hazy",
+      "playful"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.6,
+      "danceability": 0.6,
+      "acousticness": 0.3,
+      "instrumentalness": 0.5
+     },
+     "bpm": 120,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 6,
+     "title": "Mayhem",
+     "artists": [
+      "Steve Vai",
+      "Joe Satriani"
+     ],
+     "primary_artist": "Steve Vai",
+     "duration": "3:39",
+     "duration_sec": 219,
+     "spotify_track_id": "1hFXuDlmtdZkt7aSUxQrG9",
+     "spotify_uri": "spotify:track:1hFXuDlmtdZkt7aSUxQrG9",
+     "spotify_url": "https://open.spotify.com/track/1hFXuDlmtdZkt7aSUxQrG9",
+     "genres": [
+      "alt"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "rock",
+      "instrumental rock",
+      "guitar virtuoso",
+      "hard rock"
+     ],
+     "mood": [
+      "intense",
+      "energetic",
+      "virtuosic"
+     ],
+     "mood_parameters": {
+      "energy": 0.85,
+      "valence": 0.55,
+      "danceability": 0.45,
+      "acousticness": 0.1,
+      "instrumentalness": 0.9
+     },
+     "bpm": 130,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 7,
+     "title": "Blister Sunrise",
+     "artists": [
+      "M83"
+     ],
+     "primary_artist": "M83",
+     "duration": "3:21",
+     "duration_sec": 201,
+     "spotify_track_id": "6KmnrYGLTStjxonyQYRPbU",
+     "spotify_uri": "spotify:track:6KmnrYGLTStjxonyQYRPbU",
+     "spotify_url": "https://open.spotify.com/track/6KmnrYGLTStjxonyQYRPbU",
+     "genres": [
+      "electronic",
+      "alt"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "synth-pop",
+      "dream pop",
+      "shoegaze"
+     ],
+     "mood": [
+      "euphoric",
+      "nostalgic",
+      "cinematic"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.55,
+      "danceability": 0.5,
+      "acousticness": 0.1,
+      "instrumentalness": 0.5
+     },
+     "bpm": 120,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 8,
+     "title": "Look Like My Mama",
+     "artists": [
+      "AZ Chike",
+      "Tyler, The Creator"
+     ],
+     "primary_artist": "AZ Chike",
+     "duration": "3:17",
+     "duration_sec": 197,
+     "spotify_track_id": "2TwW2fNE3TPPLum0vi9rUK",
+     "spotify_uri": "spotify:track:2TwW2fNE3TPPLum0vi9rUK",
+     "spotify_url": "https://open.spotify.com/track/2TwW2fNE3TPPLum0vi9rUK",
+     "genres": [
+      "hip-hop"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "west coast hip-hop",
+      "gangsta rap",
+      "alternative hip-hop"
+     ],
+     "mood": [
+      "swaggering",
+      "playful",
+      "bold"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.6,
+      "danceability": 0.75,
+      "acousticness": 0.1,
+      "instrumentalness": 0.0
+     },
+     "bpm": 95,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 9,
+     "title": "Cooler Heads - Daedelus Remix",
+     "artists": [
+      "Morcheeba",
+      "Daedelus"
+     ],
+     "primary_artist": "Morcheeba",
+     "duration": "4:41",
+     "duration_sec": 281,
+     "spotify_track_id": "4oRedGZRXlovprq5Rt24r2",
+     "spotify_uri": "spotify:track:4oRedGZRXlovprq5Rt24r2",
+     "spotify_url": "https://open.spotify.com/track/4oRedGZRXlovprq5Rt24r2",
+     "genres": [
+      "downtempo",
+      "electronic"
+     ],
+     "genre_primary": "downtempo",
+     "subgenres": [
+      "trip-hop",
+      "beat music",
+      "remix"
+     ],
+     "mood": [
+      "mellow",
+      "dreamy",
+      "sultry"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.5,
+      "danceability": 0.6,
+      "acousticness": 0.3,
+      "instrumentalness": 0.2
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 10,
+     "title": "LIGHT DESIGN: BLOOD ORANGE VERSION",
+     "artists": [
+      "Turnstile",
+      "Blood Orange"
+     ],
+     "primary_artist": "Turnstile",
+     "duration": "2:48",
+     "duration_sec": 168,
+     "spotify_track_id": "0sT7s0um30BUnwkErK8nlM",
+     "spotify_uri": "spotify:track:0sT7s0um30BUnwkErK8nlM",
+     "spotify_url": "https://open.spotify.com/track/0sT7s0um30BUnwkErK8nlM",
+     "genres": [
+      "alt",
+      "neo-soul"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "art pop",
+      "alternative r&b",
+      "indie soul"
+     ],
+     "mood": [
+      "wistful",
+      "intimate",
+      "hazy"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.45,
+      "danceability": 0.5,
+      "acousticness": 0.45,
+      "instrumentalness": 0.2
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 11,
+     "title": "Fly (Someone You Love)",
+     "artists": [
+      "Joyce Wrice",
+      "SALIMATA"
+     ],
+     "primary_artist": "Joyce Wrice",
+     "duration": "3:34",
+     "duration_sec": 214,
+     "spotify_track_id": "46FIsUouswpvnkTOWcdvH6",
+     "spotify_uri": "spotify:track:46FIsUouswpvnkTOWcdvH6",
+     "spotify_url": "https://open.spotify.com/track/46FIsUouswpvnkTOWcdvH6",
+     "genres": [
+      "neo-soul"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "contemporary r&b",
+      "90s r&b revival",
+      "soul"
+     ],
+     "mood": [
+      "romantic",
+      "smooth",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.65,
+      "danceability": 0.65,
+      "acousticness": 0.3,
+      "instrumentalness": 0.0
+     },
+     "bpm": 92,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 12,
+     "title": "WHEN THE WORLD'S ON FIRE",
+     "artists": [
+      "Jake Isaac",
+      "Aaron Childs"
+     ],
+     "primary_artist": "Jake Isaac",
+     "duration": "3:30",
+     "duration_sec": 210,
+     "spotify_track_id": "1ExPF6iBWsudERYt8Ijki0",
+     "spotify_uri": "spotify:track:1ExPF6iBWsudERYt8Ijki0",
+     "spotify_url": "https://open.spotify.com/track/1ExPF6iBWsudERYt8Ijki0",
+     "genres": [
+      "soul-funk",
+      "neo-soul"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "soul",
+      "gospel soul",
+      "uk soul",
+      "contemporary soul"
+     ],
+     "mood": [
+      "uplifting",
+      "heartfelt",
+      "hopeful"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.6,
+      "danceability": 0.5,
+      "acousticness": 0.45,
+      "instrumentalness": 0.0
+     },
+     "bpm": 85,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 13,
+     "title": "Il prato",
+     "artists": [
+      "Ennio Morricone",
+      "Enrico Pieranunzi"
+     ],
+     "primary_artist": "Ennio Morricone",
+     "duration": "3:42",
+     "duration_sec": 222,
+     "spotify_track_id": "3gFbpnipjK2dlnV84bgUVH",
+     "spotify_uri": "spotify:track:3gFbpnipjK2dlnV84bgUVH",
+     "spotify_url": "https://open.spotify.com/track/3gFbpnipjK2dlnV84bgUVH",
+     "genres": [
+      "jazz",
+      "classical"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "solo piano",
+      "film music",
+      "jazz piano"
+     ],
+     "mood": [
+      "lyrical",
+      "nostalgic",
+      "serene"
+     ],
+     "mood_parameters": {
+      "energy": 0.15,
+      "valence": 0.4,
+      "danceability": 0.2,
+      "acousticness": 0.98,
+      "instrumentalness": 0.97
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 14,
+     "title": "Atmosphere",
+     "artists": [
+      "Fink",
+      "Michael Wollny",
+      "Tim Lefebvre",
+      "Maggie Björklund",
+      "Nicky Hustinx",
+      "Guy Sternberg"
+     ],
+     "primary_artist": "Fink",
+     "duration": "5:24",
+     "duration_sec": 324,
+     "spotify_track_id": "1LlRHmJzGSweuv5VQF4EmM",
+     "spotify_uri": "spotify:track:1LlRHmJzGSweuv5VQF4EmM",
+     "spotify_url": "https://open.spotify.com/track/1LlRHmJzGSweuv5VQF4EmM",
+     "genres": [
+      "jazz",
+      "alt"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "jazz-folk",
+      "post-rock jazz",
+      "cover"
+     ],
+     "mood": [
+      "brooding",
+      "atmospheric",
+      "melancholic"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.25,
+      "danceability": 0.35,
+      "acousticness": 0.7,
+      "instrumentalness": 0.2
+     },
+     "bpm": 75,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 15,
+     "title": "Prelude Op. 28 No. 22 (Matthew Herbert's Practice Dub)",
+     "artists": [
+      "Mariusz Szypura",
+      "Matthew Herbert"
+     ],
+     "primary_artist": "Mariusz Szypura",
+     "duration": "5:54",
+     "duration_sec": 354,
+     "spotify_track_id": "1zEEJA4RqDgpdHXmoS1yOB",
+     "spotify_uri": "spotify:track:1zEEJA4RqDgpdHXmoS1yOB",
+     "spotify_url": "https://open.spotify.com/track/1zEEJA4RqDgpdHXmoS1yOB",
+     "genres": [
+      "electronic",
+      "classical"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "dub",
+      "experimental electronic",
+      "neo-classical"
+     ],
+     "mood": [
+      "hypnotic",
+      "introspective",
+      "dark"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.3,
+      "danceability": 0.55,
+      "acousticness": 0.4,
+      "instrumentalness": 0.9
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 16,
+     "title": "In Fact You Know You Gotto Go",
+     "artists": [
+      "Benjamin Clementine"
+     ],
+     "primary_artist": "Benjamin Clementine",
+     "duration": "4:21",
+     "duration_sec": 261,
+     "spotify_track_id": "4cWEdRTQ8sg4QaTBIGn06j",
+     "spotify_uri": "spotify:track:4cWEdRTQ8sg4QaTBIGn06j",
+     "spotify_url": "https://open.spotify.com/track/4cWEdRTQ8sg4QaTBIGn06j",
+     "genres": [
+      "alt",
+      "classical"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "art pop",
+      "chamber pop",
+      "piano soul"
+     ],
+     "mood": [
+      "theatrical",
+      "dramatic",
+      "poignant"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.35,
+      "danceability": 0.35,
+      "acousticness": 0.75,
+      "instrumentalness": 0.05
+     },
+     "bpm": 80,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 17,
+     "title": "RING THE ALARM",
+     "artists": [
+      "Beyoncé"
+     ],
+     "primary_artist": "Beyoncé",
+     "duration": "3:24",
+     "duration_sec": 204,
+     "spotify_track_id": "4suAjbRBJAt2kIwGcoTqlC",
+     "spotify_uri": "spotify:track:4suAjbRBJAt2kIwGcoTqlC",
+     "spotify_url": "https://open.spotify.com/track/4suAjbRBJAt2kIwGcoTqlC",
+     "genres": [
+      "hip-hop",
+      "soul-funk"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "r&b",
+      "contemporary r&b",
+      "crunk&b",
+      "hip-hop soul"
+     ],
+     "mood": [
+      "fierce",
+      "intense",
+      "defiant"
+     ],
+     "mood_parameters": {
+      "energy": 0.9,
+      "valence": 0.35,
+      "danceability": 0.7,
+      "acousticness": 0.05,
+      "instrumentalness": 0.0
+     },
+     "bpm": 85,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 18,
+     "title": "Voodoo Child (Slight Return) - Live At Berkeley - 1st Show",
+     "artists": [
+      "Jimi Hendrix"
+     ],
+     "primary_artist": "Jimi Hendrix",
+     "duration": "12:27",
+     "duration_sec": 747,
+     "spotify_track_id": "0AtLebPe7ddTCiQuswj51Z",
+     "spotify_uri": "spotify:track:0AtLebPe7ddTCiQuswj51Z",
+     "spotify_url": "https://open.spotify.com/track/0AtLebPe7ddTCiQuswj51Z",
+     "genres": [
+      "alt",
+      "soul-funk"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "rock",
+      "blues rock",
+      "psychedelic rock",
+      "live recording"
+     ],
+     "mood": [
+      "intense",
+      "fiery",
+      "improvisational"
+     ],
+     "mood_parameters": {
+      "energy": 0.85,
+      "valence": 0.45,
+      "danceability": 0.4,
+      "acousticness": 0.15,
+      "instrumentalness": 0.6
      },
      "bpm": 88,
      "bpm_source": "estimated"
@@ -82921,6 +83627,755 @@
     "danceability": 0.6,
     "acousticness": 0.35,
     "instrumentalness": 0.05
+   },
+   "bpm": 88,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "position_in_playlist": 1,
+   "title": "Calabama",
+   "artists": [
+    "Prince"
+   ],
+   "primary_artist": "Prince",
+   "duration": "3:30",
+   "duration_sec": 210,
+   "spotify_track_id": "2IoJSDfNzVvj9nY74nunX0",
+   "spotify_uri": "spotify:track:2IoJSDfNzVvj9nY74nunX0",
+   "spotify_url": "https://open.spotify.com/track/2IoJSDfNzVvj9nY74nunX0",
+   "genres": [
+    "soul-funk",
+    "hip-hop"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "funk",
+    "soul jam",
+    "minneapolis sound",
+    "horn funk"
+   ],
+   "mood": [
+    "groovy",
+    "exuberant",
+    "loose"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.75,
+    "danceability": 0.75,
+    "acousticness": 0.3,
+    "instrumentalness": 0.1
+   },
+   "bpm": 105,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "position_in_playlist": 2,
+   "title": "LOOK OUT FOR ME: FOUR TET VERSION",
+   "artists": [
+    "Turnstile",
+    "Four Tet"
+   ],
+   "primary_artist": "Turnstile",
+   "duration": "6:07",
+   "duration_sec": 367,
+   "spotify_track_id": "4VBtp8x78yDKANaTLm2cRl",
+   "spotify_uri": "spotify:track:4VBtp8x78yDKANaTLm2cRl",
+   "spotify_url": "https://open.spotify.com/track/4VBtp8x78yDKANaTLm2cRl",
+   "genres": [
+    "electronic",
+    "alt"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "electronica",
+    "melodic techno",
+    "remix"
+   ],
+   "mood": [
+    "euphoric",
+    "driving",
+    "hypnotic"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.55,
+    "danceability": 0.7,
+    "acousticness": 0.15,
+    "instrumentalness": 0.6
+   },
+   "bpm": 130,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "position_in_playlist": 3,
+   "title": "You Wish - Abbey Road Fuzz Gospel Version",
+   "artists": [
+    "Nightmares On Wax",
+    "Mozez"
+   ],
+   "primary_artist": "Nightmares On Wax",
+   "duration": "4:48",
+   "duration_sec": 288,
+   "spotify_track_id": "4mj3S7W301jKpURJB5iveA",
+   "spotify_uri": "spotify:track:4mj3S7W301jKpURJB5iveA",
+   "spotify_url": "https://open.spotify.com/track/4mj3S7W301jKpURJB5iveA",
+   "genres": [
+    "downtempo",
+    "soul-funk"
+   ],
+   "genre_primary": "downtempo",
+   "subgenres": [
+    "downtempo",
+    "trip-hop",
+    "gospel soul",
+    "chillout"
+   ],
+   "mood": [
+    "warm",
+    "uplifting",
+    "laid-back"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.65,
+    "danceability": 0.6,
+    "acousticness": 0.45,
+    "instrumentalness": 0.2
+   },
+   "bpm": 92,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "position_in_playlist": 4,
+   "title": "Hurt You",
+   "artists": [
+    "MorMor"
+   ],
+   "primary_artist": "MorMor",
+   "duration": "3:34",
+   "duration_sec": 214,
+   "spotify_track_id": "0I7o1tYYhqLpbiF6bHmaen",
+   "spotify_uri": "spotify:track:0I7o1tYYhqLpbiF6bHmaen",
+   "spotify_url": "https://open.spotify.com/track/0I7o1tYYhqLpbiF6bHmaen",
+   "genres": [
+    "alt",
+    "neo-soul"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "psychedelic soul",
+    "bedroom pop",
+    "alternative r&b"
+   ],
+   "mood": [
+    "melancholic",
+    "dreamy",
+    "vulnerable"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.35,
+    "danceability": 0.5,
+    "acousticness": 0.45,
+    "instrumentalness": 0.1
+   },
+   "bpm": 85,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "position_in_playlist": 5,
+   "title": "Janis (Still Staring) - matthew herbert's spring remix",
+   "artists": [
+    "Croz Boyce",
+    "Avey Tare",
+    "Geologist",
+    "Matthew Herbert"
+   ],
+   "primary_artist": "Croz Boyce",
+   "duration": "5:10",
+   "duration_sec": 310,
+   "spotify_track_id": "4g9ZeNcw19ogcEZqEsxFLO",
+   "spotify_uri": "spotify:track:4g9ZeNcw19ogcEZqEsxFLO",
+   "spotify_url": "https://open.spotify.com/track/4g9ZeNcw19ogcEZqEsxFLO",
+   "genres": [
+    "electronic",
+    "alt"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "experimental electronic",
+    "neo-psychedelia",
+    "remix"
+   ],
+   "mood": [
+    "whimsical",
+    "hazy",
+    "playful"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.6,
+    "danceability": 0.6,
+    "acousticness": 0.3,
+    "instrumentalness": 0.5
+   },
+   "bpm": 120,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "position_in_playlist": 6,
+   "title": "Mayhem",
+   "artists": [
+    "Steve Vai",
+    "Joe Satriani"
+   ],
+   "primary_artist": "Steve Vai",
+   "duration": "3:39",
+   "duration_sec": 219,
+   "spotify_track_id": "1hFXuDlmtdZkt7aSUxQrG9",
+   "spotify_uri": "spotify:track:1hFXuDlmtdZkt7aSUxQrG9",
+   "spotify_url": "https://open.spotify.com/track/1hFXuDlmtdZkt7aSUxQrG9",
+   "genres": [
+    "alt"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "rock",
+    "instrumental rock",
+    "guitar virtuoso",
+    "hard rock"
+   ],
+   "mood": [
+    "intense",
+    "energetic",
+    "virtuosic"
+   ],
+   "mood_parameters": {
+    "energy": 0.85,
+    "valence": 0.55,
+    "danceability": 0.45,
+    "acousticness": 0.1,
+    "instrumentalness": 0.9
+   },
+   "bpm": 130,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "position_in_playlist": 7,
+   "title": "Blister Sunrise",
+   "artists": [
+    "M83"
+   ],
+   "primary_artist": "M83",
+   "duration": "3:21",
+   "duration_sec": 201,
+   "spotify_track_id": "6KmnrYGLTStjxonyQYRPbU",
+   "spotify_uri": "spotify:track:6KmnrYGLTStjxonyQYRPbU",
+   "spotify_url": "https://open.spotify.com/track/6KmnrYGLTStjxonyQYRPbU",
+   "genres": [
+    "electronic",
+    "alt"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "synth-pop",
+    "dream pop",
+    "shoegaze"
+   ],
+   "mood": [
+    "euphoric",
+    "nostalgic",
+    "cinematic"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.55,
+    "danceability": 0.5,
+    "acousticness": 0.1,
+    "instrumentalness": 0.5
+   },
+   "bpm": 120,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "position_in_playlist": 8,
+   "title": "Look Like My Mama",
+   "artists": [
+    "AZ Chike",
+    "Tyler, The Creator"
+   ],
+   "primary_artist": "AZ Chike",
+   "duration": "3:17",
+   "duration_sec": 197,
+   "spotify_track_id": "2TwW2fNE3TPPLum0vi9rUK",
+   "spotify_uri": "spotify:track:2TwW2fNE3TPPLum0vi9rUK",
+   "spotify_url": "https://open.spotify.com/track/2TwW2fNE3TPPLum0vi9rUK",
+   "genres": [
+    "hip-hop"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "west coast hip-hop",
+    "gangsta rap",
+    "alternative hip-hop"
+   ],
+   "mood": [
+    "swaggering",
+    "playful",
+    "bold"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.6,
+    "danceability": 0.75,
+    "acousticness": 0.1,
+    "instrumentalness": 0.0
+   },
+   "bpm": 95,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "position_in_playlist": 9,
+   "title": "Cooler Heads - Daedelus Remix",
+   "artists": [
+    "Morcheeba",
+    "Daedelus"
+   ],
+   "primary_artist": "Morcheeba",
+   "duration": "4:41",
+   "duration_sec": 281,
+   "spotify_track_id": "4oRedGZRXlovprq5Rt24r2",
+   "spotify_uri": "spotify:track:4oRedGZRXlovprq5Rt24r2",
+   "spotify_url": "https://open.spotify.com/track/4oRedGZRXlovprq5Rt24r2",
+   "genres": [
+    "downtempo",
+    "electronic"
+   ],
+   "genre_primary": "downtempo",
+   "subgenres": [
+    "trip-hop",
+    "beat music",
+    "remix"
+   ],
+   "mood": [
+    "mellow",
+    "dreamy",
+    "sultry"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.5,
+    "danceability": 0.6,
+    "acousticness": 0.3,
+    "instrumentalness": 0.2
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "position_in_playlist": 10,
+   "title": "LIGHT DESIGN: BLOOD ORANGE VERSION",
+   "artists": [
+    "Turnstile",
+    "Blood Orange"
+   ],
+   "primary_artist": "Turnstile",
+   "duration": "2:48",
+   "duration_sec": 168,
+   "spotify_track_id": "0sT7s0um30BUnwkErK8nlM",
+   "spotify_uri": "spotify:track:0sT7s0um30BUnwkErK8nlM",
+   "spotify_url": "https://open.spotify.com/track/0sT7s0um30BUnwkErK8nlM",
+   "genres": [
+    "alt",
+    "neo-soul"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "art pop",
+    "alternative r&b",
+    "indie soul"
+   ],
+   "mood": [
+    "wistful",
+    "intimate",
+    "hazy"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.45,
+    "danceability": 0.5,
+    "acousticness": 0.45,
+    "instrumentalness": 0.2
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "position_in_playlist": 11,
+   "title": "Fly (Someone You Love)",
+   "artists": [
+    "Joyce Wrice",
+    "SALIMATA"
+   ],
+   "primary_artist": "Joyce Wrice",
+   "duration": "3:34",
+   "duration_sec": 214,
+   "spotify_track_id": "46FIsUouswpvnkTOWcdvH6",
+   "spotify_uri": "spotify:track:46FIsUouswpvnkTOWcdvH6",
+   "spotify_url": "https://open.spotify.com/track/46FIsUouswpvnkTOWcdvH6",
+   "genres": [
+    "neo-soul"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "contemporary r&b",
+    "90s r&b revival",
+    "soul"
+   ],
+   "mood": [
+    "romantic",
+    "smooth",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.65,
+    "danceability": 0.65,
+    "acousticness": 0.3,
+    "instrumentalness": 0.0
+   },
+   "bpm": 92,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "position_in_playlist": 12,
+   "title": "WHEN THE WORLD'S ON FIRE",
+   "artists": [
+    "Jake Isaac",
+    "Aaron Childs"
+   ],
+   "primary_artist": "Jake Isaac",
+   "duration": "3:30",
+   "duration_sec": 210,
+   "spotify_track_id": "1ExPF6iBWsudERYt8Ijki0",
+   "spotify_uri": "spotify:track:1ExPF6iBWsudERYt8Ijki0",
+   "spotify_url": "https://open.spotify.com/track/1ExPF6iBWsudERYt8Ijki0",
+   "genres": [
+    "soul-funk",
+    "neo-soul"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "soul",
+    "gospel soul",
+    "uk soul",
+    "contemporary soul"
+   ],
+   "mood": [
+    "uplifting",
+    "heartfelt",
+    "hopeful"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.6,
+    "danceability": 0.5,
+    "acousticness": 0.45,
+    "instrumentalness": 0.0
+   },
+   "bpm": 85,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "position_in_playlist": 13,
+   "title": "Il prato",
+   "artists": [
+    "Ennio Morricone",
+    "Enrico Pieranunzi"
+   ],
+   "primary_artist": "Ennio Morricone",
+   "duration": "3:42",
+   "duration_sec": 222,
+   "spotify_track_id": "3gFbpnipjK2dlnV84bgUVH",
+   "spotify_uri": "spotify:track:3gFbpnipjK2dlnV84bgUVH",
+   "spotify_url": "https://open.spotify.com/track/3gFbpnipjK2dlnV84bgUVH",
+   "genres": [
+    "jazz",
+    "classical"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "solo piano",
+    "film music",
+    "jazz piano"
+   ],
+   "mood": [
+    "lyrical",
+    "nostalgic",
+    "serene"
+   ],
+   "mood_parameters": {
+    "energy": 0.15,
+    "valence": 0.4,
+    "danceability": 0.2,
+    "acousticness": 0.98,
+    "instrumentalness": 0.97
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "position_in_playlist": 14,
+   "title": "Atmosphere",
+   "artists": [
+    "Fink",
+    "Michael Wollny",
+    "Tim Lefebvre",
+    "Maggie Björklund",
+    "Nicky Hustinx",
+    "Guy Sternberg"
+   ],
+   "primary_artist": "Fink",
+   "duration": "5:24",
+   "duration_sec": 324,
+   "spotify_track_id": "1LlRHmJzGSweuv5VQF4EmM",
+   "spotify_uri": "spotify:track:1LlRHmJzGSweuv5VQF4EmM",
+   "spotify_url": "https://open.spotify.com/track/1LlRHmJzGSweuv5VQF4EmM",
+   "genres": [
+    "jazz",
+    "alt"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "jazz-folk",
+    "post-rock jazz",
+    "cover"
+   ],
+   "mood": [
+    "brooding",
+    "atmospheric",
+    "melancholic"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.25,
+    "danceability": 0.35,
+    "acousticness": 0.7,
+    "instrumentalness": 0.2
+   },
+   "bpm": 75,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "position_in_playlist": 15,
+   "title": "Prelude Op. 28 No. 22 (Matthew Herbert's Practice Dub)",
+   "artists": [
+    "Mariusz Szypura",
+    "Matthew Herbert"
+   ],
+   "primary_artist": "Mariusz Szypura",
+   "duration": "5:54",
+   "duration_sec": 354,
+   "spotify_track_id": "1zEEJA4RqDgpdHXmoS1yOB",
+   "spotify_uri": "spotify:track:1zEEJA4RqDgpdHXmoS1yOB",
+   "spotify_url": "https://open.spotify.com/track/1zEEJA4RqDgpdHXmoS1yOB",
+   "genres": [
+    "electronic",
+    "classical"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "dub",
+    "experimental electronic",
+    "neo-classical"
+   ],
+   "mood": [
+    "hypnotic",
+    "introspective",
+    "dark"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.3,
+    "danceability": 0.55,
+    "acousticness": 0.4,
+    "instrumentalness": 0.9
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "position_in_playlist": 16,
+   "title": "In Fact You Know You Gotto Go",
+   "artists": [
+    "Benjamin Clementine"
+   ],
+   "primary_artist": "Benjamin Clementine",
+   "duration": "4:21",
+   "duration_sec": 261,
+   "spotify_track_id": "4cWEdRTQ8sg4QaTBIGn06j",
+   "spotify_uri": "spotify:track:4cWEdRTQ8sg4QaTBIGn06j",
+   "spotify_url": "https://open.spotify.com/track/4cWEdRTQ8sg4QaTBIGn06j",
+   "genres": [
+    "alt",
+    "classical"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "art pop",
+    "chamber pop",
+    "piano soul"
+   ],
+   "mood": [
+    "theatrical",
+    "dramatic",
+    "poignant"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.35,
+    "danceability": 0.35,
+    "acousticness": 0.75,
+    "instrumentalness": 0.05
+   },
+   "bpm": 80,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "position_in_playlist": 17,
+   "title": "RING THE ALARM",
+   "artists": [
+    "Beyoncé"
+   ],
+   "primary_artist": "Beyoncé",
+   "duration": "3:24",
+   "duration_sec": 204,
+   "spotify_track_id": "4suAjbRBJAt2kIwGcoTqlC",
+   "spotify_uri": "spotify:track:4suAjbRBJAt2kIwGcoTqlC",
+   "spotify_url": "https://open.spotify.com/track/4suAjbRBJAt2kIwGcoTqlC",
+   "genres": [
+    "hip-hop",
+    "soul-funk"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "r&b",
+    "contemporary r&b",
+    "crunk&b",
+    "hip-hop soul"
+   ],
+   "mood": [
+    "fierce",
+    "intense",
+    "defiant"
+   ],
+   "mood_parameters": {
+    "energy": 0.9,
+    "valence": 0.35,
+    "danceability": 0.7,
+    "acousticness": 0.05,
+    "instrumentalness": 0.0
+   },
+   "bpm": 85,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 47,
+   "playlist_name": "New Release Playlist #47",
+   "playlist_id": "194ZB7AvrDLOXyj2SVyLys",
+   "position_in_playlist": 18,
+   "title": "Voodoo Child (Slight Return) - Live At Berkeley - 1st Show",
+   "artists": [
+    "Jimi Hendrix"
+   ],
+   "primary_artist": "Jimi Hendrix",
+   "duration": "12:27",
+   "duration_sec": 747,
+   "spotify_track_id": "0AtLebPe7ddTCiQuswj51Z",
+   "spotify_uri": "spotify:track:0AtLebPe7ddTCiQuswj51Z",
+   "spotify_url": "https://open.spotify.com/track/0AtLebPe7ddTCiQuswj51Z",
+   "genres": [
+    "alt",
+    "soul-funk"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "rock",
+    "blues rock",
+    "psychedelic rock",
+    "live recording"
+   ],
+   "mood": [
+    "intense",
+    "fiery",
+    "improvisational"
+   ],
+   "mood_parameters": {
+    "energy": 0.85,
+    "valence": 0.45,
+    "danceability": 0.4,
+    "acousticness": 0.15,
+    "instrumentalness": 0.6
    },
    "bpm": 88,
    "bpm_source": "estimated"
