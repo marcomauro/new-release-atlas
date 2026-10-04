@@ -4,7 +4,7 @@
   "source_account": "Spotify",
   "generated_at": "2026-05-23T12:27:11.266084",
   "description": "Archivio strutturato delle 'New Release Playlist' di Marco Mauro, da consultare via AI per generare playlist tematiche o effettuare analisi.",
-  "playlist_range": "#1 - #45 (45 New Release Playlist consecutive) + 1 extra (#101)",
+  "playlist_range": "#1 - #46 (46 New Release Playlist consecutive) + 1 extra (#101)",
   "note_on_gaps": "Nessuno: il dataset copre integralmente le New Release Playlist da #12 a #36. Le #1-#11 e #13-#17 si chiamano 'New Release Friday #N', dalla #12 e #18 in poi 'New Release Playlist #N'. La '2025 Fav Album Playlist' e' una compilation tematica (extra), spostata fuori dalla sequenza NRP al playlist_number 101.",
   "schema_per_track": {
    "playlist_number": "int (numero progressivo della playlist di origine)",
@@ -27,9 +27,9 @@
    "bpm": "int | null (null = non verificabile, mai inventato)",
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
-  "total_tracks_with_duplicates": 1011,
-  "unique_tracks": 988,
-  "unique_artists": 915,
+  "total_tracks_with_duplicates": 1027,
+  "unique_tracks": 1004,
+  "unique_artists": 925,
   "top_artists": [
    [
     "Brian Jackson",
@@ -48,15 +48,15 @@
     10
    ],
    [
+    "Peter Gabriel",
+    10
+   ],
+   [
     "Masters At Work",
     9
    ],
    [
     "Jordan Rakei",
-    9
-   ],
-   [
-    "Peter Gabriel",
     9
    ],
    [
@@ -100,15 +100,15 @@
     7
    ],
    [
+    "Ezra Collective",
+    7
+   ],
+   [
     "Nicholas Payton",
     7
    ],
    [
     "Alfa Mist",
-    6
-   ],
-   [
-    "Nubiyan Twist",
     6
    ]
   ],
@@ -166,8 +166,8 @@
   "enrichment_note": "Caratterizzazione musicale esperta aggiunta da Claude (giugno 2026): subgenres granulari, mood, mood_parameters (energy/valence/danceability/acousticness/instrumentalness, scala 0-1, stime qualitative da esperto), bpm (int o null) e bpm_source. bpm_source='verified' = confermato da fonti web DJ-pool (Beatsource, BPM Supreme, SongBPM, Tunebat); 'estimated' = stima fondata sul tempo tipico del brano/genere (presente solo dove molto affidabile, es. house 120-126); bpm=null dove non verificabile, mai inventato. I campi 'genres' e 'genre_primary' preesistenti (tassonomia a 12 macro-generi della pipeline new-release-atlas) sono INTOCCATI e restano la classificazione di riferimento.",
   "extended_at": "2026-06-11T09:12:01.887032",
   "extension_note": "Playlist #33 e #34 aggiunte a giugno 2026 con caratterizzazione esperta completa. Per queste 2 playlist anche genres/genre_primary sono assegnati dall'AI (coerenti con la tassonomia a 12 macro-generi della pipeline). Nota: 'Fainted Light' (Indra Lesmana) in #34 è un duplicato cross-playlist di #32 (stesso track ID).",
-  "merged_at": "2026-09-24T22:08:37Z",
-  "merge_note": "add_playlist.py: aggiunte ['#45'] (19 occorrenze, 19 brani nuovi)",
+  "merged_at": "2026-10-04T21:26:22Z",
+  "merge_note": "add_playlist.py: aggiunte ['#46'] (16 occorrenze, 16 brani nuovi)",
   "cross_playlist_duplicates": [
    {
     "spotify_track_id": "0ACrjHByr2GzPVTxKbDBix",
@@ -39743,6 +39743,638 @@
       "instrumentalness": 0.95
      },
      "bpm": 86,
+     "bpm_source": "estimated"
+    }
+   ]
+  },
+  {
+   "playlist_number": 46,
+   "playlist_name": "New Release Playlist #46",
+   "playlist_id": "2RT9YBproiabVwcvbq0t4I",
+   "spotify_url": "https://open.spotify.com/playlist/2RT9YBproiabVwcvbq0t4I",
+   "description": "",
+   "date": null,
+   "track_count": 16,
+   "tracks": [
+    {
+     "position_in_playlist": 1,
+     "title": "Lady Havana (feat. Theo Croker, Yiyi Sanchez and Axel Tosca)",
+     "artists": [
+      "Wyclef Jean",
+      "Yussef Dayes",
+      "Theo Croker",
+      "Yiyi Sanchez",
+      "Axel Tosca"
+     ],
+     "primary_artist": "Wyclef Jean",
+     "duration": "6:25",
+     "duration_sec": 385,
+     "spotify_track_id": "2DBvAQzwbRLNy1UZqtCN78",
+     "spotify_uri": "spotify:track:2DBvAQzwbRLNy1UZqtCN78",
+     "spotify_url": "https://open.spotify.com/track/2DBvAQzwbRLNy1UZqtCN78",
+     "genres": [
+      "uk-jazz",
+      "world"
+     ],
+     "genre_primary": "uk-jazz",
+     "subgenres": [
+      "jazz",
+      "afro-cuban jazz",
+      "spiritual jazz",
+      "jazz fusion"
+     ],
+     "mood": [
+      "warm",
+      "lush",
+      "hypnotic"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.6,
+      "danceability": 0.6,
+      "acousticness": 0.6,
+      "instrumentalness": 0.6
+     },
+     "bpm": 100,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 2,
+     "title": "Don’t Look Any Further (with Lianne La Havas)",
+     "artists": [
+      "Meshell Ndegeocello",
+      "Lianne La Havas"
+     ],
+     "primary_artist": "Meshell Ndegeocello",
+     "duration": "4:03",
+     "duration_sec": 243,
+     "spotify_track_id": "0AjcjeMsxzUWPh0dQcYMyW",
+     "spotify_uri": "spotify:track:0AjcjeMsxzUWPh0dQcYMyW",
+     "spotify_url": "https://open.spotify.com/track/0AjcjeMsxzUWPh0dQcYMyW",
+     "genres": [
+      "neo-soul",
+      "jazz"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "alternative r&b",
+      "jazz-soul",
+      "soul"
+     ],
+     "mood": [
+      "intimate",
+      "tender",
+      "soulful"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.55,
+      "danceability": 0.55,
+      "acousticness": 0.6,
+      "instrumentalness": 0.05
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 3,
+     "title": "Close (feat. Sampha)",
+     "artists": [
+      "Headie One",
+      "Sampha"
+     ],
+     "primary_artist": "Headie One",
+     "duration": "3:09",
+     "duration_sec": 189,
+     "spotify_track_id": "7azina6xD8AIc4CdlGaVN9",
+     "spotify_uri": "spotify:track:7azina6xD8AIc4CdlGaVN9",
+     "spotify_url": "https://open.spotify.com/track/7azina6xD8AIc4CdlGaVN9",
+     "genres": [
+      "hip-hop",
+      "neo-soul"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "uk rap",
+      "alternative hip-hop",
+      "conscious rap"
+     ],
+     "mood": [
+      "introspective",
+      "melancholic",
+      "intimate"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.3,
+      "danceability": 0.6,
+      "acousticness": 0.4,
+      "instrumentalness": 0.0
+     },
+     "bpm": 140,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 4,
+     "title": "Tea Time",
+     "artists": [
+      "Alabama Shakes"
+     ],
+     "primary_artist": "Alabama Shakes",
+     "duration": "3:47",
+     "duration_sec": 227,
+     "spotify_track_id": "31GAlUeCLW7X2wabzWaCYM",
+     "spotify_uri": "spotify:track:31GAlUeCLW7X2wabzWaCYM",
+     "spotify_url": "https://open.spotify.com/track/31GAlUeCLW7X2wabzWaCYM",
+     "genres": [
+      "soul-funk",
+      "alt"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "soul",
+      "southern soul",
+      "blues rock",
+      "retro soul"
+     ],
+     "mood": [
+      "gritty",
+      "soulful",
+      "laid-back"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.55,
+      "danceability": 0.55,
+      "acousticness": 0.5,
+      "instrumentalness": 0.05
+     },
+     "bpm": 95,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 5,
+     "title": "Movement 13 - Hope Taking Flight",
+     "artists": [
+      "Floating Points",
+      "San Francisco Ballet Orchestra"
+     ],
+     "primary_artist": "Floating Points",
+     "duration": "1:40",
+     "duration_sec": 100,
+     "spotify_track_id": "70vbC4BGJn2AMUEhRxYBoq",
+     "spotify_uri": "spotify:track:70vbC4BGJn2AMUEhRxYBoq",
+     "spotify_url": "https://open.spotify.com/track/70vbC4BGJn2AMUEhRxYBoq",
+     "genres": [
+      "classical",
+      "electronic"
+     ],
+     "genre_primary": "classical",
+     "subgenres": [
+      "contemporary classical",
+      "orchestral",
+      "ballet score",
+      "modern composition"
+     ],
+     "mood": [
+      "uplifting",
+      "cinematic",
+      "delicate"
+     ],
+     "mood_parameters": {
+      "energy": 0.3,
+      "valence": 0.55,
+      "danceability": 0.15,
+      "acousticness": 0.85,
+      "instrumentalness": 0.95
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 6,
+     "title": "Kingpin (Knock Ya Head Off) (feat. Anderson .Paak & Ludacris)",
+     "artists": [
+      "Busta Rhymes",
+      "J Dilla",
+      "Anderson .Paak",
+      "Ludacris"
+     ],
+     "primary_artist": "Busta Rhymes",
+     "duration": "4:28",
+     "duration_sec": 268,
+     "spotify_track_id": "0infHb5VLogAe1NvKPFoeu",
+     "spotify_uri": "spotify:track:0infHb5VLogAe1NvKPFoeu",
+     "spotify_url": "https://open.spotify.com/track/0infHb5VLogAe1NvKPFoeu",
+     "genres": [
+      "hip-hop",
+      "soul-funk"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "boom bap",
+      "east coast hip-hop",
+      "funk rap"
+     ],
+     "mood": [
+      "energetic",
+      "swaggering",
+      "playful"
+     ],
+     "mood_parameters": {
+      "energy": 0.8,
+      "valence": 0.65,
+      "danceability": 0.8,
+      "acousticness": 0.15,
+      "instrumentalness": 0.0
+     },
+     "bpm": 95,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 7,
+     "title": "Love's Ekongo",
+     "artists": [
+      "Dawuna"
+     ],
+     "primary_artist": "Dawuna",
+     "duration": "4:39",
+     "duration_sec": 279,
+     "spotify_track_id": "1ZnwzNQfXHekwcBArGFHKi",
+     "spotify_uri": "spotify:track:1ZnwzNQfXHekwcBArGFHKi",
+     "spotify_url": "https://open.spotify.com/track/1ZnwzNQfXHekwcBArGFHKi",
+     "genres": [
+      "neo-soul",
+      "alt"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "lo-fi soul",
+      "experimental r&b",
+      "psychedelic soul"
+     ],
+     "mood": [
+      "dreamy",
+      "hazy",
+      "tender"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.5,
+      "danceability": 0.5,
+      "acousticness": 0.55,
+      "instrumentalness": 0.2
+     },
+     "bpm": 80,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 8,
+     "title": "Talk to Me",
+     "artists": [
+      "Bonobo",
+      "Nicole Miglis"
+     ],
+     "primary_artist": "Bonobo",
+     "duration": "3:43",
+     "duration_sec": 223,
+     "spotify_track_id": "1AS9YdkPrxVhSYd0RpommY",
+     "spotify_uri": "spotify:track:1AS9YdkPrxVhSYd0RpommY",
+     "spotify_url": "https://open.spotify.com/track/1AS9YdkPrxVhSYd0RpommY",
+     "genres": [
+      "electronic",
+      "downtempo"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "downtempo",
+      "melodic electronica",
+      "art pop"
+     ],
+     "mood": [
+      "ethereal",
+      "melancholic",
+      "airy"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.45,
+      "danceability": 0.6,
+      "acousticness": 0.3,
+      "instrumentalness": 0.3
+     },
+     "bpm": 118,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 9,
+     "title": "Looking for the Happy - Bright-Side Mix",
+     "artists": [
+      "Peter Gabriel"
+     ],
+     "primary_artist": "Peter Gabriel",
+     "duration": "8:35",
+     "duration_sec": 515,
+     "spotify_track_id": "4Fia44xhsPjGBzlddpOYYk",
+     "spotify_uri": "spotify:track:4Fia44xhsPjGBzlddpOYYk",
+     "spotify_url": "https://open.spotify.com/track/4Fia44xhsPjGBzlddpOYYk",
+     "genres": [
+      "alt",
+      "electronic"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "art rock",
+      "art pop",
+      "progressive pop"
+     ],
+     "mood": [
+      "reflective",
+      "hopeful",
+      "expansive"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.6,
+      "danceability": 0.5,
+      "acousticness": 0.4,
+      "instrumentalness": 0.15
+     },
+     "bpm": 100,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 10,
+     "title": "Pegasus (feat. Bradford Hayes)",
+     "artists": [
+      "Wyclef Jean",
+      "Yussef Dayes",
+      "Bradford Hayes"
+     ],
+     "primary_artist": "Wyclef Jean",
+     "duration": "3:21",
+     "duration_sec": 201,
+     "spotify_track_id": "2mSCxKakSzmuKyT5ehdwQq",
+     "spotify_uri": "spotify:track:2mSCxKakSzmuKyT5ehdwQq",
+     "spotify_url": "https://open.spotify.com/track/2mSCxKakSzmuKyT5ehdwQq",
+     "genres": [
+      "uk-jazz",
+      "jazz"
+     ],
+     "genre_primary": "uk-jazz",
+     "subgenres": [
+      "jazz",
+      "jazz fusion",
+      "spiritual jazz",
+      "groove jazz"
+     ],
+     "mood": [
+      "soaring",
+      "hypnotic",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.55,
+      "danceability": 0.55,
+      "acousticness": 0.55,
+      "instrumentalness": 0.75
+     },
+     "bpm": 105,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 11,
+     "title": "Insignificant Other",
+     "artists": [
+      "Queens of the Stone Age"
+     ],
+     "primary_artist": "Queens of the Stone Age",
+     "duration": "5:54",
+     "duration_sec": 354,
+     "spotify_track_id": "3NdLNUPkumBUIcacNxPlVE",
+     "spotify_uri": "spotify:track:3NdLNUPkumBUIcacNxPlVE",
+     "spotify_url": "https://open.spotify.com/track/3NdLNUPkumBUIcacNxPlVE",
+     "genres": [
+      "alt"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "rock",
+      "stoner rock",
+      "alternative rock",
+      "desert rock"
+     ],
+     "mood": [
+      "brooding",
+      "dark",
+      "driving"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.35,
+      "danceability": 0.5,
+      "acousticness": 0.15,
+      "instrumentalness": 0.05
+     },
+     "bpm": 110,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 12,
+     "title": "Because I Don't Know - Lita Lores Version",
+     "artists": [
+      "Lita Lores",
+      "Tricky"
+     ],
+     "primary_artist": "Lita Lores",
+     "duration": "5:28",
+     "duration_sec": 328,
+     "spotify_track_id": "6CnJGOZhX0n9mrb06a8mhM",
+     "spotify_uri": "spotify:track:6CnJGOZhX0n9mrb06a8mhM",
+     "spotify_url": "https://open.spotify.com/track/6CnJGOZhX0n9mrb06a8mhM",
+     "genres": [
+      "downtempo",
+      "alt"
+     ],
+     "genre_primary": "downtempo",
+     "subgenres": [
+      "trip-hop",
+      "dark electronica",
+      "bristol sound"
+     ],
+     "mood": [
+      "dark",
+      "hypnotic",
+      "sultry"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.25,
+      "danceability": 0.6,
+      "acousticness": 0.25,
+      "instrumentalness": 0.1
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 13,
+     "title": "To Some Degree (feat. Michael Kiwanuka)",
+     "artists": [
+      "Daniele Luppi",
+      "Michael Kiwanuka"
+     ],
+     "primary_artist": "Daniele Luppi",
+     "duration": "3:01",
+     "duration_sec": 181,
+     "spotify_track_id": "6Ru5eANwKCdITFc3wvURBO",
+     "spotify_uri": "spotify:track:6Ru5eANwKCdITFc3wvURBO",
+     "spotify_url": "https://open.spotify.com/track/6Ru5eANwKCdITFc3wvURBO",
+     "genres": [
+      "soul-funk",
+      "alt"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "soul",
+      "cinematic soul",
+      "psychedelic soul",
+      "orchestral pop"
+     ],
+     "mood": [
+      "nostalgic",
+      "warm",
+      "melancholic"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.45,
+      "danceability": 0.45,
+      "acousticness": 0.6,
+      "instrumentalness": 0.05
+     },
+     "bpm": 85,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 14,
+     "title": "Jubilee Feeling",
+     "artists": [
+      "Ezra Collective"
+     ],
+     "primary_artist": "Ezra Collective",
+     "duration": "4:15",
+     "duration_sec": 255,
+     "spotify_track_id": "20oKIhNJOY7QemUmqydhDN",
+     "spotify_uri": "spotify:track:20oKIhNJOY7QemUmqydhDN",
+     "spotify_url": "https://open.spotify.com/track/20oKIhNJOY7QemUmqydhDN",
+     "genres": [
+      "uk-jazz",
+      "world"
+     ],
+     "genre_primary": "uk-jazz",
+     "subgenres": [
+      "jazz",
+      "afrobeat jazz",
+      "uk jazz",
+      "jazz-funk"
+     ],
+     "mood": [
+      "joyful",
+      "celebratory",
+      "energetic"
+     ],
+     "mood_parameters": {
+      "energy": 0.8,
+      "valence": 0.85,
+      "danceability": 0.8,
+      "acousticness": 0.5,
+      "instrumentalness": 0.8
+     },
+     "bpm": 118,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 15,
+     "title": "Here They Come II",
+     "artists": [
+      "Tanerélle",
+      "MAUIMØON"
+     ],
+     "primary_artist": "Tanerélle",
+     "duration": "3:07",
+     "duration_sec": 187,
+     "spotify_track_id": "6UKlx3FPcxDujf4r3MI4hT",
+     "spotify_uri": "spotify:track:6UKlx3FPcxDujf4r3MI4hT",
+     "spotify_url": "https://open.spotify.com/track/6UKlx3FPcxDujf4r3MI4hT",
+     "genres": [
+      "neo-soul",
+      "electronic"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "alternative r&b",
+      "future soul",
+      "psychedelic soul"
+     ],
+     "mood": [
+      "dreamy",
+      "cosmic",
+      "sensual"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.5,
+      "danceability": 0.55,
+      "acousticness": 0.3,
+      "instrumentalness": 0.1
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 16,
+     "title": "Can't Let Go",
+     "artists": [
+      "Lalah Hathaway"
+     ],
+     "primary_artist": "Lalah Hathaway",
+     "duration": "4:00",
+     "duration_sec": 240,
+     "spotify_track_id": "1e6b8Vinqx518KdGAw6pEk",
+     "spotify_uri": "spotify:track:1e6b8Vinqx518KdGAw6pEk",
+     "spotify_url": "https://open.spotify.com/track/1e6b8Vinqx518KdGAw6pEk",
+     "genres": [
+      "neo-soul",
+      "soul-funk"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "contemporary r&b",
+      "quiet storm",
+      "adult r&b"
+     ],
+     "mood": [
+      "romantic",
+      "smooth",
+      "soulful"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.6,
+      "danceability": 0.6,
+      "acousticness": 0.35,
+      "instrumentalness": 0.05
+     },
+     "bpm": 88,
      "bpm_source": "estimated"
     }
    ]
@@ -81622,6 +82254,675 @@
     "instrumentalness": 0.95
    },
    "bpm": 86,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 46,
+   "playlist_name": "New Release Playlist #46",
+   "playlist_id": "2RT9YBproiabVwcvbq0t4I",
+   "position_in_playlist": 1,
+   "title": "Lady Havana (feat. Theo Croker, Yiyi Sanchez and Axel Tosca)",
+   "artists": [
+    "Wyclef Jean",
+    "Yussef Dayes",
+    "Theo Croker",
+    "Yiyi Sanchez",
+    "Axel Tosca"
+   ],
+   "primary_artist": "Wyclef Jean",
+   "duration": "6:25",
+   "duration_sec": 385,
+   "spotify_track_id": "2DBvAQzwbRLNy1UZqtCN78",
+   "spotify_uri": "spotify:track:2DBvAQzwbRLNy1UZqtCN78",
+   "spotify_url": "https://open.spotify.com/track/2DBvAQzwbRLNy1UZqtCN78",
+   "genres": [
+    "uk-jazz",
+    "world"
+   ],
+   "genre_primary": "uk-jazz",
+   "subgenres": [
+    "jazz",
+    "afro-cuban jazz",
+    "spiritual jazz",
+    "jazz fusion"
+   ],
+   "mood": [
+    "warm",
+    "lush",
+    "hypnotic"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.6,
+    "danceability": 0.6,
+    "acousticness": 0.6,
+    "instrumentalness": 0.6
+   },
+   "bpm": 100,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 46,
+   "playlist_name": "New Release Playlist #46",
+   "playlist_id": "2RT9YBproiabVwcvbq0t4I",
+   "position_in_playlist": 2,
+   "title": "Don’t Look Any Further (with Lianne La Havas)",
+   "artists": [
+    "Meshell Ndegeocello",
+    "Lianne La Havas"
+   ],
+   "primary_artist": "Meshell Ndegeocello",
+   "duration": "4:03",
+   "duration_sec": 243,
+   "spotify_track_id": "0AjcjeMsxzUWPh0dQcYMyW",
+   "spotify_uri": "spotify:track:0AjcjeMsxzUWPh0dQcYMyW",
+   "spotify_url": "https://open.spotify.com/track/0AjcjeMsxzUWPh0dQcYMyW",
+   "genres": [
+    "neo-soul",
+    "jazz"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "alternative r&b",
+    "jazz-soul",
+    "soul"
+   ],
+   "mood": [
+    "intimate",
+    "tender",
+    "soulful"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.55,
+    "danceability": 0.55,
+    "acousticness": 0.6,
+    "instrumentalness": 0.05
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 46,
+   "playlist_name": "New Release Playlist #46",
+   "playlist_id": "2RT9YBproiabVwcvbq0t4I",
+   "position_in_playlist": 3,
+   "title": "Close (feat. Sampha)",
+   "artists": [
+    "Headie One",
+    "Sampha"
+   ],
+   "primary_artist": "Headie One",
+   "duration": "3:09",
+   "duration_sec": 189,
+   "spotify_track_id": "7azina6xD8AIc4CdlGaVN9",
+   "spotify_uri": "spotify:track:7azina6xD8AIc4CdlGaVN9",
+   "spotify_url": "https://open.spotify.com/track/7azina6xD8AIc4CdlGaVN9",
+   "genres": [
+    "hip-hop",
+    "neo-soul"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "uk rap",
+    "alternative hip-hop",
+    "conscious rap"
+   ],
+   "mood": [
+    "introspective",
+    "melancholic",
+    "intimate"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.3,
+    "danceability": 0.6,
+    "acousticness": 0.4,
+    "instrumentalness": 0.0
+   },
+   "bpm": 140,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 46,
+   "playlist_name": "New Release Playlist #46",
+   "playlist_id": "2RT9YBproiabVwcvbq0t4I",
+   "position_in_playlist": 4,
+   "title": "Tea Time",
+   "artists": [
+    "Alabama Shakes"
+   ],
+   "primary_artist": "Alabama Shakes",
+   "duration": "3:47",
+   "duration_sec": 227,
+   "spotify_track_id": "31GAlUeCLW7X2wabzWaCYM",
+   "spotify_uri": "spotify:track:31GAlUeCLW7X2wabzWaCYM",
+   "spotify_url": "https://open.spotify.com/track/31GAlUeCLW7X2wabzWaCYM",
+   "genres": [
+    "soul-funk",
+    "alt"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "soul",
+    "southern soul",
+    "blues rock",
+    "retro soul"
+   ],
+   "mood": [
+    "gritty",
+    "soulful",
+    "laid-back"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.55,
+    "danceability": 0.55,
+    "acousticness": 0.5,
+    "instrumentalness": 0.05
+   },
+   "bpm": 95,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 46,
+   "playlist_name": "New Release Playlist #46",
+   "playlist_id": "2RT9YBproiabVwcvbq0t4I",
+   "position_in_playlist": 5,
+   "title": "Movement 13 - Hope Taking Flight",
+   "artists": [
+    "Floating Points",
+    "San Francisco Ballet Orchestra"
+   ],
+   "primary_artist": "Floating Points",
+   "duration": "1:40",
+   "duration_sec": 100,
+   "spotify_track_id": "70vbC4BGJn2AMUEhRxYBoq",
+   "spotify_uri": "spotify:track:70vbC4BGJn2AMUEhRxYBoq",
+   "spotify_url": "https://open.spotify.com/track/70vbC4BGJn2AMUEhRxYBoq",
+   "genres": [
+    "classical",
+    "electronic"
+   ],
+   "genre_primary": "classical",
+   "subgenres": [
+    "contemporary classical",
+    "orchestral",
+    "ballet score",
+    "modern composition"
+   ],
+   "mood": [
+    "uplifting",
+    "cinematic",
+    "delicate"
+   ],
+   "mood_parameters": {
+    "energy": 0.3,
+    "valence": 0.55,
+    "danceability": 0.15,
+    "acousticness": 0.85,
+    "instrumentalness": 0.95
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 46,
+   "playlist_name": "New Release Playlist #46",
+   "playlist_id": "2RT9YBproiabVwcvbq0t4I",
+   "position_in_playlist": 6,
+   "title": "Kingpin (Knock Ya Head Off) (feat. Anderson .Paak & Ludacris)",
+   "artists": [
+    "Busta Rhymes",
+    "J Dilla",
+    "Anderson .Paak",
+    "Ludacris"
+   ],
+   "primary_artist": "Busta Rhymes",
+   "duration": "4:28",
+   "duration_sec": 268,
+   "spotify_track_id": "0infHb5VLogAe1NvKPFoeu",
+   "spotify_uri": "spotify:track:0infHb5VLogAe1NvKPFoeu",
+   "spotify_url": "https://open.spotify.com/track/0infHb5VLogAe1NvKPFoeu",
+   "genres": [
+    "hip-hop",
+    "soul-funk"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "boom bap",
+    "east coast hip-hop",
+    "funk rap"
+   ],
+   "mood": [
+    "energetic",
+    "swaggering",
+    "playful"
+   ],
+   "mood_parameters": {
+    "energy": 0.8,
+    "valence": 0.65,
+    "danceability": 0.8,
+    "acousticness": 0.15,
+    "instrumentalness": 0.0
+   },
+   "bpm": 95,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 46,
+   "playlist_name": "New Release Playlist #46",
+   "playlist_id": "2RT9YBproiabVwcvbq0t4I",
+   "position_in_playlist": 7,
+   "title": "Love's Ekongo",
+   "artists": [
+    "Dawuna"
+   ],
+   "primary_artist": "Dawuna",
+   "duration": "4:39",
+   "duration_sec": 279,
+   "spotify_track_id": "1ZnwzNQfXHekwcBArGFHKi",
+   "spotify_uri": "spotify:track:1ZnwzNQfXHekwcBArGFHKi",
+   "spotify_url": "https://open.spotify.com/track/1ZnwzNQfXHekwcBArGFHKi",
+   "genres": [
+    "neo-soul",
+    "alt"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "lo-fi soul",
+    "experimental r&b",
+    "psychedelic soul"
+   ],
+   "mood": [
+    "dreamy",
+    "hazy",
+    "tender"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.5,
+    "danceability": 0.5,
+    "acousticness": 0.55,
+    "instrumentalness": 0.2
+   },
+   "bpm": 80,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 46,
+   "playlist_name": "New Release Playlist #46",
+   "playlist_id": "2RT9YBproiabVwcvbq0t4I",
+   "position_in_playlist": 8,
+   "title": "Talk to Me",
+   "artists": [
+    "Bonobo",
+    "Nicole Miglis"
+   ],
+   "primary_artist": "Bonobo",
+   "duration": "3:43",
+   "duration_sec": 223,
+   "spotify_track_id": "1AS9YdkPrxVhSYd0RpommY",
+   "spotify_uri": "spotify:track:1AS9YdkPrxVhSYd0RpommY",
+   "spotify_url": "https://open.spotify.com/track/1AS9YdkPrxVhSYd0RpommY",
+   "genres": [
+    "electronic",
+    "downtempo"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "downtempo",
+    "melodic electronica",
+    "art pop"
+   ],
+   "mood": [
+    "ethereal",
+    "melancholic",
+    "airy"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.45,
+    "danceability": 0.6,
+    "acousticness": 0.3,
+    "instrumentalness": 0.3
+   },
+   "bpm": 118,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 46,
+   "playlist_name": "New Release Playlist #46",
+   "playlist_id": "2RT9YBproiabVwcvbq0t4I",
+   "position_in_playlist": 9,
+   "title": "Looking for the Happy - Bright-Side Mix",
+   "artists": [
+    "Peter Gabriel"
+   ],
+   "primary_artist": "Peter Gabriel",
+   "duration": "8:35",
+   "duration_sec": 515,
+   "spotify_track_id": "4Fia44xhsPjGBzlddpOYYk",
+   "spotify_uri": "spotify:track:4Fia44xhsPjGBzlddpOYYk",
+   "spotify_url": "https://open.spotify.com/track/4Fia44xhsPjGBzlddpOYYk",
+   "genres": [
+    "alt",
+    "electronic"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "art rock",
+    "art pop",
+    "progressive pop"
+   ],
+   "mood": [
+    "reflective",
+    "hopeful",
+    "expansive"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.6,
+    "danceability": 0.5,
+    "acousticness": 0.4,
+    "instrumentalness": 0.15
+   },
+   "bpm": 100,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 46,
+   "playlist_name": "New Release Playlist #46",
+   "playlist_id": "2RT9YBproiabVwcvbq0t4I",
+   "position_in_playlist": 10,
+   "title": "Pegasus (feat. Bradford Hayes)",
+   "artists": [
+    "Wyclef Jean",
+    "Yussef Dayes",
+    "Bradford Hayes"
+   ],
+   "primary_artist": "Wyclef Jean",
+   "duration": "3:21",
+   "duration_sec": 201,
+   "spotify_track_id": "2mSCxKakSzmuKyT5ehdwQq",
+   "spotify_uri": "spotify:track:2mSCxKakSzmuKyT5ehdwQq",
+   "spotify_url": "https://open.spotify.com/track/2mSCxKakSzmuKyT5ehdwQq",
+   "genres": [
+    "uk-jazz",
+    "jazz"
+   ],
+   "genre_primary": "uk-jazz",
+   "subgenres": [
+    "jazz",
+    "jazz fusion",
+    "spiritual jazz",
+    "groove jazz"
+   ],
+   "mood": [
+    "soaring",
+    "hypnotic",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.55,
+    "danceability": 0.55,
+    "acousticness": 0.55,
+    "instrumentalness": 0.75
+   },
+   "bpm": 105,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 46,
+   "playlist_name": "New Release Playlist #46",
+   "playlist_id": "2RT9YBproiabVwcvbq0t4I",
+   "position_in_playlist": 11,
+   "title": "Insignificant Other",
+   "artists": [
+    "Queens of the Stone Age"
+   ],
+   "primary_artist": "Queens of the Stone Age",
+   "duration": "5:54",
+   "duration_sec": 354,
+   "spotify_track_id": "3NdLNUPkumBUIcacNxPlVE",
+   "spotify_uri": "spotify:track:3NdLNUPkumBUIcacNxPlVE",
+   "spotify_url": "https://open.spotify.com/track/3NdLNUPkumBUIcacNxPlVE",
+   "genres": [
+    "alt"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "rock",
+    "stoner rock",
+    "alternative rock",
+    "desert rock"
+   ],
+   "mood": [
+    "brooding",
+    "dark",
+    "driving"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.35,
+    "danceability": 0.5,
+    "acousticness": 0.15,
+    "instrumentalness": 0.05
+   },
+   "bpm": 110,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 46,
+   "playlist_name": "New Release Playlist #46",
+   "playlist_id": "2RT9YBproiabVwcvbq0t4I",
+   "position_in_playlist": 12,
+   "title": "Because I Don't Know - Lita Lores Version",
+   "artists": [
+    "Lita Lores",
+    "Tricky"
+   ],
+   "primary_artist": "Lita Lores",
+   "duration": "5:28",
+   "duration_sec": 328,
+   "spotify_track_id": "6CnJGOZhX0n9mrb06a8mhM",
+   "spotify_uri": "spotify:track:6CnJGOZhX0n9mrb06a8mhM",
+   "spotify_url": "https://open.spotify.com/track/6CnJGOZhX0n9mrb06a8mhM",
+   "genres": [
+    "downtempo",
+    "alt"
+   ],
+   "genre_primary": "downtempo",
+   "subgenres": [
+    "trip-hop",
+    "dark electronica",
+    "bristol sound"
+   ],
+   "mood": [
+    "dark",
+    "hypnotic",
+    "sultry"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.25,
+    "danceability": 0.6,
+    "acousticness": 0.25,
+    "instrumentalness": 0.1
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 46,
+   "playlist_name": "New Release Playlist #46",
+   "playlist_id": "2RT9YBproiabVwcvbq0t4I",
+   "position_in_playlist": 13,
+   "title": "To Some Degree (feat. Michael Kiwanuka)",
+   "artists": [
+    "Daniele Luppi",
+    "Michael Kiwanuka"
+   ],
+   "primary_artist": "Daniele Luppi",
+   "duration": "3:01",
+   "duration_sec": 181,
+   "spotify_track_id": "6Ru5eANwKCdITFc3wvURBO",
+   "spotify_uri": "spotify:track:6Ru5eANwKCdITFc3wvURBO",
+   "spotify_url": "https://open.spotify.com/track/6Ru5eANwKCdITFc3wvURBO",
+   "genres": [
+    "soul-funk",
+    "alt"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "soul",
+    "cinematic soul",
+    "psychedelic soul",
+    "orchestral pop"
+   ],
+   "mood": [
+    "nostalgic",
+    "warm",
+    "melancholic"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.45,
+    "danceability": 0.45,
+    "acousticness": 0.6,
+    "instrumentalness": 0.05
+   },
+   "bpm": 85,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 46,
+   "playlist_name": "New Release Playlist #46",
+   "playlist_id": "2RT9YBproiabVwcvbq0t4I",
+   "position_in_playlist": 14,
+   "title": "Jubilee Feeling",
+   "artists": [
+    "Ezra Collective"
+   ],
+   "primary_artist": "Ezra Collective",
+   "duration": "4:15",
+   "duration_sec": 255,
+   "spotify_track_id": "20oKIhNJOY7QemUmqydhDN",
+   "spotify_uri": "spotify:track:20oKIhNJOY7QemUmqydhDN",
+   "spotify_url": "https://open.spotify.com/track/20oKIhNJOY7QemUmqydhDN",
+   "genres": [
+    "uk-jazz",
+    "world"
+   ],
+   "genre_primary": "uk-jazz",
+   "subgenres": [
+    "jazz",
+    "afrobeat jazz",
+    "uk jazz",
+    "jazz-funk"
+   ],
+   "mood": [
+    "joyful",
+    "celebratory",
+    "energetic"
+   ],
+   "mood_parameters": {
+    "energy": 0.8,
+    "valence": 0.85,
+    "danceability": 0.8,
+    "acousticness": 0.5,
+    "instrumentalness": 0.8
+   },
+   "bpm": 118,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 46,
+   "playlist_name": "New Release Playlist #46",
+   "playlist_id": "2RT9YBproiabVwcvbq0t4I",
+   "position_in_playlist": 15,
+   "title": "Here They Come II",
+   "artists": [
+    "Tanerélle",
+    "MAUIMØON"
+   ],
+   "primary_artist": "Tanerélle",
+   "duration": "3:07",
+   "duration_sec": 187,
+   "spotify_track_id": "6UKlx3FPcxDujf4r3MI4hT",
+   "spotify_uri": "spotify:track:6UKlx3FPcxDujf4r3MI4hT",
+   "spotify_url": "https://open.spotify.com/track/6UKlx3FPcxDujf4r3MI4hT",
+   "genres": [
+    "neo-soul",
+    "electronic"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "alternative r&b",
+    "future soul",
+    "psychedelic soul"
+   ],
+   "mood": [
+    "dreamy",
+    "cosmic",
+    "sensual"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.5,
+    "danceability": 0.55,
+    "acousticness": 0.3,
+    "instrumentalness": 0.1
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 46,
+   "playlist_name": "New Release Playlist #46",
+   "playlist_id": "2RT9YBproiabVwcvbq0t4I",
+   "position_in_playlist": 16,
+   "title": "Can't Let Go",
+   "artists": [
+    "Lalah Hathaway"
+   ],
+   "primary_artist": "Lalah Hathaway",
+   "duration": "4:00",
+   "duration_sec": 240,
+   "spotify_track_id": "1e6b8Vinqx518KdGAw6pEk",
+   "spotify_uri": "spotify:track:1e6b8Vinqx518KdGAw6pEk",
+   "spotify_url": "https://open.spotify.com/track/1e6b8Vinqx518KdGAw6pEk",
+   "genres": [
+    "neo-soul",
+    "soul-funk"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "contemporary r&b",
+    "quiet storm",
+    "adult r&b"
+   ],
+   "mood": [
+    "romantic",
+    "smooth",
+    "soulful"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.6,
+    "danceability": 0.6,
+    "acousticness": 0.35,
+    "instrumentalness": 0.05
+   },
+   "bpm": 88,
    "bpm_source": "estimated"
   }
  ]
