@@ -14,9 +14,9 @@ sorgente tra tante, non il fondamento dell'app.
 **Decisioni (2026-10-17):**
 
 1. **YouTube è il nuovo player di default**: brani interi per tutti, senza account.
-2. **Apple Music** è la seconda sorgente (MusicKit JS, Apple Developer Program
-   99 $/anno): nessun limite di utenti, brani interi per chi ha un abbonamento
-   Apple Music, anteprime di 30 s per gli altri.
+2. ~~Apple Music come seconda sorgente~~ — **scartato** (2026-10-17): costo
+   annuo (99 $) per servire solo gli abbonati Apple Music. Le righe su Apple
+   nelle sezioni seguenti restano come documentazione della ricerca.
 3. **Spotify resta come sorgente opzionale** (embed + Connect per l'owner): il
    codice c'è già e non costa nulla mantenerlo.
 
@@ -51,10 +51,9 @@ renderebbe ogni merge da `main` un conflitto su un JSON enorme. Quindi:
 1. Chiave **YouTube Data API v3** → prima esecuzione del risolutore (~11 giorni
    di quota per i 1022 brani, poi ~20 brani a settimana) → revisione dei "review".
 2. Prova reale su desktop e mobile (embed bloccati, autoplay su iOS, qualità dei match).
-3. **Apple Music**: iscrizione all'Apple Developer Program → chiave MusicKit
-   (.p8) → firma del developer token in CI (claim `origin`, rinnovo ≤6 mesi) →
-   risoluzione per ISRC (serve prima l'ISRC: fase 1/2 della roadmap) → `src/AppleMusicPlayer.jsx`
-   sulla stessa `playbackRoute.js`.
+3. Altre strategie per far ascoltare **tutti** (sorgenti complementari a
+   YouTube, licenze, "consegna" del percorso all'app dell'ascoltatore):
+   ricerca in [`LISTENING_STRATEGIES.md`](LISTENING_STRATEGIES.md).
 4. Export neutrale (JSPF/XSPF), poi migrazione d'identità prima del merge.
 
 ---
