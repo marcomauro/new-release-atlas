@@ -13,15 +13,23 @@ const MOOD_PARAMS = [
 
 // Track detail card — docked on desktop, a bottom sheet on mobile. Shows the
 // selected track's genres/metadata, the collapsible mood/audio section, the
-// action row (Spotify / generate playlist) and, when no route is playing, the
-// single-track Spotify embed. Weights live in the Playlist Hub only (⚖ Tune).
+// action row (open on YouTube / Spotify, generate playlist) and, when no route
+// is playing, the single-track player of the current listening source
+// (YouTube when the track has a match, else the Spotify embed). Weights live
+// in the Playlist Hub only (⚖ Tune).
 export default function DetailPanel({
   track, onClose, isMobile,
   // bottom padding reservation for the mobile mini-player
   reserveBottom,
   moodOpen, setMoodOpen,
-  onGenerate, showEmbed,
+  onGenerate, showEmbed, listenSource = "spotify",
 }) {
+  const onYouTube = listenSource === "youtube" && !!track.yt;
+  // "Open on …" links: the current source first (filled), the other outlined.
+  const links = [
+    track.yt && { key: "youtube", href: `https://www.youtube.com/watch?v=${track.yt}`, label: "YouTube" },
+    { key: "spotify", href: track.url, label: "Spotify" },
+  ].filter(Boolean).sort((x, y) => (y.key === listenSource) - (x.key === listenSource));
   // When "Mood & audio" opens, make sure the expanded section scrolls into
   // view ABOVE the mini-player (the reserved bottom padding is inside this
   // scroll container, so scrolling the section into view clears the player).
@@ -198,20 +206,24 @@ export default function DetailPanel({
       {/* Actions: pill buttons, same family as the Playlist Hub's. On mobile
           they share a single row (compact labels). */}
       <div style={{ display: "flex", gap: isMobile ? 6 : 8, marginTop: 16, flexWrap: isMobile ? "nowrap" : "wrap" }}>
-        <a
-          href={track.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            flex: isMobile ? 1 : undefined, minWidth: 0,
-            textAlign: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
-            fontSize: 12, fontWeight: 500, color: PAPER, background: INK,
-            padding: isMobile ? "9px 12px" : "7px 16px",
-            borderRadius: 16, textDecoration: "none",
-          }}
-        >
-          {isMobile ? "Spotify ↗" : "Open in Spotify ↗"}
-        </a>
+        {links.map((l, i) => (
+          <a
+            key={l.key}
+            href={l.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              flex: isMobile ? 1 : undefined, minWidth: 0,
+              textAlign: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+              fontSize: 12, fontWeight: 500, textDecoration: "none", borderRadius: 16,
+              ...(i === 0
+                ? { color: PAPER, background: INK, padding: isMobile ? "9px 12px" : "7px 16px" }
+                : { color: INK, background: "transparent", border: `1px solid ${INK}`, padding: isMobile ? "8px 12px" : "6px 16px" }),
+            }}
+          >
+            {isMobile || links.length > 1 ? `${l.label} ↗` : `Open in ${l.label} ↗`}
+          </a>
+        ))}
         <button
           onClick={() => onGenerate(track)}
           title="Build a playlist from this track's graph connections"
@@ -227,10 +239,25 @@ export default function DetailPanel({
           {isMobile ? "♫ Generate" : "♫ Generate playlist"}
         </button>
       </div>
-      {/* Single-track Spotify player (~30s preview for everyone, full track
-          for logged-in Premium). Hidden while a route is playing: the route's
-          mini-player owns the audio then (no double playback). */}
-      {showEmbed && (
+      {/* Single-track player, hidden while a route is playing (the route's
+          mini-player owns the audio then — no double playback). YouTube: full
+          track for everyone, box ≥200px tall as YouTube requires. Spotify:
+          ~30s preview for everyone, full track for logged-in Premium. */}
+      {showEmbed && onYouTube && (
+        <iframe
+          title="YouTube player"
+          src={`https://www.youtube-nocookie.com/embed/${track.yt}?playsinline=1&rel=0`}
+          width="100%"
+          height="200"
+          frameBorder="0"
+          loading="lazy"
+          allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+          style={{ border: 0, borderRadius: 8, marginTop: 16, display: "block", background: "#000" }}
+        />
+      )}
+      {showEmbed && !onYouTube && (
         <iframe
           title="Spotify player"
           src={`https://open.spotify.com/embed/track/${track.id}?utm_source=new-release-atlas`}

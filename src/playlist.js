@@ -356,7 +356,7 @@ function tracksOf(ids, byId) {
     return {
       id, title: n.title, artist: n.artist, artists: n.artists,
       genre: n.genre, genreLabel: GENRE_LABEL[n.genre] || n.genre,
-      duration: n.duration, url: n.url,
+      duration: n.duration, url: n.url, yt: n.yt,
     };
   });
 }

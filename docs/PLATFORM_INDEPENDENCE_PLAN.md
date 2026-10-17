@@ -1,11 +1,61 @@
 # Piano: svincolare Atlas da Spotify
 
-> Stato: **proposta** · Data della ricerca: 2026-10-16 · Nessuna modifica al codice
-> è ancora stata fatta: questo documento è la base per decidere e poi procedere per fasi.
+> Stato: **in sviluppo** sul ramo `experimental/platform-independence` ·
+> Ricerca: 2026-10-16 · Decisioni: 2026-10-17 (vedi §0)
 
 Obiettivo: chiunque deve poter **ascoltare** la mappa (senza un account o con quello
 che già ha) e chiunque deve poter **curare** un proprio Atlas. Spotify diventa una
 sorgente tra tante, non il fondamento dell'app.
+
+---
+
+## 0. Decisioni prese e stato del ramo sperimentale
+
+**Decisioni (2026-10-17):**
+
+1. **YouTube è il nuovo player di default**: brani interi per tutti, senza account.
+2. **Apple Music** è la seconda sorgente (MusicKit JS, Apple Developer Program
+   99 $/anno): nessun limite di utenti, brani interi per chi ha un abbonamento
+   Apple Music, anteprime di 30 s per gli altri.
+3. **Spotify resta come sorgente opzionale** (embed + Connect per l'owner): il
+   codice c'è già e non costa nulla mantenerlo.
+
+**Cambio di sequenza rispetto alla roadmap (§5):** `main` continua a ricevere
+una playlist a settimana, che riscrive `data/spotify_archive_enriched.json`.
+Rinominare l'archivio o cambiarne la chiave primaria sul ramo sperimentale
+renderebbe ogni merge da `main` un conflitto su un JSON enorme. Quindi:
+
+- le id di piattaforma vivono in un **file separato** (`data/sources.json`,
+  generato, + `data/source_overrides.json`, manuale), indicizzato per ora con
+  l'id attuale del brano trattato come chiave opaca;
+- l'archivio resta **byte-identico**: i merge da `main` restano puliti;
+- la migrazione a `atlas_id` / ISRC / MBID (fase 1) si fa **in un colpo solo,
+  subito prima del merge del ramo**, quando il resto è stabile;
+- `sources.json` non si carica a parte (idea di §4.1): ~20 KB di videoId nel
+  `graph.json` (~1 MB) costano meno di un fetch in più e restano offline nel PWA.
+
+**Fatto sul ramo:**
+
+| Pezzo | File | Stato |
+|---|---|---|
+| Risolutore YouTube offline (punteggio titolo/artista/durata/canale "Topic", quota incrementale, report, override) | `scripts/resolve_sources.py`, `tests/test_resolve_sources.py` | ✅ testato (dati finti) — manca la prima esecuzione con una chiave reale |
+| `yt` nei nodi di `graph.json` + `meta.sources` | `scripts/build_graph.py` | ✅ grafo identico al bit quando non ci sono match |
+| Navigazione del percorso un brano alla volta (skip, repeat, shuffle) | `src/playbackRoute.js`, `tests/playback_route.test.mjs` | ✅ |
+| Player YouTube (IFrame API, `youtube-nocookie.com`, ≥200×200, skip su errore embed) | `src/YouTubePlayer.jsx` | ✅ provato in browser headless con API YouTube simulata |
+| Switch di sorgente nel player, preferenza ricordata, ripresa alla stessa posizione | `src/PlayerBar.jsx`, `src/playerChrome.jsx`, `src/MusicNetwork.jsx` | ✅ |
+| Pannello brano: link YouTube/Spotify, player YouTube del singolo brano | `src/components/DetailPanel.jsx` | ✅ |
+| Export CSV con colonna `youtube_url` | `src/export.js` | ✅ |
+
+**Prossimi passi:**
+
+1. Chiave **YouTube Data API v3** → prima esecuzione del risolutore (~11 giorni
+   di quota per i 1022 brani, poi ~20 brani a settimana) → revisione dei "review".
+2. Prova reale su desktop e mobile (embed bloccati, autoplay su iOS, qualità dei match).
+3. **Apple Music**: iscrizione all'Apple Developer Program → chiave MusicKit
+   (.p8) → firma del developer token in CI (claim `origin`, rinnovo ≤6 mesi) →
+   risoluzione per ISRC (serve prima l'ISRC: fase 1/2 della roadmap) → `src/AppleMusicPlayer.jsx`
+   sulla stessa `playbackRoute.js`.
+4. Export neutrale (JSPF/XSPF), poi migrazione d'identità prima del merge.
 
 ---
 
@@ -323,6 +373,8 @@ vanno provati da un browser reale o da GitHub Actions.
 ---
 
 ## 8. Decisioni richieste prima di partire
+
+> Punti 1 e 2 decisi il 2026-10-17 (vedi §0). Restano aperti 3, 4 e 5.
 
 1. **Provider "brano intero" per il pubblico**: YouTube (gratis, video visibile,
    pubblicità) — consigliato come default — e/o Apple Music (99 $/anno, solo abbonati)?

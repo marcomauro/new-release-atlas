@@ -4,6 +4,10 @@ import {
   spotifyNext, spotifyPrevious, spotifySeek, spotifyShuffle, spotifyRepeat, connectBusy,
 } from "./spotifyConnect.js";
 import { INK, PAPER, MUTED } from "./theme.js";
+import {
+  Shell, Marquee, ProgressRow, TransportRow, SourceSwitch, navBtn, tglBtn,
+} from "./playerChrome.jsx";
+import YouTubePlayer from "./YouTubePlayer.jsx";
 
 const GREEN = "#1db954";
 
@@ -30,23 +34,38 @@ export function preloadSpotifyApi() {
   if (typeof window !== "undefined") loadSpotifyApi();
 }
 
-/* Mini-player persistente del PERCORSO.
-   - Modalità CONNECT (utente loggato a Spotify Premium): pilota il device
+/* Mini-player persistente del PERCORSO. La sorgente di ascolto (`source`)
+   sceglie il motore; `sources` sono quelle offerte dallo switch nel player.
+   - YOUTUBE: brani INTERI per tutti, senza account (IFrame API, un brano
+     alla volta; la coda la tiene l'app — vedi YouTubePlayer.jsx).
+   - SPOTIFY · CONNECT (utente loggato a Spotify Premium): pilota il device
      dell'utente via Web API → brani INTERI in sequenza (anche su mobile).
-   - Modalità EMBED (non loggato): l'embed ufficiale, anteprima ~30s, con
+   - SPOTIFY · EMBED (non loggato): l'embed ufficiale, anteprima ~30s, con
      pulsante opt-in "Ascolta intero" per attivare il Connect. */
-export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap = 0, connected, onLogin, isMobile, onOpenTrack, onHeight }) {
+export default function PlayerBar({
+  tracks, index, setIndex, onClose, bottomGap = 0, connected, onLogin, isMobile, onOpenTrack, onHeight,
+  source = "spotify", sources = ["spotify"], onSource,
+}) {
+  const sw = { sources, onSource };
+  if (source === "youtube") {
+    return (
+      <YouTubePlayer
+        tracks={tracks} index={index} setIndex={setIndex} onClose={onClose} bottomGap={bottomGap}
+        isMobile={isMobile} onOpenTrack={onOpenTrack} onHeight={onHeight} {...sw}
+      />
+    );
+  }
   if (connected) {
     return (
       <ConnectPlayer
         tracks={tracks} index={index} setIndex={setIndex} onClose={onClose} bottomGap={bottomGap}
-        isMobile={isMobile} onOpenTrack={onOpenTrack} onHeight={onHeight} onLogin={onLogin}
+        isMobile={isMobile} onOpenTrack={onOpenTrack} onHeight={onHeight} onLogin={onLogin} {...sw}
       />
     );
   }
   return (
     <EmbedPlayer
-      tracks={tracks} index={index} setIndex={setIndex} onClose={onClose} bottomGap={bottomGap} onLogin={onLogin} onHeight={onHeight}
+      tracks={tracks} index={index} setIndex={setIndex} onClose={onClose} bottomGap={bottomGap} onLogin={onLogin} onHeight={onHeight} {...sw}
     />
   );
 }
@@ -54,7 +73,7 @@ export default function PlayerBar({ tracks, index, setIndex, onClose, bottomGap 
 // ---------------------------------------------------------------------------
 //  CONNECT: full track sul device dell'utente (Premium)
 // ---------------------------------------------------------------------------
-function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, onOpenTrack, onHeight, onLogin }) {
+function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, onOpenTrack, onHeight, onLogin, sources, onSource }) {
   const uris = useMemo(() => tracks.map((t) => `spotify:track:${t.id}`), [tracks]);
   const [paused, setPaused] = useState(false);
   const [liveIdx, setLiveIdx] = useState(index);
@@ -230,17 +249,17 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
     spotifyPause().catch(() => {});
     onClose();
   };
+  // Switching to another source silences the Spotify device first, like ✕.
+  const switchSource = onSource && ((s) => {
+    spotifyPause().catch(() => {});
+    onSource(s);
+  });
 
   const many = tracks.length > 1;
   if (!cur) return null;
 
   const posDisp = prog.playing ? Math.min(prog.dur, prog.pos + (Date.now() - prog.at)) : prog.pos;
-  const pct = prog.dur > 0 ? Math.min(100, (posDisp / prog.dur) * 100) : 0;
-  const onSeek = (e) => {
-    if (!prog.dur) return;
-    const r = e.currentTarget.getBoundingClientRect();
-    const frac = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
-    const ms = frac * prog.dur;
+  const onSeek = (ms) => {
     setProg((p) => ({ ...p, pos: ms, at: Date.now() }));
     spotifySeek(ms).catch(() => {});
   };
@@ -257,16 +276,18 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
         <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 4 }}>
           {/* row 1: title (marquee when it overflows) + device + close */}
           <div style={{ display: "flex", alignItems: "flex-start", gap: 6 }}>
-            <button
-              onClick={() => onOpenTrack && onOpenTrack(cur.id)}
-              title="Show on the map"
-              style={{ flex: 1, minWidth: 0, textAlign: "left", background: "transparent", border: "none", padding: 0, cursor: onOpenTrack ? "pointer" : "default" }}
-            >
-              <Marquee text={`${cur.title} — ${cur.artist}`} />
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <button
+                onClick={() => onOpenTrack && onOpenTrack(cur.id)}
+                title="Show on the map"
+                style={{ display: "block", width: "100%", textAlign: "left", background: "transparent", border: "none", padding: 0, cursor: onOpenTrack ? "pointer" : "default" }}
+              >
+                <Marquee text={`${cur.title} — ${cur.artist}`} />
+              </button>
               <div style={{ fontSize: 10.5, color: MUTED, marginTop: 1 }}>
-                <span style={{ color: GREEN, fontWeight: 600 }}>● Spotify</span>{many ? ` · ${shown + 1}/${tracks.length}` : ""}
+                <SourceSwitch active="spotify" sources={sources} onSource={switchSource} />{many ? ` · ${shown + 1}/${tracks.length}` : ""}
               </div>
-            </button>
+            </div>
             <button
               onClick={() => setDevicesOpen((v) => !v)}
               title="Choose the playback device"
@@ -278,25 +299,14 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
             <button onClick={closePlayer} title="Pause and close" aria-label="Pause and close" style={navBtn}>✕</button>
           </div>
 
-          {/* row 2: progress + seek (6px bar, ~20px pointer target) */}
-          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <span style={{ fontSize: 10, color: MUTED, width: 30, textAlign: "right" }}>{fmtTime(posDisp)}</span>
-            <div onClick={onSeek} style={{ flex: 1, padding: "7px 0", cursor: "pointer" }}>
-              <div style={{ height: 6, borderRadius: 3, background: "rgba(154,147,138,0.3)", position: "relative" }}>
-                <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${pct}%`, background: INK, borderRadius: 3 }} />
-              </div>
-            </div>
-            <span style={{ fontSize: 10, color: MUTED, width: 30 }}>{fmtTime(prog.dur)}</span>
-          </div>
+          {/* row 2: progress + seek */}
+          <ProgressRow pos={posDisp} dur={prog.dur} onSeek={onSeek} />
 
           {/* row 3: transport distributed along the column width */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 4px" }}>
-            <button onClick={toggleShuffle} title="Shuffle the route" aria-label="Shuffle" style={tglBtn(shuffle)}>⇄</button>
-            <button onClick={goPrev} disabled={!many} title="Previous" aria-label="Previous track" style={{ ...navBtn, opacity: many ? 1 : 0.35 }}>‹</button>
-            <button onClick={toggle} title={paused ? "Resume" : "Pause"} aria-label={paused ? "Resume" : "Pause"} style={playBtn}>{paused ? "▶" : "❚❚"}</button>
-            <button onClick={goNext} disabled={!many} title="Next" aria-label="Next track" style={{ ...navBtn, opacity: many ? 1 : 0.35 }}>›</button>
-            <button onClick={cycleRepeat} title={`Repeat: ${repeat}`} aria-label={`Repeat: ${repeat}`} style={tglBtn(repeat !== "off")}>{repeat === "one" ? "₁⟲" : "⟲"}</button>
-          </div>
+          <TransportRow
+            shuffle={shuffle} onShuffle={toggleShuffle} many={many} onPrev={goPrev} onNext={goNext}
+            paused={paused} onToggle={toggle} repeat={repeat} onRepeat={cycleRepeat}
+          />
         </div>
       </div>
 
@@ -347,7 +357,7 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
 // ---------------------------------------------------------------------------
 //  EMBED: anteprima ~30s + opt-in "Ascolta intero"
 // ---------------------------------------------------------------------------
-function EmbedPlayer({ tracks, index, setIndex, onClose, bottomGap, onLogin, onHeight }) {
+function EmbedPlayer({ tracks, index, setIndex, onClose, bottomGap, onLogin, onHeight, sources, onSource }) {
   const hostRef = useRef(null);
   const ctrlRef = useRef(null);
   const advancingRef = useRef(false);
@@ -414,7 +424,11 @@ function EmbedPlayer({ tracks, index, setIndex, onClose, bottomGap, onLogin, onH
           <div style={{ fontSize: 12.5, color: INK, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
             {cur.title}<span style={{ color: MUTED }}> — {cur.artist}</span>
           </div>
-          {many && <div style={{ fontSize: 10.5, color: MUTED, marginTop: 1 }}>route · {index + 1}/{tracks.length}</div>}
+          {(many || sources.length > 1) && (
+            <div style={{ fontSize: 10.5, color: MUTED, marginTop: 1 }}>
+              <SourceSwitch active="spotify" sources={sources} onSource={onSource} />{many ? ` · route ${index + 1}/${tracks.length}` : ""}
+            </div>
+          )}
         </div>
         {many && <button onClick={() => setIndex(Math.min(tracks.length - 1, index + 1))} disabled={index === tracks.length - 1} title="Next" style={navBtn}>›</button>}
         <button onClick={onClose} title="Close player" style={navBtn}>✕</button>
@@ -426,89 +440,6 @@ function EmbedPlayer({ tracks, index, setIndex, onClose, bottomGap, onLogin, onH
         </button>
       )}
     </Shell>
-  );
-}
-
-// Single-line title that scrolls (seamless loop) only when it doesn't fit:
-// the text is duplicated and translated by -50%, so the loop point is
-// invisible; a hold at the start keeps the beginning readable. Recomputed
-// on every track change.
-function Marquee({ text }) {
-  const outerRef = useRef(null);
-  const innerRef = useRef(null);
-  const [scroll, setScroll] = useState(false);
-  useEffect(() => {
-    const o = outerRef.current;
-    const i = innerRef.current;
-    if (o && i) setScroll(i.scrollWidth > o.clientWidth + 2);
-  }, [text]);
-  const dur = Math.max(9, text.length * 0.32); // longer titles scroll slower
-  const [title, artist] = splitDash(text);
-  const content = (
-    <>
-      <span style={{ color: INK }}>{title}</span>
-      {artist && <span style={{ color: MUTED }}> — {artist}</span>}
-    </>
-  );
-  return (
-    <div ref={outerRef} style={{ overflow: "hidden", whiteSpace: "nowrap", fontSize: 12.5, lineHeight: 1.25 }}>
-      <div
-        ref={innerRef}
-        className={scroll ? "mn-marquee" : undefined}
-        style={{ display: "inline-block", ...(scroll ? { animationDuration: `${dur}s` } : {}) }}
-      >
-        {content}
-        {scroll && <span style={{ padding: "0 28px" }} aria-hidden="true">{content}</span>}
-      </div>
-    </div>
-  );
-}
-
-function splitDash(s) {
-  const i = s.lastIndexOf(" — ");
-  return i < 0 ? [s, ""] : [s.slice(0, i), s.slice(i + 3)];
-}
-
-function Shell({ children, bottomGap, onHeight }) {
-  const ref = useRef(null);
-  useEffect(() => {
-    if (!ref.current || !onHeight) return;
-    const report = () => onHeight(ref.current ? ref.current.offsetHeight : 0);
-    const ro = new ResizeObserver(report);
-    ro.observe(ref.current);
-    report();
-    return () => { ro.disconnect(); onHeight(0); };
-  }, [onHeight]);
-  return (
-    <div
-      ref={ref}
-      style={{
-        position: "absolute",
-        left: "50%",
-        transform: "translateX(-50%)",
-        bottom: `calc(${bottomGap}px + env(safe-area-inset-bottom))`,
-        zIndex: 45,
-        width: "min(580px, 94vw)",
-        background: "rgba(255,255,255,0.97)",
-        backdropFilter: "blur(8px)",
-        border: `1px solid ${MUTED}`,
-        borderRadius: 10,
-        boxShadow: "0 12px 40px rgba(0,0,0,0.18)",
-        overflow: "hidden",
-        fontFamily: "Inter, system-ui, sans-serif",
-      }}
-    >
-      <style>{`
-        /* Marquee for overflowing titles: duplicated content + -50% loop =
-           seamless; the 12% hold keeps the start readable before scrolling. */
-        .mn-marquee { animation: mn-marquee 12s linear infinite; will-change: transform; }
-        @keyframes mn-marquee {
-          0%, 12% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-      `}</style>
-      {children}
-    </div>
   );
 }
 
@@ -536,41 +467,6 @@ function describeError(e, dev, kind) {
     : "Command didn't reach Spotify — check the device, then press ⟳.";
 }
 
-function fmtTime(ms) {
-  const s = Math.max(0, Math.floor((ms || 0) / 1000));
-  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
-}
-
-const navBtn = {
-  fontFamily: "Inter, sans-serif",
-  fontSize: 14,
-  lineHeight: 1,
-  color: INK,
-  background: "transparent",
-  border: `1px solid rgba(154,147,138,0.5)`,
-  borderRadius: 6,
-  padding: "5px 9px",
-  cursor: "pointer",
-};
-// "toggle" button: active = filled (ink), off = outline
-const tglBtn = (active) => ({
-  ...navBtn,
-  color: active ? PAPER : INK,
-  background: active ? INK : "transparent",
-  borderColor: active ? INK : "rgba(154,147,138,0.5)",
-});
-// play/pause: the transport's round centrepiece, bigger than the rest
-const playBtn = {
-  ...navBtn,
-  width: 40,
-  height: 40,
-  padding: 0,
-  borderRadius: "50%",
-  fontSize: 15,
-  color: PAPER,
-  background: INK,
-  borderColor: INK,
-};
 const fullBtn = {
   display: "block",
   width: "100%",

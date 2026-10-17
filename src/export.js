@@ -13,16 +13,20 @@ export function playlistLinks(res) {
   return (res.tracks || []).map((t) => t.url).filter(Boolean).join("\n");
 }
 
-// CSV con titolo/artista/link (per Soundiiz, fogli di calcolo, archivio).
+// CSV con titolo/artista/link Spotify e YouTube (per Soundiiz, TuneMyMusic,
+// fogli di calcolo, archivio). youtube_url vuoto se il brano non ha match.
 // Prefissato da BOM UTF-8: senza di esso Excel legge il file in ANSI e
 // sballa TUTTE le righe non-ASCII (accenti, titoli con Unicode esotico),
 // non solo quella incriminata.
 export const CSV_BOM = "\uFEFF";
 export function playlistCsv(res) {
   const esc = (s) => `"${String(s ?? "").replace(/"/g, '""')}"`;
-  const rows = ["title,artist,spotify_url"];
+  const rows = ["title,artist,spotify_url,youtube_url"];
   (res.tracks || []).forEach((t) =>
-    rows.push([esc(t.title), esc((t.artists || [t.artist]).join(", ")), esc(t.url)].join(","))
+    rows.push([
+      esc(t.title), esc((t.artists || [t.artist]).join(", ")), esc(t.url),
+      esc(t.yt ? `https://www.youtube.com/watch?v=${t.yt}` : ""),
+    ].join(","))
   );
   return CSV_BOM + rows.join("\n");
 }

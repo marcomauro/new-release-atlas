@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState, useMemo, useCallback } from "react"
 import * as d3 from "d3";
 import PlaylistHub from "./components/PlaylistHub.jsx";
 import PlayerBar, { preloadSpotifyApi } from "./PlayerBar.jsx";
+import { preloadYouTubeApi } from "./YouTubePlayer.jsx";
 import {
   completeSpotifyAuthIfNeeded, isSpotifyLoggedIn, loginSpotify, setPendingPlay, takePendingPlay,
 } from "./spotifyConnect.js";
@@ -113,9 +114,24 @@ function MusicNetworkInner() {
       (playlist || [])
         .map((id) => GRAPH.nodes.find((n) => n.id === id))
         .filter(Boolean)
-        .map((n) => ({ id: n.id, title: n.title, artist: n.artist })),
+        .map((n) => ({ id: n.id, title: n.title, artist: n.artist, yt: n.yt })),
     [playlist]
   );
+
+  // --- sorgente di ascolto: YouTube (brani interi, nessun account) se il
+  // grafo ha dei match YouTube, altrimenti Spotify. Scelta persistita.
+  const sources = useMemo(
+    () => ((GRAPH.meta.sources && GRAPH.meta.sources.youtube) ? ["youtube", "spotify"] : ["spotify"]),
+    []
+  );
+  const [listenSource, setListenSource] = useState(() => {
+    let s = null;
+    try { s = localStorage.getItem("nra_source"); } catch {}
+    return sources.includes(s) ? s : sources[0];
+  });
+  useEffect(() => {
+    try { localStorage.setItem("nra_source", listenSource); } catch {}
+  }, [listenSource]);
 
   // --- Spotify Connect (full-track opt-in) ---
   const [spotifyConnected, setSpotifyConnected] = useState(() => isSpotifyLoggedIn());
@@ -124,6 +140,7 @@ function MusicNetworkInner() {
     completeSpotifyAuthIfNeeded().then((ok) => {
       if (done || !ok) return;
       setSpotifyConnected(true);
+      setListenSource("spotify"); // logged in to listen on Spotify: use it
       // riprende il percorso che stava ascoltando prima del login
       const pending = takePendingPlay();
       if (pending && pending.length) setPlaylist(pending);
@@ -178,9 +195,13 @@ function MusicNetworkInner() {
     return () => ro.disconnect();
   }, []);
 
-  // Pre-carica l'API Spotify allo start: così l'autoplay del percorso parte
-  // subito (controller pronto entro la finestra di user-activation del click).
-  useEffect(() => { preloadSpotifyApi(); }, []);
+  // Pre-carica le API dei player allo start (Spotify, e YouTube se il grafo
+  // ha dei match): così l'autoplay del percorso parte subito (controller
+  // pronto entro la finestra di user-activation del click).
+  useEffect(() => {
+    preloadSpotifyApi();
+    if (sources.includes("youtube")) preloadYouTubeApi();
+  }, [sources]);
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
@@ -973,6 +994,7 @@ function MusicNetworkInner() {
           moodOpen={moodOpen} setMoodOpen={setMoodOpen}
           onGenerate={generateFromNode}
           showEmbed={!playlist}
+          listenSource={listenSource}
         />
       )}
 
@@ -1014,6 +1036,9 @@ function MusicNetworkInner() {
           bottomGap={20}
           connected={spotifyConnected}
           onLogin={handleSpotifyLogin}
+          source={listenSource}
+          sources={sources}
+          onSource={setListenSource}
           isMobile={isMobile}
           onOpenTrack={onOpenTrack}
           onHeight={setPlayerH}
