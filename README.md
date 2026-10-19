@@ -120,8 +120,10 @@ A persistent mini-player follows the generated **route**. A small switch in the
 player (`● YouTube · Spotify`) picks the **listening source**; the choice is
 remembered and switching keeps the position in the route.
 
-- **YouTube mode** (default whenever the graph has YouTube matches — branch
-  `experimental/platform-independence`): **full tracks for everyone, no
+- **YouTube mode** (offered by the switch as soon as the graph has YouTube
+  matches; it becomes the **default** once they cover ≥ 80% of the tracks —
+  `YOUTUBE_DEFAULT_MIN` in `MusicNetwork.jsx` — so a half-resolved archive
+  doesn't skip most of a route): **full tracks for everyone, no
   account**. The app owns the queue: the YouTube IFrame player plays one video
   at a time (the `videoId` was resolved offline into `graph.json`, see
   [`scripts/resolve_sources.py`](scripts/resolve_sources.py)) and the route

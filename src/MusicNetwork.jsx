@@ -46,6 +46,8 @@ const MOBILE_ZOOM_EXP = 0.4;
 // boost is smaller — a hub can emphasize 40 neighbours at once.
 const ROUTE_NODE_SPACING = 12;
 const SELECT_NODE_SPACING = 8;
+// quota di brani con un video YouTube oltre la quale YouTube è la sorgente di default
+const YOUTUBE_DEFAULT_MIN = 0.8;
 
 function MusicNetworkInner() {
   const svgRef = useRef(null);
@@ -118,12 +120,15 @@ function MusicNetworkInner() {
     [playlist]
   );
 
-  // --- sorgente di ascolto: YouTube (brani interi, nessun account) se il
-  // grafo ha dei match YouTube, altrimenti Spotify. Scelta persistita.
-  const sources = useMemo(
-    () => ((GRAPH.meta.sources && GRAPH.meta.sources.youtube) ? ["youtube", "spotify"] : ["spotify"]),
-    []
-  );
+  // --- sorgente di ascolto: con dei match YouTube compare lo switch; YouTube
+  // (brani interi, nessun account) diventa il DEFAULT solo quando copre quasi
+  // tutto l'archivio — prima il player salterebbe la maggior parte dei brani.
+  // La scelta dell'utente resta persistita.
+  const sources = useMemo(() => {
+    const yt = (GRAPH.meta.sources && GRAPH.meta.sources.youtube) || 0;
+    if (!yt) return ["spotify"];
+    return yt / GRAPH.nodes.length >= YOUTUBE_DEFAULT_MIN ? ["youtube", "spotify"] : ["spotify", "youtube"];
+  }, []);
   const [listenSource, setListenSource] = useState(() => {
     let s = null;
     try { s = localStorage.getItem("nra_source"); } catch {}

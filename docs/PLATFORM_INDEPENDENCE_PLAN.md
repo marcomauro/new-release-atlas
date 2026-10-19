@@ -14,6 +14,8 @@ sorgente tra tante, non il fondamento dell'app.
 **Decisioni (2026-10-17):**
 
 1. **YouTube è il nuovo player di default**: brani interi per tutti, senza account.
+   Il default scatta quando i match coprono ≥ 80% dei brani (`YOUTUBE_DEFAULT_MIN`);
+   prima YouTube si sceglie dallo switch del player (merge su `main` del 2026-10-19).
 2. ~~Apple Music come seconda sorgente~~ — **scartato** (2026-10-17): costo
    annuo (99 $) per servire solo gli abbonati Apple Music. Le righe su Apple
    nelle sezioni seguenti restano come documentazione della ricerca.
