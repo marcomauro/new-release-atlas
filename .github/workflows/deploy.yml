@@ -62,7 +62,8 @@ jobs:
         run: npm ci
 
       # Front-end unit tests: the Spotify Connect transport layer (request
-      # deadline, retry policy, serial command queue). node --test, no deps.
+      # deadline, retry policy, serial command queue) and the one-track-at-a-
+      # time route navigation (YouTube). node --test, no deps.
       - name: Run front-end tests
         run: npm test
 

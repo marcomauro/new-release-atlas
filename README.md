@@ -114,9 +114,26 @@ playlist path is grown, without rebuilding the graph:
   bias selection toward tracks matching the desired feel. Mood values come from
   the enriched archive's `mood_parameters` (see [the pipeline](#data-pipeline)).
 
-### Playback — mini-player ([`src/PlayerBar.jsx`](src/PlayerBar.jsx) + [`src/spotifyConnect.js`](src/spotifyConnect.js))
+### Playback — mini-player ([`src/PlayerBar.jsx`](src/PlayerBar.jsx) + [`src/YouTubePlayer.jsx`](src/YouTubePlayer.jsx) + [`src/spotifyConnect.js`](src/spotifyConnect.js))
 
-A persistent mini-player follows the generated **route** and works in two modes:
+A persistent mini-player follows the generated **route**. A small switch in the
+player (`● YouTube · Spotify`) picks the **listening source**; the choice is
+remembered and switching keeps the position in the route.
+
+- **YouTube mode** (offered by the switch as soon as the graph has YouTube
+  matches; it becomes the **default** once they cover ≥ 80% of the tracks —
+  `YOUTUBE_DEFAULT_MIN` in `MusicNetwork.jsx` — so a half-resolved archive
+  doesn't skip most of a route): **full tracks for everyone, no
+  account**. The app owns the queue: the YouTube IFrame player plays one video
+  at a time (the `videoId` was resolved offline into `graph.json`, see
+  [`scripts/resolve_sources.py`](scripts/resolve_sources.py)) and the route
+  advances with [`src/playbackRoute.js`](src/playbackRoute.js), skipping tracks
+  without a match and videos YouTube refuses to embed. YouTube's rules are kept:
+  the video is always visible and at least 200×200, nothing overlays it, no
+  audio-only playback; served from `youtube-nocookie.com`. Mobile browsers pause
+  it when the screen locks.
+
+The **Spotify** source works in two modes:
 
 - **Connect mode** (Spotify Premium): the app acts as a **remote control** for
   your Spotify device via the Web API, playing **full tracks** in sequence (also
@@ -242,6 +259,22 @@ reads). Every track carries the full enrichment: `genres`/`genre_primary`
   `metadata.deduped_reissues`. `--dry-run` / `--build` like the others.
 - **`scripts/build_graph.py`** — builds `public/graph.json`. Idempotent: it
   regenerates the whole graph from the archive's current state.
+- **`scripts/resolve_sources.py`** — finds each archive track on **YouTube**
+  (YouTube Data API v3, key in `$YOUTUBE_API_KEY`), offline, never in the
+  browser. Scores candidates on title, artist, duration and official uploads
+  ("Topic" or the artist's own channel, preferred over re-uploads); a duration
+  off by more than 30 s (teasers, interviews, live takes) is never a match;
+  only confident matches reach the graph, uncertain ones are listed for
+  review. API search never returns YouTube Music "Art Tracks", so when the first
+  search has no confident match it reads the uploads of the artist's
+  `Artist - Topic` channels (looked up once per artist, cached in
+  `data/sources.json` → `youtube_topic`). Incremental and quota-aware
+  (~75–90 tracks/day on the default quota; `--retry-none` / `--retry-review`
+  search again):
+  it saves after every track into `data/sources.json` and just stops when the
+  quota is spent — rerun it the next day. Manual fixes go in
+  `data/source_overrides.json` (`"<id>": "<videoId>"` or `null`), which always
+  wins. `--report` prints coverage and the review list without any network.
 - **`scripts/check_archive.py`** — CI guard: verifies the enriched archive's
   internal consistency (counts, full enrichment, valid playlists) before the
   graph is generated. A corrupted merge stops the deploy here.
@@ -276,11 +309,13 @@ full-format files still load fine.
     "mood?", "subgenres?", "bpm_source?",
     "bpm?", "key?", "mode?", "camelot?",
     "energy?", "valence?", "danceability?", "acousticness?", "instrumentalness?",
-    "year?", "popularity?"
+    "year?", "popularity?",
+    "yt?"                                    // YouTube videoId (data/sources.json + overrides)
   }],
   "links": [{ "source": nodeIndex, "target": nodeIndex, "c": [artist, primary, secondary, playlist] }],
   "genres": ["...ordered by frequency = cluster index..."],
-  "meta": { "format": 2, "unique_tracks", "edges", "genres", "playlists", "playlist_range", "updated", "linkWeights" }
+  "meta": { "format": 2, "unique_tracks", "edges", "genres", "playlists", "playlist_range", "updated", "linkWeights",
+            "sources": { "youtube": n } }    // playable tracks per listening source
 }
 ```
 
@@ -322,9 +357,14 @@ python3 scripts/add_playlist.py --support support.json --char char.json --build
 #    If any new track has no characterization, the script STOPS and prints
 #    the exact to-do list of ids to characterize.
 
+# 1b. Find the new tracks on YouTube (only the ones not checked yet),
+#     then rebuild the graph so they get their "yt" field:
+YOUTUBE_API_KEY=... python3 scripts/resolve_sources.py
+python3 scripts/build_graph.py --output public/graph.json
+
 # 2. Verify + publish
 npm run build
-git add data/spotify_archive_enriched.json public/graph.json
+git add data/spotify_archive_enriched.json data/sources.json public/graph.json
 git commit -m "data+graph: add playlist #NN" && git push
 # → GitHub Actions regenerates the graph, checks docs, rebuilds, republishes
 ```
@@ -388,15 +428,19 @@ derive from `base`.
 new-release-atlas/
 ├── .github/workflows/deploy.yml         # automatic deploy to GitHub Pages
 ├── data/
-│   └── spotify_archive_enriched.json    # THE live source (AI-enriched, #1–#36 + extra)
+│   ├── spotify_archive_enriched.json    # THE live source (AI-enriched, #1–#36 + extra)
+│   ├── sources.json                     # GENERATED by resolve_sources.py (YouTube matches)
+│   └── source_overrides.json            # manual match fixes (always win)
 ├── public/
 │   └── graph.json                       # GENERATED by build_graph.py
 ├── scripts/
 │   ├── add_playlist.py                  # automated merge of new playlists (Phase B)
 │   ├── build_graph.py                   # builds graph.json
+│   ├── resolve_sources.py               # finds the tracks on YouTube (offline)
 │   └── check_docs.py                    # CI guard: README ↔ graph.json
 ├── docs/
-│   └── ADDING_PLAYLISTS.md              # step-by-step: adding playlists to the map
+│   ├── ADDING_PLAYLISTS.md              # step-by-step: adding playlists to the map
+│   └── PLATFORM_INDEPENDENCE_PLAN.md    # plan: decoupling Atlas from Spotify
 ├── legacy/                              # frozen: classic pipeline + historical artifacts
 │   ├── README.md                        # what's here and why
 │   ├── scripts/                         # enrich_genres.py · enrich_audio.py · genre_map.py

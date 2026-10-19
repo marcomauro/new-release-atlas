@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState, useMemo, useCallback } from "react"
 import * as d3 from "d3";
 import PlaylistHub from "./components/PlaylistHub.jsx";
 import PlayerBar, { preloadSpotifyApi } from "./PlayerBar.jsx";
+import { preloadYouTubeApi } from "./YouTubePlayer.jsx";
 import {
   completeSpotifyAuthIfNeeded, isSpotifyLoggedIn, loginSpotify, setPendingPlay, takePendingPlay,
 } from "./spotifyConnect.js";
@@ -45,6 +46,8 @@ const MOBILE_ZOOM_EXP = 0.4;
 // boost is smaller — a hub can emphasize 40 neighbours at once.
 const ROUTE_NODE_SPACING = 12;
 const SELECT_NODE_SPACING = 8;
+// quota di brani con un video YouTube oltre la quale YouTube è la sorgente di default
+const YOUTUBE_DEFAULT_MIN = 0.8;
 
 function MusicNetworkInner() {
   const svgRef = useRef(null);
@@ -113,9 +116,27 @@ function MusicNetworkInner() {
       (playlist || [])
         .map((id) => GRAPH.nodes.find((n) => n.id === id))
         .filter(Boolean)
-        .map((n) => ({ id: n.id, title: n.title, artist: n.artist })),
+        .map((n) => ({ id: n.id, title: n.title, artist: n.artist, yt: n.yt })),
     [playlist]
   );
+
+  // --- sorgente di ascolto: con dei match YouTube compare lo switch; YouTube
+  // (brani interi, nessun account) diventa il DEFAULT solo quando copre quasi
+  // tutto l'archivio — prima il player salterebbe la maggior parte dei brani.
+  // La scelta dell'utente resta persistita.
+  const sources = useMemo(() => {
+    const yt = (GRAPH.meta.sources && GRAPH.meta.sources.youtube) || 0;
+    if (!yt) return ["spotify"];
+    return yt / GRAPH.nodes.length >= YOUTUBE_DEFAULT_MIN ? ["youtube", "spotify"] : ["spotify", "youtube"];
+  }, []);
+  const [listenSource, setListenSource] = useState(() => {
+    let s = null;
+    try { s = localStorage.getItem("nra_source"); } catch {}
+    return sources.includes(s) ? s : sources[0];
+  });
+  useEffect(() => {
+    try { localStorage.setItem("nra_source", listenSource); } catch {}
+  }, [listenSource]);
 
   // --- Spotify Connect (full-track opt-in) ---
   const [spotifyConnected, setSpotifyConnected] = useState(() => isSpotifyLoggedIn());
@@ -124,6 +145,7 @@ function MusicNetworkInner() {
     completeSpotifyAuthIfNeeded().then((ok) => {
       if (done || !ok) return;
       setSpotifyConnected(true);
+      setListenSource("spotify"); // logged in to listen on Spotify: use it
       // riprende il percorso che stava ascoltando prima del login
       const pending = takePendingPlay();
       if (pending && pending.length) setPlaylist(pending);
@@ -178,9 +200,13 @@ function MusicNetworkInner() {
     return () => ro.disconnect();
   }, []);
 
-  // Pre-carica l'API Spotify allo start: così l'autoplay del percorso parte
-  // subito (controller pronto entro la finestra di user-activation del click).
-  useEffect(() => { preloadSpotifyApi(); }, []);
+  // Pre-carica le API dei player allo start (Spotify, e YouTube se il grafo
+  // ha dei match): così l'autoplay del percorso parte subito (controller
+  // pronto entro la finestra di user-activation del click).
+  useEffect(() => {
+    preloadSpotifyApi();
+    if (sources.includes("youtube")) preloadYouTubeApi();
+  }, [sources]);
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
@@ -973,6 +999,7 @@ function MusicNetworkInner() {
           moodOpen={moodOpen} setMoodOpen={setMoodOpen}
           onGenerate={generateFromNode}
           showEmbed={!playlist}
+          listenSource={listenSource}
         />
       )}
 
@@ -1014,6 +1041,9 @@ function MusicNetworkInner() {
           bottomGap={20}
           connected={spotifyConnected}
           onLogin={handleSpotifyLogin}
+          source={listenSource}
+          sources={sources}
+          onSource={setListenSource}
           isMobile={isMobile}
           onOpenTrack={onOpenTrack}
           onHeight={setPlayerH}

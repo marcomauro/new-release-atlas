@@ -114,19 +114,26 @@ For each occurrence, build a full master-schema track:
 
 > Always write a `.bak` of the enriched archive before overwriting.
 
-### 5. Regenerate the map
+### 5. Find the new tracks on YouTube, then regenerate the map
 
 ```bash
+YOUTUBE_API_KEY=... python3 scripts/resolve_sources.py   # only tracks never checked
+python3 scripts/resolve_sources.py --report              # coverage + matches to review
 python3 scripts/build_graph.py        # no --input → auto-picks the enriched archive
 ```
 
-→ rewrites `public/graph.json`.
+→ updates `data/sources.json` and rewrites `public/graph.json` (new tracks get
+their `yt` videoId). A weekly playlist (~20 tracks) costs ~2,000 of the 10,000
+daily quota units. Matches listed under "review" are NOT in the map until you
+confirm them in `data/source_overrides.json` (`"<id>": "<videoId>"`, or `null`
+for "not on YouTube"). Without a key this step can be skipped: the new tracks
+simply stay Spotify-only until the next run.
 
 ### 6. Build, commit, deploy
 
 ```bash
 npm run build
-git add data/spotify_archive_enriched.json public/graph.json   # + front-end iff a new genre was added
+git add data/spotify_archive_enriched.json data/sources.json public/graph.json   # + front-end iff a new genre was added
 git commit -m "data+graph: add playlist #NN"
 git push                              # GitHub Actions rebuilds graph.json and republishes
 ```

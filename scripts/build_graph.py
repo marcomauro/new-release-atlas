@@ -24,6 +24,7 @@ url dei nodi ricostruito dall'id, weight degli archi ricalcolato da c):
                  era,era_norm,genre_count,bridging,artist_track_count,
                  is_bridge?,is_remix?,remixer?,is_instrumental?,is_live?,is_interlude?,  # derivati dal titolo
                  mood?,subgenres?,bpm_source?,                                           # archivio AI-arricchito
+                 yt?,                                                                    # videoId YouTube (data/sources.json)
                  bpm?,key?,mode?,camelot?,energy?,valence?,                              # audio
                  danceability?,acousticness?,instrumentalness?,year?,popularity?}],
       # ogni arco tiene i COMPONENTI separati in c=[artista,primario,secondario,playlist]
@@ -33,6 +34,12 @@ url dei nodi ricostruito dall'id, weight degli archi ricalcolato da c):
       "meta":   {unique_tracks,edges,genres,playlists,playlist_range,updated,linkWeights}
     }
 I campi con "?" sono presenti solo quando veri/disponibili (degradazione morbida).
+
+Sorgenti di ascolto (opzionale): se esiste data/sources.json (generato da
+scripts/resolve_sources.py) i brani con un match YouTube confermato ricevono
+il campo "yt" (videoId); data/source_overrides.json vince sempre. Solo gli
+esiti "matched" entrano nel grafo, mai i "review". meta.sources conta i brani
+riproducibili per sorgente.
 """
 import argparse
 import json
@@ -95,7 +102,31 @@ def latest_update(archive: dict) -> str:
     return max(dates) if dates else ""
 
 
-def build(archive: dict, seed: int = 7) -> dict:
+SOURCES = "data/sources.json"
+OVERRIDES = "data/source_overrides.json"
+
+
+def load_sources(sources_path: str = SOURCES, overrides_path: str = OVERRIDES) -> dict:
+    """{track id: videoId} dai match YouTube confermati + override manuali.
+
+    Override: un videoId forza il match, null lo esclude ("non è su YouTube")."""
+    yt = {}
+    if sources_path and os.path.exists(sources_path):
+        with open(sources_path, encoding="utf-8") as f:
+            for tid, e in (json.load(f).get("youtube") or {}).items():
+                if e.get("status") == "matched" and e.get("id"):
+                    yt[tid] = e["id"]
+    if overrides_path and os.path.exists(overrides_path):
+        with open(overrides_path, encoding="utf-8") as f:
+            for tid, vid in (json.load(f).get("youtube") or {}).items():
+                if vid:
+                    yt[tid] = vid
+                else:
+                    yt.pop(tid, None)
+    return {"youtube": yt}
+
+
+def build(archive: dict, seed: int = 7, sources: dict = None) -> dict:
     tracks = archive["tracks_flat"]
 
     # --- dedup per track id, accumulando le playlist di apparizione ---
@@ -231,6 +262,8 @@ def build(archive: dict, seed: int = 7) -> dict:
         d.update(title_flags(n["title"]))
         return d
 
+    yt_ids = (sources or {}).get("youtube") or {}
+
     # Formato 2 (compatto): l'url è derivabile dall'id (lo ricostruisce il
     # front-end all'idratazione), quindi non viene emesso.
     out_nodes = [{
@@ -247,6 +280,8 @@ def build(archive: dict, seed: int = 7) -> dict:
         **({"bpm_source": n["bpm_source"]} if n.get("bpm_source") else {}),
         # campi audio inclusi solo quando presenti (degradazione morbida)
         **n.get("audio", {}),
+        # sorgente di ascolto YouTube (solo match confermati / override)
+        **({"yt": yt_ids[n["id"]]} if n["id"] in yt_ids else {}),
     } for n in nodes]
 
     # Formato 2 (compatto): source/target = INDICI in nodes (non gli id da 22
@@ -287,6 +322,9 @@ def build(archive: dict, seed: int = 7) -> dict:
             # pesi default per categoria; il front-end li usa come valori iniziali
             # dei controlli "pesi del percorso" e per ricalcolare i legami al volo.
             "linkWeights": DEFAULT_LINK_WEIGHTS,
+            # brani riproducibili per sorgente di ascolto (il front-end offre
+            # YouTube solo se > 0)
+            "sources": {"youtube": sum(1 for n in out_nodes if "yt" in n)},
         },
     }
 
@@ -298,6 +336,8 @@ def main():
     ap.add_argument("--input", default=None)
     ap.add_argument("--output", default="public/graph.json")
     ap.add_argument("--seed", type=int, default=7)
+    ap.add_argument("--sources", default=SOURCES, help="match per piattaforma (resolve_sources.py)")
+    ap.add_argument("--overrides", default=OVERRIDES, help="correzioni manuali dei match")
     args = ap.parse_args()
 
     inp = args.input
@@ -311,13 +351,14 @@ def main():
     with open(inp, encoding="utf-8") as f:
         archive = json.load(f)
 
-    graph = build(archive, seed=args.seed)
+    graph = build(archive, seed=args.seed, sources=load_sources(args.sources, args.overrides))
 
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(graph, f, ensure_ascii=False, separators=(",", ":"))
 
     m = graph["meta"]
-    print(f"OK  {m['unique_tracks']} nodi · {m['edges']} archi · {m['genres']} generi")
+    print(f"OK  {m['unique_tracks']} nodi · {m['edges']} archi · {m['genres']} generi"
+          f" · {m['sources']['youtube']} su YouTube")
     print(f"    scritto in {args.output}")
 
 
