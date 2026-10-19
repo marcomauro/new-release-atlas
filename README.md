@@ -259,8 +259,10 @@ reads). Every track carries the full enrichment: `genres`/`genre_primary`
   regenerates the whole graph from the archive's current state.
 - **`scripts/resolve_sources.py`** — finds each archive track on **YouTube**
   (YouTube Data API v3, key in `$YOUTUBE_API_KEY`), offline, never in the
-  browser. Scores candidates on title, artist, duration and official "Topic"
-  uploads; only confident matches reach the graph, uncertain ones are listed for
+  browser. Scores candidates on title, artist, duration and official uploads
+  ("Topic" or the artist's own channel, preferred over re-uploads); a duration
+  off by more than 30 s (teasers, interviews, live takes) is never a match;
+  only confident matches reach the graph, uncertain ones are listed for
   review. Incremental and quota-aware (~95 tracks/day on the default quota):
   it saves after every track into `data/sources.json` and just stops when the
   quota is spent — rerun it the next day. Manual fixes go in

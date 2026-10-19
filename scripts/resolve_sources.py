@@ -19,6 +19,11 @@ quindi ~95 brani al giorno. Lo script è INCREMENTALE: salta i brani già
 controllati, salva dopo ogni brano e si ferma pulito a budget esaurito o al
 primo "quotaExceeded" — basta rilanciarlo il giorno dopo.
 
+Punteggio (score): titolo 0.30 · artista 0.25 · durata 0.30 · canale ufficiale
+0.15 ("Topic" o canale dell'artista), meno penalità per versioni diverse e per
+cover/432hz/teaser; oltre 30 s di scarto di durata il brano non va mai in
+"review". HTTP 429 o 403 di quota fermano il giro come quota esaurita.
+
 Esiti per brano (data/sources.json -> "youtube" -> <track id>):
     matched  punteggio >= MATCH_MIN: finisce nel grafo
     review   punteggio fra REVIEW_MIN e MATCH_MIN: NON finisce nel grafo,
@@ -77,7 +82,9 @@ _VERSION = {"live", "remix", "instrumental", "acoustic", "edit", "extended", "du
             "rework", "reprise", "demo", "radio"}
 # contenuti che non sono la registrazione: presenti solo su YouTube -> penalità forte
 _BAD = {"cover", "karaoke", "reaction", "nightcore", "slowed", "sped", "8d",
-        "tutorial", "lesson", "piano", "guitar", "drum", "bass", "loop", "hour"}
+        "tutorial", "lesson", "piano", "guitar", "drum", "bass", "loop", "hour",
+        "432hz", "528hz", "reverb", "bassboosted", "mashup", "shorts", "teaser", "trailer",
+        "interview", "podcast", "snippet"}
 
 
 def _plain(s):
@@ -115,6 +122,17 @@ def duration_score(track_sec, video_sec):
     return 0.0
 
 
+def official_channel(track, video):
+    """1.0 se il video viene dall'audio del distributore ("Artista - Topic",
+    "Provided to YouTube by …") o dal canale dell'artista ("Puma Blue",
+    "tameimpalaVEVO", "corto. alto"); altrimenti 0.0 (re-upload, canali lyric)."""
+    channel = video.get("channel", "")
+    if channel.endswith(" - Topic") or (video.get("description") or "").startswith("Provided to YouTube by"):
+        return 1.0
+    artist = _plain(track.get("primary_artist", "")).replace(" ", "")
+    return 1.0 if artist and _plain(channel).replace(" ", "").startswith(artist) else 0.0
+
+
 def score(track, video):
     """Affinità 0..1 fra un brano dell'archivio e un video candidato.
 
@@ -130,10 +148,8 @@ def score(track, video):
     title = len(t_title & v_title) / len(t_title) if t_title else 0.5
     artist = len(t_artist & v_all) / len(t_artist) if t_artist else 0.5
     dur = duration_score(track.get("duration_sec"), video.get("duration_sec"))
-    # canali "Artista - Topic" / descrizione "Provided to YouTube by …": l'audio
-    # ufficiale caricato dal distributore, con la durata esatta della release.
-    topic = 1.0 if (video.get("channel", "").endswith(" - Topic")
-                    or (video.get("description") or "").startswith("Provided to YouTube by")) else 0.0
+    # a parità di brano, meglio la fonte ufficiale di un re-upload (che può sparire)
+    official = official_channel(track, video)
 
     # titolo + artista: "Drum Talk" o "Live Garden" non sono una cover/un live
     known = tokens(track["title"]) | tokens(track.get("primary_artist", ""))
@@ -145,7 +161,11 @@ def score(track, video):
         if w in v_title and w not in known:
             penalty += 0.4
 
-    s = 0.30 * title + 0.25 * artist + 0.30 * dur + 0.15 * topic - penalty
+    s = 0.30 * title + 0.25 * artist + 0.30 * dur + 0.15 * official - penalty
+    # oltre 30 s di scarto non è la stessa registrazione (teaser, intervista,
+    # live, altro mix): titolo e artista da soli non bastano nemmeno per "review"
+    if dur == 0.0 and track.get("duration_sec") and video.get("duration_sec"):
+        s = min(s, REVIEW_MIN - 0.05)
     return round(max(0.0, min(1.0, s)), 3)
 
 
@@ -163,8 +183,9 @@ def http_get_json(url):
             body = {}
         errs = (body.get("error") or {}).get("errors") or [{}]
         reason = errs[0].get("reason", "")
-        if e.code == 403 and reason in ("quotaExceeded", "dailyLimitExceeded", "rateLimitExceeded"):
-            raise QuotaExceeded(reason)
+        if e.code == 429 or (e.code == 403 and reason in
+                             ("quotaExceeded", "dailyLimitExceeded", "rateLimitExceeded")):
+            raise QuotaExceeded(reason or f"HTTP {e.code}")
         raise RuntimeError(f"HTTP {e.code} {reason or e.reason}")
 
 

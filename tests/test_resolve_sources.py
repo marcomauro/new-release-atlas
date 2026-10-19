@@ -11,6 +11,9 @@ import os
 import sys
 import tempfile
 import unittest
+import urllib.error
+from io import BytesIO
+from unittest import mock
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO, "scripts"))
@@ -82,6 +85,53 @@ class ScoreTest(unittest.TestCase):
         t = {"title": "Night Shift", "primary_artist": "Drum Talk", "duration_sec": 300}
         v = {"title": "Drum Talk - Night Shift", "channel": "Drum Talk - Topic", "duration_sec": 300}
         self.assertGreaterEqual(rs.score(t, v), rs.MATCH_MIN)
+
+    # casi presi dal primo giro reale (2026-10-19)
+    def test_teaser_with_right_title_is_not_even_review(self):
+        t = {"title": "OYSTRI (feat. Richard Spaven)", "primary_artist": "Petter Eldh", "duration_sec": 186}
+        v = {"title": "Petter Eldh - OYSTRI feat. Richard Spaven | Projekt Drums Vol. 2",
+             "channel": "Edition Records", "duration_sec": 38}
+        self.assertLess(rs.score(t, v), rs.REVIEW_MIN)
+
+    def test_live_take_far_off_in_duration_is_not_even_review(self):
+        t = {"title": "Paris", "primary_artist": "CORBAAL", "duration_sec": 297}
+        v = {"title": '"PARIS" live - CORBAAL x TRUFFAZ', "channel": "Production Production",
+             "duration_sec": 213}
+        self.assertLess(rs.score(t, v), rs.REVIEW_MIN)
+
+    def test_artist_channel_beats_lyrics_reupload(self):
+        t = {"title": "Time Will Tell", "primary_artist": "Celeste", "duration_sec": 224}
+        reupload = {"title": "Celeste - Time Will Tell (Lyrics)", "channel": "Trending Now Lyrics",
+                    "duration_sec": 226}
+        official = {"title": "Celeste - Time Will Tell", "channel": "Celeste", "duration_sec": 226}
+        self.assertGreater(rs.score(t, official), rs.score(t, reupload))
+        vevo = {"title": "Tame Impala - Ethereal Connection", "channel": "tameimpalaVEVO"}
+        self.assertEqual(rs.official_channel({"primary_artist": "Tame Impala"}, vevo), 1.0)
+
+    def test_retuned_copy_loses_to_official_video(self):
+        t = {"title": "Desire", "primary_artist": "Puma Blue", "duration_sec": 207}
+        hz = {"title": "Puma Blue - Desire (432hz)", "channel": "DJ Raziel", "duration_sec": 209}
+        official = {"title": "Puma Blue - Desire (Official Video)", "channel": "Puma Blue",
+                    "duration_sec": 216}
+        self.assertLess(rs.score(t, hz), rs.REVIEW_MIN)
+        self.assertGreaterEqual(rs.score(t, official), rs.MATCH_MIN)
+
+
+class HttpTest(unittest.TestCase):
+    def _http_error(self, code, reason):
+        body = json.dumps({"error": {"errors": [{"reason": reason}]}}).encode()
+        return urllib.error.HTTPError("https://x", code, "err", {}, BytesIO(body))
+
+    def test_429_and_quota_403_stop_the_run(self):
+        for code, reason in ((429, "rateLimitExceeded"), (429, ""), (403, "quotaExceeded")):
+            with mock.patch("urllib.request.urlopen", side_effect=self._http_error(code, reason)):
+                with self.assertRaises(rs.QuotaExceeded):
+                    rs.http_get_json("https://x")
+
+    def test_other_errors_skip_the_track(self):
+        with mock.patch("urllib.request.urlopen", side_effect=self._http_error(400, "badRequest")):
+            with self.assertRaises(RuntimeError):
+                rs.http_get_json("https://x")
 
 
 class ResolveTest(unittest.TestCase):
