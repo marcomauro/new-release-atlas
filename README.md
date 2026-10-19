@@ -263,7 +263,12 @@ reads). Every track carries the full enrichment: `genres`/`genre_primary`
   ("Topic" or the artist's own channel, preferred over re-uploads); a duration
   off by more than 30 s (teasers, interviews, live takes) is never a match;
   only confident matches reach the graph, uncertain ones are listed for
-  review. Incremental and quota-aware (~95 tracks/day on the default quota):
+  review. API search never returns YouTube Music "Art Tracks", so when the first
+  search has no confident match it reads the uploads of the artist's
+  `Artist - Topic` channels (looked up once per artist, cached in
+  `data/sources.json` → `youtube_topic`). Incremental and quota-aware
+  (~75–90 tracks/day on the default quota; `--retry-none` / `--retry-review`
+  search again):
   it saves after every track into `data/sources.json` and just stops when the
   quota is spent — rerun it the next day. Manual fixes go in
   `data/source_overrides.json` (`"<id>": "<videoId>"` or `null`), which always

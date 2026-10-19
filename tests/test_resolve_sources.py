@@ -12,6 +12,7 @@ import sys
 import tempfile
 import unittest
 import urllib.error
+import urllib.parse
 from io import BytesIO
 from unittest import mock
 
@@ -35,14 +36,33 @@ def video(vid, title, channel, dur, desc="", embeddable=True, blocked=None):
     return item
 
 
-def fake_fetch(items, calls=None):
-    """search -> gli id di items; videos -> items (dettagli)."""
+def fake_fetch(items, calls=None, search=None, channels=(), uploads=None):
+    """Finta YouTube Data API.
+
+    items: i video noti (dettagli per videos.list); search: gli id restituiti
+    dalla ricerca video (default: tutti); channels: [(channelId, nome)] per la
+    ricerca canali; uploads: {playlistId: [pagina, ...]}, pagina = [(videoId, titolo)].
+    """
     def fetch(url):
         if calls is not None:
             calls.append(url)
+        q = {k: v[0] for k, v in urllib.parse.parse_qs(urllib.parse.urlsplit(url).query).items()}
+        if "/search?" in url and q.get("type") == "channel":
+            return {"items": [{"id": {"channelId": c}, "snippet": {"channelTitle": n}} for c, n in channels]}
         if "/search?" in url:
-            return {"items": [{"id": {"videoId": it["id"]}} for it in items]}
-        return {"items": items}
+            ids = search if search is not None else [it["id"] for it in items]
+            return {"items": [{"id": {"videoId": i}} for i in ids]}
+        if "/playlistItems?" in url:
+            pages = (uploads or {}).get(q["playlistId"])
+            if pages is None:
+                raise RuntimeError("HTTP 404 playlistNotFound")
+            n = int(q.get("pageToken", 0))
+            out = {"items": [{"snippet": {"title": t, "resourceId": {"videoId": v}}} for v, t in pages[n]]}
+            if n + 1 < len(pages):
+                out["nextPageToken"] = str(n + 1)
+            return out
+        wanted = q["id"].split(",")
+        return {"items": [it for it in items if it["id"] in wanted]}
     return fetch
 
 
@@ -157,7 +177,7 @@ class ResolveTest(unittest.TestCase):
         calls = []
         e = rs.resolve_one(TRACK, "KEY", fetch=fake_fetch([], calls))
         self.assertEqual(e["status"], "none")
-        self.assertEqual(len(calls), 1)
+        self.assertFalse([u for u in calls if "/videos?" in u])
 
     def test_uncertain_match_goes_to_review_with_alternatives(self):
         items = [video("MAYBE", "Brian Jackson Winter in America", "Uploader", "PT8M50S"),
@@ -174,6 +194,62 @@ class ResolveTest(unittest.TestCase):
         self.assertEqual([t["id"] for t in rs.todo(tracks, cache, overrides)], ["D"])
         self.assertEqual([t["id"] for t in rs.todo(tracks, cache, overrides, retry_none=True)], ["B", "D"])
         self.assertEqual([t["id"] for t in rs.todo(tracks, cache, overrides, refresh=True)], ["A", "B", "D"])
+        cache["A"] = {"status": "review"}
+        self.assertEqual([t["id"] for t in rs.todo(tracks, cache, overrides, retry_review=True)], ["A", "D"])
+
+
+class TopicFallbackTest(unittest.TestCase):
+    # caso reale: la ricerca dà solo un teaser, l'Art Track sta nel canale Topic
+    TRACK = {"id": "K1", "title": "Mind States", "primary_artist": "Koralle", "duration_sec": 174}
+    ITEMS = [
+        video("TEASER", "Koralle & Yawuh - Mind States (feat. Physical Graffiti)", "LE Groove", "PT26S"),
+        video("ART", "Mind States", "Koralle - Topic", "PT2M54S", "Provided to YouTube by Melting Pot Music"),
+        video("ECL", "Eclissi", "Koralle - Topic", "PT2M49S", "Provided to YouTube by Melting Pot Music"),
+    ]
+    CHANNELS = [("UCother", "Koralle - Topic"), ("UCkoralle", "Koralle - Topic"),
+                ("UCdie", "Die Koralle")]
+    UPLOADS = {"UUother": [[("X1", "Something Else")]],
+               "UUkoralle": [[("ECL", "Eclissi"), ("Z", "Hot Summer")], [("ART", "Mind States")]]}
+
+    def fetch(self, calls=None):
+        return fake_fetch(self.ITEMS, calls, search=["TEASER"], channels=self.CHANNELS,
+                          uploads=self.UPLOADS)
+
+    def test_art_track_found_in_topic_channel_uploads(self):
+        calls, cache = [], {}
+        e = rs.resolve_one(self.TRACK, "KEY", fetch=self.fetch(calls), topic_cache=cache)
+        self.assertEqual((e["status"], e["id"]), ("matched", "ART"))
+        self.assertEqual(cache, {"Koralle": ["UCother", "UCkoralle"]})   # omonimi sì, "Die Koralle" no
+        self.assertFalse([u for u in calls if "UUdie" in u])
+        self.assertTrue([u for u in calls if "pageToken=1" in u])          # seconda pagina letta
+
+    def test_channel_search_happens_once_per_artist(self):
+        calls, cache = [], {}
+        eclissi = {"id": "K2", "title": "Eclissi", "primary_artist": "Koralle", "duration_sec": 169}
+        rs.resolve_one(self.TRACK, "KEY", fetch=self.fetch(calls), topic_cache=cache)
+        e = rs.resolve_one(eclissi, "KEY", fetch=self.fetch(calls), topic_cache=cache)
+        self.assertEqual((e["status"], e["id"]), ("matched", "ECL"))
+        self.assertEqual(sum("type=channel" in u for u in calls), 1)
+
+    def test_artist_without_topic_channel_is_cached_too(self):
+        calls, cache = [], {}
+        f = fake_fetch(self.ITEMS[:1], calls, channels=[("UCdie", "Die Koralle")])
+        self.assertEqual(rs.resolve_one(self.TRACK, "KEY", fetch=f, topic_cache=cache)["status"], "none")
+        self.assertEqual(cache, {"Koralle": []})
+
+    def test_no_second_search_when_first_is_confident(self):
+        calls = []
+        items = [video("GOOD", 'Winter in America (12" Version)', "Brian Jackson - Topic", "PT8M58S",
+                       "Provided to YouTube by Strut")]
+        e = rs.resolve_one(TRACK, "KEY", fetch=fake_fetch(items, calls), topic_cache={})
+        self.assertEqual(e["status"], "matched")
+        self.assertEqual(len(calls), 2)                                     # search + videos
+
+    def test_meter_counts_quota_units(self):
+        meter = rs.Meter(self.fetch())
+        rs.resolve_one(self.TRACK, "KEY", fetch=meter, topic_cache={})
+        # 2 search (video, canali) + 1 videos + 1 + 2 pagine di caricamenti + 1 videos
+        self.assertEqual(meter.units, 2 * 100 + 1 + 3 + 1)
 
 
 class BuildMergeTest(unittest.TestCase):

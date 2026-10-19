@@ -38,7 +38,7 @@ renderebbe ogni merge da `main` un conflitto su un JSON enorme. Quindi:
 
 | Pezzo | File | Stato |
 |---|---|---|
-| Risolutore YouTube offline (punteggio titolo/artista/durata/canale ufficiale — "Topic" o dell'artista —, veto oltre 30 s di scarto, quota incrementale, report, override) | `scripts/resolve_sources.py`, `tests/test_resolve_sources.py` | ✅ primo giro reale (2026-10-19): 88 brani, 62 match; pesi corretti dopo la revisione |
+| Risolutore YouTube offline (punteggio titolo/artista/durata/canale ufficiale — "Topic" o dell'artista —, veto oltre 30 s di scarto, seconda ricerca nei caricamenti dei canali "Artista - Topic", quota incrementale, report, override) | `scripts/resolve_sources.py`, `tests/test_resolve_sources.py` | ✅ primo giro reale (2026-10-19): 88 brani, 62 match; pesi corretti dopo la revisione |
 | `yt` nei nodi di `graph.json` + `meta.sources` | `scripts/build_graph.py` | ✅ grafo identico al bit quando non ci sono match |
 | Navigazione del percorso un brano alla volta (skip, repeat, shuffle) | `src/playbackRoute.js`, `tests/playback_route.test.mjs` | ✅ |
 | Player YouTube (IFrame API, `youtube-nocookie.com`, ≥200×200, skip su errore embed) | `src/YouTubePlayer.jsx` | ✅ provato in browser headless con API YouTube simulata |

@@ -10,14 +10,22 @@ quindi nessuna chiave API, nessuna ricerca, nessun rate limit.
 
 Uso:
     YOUTUBE_API_KEY=... python3 scripts/resolve_sources.py [--limit N]
-        [--budget 9000] [--retry-none] [--refresh] [--region IT] [--dry-run]
+        [--budget 9000] [--retry-none] [--retry-review] [--refresh]
+        [--region IT] [--dry-run]
     python3 scripts/resolve_sources.py --report      # solo report, nessuna rete
 
-Costo YouTube Data API v3: search.list = 100 unità + videos.list = 1 unità
--> ~101 unità a brano; la quota di default è 10.000/giorno per progetto,
-quindi ~95 brani al giorno. Lo script è INCREMENTALE: salta i brani già
+Costo YouTube Data API v3: search.list = 100 unità, videos.list e
+playlistItems.list = 1 unità -> ~101 unità a brano; la quota di default è
+10.000/giorno per progetto. Lo script è INCREMENTALE: salta i brani già
 controllati, salva dopo ogni brano e si ferma pulito a budget esaurito o al
 primo "quotaExceeded" — basta rilanciarlo il giorno dopo.
+
+Seconda ricerca nei canali "Topic": la ricerca dell'API non restituisce mai
+le Art Track ("Artista - Topic", "Provided to YouTube by …"), cioè proprio
+l'audio ufficiale della release. Se la prima ricerca non dà un match sicuro,
+lo script cerca i canali "Artista - Topic" (100 unità, UNA volta per artista:
+gli id restano in data/sources.json -> "youtube_topic") e ne legge i
+caricamenti (1 unità ogni 50). In tutto ~75-90 brani al giorno.
 
 Punteggio (score): titolo 0.30 · artista 0.25 · durata 0.30 · canale ufficiale
 0.15 ("Topic" o canale dell'artista), meno penalità per versioni diverse e per
@@ -56,17 +64,32 @@ SOURCES = "data/sources.json"
 OVERRIDES = "data/source_overrides.json"
 
 YT_API = "https://www.googleapis.com/youtube/v3"
-COST_PER_TRACK = 101          # search.list (100) + videos.list (1)
+COST_PER_TRACK = 101          # search.list (100) + videos.list (1), senza seconda ricerca
+UNIT_COST = {"search": 100}   # ogni altro endpoint usato costa 1 unità
 DEFAULT_BUDGET = 9000         # margine sotto la quota giornaliera di 10.000
 MATCH_MIN = 0.70
 REVIEW_MIN = 0.50
 CANDIDATES = 5
+TOPIC_CHANNELS = 6            # omonimi: "Koralle - Topic" ne ha sei
+TOPIC_PAGES = 4               # 200 caricamenti per canale
 
 USER_AGENT = "new-release-atlas/resolve_sources (+https://github.com/marcomauro/new-release-atlas)"
 
 
 class QuotaExceeded(Exception):
     pass
+
+
+class Meter:
+    """Avvolge fetch e conta le unità di quota spese."""
+
+    def __init__(self, fetch):
+        self.fetch, self.units = fetch, 0
+
+    def __call__(self, url):
+        endpoint = urllib.parse.urlsplit(url).path.rsplit("/", 1)[-1]
+        self.units += UNIT_COST.get(endpoint, 1)
+        return self.fetch(url)
 
 
 # --- normalizzazione (solo per il confronto, mai salvata) -----------------
@@ -199,9 +222,14 @@ def youtube_candidates(track, key, region=None, fetch=http_get_json):
     found = fetch(f"{YT_API}/search?{urllib.parse.urlencode(params)}")
     ids = [it["id"]["videoId"] for it in found.get("items", [])
            if it.get("id", {}).get("videoId")]
+    return video_details(ids, key, region, fetch)
+
+
+def video_details(ids, key, region=None, fetch=http_get_json):
+    """videos.list (max 50 id): durata/canale/descrizione, solo video embeddabili."""
     if not ids:
         return []
-    params = {"part": "snippet,contentDetails,status", "id": ",".join(ids), "key": key}
+    params = {"part": "snippet,contentDetails,status", "id": ",".join(ids[:50]), "key": key}
     details = fetch(f"{YT_API}/videos?{urllib.parse.urlencode(params)}")
     out = []
     for it in details.get("items", []):
@@ -223,10 +251,63 @@ def youtube_candidates(track, key, region=None, fetch=http_get_json):
     return out
 
 
-def resolve_one(track, key, region=None, fetch=http_get_json, today=None):
-    """Esito per un brano: {id?, status, score?, title?, channel?, alt?, checked}."""
+def topic_channels(artist, key, fetch=http_get_json, cache=None):
+    """Id dei canali "<artista> - Topic" (anche omonimi), cercati una volta per artista."""
+    if cache is not None and artist in cache:
+        return cache[artist]
+    params = {"part": "snippet", "type": "channel", "maxResults": 10, "q": artist, "key": key}
+    found = fetch(f"{YT_API}/search?{urllib.parse.urlencode(params)}")
+    ids = []
+    for it in found.get("items", []):
+        name = it.get("snippet", {}).get("channelTitle", "")
+        cid = it.get("id", {}).get("channelId")
+        if cid and name.endswith(" - Topic") and _plain(name[:-len(" - Topic")]) == _plain(artist):
+            ids.append(cid)
+    ids = ids[:TOPIC_CHANNELS]
+    if cache is not None:
+        cache[artist] = ids
+    return ids
+
+
+def topic_candidates(track, key, region=None, fetch=http_get_json, cache=None):
+    """Art Track dai caricamenti dei canali Topic dell'artista con un titolo simile."""
+    artist = track.get("primary_artist", "")
+    t_title = tokens(track["title"]) - _STOP
+    if not artist or not t_title:
+        return []
+    hits = []
+    for cid in topic_channels(artist, key, fetch, cache):
+        params = {"part": "snippet", "maxResults": 50, "playlistId": "UU" + cid[2:], "key": key}
+        for _ in range(TOPIC_PAGES):
+            try:
+                page = fetch(f"{YT_API}/playlistItems?{urllib.parse.urlencode(params)}")
+            except RuntimeError:          # canale senza caricamenti pubblici
+                break
+            for it in page.get("items", []):
+                sn = it.get("snippet", {})
+                vid = sn.get("resourceId", {}).get("videoId")
+                overlap = len(t_title & tokens(sn.get("title", ""))) / len(t_title)
+                if vid and overlap >= 0.5 and vid not in (h[1] for h in hits):
+                    hits.append((overlap, vid))
+            if not page.get("nextPageToken"):
+                break
+            params["pageToken"] = page["nextPageToken"]
+        params.pop("pageToken", None)
+    hits.sort(key=lambda h: -h[0])
+    return video_details([vid for _, vid in hits], key, region, fetch)
+
+
+def resolve_one(track, key, region=None, fetch=http_get_json, today=None, topic_cache=None):
+    """Esito per un brano: {id?, status, score?, title?, channel?, alt?, checked}.
+
+    Senza un match sicuro dalla ricerca, prova i canali Topic dell'artista
+    (topic_cache: {artista: [channelId]}, condivisa fra i brani)."""
     cands = youtube_candidates(track, key, region, fetch)
     ranked = sorted(((score(track, c), c) for c in cands), key=lambda x: -x[0])
+    if not ranked or ranked[0][0] < MATCH_MIN:
+        seen = {c["id"] for c in cands}
+        more = [c for c in topic_candidates(track, key, region, fetch, topic_cache) if c["id"] not in seen]
+        ranked = sorted(ranked + [(score(track, c), c) for c in more], key=lambda x: -x[0])
     entry = {"checked": today or date.today().isoformat()}
     if not ranked or ranked[0][0] < REVIEW_MIN:
         entry["status"] = "none"
@@ -272,13 +353,14 @@ def save_json(path, data):
     os.replace(tmp, path)
 
 
-def todo(tracks, cache, overrides, retry_none=False, refresh=False):
+def todo(tracks, cache, overrides, retry_none=False, refresh=False, retry_review=False):
+    retry = {s for s, on in (("none", retry_none), ("review", retry_review)) if on}
     out = []
     for t in tracks:
         if t["id"] in overrides:
             continue
         e = cache.get(t["id"])
-        if refresh or e is None or (retry_none and e.get("status") == "none"):
+        if refresh or e is None or e.get("status") in retry:
             out.append(t)
     return out
 
@@ -323,6 +405,7 @@ def main():
     ap.add_argument("--budget", type=int, default=DEFAULT_BUDGET, help="unità di quota da non superare")
     ap.add_argument("--region", default=None, help="es. IT: scarta i video bloccati in quel paese")
     ap.add_argument("--retry-none", action="store_true", help="ricerca di nuovo i brani 'none'")
+    ap.add_argument("--retry-review", action="store_true", help="ricerca di nuovo i brani 'review'")
     ap.add_argument("--refresh", action="store_true", help="ricerca di nuovo TUTTI i brani")
     ap.add_argument("--dry-run", action="store_true", help="cerca ma non scrive")
     ap.add_argument("--report", action="store_true", help="solo report dello stato attuale")
@@ -333,6 +416,7 @@ def main():
         sys.exit(f"ERRORE: archivio non trovato: {args.archive}")
     sources = load_json(args.sources, {"version": 1})
     cache = sources.setdefault("youtube", {})
+    topic_cache = sources.setdefault("youtube_topic", {})
     overrides = load_json(args.overrides, {}).get("youtube", {})
     tracks = unique_tracks(archive)
 
@@ -342,18 +426,22 @@ def main():
     if not args.key:
         sys.exit("ERRORE: serve una chiave YouTube Data API v3 (--key o $YOUTUBE_API_KEY).")
 
-    queue = todo(tracks, cache, overrides, args.retry_none, args.refresh)
-    cap = args.budget // COST_PER_TRACK
+    queue = todo(tracks, cache, overrides, args.retry_none, args.refresh, args.retry_review)
     if args.limit is not None:
-        cap = min(cap, args.limit)
-    print(f"{len(queue)} brani da cercare · questo giro: {min(cap, len(queue))} "
-          f"(~{min(cap, len(queue)) * COST_PER_TRACK} unità)")
+        queue = queue[:args.limit]
+    print(f"{len(queue)} brani da cercare · budget {args.budget} unità "
+          f"(~{COST_PER_TRACK} a brano, ~200 con la seconda ricerca Topic)")
 
+    meter = Meter(http_get_json)
     done = 0
     try:
-        for t in queue[:cap]:
+        for t in queue:
+            # il margine sotto la quota giornaliera assorbe l'ultimo brano
+            if meter.units + COST_PER_TRACK > args.budget:
+                print(f"\nBudget raggiunto ({meter.units} unità): rilancia domani.")
+                break
             try:
-                entry = resolve_one(t, args.key, args.region)
+                entry = resolve_one(t, args.key, args.region, fetch=meter, topic_cache=topic_cache)
             except RuntimeError as e:
                 print(f"  SKIP  {t['id']}  {e}")
                 continue
@@ -367,7 +455,9 @@ def main():
         print(f"\nQuota YouTube esaurita ({e}): progressi salvati, rilancia domani.")
     except KeyboardInterrupt:
         print("\nInterrotto: progressi salvati.")
-    print(f"\n{done} brani risolti in questo giro.\n")
+    if not args.dry_run:
+        save_json(args.sources, sources)   # anche i canali Topic trovati prima dello stop
+    print(f"\n{done} brani risolti in questo giro · {meter.units} unità di quota.\n")
     report(tracks, cache, overrides)
 
 
