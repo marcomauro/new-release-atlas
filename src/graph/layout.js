@@ -45,6 +45,75 @@ export function hashJitter(id) {
   return ((h >>> 0) % 1000) / 1000;
 }
 
+// Zoom transform {x, y, k} that fits the points' bounding box (expanded by
+// pad, graph units) inside the viewport minus the UI margins {l, r, t, b}
+// (screen px). k is clamped to [minK, maxK]. Shared by the initial/reset
+// fit of the whole map and by the route fit.
+export function fitTransform(pts, dims, m, { pad = 0, minK = 0.12, maxK = 1 } = {}) {
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  for (const p of pts) {
+    if (p.x < minX) minX = p.x;
+    if (p.x > maxX) maxX = p.x;
+    if (p.y < minY) minY = p.y;
+    if (p.y > maxY) maxY = p.y;
+  }
+  const uw = Math.max(120, dims.w - m.l - m.r);
+  const uh = Math.max(120, dims.h - m.t - m.b);
+  const bw = Math.max(60, maxX - minX) + 2 * pad;
+  const bh = Math.max(60, maxY - minY) + 2 * pad;
+  const k = Math.max(minK, Math.min(maxK, uw / bw, uh / bh));
+  return {
+    x: m.l + uw / 2 - k * ((minX + maxX) / 2),
+    y: m.t + uh / 2 - k * ((minY + maxY) / 2),
+    k,
+  };
+}
+
+// Same-artist links kept for DRAWING and for the LINK FORCE. Artist edges
+// are a complete clique per artist (n tracks -> n(n-1)/2 edges): Louie Vega
+// alone has 231. Up to maxClique tracks the clique stays whole; above it the
+// group keeps a ring with chords — each track linked to the next `k` in
+// release order (first playlist, then id) — which stays connected and
+// cohesive with ~k·n edges. Only edges that are PURELY artist (no shared
+// genre or playlist component) can be dropped. Returns the Set of the
+// link indices to drop; the data (and so the playlist walk, which reads
+// GRAPH.links) is untouched.
+export function sparseArtistDrops(nodes, links, { maxClique = 5, k = 2 } = {}) {
+  const idx = new Map(nodes.map((n, i) => [n.id, i]));
+  const groups = new Map();
+  nodes.forEach((n, i) => {
+    for (const a of new Set(n.artists || [n.artist])) {
+      if (!groups.has(a)) groups.set(a, []);
+      groups.get(a).push(i);
+    }
+  });
+  const key = (a, b) => (a < b ? a * 1e6 + b : b * 1e6 + a);
+  const keep = new Set();
+  let big = false;
+  for (const ids of groups.values()) {
+    if (ids.length <= maxClique) {
+      for (let i = 0; i < ids.length; i++)
+        for (let j = i + 1; j < ids.length; j++) keep.add(key(ids[i], ids[j]));
+      continue;
+    }
+    big = true;
+    const first = (i) => Math.min(...(nodes[i].playlists || [0]));
+    const ord = [...ids].sort((a, b) => first(a) - first(b) || (nodes[a].id < nodes[b].id ? -1 : 1));
+    for (let i = 0; i < ord.length; i++)
+      for (let s = 1; s <= k; s++) keep.add(key(ord[i], ord[(i + s) % ord.length]));
+  }
+  const drops = new Set();
+  if (!big) return drops;
+  links.forEach((l, li) => {
+    const c = l.c || [0, 0, 0, 0];
+    if (!(c[0] > 0) || c[1] + c[2] + c[3] > 0) return;
+    const s = idx.get(l.source.id ?? l.source);
+    const t = idx.get(l.target.id ?? l.target);
+    if (!keep.has(key(s, t))) drops.add(li);
+  });
+  return drops;
+}
+
 // Genre anchors "packed" PROPORTIONALLY to cluster size. Each genre gets a
 // territory radius ∝ √(track count) → area ∝ count → ~uniform density across
 // the canvas. A DETERMINISTIC mini-simulation (golden-spiral init, no random)
