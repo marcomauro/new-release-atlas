@@ -12,6 +12,7 @@ import {
 } from "./export.js";
 import { INK, PAPER, MUTED, ACCENT, gColor } from "./theme.js";
 import { hydrateGraph } from "./graph/hydrate.js";
+import { createCanvasMap } from "./graph/canvasMap.js";
 import { clusterForce, hashJitter, packGenreAnchors, fitTransform, sparseArtistDrops } from "./graph/layout.js";
 import Header from "./components/Header.jsx";
 import Legend from "./components/Legend.jsx";
@@ -55,10 +56,9 @@ const MOBILE_MAP_MARGINS = { l: 10, r: 10, t: 112, b: 72 };
 const YOUTUBE_DEFAULT_MIN = 0.8;
 
 function MusicNetworkInner() {
-  const svgRef = useRef(null);
+  const canvasRef = useRef(null);
   const wrapRef = useRef(null);
   const simRef = useRef(null);
-  const hoverElsRef = useRef(null); // elementi evidenziati dall'hover corrente
   const labelPxRef = useRef(LABEL_PX); // on-screen label size (emphasis bumps it)
   const routeBoostRef = useRef(null);  // { ids, extra }: nodes getting extra collision room
   const emphRef = useRef(null);        // node datums whose labels get anti-overlap placement
@@ -227,8 +227,8 @@ function MusicNetworkInner() {
   }, [sources]);
 
   useEffect(() => {
-    const svg = d3.select(svgRef.current);
-    svg.selectAll("*").remove();
+    const canvas = canvasRef.current;
+    const view = d3.select(canvas);
 
     const nodes = GRAPH.nodes.map((d) => ({ ...d }));
     const allLinks = GRAPH.links.map((d) => ({ ...d }));
@@ -248,8 +248,6 @@ function MusicNetworkInner() {
         hiddenById.get(id).push(h);
       }
     });
-    const g = svg.append("g");
-
     // Target ON-SCREEN label size for the current zoom factor. Desktop:
     // constant (labelPxRef). Mobile: softly zoom-coupled — base × k^0.3,
     // clamped to [9, 14] px — so zooming feels natural without ever making
@@ -258,24 +256,6 @@ function MusicNetworkInner() {
       isMobile
         ? Math.max(8, Math.min(16, labelPxRef.current * Math.pow(k, MOBILE_ZOOM_EXP)))
         : labelPxRef.current;
-
-    const zoom = d3
-      .zoom()
-      .scaleExtent([0.12, 6])
-      .on("start", (e) => {
-        // a real gesture (wheel, pan, pinch) — not a programmatic transform
-        if (e.sourceEvent) { userMovedRef.current = true; autoFitRef.current = false; }
-      })
-      .on("zoom", (e) => {
-        g.attr("transform", e.transform);
-        // Node labels keep a controlled screen size: the group's font (in
-        // graph units) is counter-scaled by the zoom factor. Desktop is
-        // pinned; mobile couples softly to the zoom (base × k^0.3, clamped).
-        // One attribute write on the group per frame — tspans inherit.
-        g.select(".mn-labelg").attr("font-size", labelScreenPx(e.transform.k) / e.transform.k);
-      });
-    svg.call(zoom);
-    svg.on("dblclick.zoom", null);
 
     const maxDeg = d3.max(nodes, (d) => d.degree) || 1;
     // Su mobile la tela e' stretta: nodi PIU' PICCOLI (non piu' grandi) cosi'
@@ -287,136 +267,84 @@ function MusicNetworkInner() {
       .domain([1, maxDeg])
       .range(isMobile ? [3, 8] : [3, 12]);
 
-    const link = g
-      .append("g")
-      .attr("class", "mn-linkg")
-      .attr("stroke", INK)
-      .attr("stroke-opacity", 0.1)
-      // Links are visual only — never let them intercept pan/drag gestures.
-      .style("pointer-events", "none")
-      .selectAll("line")
-      .data(links)
-      .join("line")
-      .attr("stroke-width", (d) => Math.min(2, 0.3 + d.weight * 0.1));
+    const radius = (d) => rScale(d.degree);
 
-    // Focus layer: the thinned-out artist edges of the hovered/selected node,
-    // so the highlight still shows every real connection. O(degree) lines.
-    const focusLinkG = g
-      .append("g")
-      .attr("class", "mn-focuslinkg")
-      .attr("stroke", INK)
-      .attr("stroke-opacity", 0.5)
-      .style("pointer-events", "none");
-    let focusLinks = focusLinkG.selectAll("line");
-    const placeFocusLinks = () =>
-      focusLinks
-        .attr("x1", (d) => d.source.x)
-        .attr("y1", (d) => d.source.y)
-        .attr("x2", (d) => d.target.x)
-        .attr("y2", (d) => d.target.y);
-    const setFocusLinks = (id) => {
-      focusLinks = focusLinkG
-        .selectAll("line")
-        .data((id && hiddenById.get(id)) || [])
-        .join("line")
-        .attr("stroke-width", (d) => Math.min(2, 0.3 + d.weight * 0.1));
-      placeFocusLinks();
-    };
+    // One canvas paints links, route, nodes and labels (graph/canvasMap.js):
+    // the effects below only hand it the state to show.
+    const map = createCanvasMap(canvas, { nodes, links, radius });
+    map.resize(dimsRef.current.w, dimsRef.current.h);
+    map.setLabelPx(labelScreenPx(1));
 
-    // Percorso della playlist generata: segmenti che collegano i brani
-    // nell'ordine d'ascolto. Disegnati sopra i link, sotto i nodi. Si
-    // assottigliano e sfumano dal primo all'ultimo brano, così la direzione
-    // del percorso è leggibile a colpo d'occhio.
-    const route = g
-      .append("g")
-      .attr("class", "mn-route")
-      .attr("fill", "none")
-      .attr("stroke", ACCENT)
-      .attr("stroke-linecap", "round")
-      .style("pointer-events", "none");
+    // The thinned-out artist edges of the hovered/selected node are painted
+    // on demand, so the highlight still shows every real connection.
+    const setFocusLinks = (id) => map.setFocusLinks((id && hiddenById.get(id)) || []);
 
-    const drawRoute = () => {
-      const pts = routeRef.current;
-      const n = pts ? pts.length : 0;
-      const segs = n >= 2 ? d3.range(n - 1) : [];
-      const denom = Math.max(1, n - 2);
-      const seg = route.selectAll("line").data(segs);
-      seg.exit().remove();
-      seg
-        .enter()
-        .append("line")
-        .merge(seg)
-        .attr("x1", (i) => pts[i].x)
-        .attr("y1", (i) => pts[i].y)
-        .attr("x2", (i) => pts[i + 1].x)
-        .attr("y2", (i) => pts[i + 1].y)
-        // primo brano: tratto spesso e marcato → ultimo: sottile e sfumato
-        .attr("stroke-width", (i) => 3.6 - 2.6 * (i / denom))
-        .attr("stroke-opacity", (i) => 0.95 - 0.62 * (i / denom));
-    };
-
-    const node = g
-      .append("g")
-      .attr("class", "mn-nodeg")
-      .selectAll("circle")
-      .data(nodes)
-      .join("circle")
-      .attr("r", (d) => rScale(d.degree))
-      .attr("fill", (d) => gColor(d.genre))
-      .attr("stroke", PAPER)
-      .attr("stroke-width", 1.2)
-      .style("cursor", "pointer")
-      .call(
-        d3
-          .drag()
-          .on("start", (e, d) => {
-            autoFitRef.current = false;
-            if (!e.active) sim.alphaTarget(0.3).restart();
-            d.fx = d.x;
-            d.fy = d.y;
-          })
-          .on("drag", (e, d) => {
-            d.fx = e.x;
-            d.fy = e.y;
-          })
-          .on("end", (e, d) => {
-            if (!e.active) sim.alphaTarget(0);
-            d.fx = null;
-            d.fy = null;
-          })
-      );
-
-    const labels = g
-      .append("g")
-      .attr("class", "mn-labelg")
-      // font-size lives on the GROUP (single write per zoom frame counter-
-      // scales every label; texts and tspans inherit it)
-      .attr("font-size", LABEL_PX)
-      .attr("font-family", "'Spectral', Georgia, serif")
-      .selectAll("text")
-      .data(nodes)
-      .join("text")
-      .attr("fill", INK)
-      .attr("dx", (d) => rScale(d.degree) + 3)
-      .attr("dy", 3)
-      .attr("opacity", 0)
-      .style("pointer-events", "none");
-    // Label next to the node: title + artist (artist in a muted tone) —
-    // shown in full in route mode too.
-    labels.append("tspan").text((d) => d.title);
-    labels.append("tspan").attr("class", "mn-artist").attr("fill", MUTED).text((d) => " — " + d.artist);
-
-    // Hover solo dove esiste davvero (mouse/trackpad): su touch il mouseenter
-    // sintetico del tap farebbe un restyle inutile prima di ogni click.
+    // Pointer: hit-testing on the canvas replaces the per-circle listeners.
+    // Hover only where it really exists (mouse/trackpad): on touch the
+    // synthetic hover of a tap would restyle the map before every click.
     const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    node
-      .on("mouseenter", canHover ? (e, d) => setHovered(d) : null)
-      .on("mouseleave", canHover ? () => setHovered(null) : null)
-      .on("click", (e, d) => {
-        setSelected((prev) => (prev && prev.id === d.id ? null : d));
-        e.stopPropagation();
+    let hoverNode = null;
+    view
+      .on("pointermove.hover", (e) => {
+        if (!canHover || e.pointerType !== "mouse") return;
+        const [x, y] = d3.pointer(e, canvas);
+        const d = map.nodeAt(x, y);
+        canvas.style.cursor = d ? "pointer" : "default";
+        if (d !== hoverNode) { hoverNode = d; setHovered(d); }
+      })
+      .on("pointerleave.hover", () => {
+        if (hoverNode) { hoverNode = null; setHovered(null); }
+      })
+      .on("click", (e) => {
+        const [x, y] = d3.pointer(e, canvas);
+        const d = map.nodeAt(x, y);
+        setSelected((prev) => (d && !(prev && prev.id === d.id) ? d : null));
       });
-    svg.on("click", () => setSelected(null));
+
+    // Drag a node; a press that misses every node falls through to the zoom
+    // (pan). Registered before the zoom so it gets the press first.
+    view.call(
+      d3
+        .drag()
+        .container(canvas)
+        .subject((e) => {
+          const d = map.nodeAt(e.x, e.y);
+          return d ? { node: d, x: e.x, y: e.y } : null;
+        })
+        .on("start", (e) => {
+          autoFitRef.current = false;
+          if (!e.active) sim.alphaTarget(0.3).restart();
+          const d = e.subject.node;
+          d.fx = d.x;
+          d.fy = d.y;
+        })
+        .on("drag", (e) => {
+          const t = d3.zoomTransform(canvas);
+          e.subject.node.fx = (e.x - t.x) / t.k;
+          e.subject.node.fy = (e.y - t.y) / t.k;
+        })
+        .on("end", (e) => {
+          if (!e.active) sim.alphaTarget(0);
+          e.subject.node.fx = null;
+          e.subject.node.fy = null;
+        })
+    );
+
+    const zoom = d3
+      .zoom()
+      .scaleExtent([0.12, 6])
+      .on("start", (e) => {
+        // a real gesture (wheel, pan, pinch) — not a programmatic transform
+        if (e.sourceEvent) { userMovedRef.current = true; autoFitRef.current = false; }
+      })
+      .on("zoom", (e) => {
+        map.setTransform(e.transform);
+        // Node labels keep a controlled screen size: desktop is pinned;
+        // mobile couples softly to the zoom (base × k^0.4, clamped).
+        map.setLabelPx(labelScreenPx(e.transform.k));
+      });
+    view.call(zoom);
+    view.on("dblclick.zoom", null);
 
     // Genre clustering force — pulls same-genre nodes toward shared anchors,
     // giving spatial separation between genres on top of the link forces.
@@ -467,9 +395,9 @@ function MusicNetworkInner() {
     // tick, so the map is framed without a visible jump at the end.
     const followFit = () => {
       const f = mapFit();
-      const c = d3.zoomTransform(svg.node());
+      const c = d3.zoomTransform(canvas);
       const a = 0.12;
-      svg.call(zoom.transform, toZoom({ x: c.x + (f.x - c.x) * a, y: c.y + (f.y - c.y) * a, k: c.k + (f.k - c.k) * a }));
+      view.call(zoom.transform, toZoom({ x: c.x + (f.x - c.x) * a, y: c.y + (f.y - c.y) * a, k: c.k + (f.k - c.k) * a }));
     };
 
     const sim = d3
@@ -516,35 +444,15 @@ function MusicNetworkInner() {
           .iterations(3)
       )
       .on("tick", () => {
-        link
-          .attr("x1", (d) => d.source.x)
-          .attr("y1", (d) => d.source.y)
-          .attr("x2", (d) => d.target.x)
-          .attr("y2", (d) => d.target.y);
-        node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
-        labels.attr("x", (d) => d.x).attr("y", (d) => d.y);
-        placeFocusLinks();
-        drawRoute();
+        map.requestDraw();
         if (autoFitRef.current) followFit();
       })
       .on("end", () => {
         // settled: land exactly on the fit, then stop following
         if (!autoFitRef.current) return;
         autoFitRef.current = false;
-        svg.transition().duration(400).call(zoom.transform, toZoom(mapFit()));
+        view.transition().duration(400).call(zoom.transform, toZoom(mapFit()));
       });
-
-    // Mappa id -> elementi <line> incidenti: l'hover evidenzia solo i ~deg
-    // archi del nodo (via classi CSS) invece di ristilizzare tutti i 7k link.
-    const incident = new Map();
-    link.each(function (l) {
-      const s = l.source.id ?? l.source;
-      const t = l.target.id ?? l.target;
-      if (!incident.has(s)) incident.set(s, []);
-      if (!incident.has(t)) incident.set(t, []);
-      incident.get(s).push(this);
-      incident.get(t).push(this);
-    });
 
     // Greedy label placement for the EMPHASIZED nodes (the active route, or
     // the selected node + its neighbours): works in SCREEN space (label fonts
@@ -555,18 +463,11 @@ function MusicNetworkInner() {
     // the settle, and again on every zoom end while an emphasis is active.
     // Cost: O(n²) pairwise checks on n ≤ ~40 labels — negligible.
     const placeLabels = () => {
-      const t = d3.zoomTransform(svg.node());
+      const t = d3.zoomTransform(canvas);
       const k = t.k;
-      // reset everyone to the default anchor first (also clears a previous set)
-      labels
-        .attr("dx", (d) => rScale(d.degree) + 3)
-        .attr("dy", 3)
-        .attr("text-anchor", null);
+      const offsets = new Map(); // everyone else keeps the default anchor
       const pts = emphRef.current || [];
-      if (pts.length < 2) return;
-      const ids = new Set(pts.map((p) => p.id));
-      const byId = new Map();
-      labels.filter((d) => ids.has(d.id)).each(function (d) { byId.set(d.id, this); });
+      if (pts.length < 2) { map.setLabelOffsets(offsets); return; }
       const placed = [];
       const grow = 2; // safety margin around each box, px
       const overlapArea = (a, b) => {
@@ -575,9 +476,7 @@ function MusicNetworkInner() {
         return w > 0 && h > 0 ? w * h : 0;
       };
       for (const p of pts) {
-        const el = byId.get(p.id);
-        if (!el) continue;
-        const w = el.getComputedTextLength() * k; // screen px
+        const w = map.measureLabel(p); // screen px
         const h = labelScreenPx(k) + 4; // real bbox: current label size + halo
         const sx = p.x * k + t.x;
         const sy = p.y * k + t.y;
@@ -605,25 +504,28 @@ function MusicNetworkInner() {
           if (area === 0) break;
         }
         placed.push(best.box);
-        d3.select(el)
-          .attr("dx", best.c.dx / k)
-          .attr("dy", best.c.dy / k)
-          .attr("text-anchor", best.c.anchor);
+        // stored in graph units, like the SVG dx/dy were: between two
+        // placements a zoom scales the offsets with the map
+        offsets.set(p.id, { dx: best.c.dx / k, dy: best.c.dy / k, anchor: best.c.anchor });
       }
+      map.setLabelOffsets(offsets);
     };
     // Re-distribute on zoom end: overlaps depend on the zoom factor.
     zoom.on("end.emphasisLabels", () => {
       if (emphRef.current && emphRef.current.length > 1) placeLabels();
     });
 
-    simRef.current = { sim, node, link, labels, g, zoom, svg, anchor, route, nodesById, drawRoute, incident, collideRadius, placeLabels, labelScreenPx, setFocusLinks, mapFit, toZoom };
+    simRef.current = { sim, map, zoom, view, canvas, nodes, links, nodesById, collideRadius, placeLabels, labelScreenPx, setFocusLinks, mapFit, toZoom };
+    // dev-only handle for the browser smoke tests
+    if (import.meta.env.DEV) window.__atlasMap = simRef.current;
     return () => sim.stop();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (!simRef.current) return;
-    const { sim } = simRef.current;
+    const { sim, map } = simRef.current;
+    map.resize(dims.w, dims.h);
     // Ricalcola le ancore impacchettate per le nuove dimensioni (init e resize
     // condividono la stessa geometria proporzionale alla dimensione dei cluster).
     const anchorMap = packGenreAnchors(GRAPH.genres, genreCounts, dims);
@@ -637,16 +539,16 @@ function MusicNetworkInner() {
     sim.alpha(0.3).restart();
   }, [dims, genreCounts]);
 
-  // Restyle "strutturale" (selezione, filtri, ricerca, playlist): tocca tutti
-  // gli elementi, quindi NON dipende dall'hover — quello e' gestito a parte con
-  // classi CSS (effetto leggero qui sotto) per non ristilizzare 7k archi a
-  // ogni passaggio del mouse.
+  // Restyle "strutturale" (selezione, filtri, ricerca, playlist): calcola lo
+  // stato di ogni nodo e arco e lo passa al canvas, che ridisegna al frame
+  // successivo. NON dipende dall'hover, gestito a parte (effetto leggero qui
+  // sotto) come sovrapposizione temporanea.
   useEffect(() => {
     if (!simRef.current) return;
-    const { node, link, labels, g } = simRef.current;
+    const { map, nodes, links } = simRef.current;
     const focus = selected;
     const focusId = focus?.id;
-    const selId = selected?.id; // solo il brano cliccato pulsa (non l'hover)
+    const selId = selected?.id; // solo il brano cliccato ha l'alone (non l'hover)
     const nbr = focusId ? neighbors.get(focusId) : null;
     // brano attualmente in riproduzione nel percorso (evidenziato sul grafo)
     const currentId =
@@ -662,103 +564,83 @@ function MusicNetworkInner() {
       return false;
     };
 
-    node
-      .attr("opacity", (d) => {
-        if (focusId && d.id === focusId) return 1;
-        if (!focusId && playlistSet?.has(d.id)) return 1;
-        return dim(d) ? 0.08 : 0.96;
-      })
+    const n = nodes.length;
+    const v = {
+      nodeAlpha: new Float32Array(n),
+      interactive: new Uint8Array(n),
+      strokeW: new Float32Array(n),
+      strokeC: new Array(n),
+      glow: new Uint8Array(n),
+      labelAlpha: new Float32Array(n),
+      linkAlpha: new Float32Array(links.length),
+      // Nascondi il percorso della playlist mentre un nodo e' in focus (dettaglio).
+      showRoute: !focusId && !!playlistSet && playlistSet.size > 1,
+    };
+    nodes.forEach((d, i) => {
+      const lit = (focusId && d.id === focusId) || (!focusId && playlistSet?.has(d.id));
+      const dimmed = !lit && dim(d);
+      v.nodeAlpha[i] = lit ? 1 : dimmed ? 0.08 : 0.96;
       // Dimmed background nodes must not catch taps/drags: while a node is
       // focused (or a filter/playlist is active) only the highlighted layer
       // stays interactive, so a drag over the faded nodes pans/zooms the view
-      // instead of grabbing a node underneath. Attributo (non style inline):
-      // le regole CSS .mn-hover devono poterlo sovrascrivere durante l'hover.
-      .attr("pointer-events", (d) => {
-        if (focusId && d.id === focusId) return "auto";
-        if (!focusId && playlistSet?.has(d.id)) return "auto";
-        return dim(d) ? "none" : "auto";
-      })
-      .attr("stroke-width", (d) =>
-        d.id === currentId ? 3 : d.id === focusId || playlistSet?.has(d.id) ? 2.4 : matchSet?.has(d.id) ? 2 : 1.2
-      )
-      .attr("stroke", (d) =>
+      // instead of grabbing a node underneath.
+      v.interactive[i] = dimmed ? 0 : 1;
+      v.strokeW[i] =
+        d.id === currentId ? 3 : d.id === focusId || playlistSet?.has(d.id) ? 2.4 : matchSet?.has(d.id) ? 2 : 1.2;
+      v.strokeC[i] =
         d.id === selId || d.id === currentId
           ? ACCENT
           : d.id === focusId || matchSet?.has(d.id) || playlistSet?.has(d.id)
           ? INK
-          : PAPER
-      );
-    // Alone ciano statico: sul brano selezionato e su quello in riproduzione.
-    node.classed("mn-node-selected", (d) => d.id === selId);
-    node.classed("mn-node-playing", (d) => d.id === currentId);
-
-    link.attr("stroke-opacity", (d) => {
-      const s = d.source.id ?? d.source;
-      const t = d.target.id ?? d.target;
-      if (focusId) return s === focusId || t === focusId ? 0.5 : 0.02;
-      if (activeGenre) {
-        const ns = GRAPH.nodes;
-        return 0.04;
-      }
-      if (matchSet) return matchSet.has(s) || matchSet.has(t) ? 0.22 : 0.02;
-      if (playlistSet) return playlistSet.has(s) && playlistSet.has(t) ? 0.15 : 0.02;
-      return 0.1;
+          : PAPER;
+      // Alone ciano statico: sul brano selezionato e su quello in riproduzione.
+      v.glow[i] = d.id === selId || d.id === currentId ? 1 : 0;
+      v.labelAlpha[i] = focusId
+        ? d.id === focusId ? 1 : nbr?.has(d.id) ? 0.8 : 0
+        : matchSet
+        ? matchSet.has(d.id) ? 1 : 0
+        : playlistSet
+        ? playlistSet.has(d.id) ? 1 : 0
+        : 0;
     });
-
-    labels.attr("opacity", (d) => {
-      if (focusId) {
-        if (d.id === focusId) return 1;
-        return nbr?.has(d.id) ? 0.8 : 0;
-      }
-      if (matchSet) return matchSet.has(d.id) ? 1 : 0;
-      if (playlistSet) return playlistSet.has(d.id) ? 1 : 0;
-      return 0;
+    links.forEach((l, i) => {
+      const s = l.source.id;
+      const t = l.target.id;
+      v.linkAlpha[i] = focusId
+        ? s === focusId || t === focusId ? 0.5 : 0.02
+        : activeGenre
+        ? 0.04
+        : matchSet
+        ? matchSet.has(s) || matchSet.has(t) ? 0.22 : 0.02
+        : playlistSet
+        ? playlistSet.has(s) && playlistSet.has(t) ? 0.15 : 0.02
+        : 0.1;
     });
-
-    // Nascondi il percorso della playlist mentre un nodo e' in focus (dettaglio).
-    if (simRef.current.route) {
-      const showRoute = !focusId && playlistSet && playlistSet.size > 1;
-      simRef.current.route.attr("display", showRoute ? null : "none");
-    }
+    map.setView(v);
   }, [selected, matchSet, activeGenre, neighbors, playlistSet, playlist, playIndex]);
 
-  // Effetto LEGGERO per l'hover: aggiunge/toglie classi solo sul nodo, i suoi
-  // vicini, le sue etichette e i suoi ~deg archi incidenti; il resto della
-  // scena sfuma via regole CSS scoped sotto .mn-hover (che sovrascrivono gli
-  // attributi di base impostati dall'effetto strutturale). Costo per hover:
-  // O(grado del nodo) mutazioni DOM invece di ~8k.
+  // Effetto LEGGERO per l'hover: il canvas sovrappone allo stato strutturale
+  // il nodo, i suoi vicini e i suoi archi incidenti (tutto il resto sfuma),
+  // senza ricalcolare la vista. Su touch l'hover non c'e'.
   useEffect(() => {
     if (!simRef.current) return;
-    const { g, node, labels, incident, setFocusLinks } = simRef.current;
+    const { map, nodesById, setFocusLinks } = simRef.current;
     // thinned-out artist edges of the focused node (selection wins over hover)
     setFocusLinks(selected ? selected.id : hovered ? hovered.id : null);
-    if (hoverElsRef.current) {
-      for (const el of hoverElsRef.current) el.classList.remove("mn-hl", "mn-hl-n");
-      hoverElsRef.current = null;
-    }
     const id = !selected && hovered ? hovered.id : null;
-    g.classed("mn-hover", !!id);
-    if (!id) return;
-    const nbr = neighbors.get(id) || new Set();
-    const els = [];
-    const mark = function (d) {
-      if (d.id === id) { this.classList.add("mn-hl"); els.push(this); }
-      else if (nbr.has(d.id)) { this.classList.add("mn-hl-n"); els.push(this); }
-    };
-    node.each(mark);
-    labels.each(mark);
-    for (const el of incident.get(id) || []) { el.classList.add("mn-hl"); els.push(el); }
-    hoverElsRef.current = els;
+    if (!id) { map.setHover(null); return; }
+    const nbr = new Set();
+    for (const x of neighbors.get(id) || []) nbr.add(nodesById.get(x).index);
+    map.setHover({ index: nodesById.get(id).index, nbr });
   }, [hovered, selected, neighbors]);
 
   // Aggiorna il percorso della playlist e inquadra i suoi nodi (solo al cambio).
   useEffect(() => {
     if (!simRef.current) return;
-    const { nodesById, drawRoute, route, svg, zoom, toZoom } = simRef.current;
+    const { nodesById, map, view, zoom, toZoom } = simRef.current;
     const pts = (playlist || []).map((id) => nodesById.get(id)).filter(Boolean);
     routeRef.current = pts;
-    drawRoute();
-    route.attr("display", pts.length > 1 ? null : "none");
+    map.setRoute(pts);
     if (pts.length) {
       autoFitRef.current = false;
       // Inquadra nell'area utile, lasciando margini per header/legenda (sx, alto)
@@ -769,7 +651,7 @@ function MusicNetworkInner() {
       const Tm = isMobile ? 120 : 130;
       const Bm = isMobile ? Math.min(320, dims.h * 0.42) : Math.min(260, dims.h * 0.34);
       const t = fitTransform(pts, dims, { l: Lm, r: Rm, t: Tm, b: Bm }, { pad: 60, maxK: 2 });
-      svg.transition().duration(750).call(zoom.transform, toZoom(t));
+      view.transition().duration(750).call(zoom.transform, toZoom(t));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playlist]);
@@ -782,7 +664,7 @@ function MusicNetworkInner() {
   // visible cost is the gentle re-settle (smaller boost for selections).
   useEffect(() => {
     if (!simRef.current) return;
-    const { sim, collideRadius, placeLabels, labelScreenPx, g, svg, nodesById } = simRef.current;
+    const { sim, map, canvas, collideRadius, placeLabels, labelScreenPx, nodesById } = simRef.current;
     let pts = null;
     if (selected) {
       autoFitRef.current = false;
@@ -799,8 +681,7 @@ function MusicNetworkInner() {
 
     // label size for the mode, applied immediately at the current zoom
     labelPxRef.current = pts ? ROUTE_LABEL_PX : isMobile ? MOBILE_LABEL_PX : LABEL_PX;
-    const k = d3.zoomTransform(svg.node()).k;
-    g.select(".mn-labelg").attr("font-size", labelScreenPx(k) / k);
+    map.setLabelPx(labelScreenPx(d3.zoomTransform(canvas).k));
 
     // re-init collision radii and let the layout breathe
     sim.force("collide").radius(collideRadius);
@@ -815,11 +696,11 @@ function MusicNetworkInner() {
 
   const resetView = useCallback(() => {
     if (!simRef.current) return;
-    const { svg, zoom, mapFit, toZoom } = simRef.current;
+    const { view, zoom, mapFit, toZoom } = simRef.current;
     // back to the framed overview (and to re-framing on resize)
     autoFitRef.current = false;
     userMovedRef.current = false;
-    svg.transition().duration(600).call(zoom.transform, toZoom(mapFit()));
+    view.transition().duration(600).call(zoom.transform, toZoom(mapFit()));
     setSelected(null);
     setQuery("");
     setActiveGenre(null);
@@ -885,7 +766,7 @@ function MusicNetworkInner() {
     if (nd && nd.x != null) {
       autoFitRef.current = false;
       const t = d3.zoomIdentity.translate(dims.w / 2, dims.h / 2).scale(1.5).translate(-nd.x, -nd.y);
-      S.svg.transition().duration(600).call(S.zoom.transform, t);
+      S.view.transition().duration(600).call(S.zoom.transform, t);
     }
   }, [dims]);
 
@@ -973,39 +854,6 @@ function MusicNetworkInner() {
         .mn-input:focus { outline: none; border-color: ${INK}; }
         .mn-chip { transition: all .15s ease; }
         .mn-chip:hover { transform: translateX(2px); }
-        /* Brano selezionato: alone ciano STATICO (niente animazione). Un filter
-           animato su un elemento SVG forza repaint continui dell'intera tela e fa
-           sfarfallare i pannelli con backdrop-filter: il glow fisso viene dipinto
-           una sola volta alla selezione, quindi nessun repaint in loop. */
-        .mn-node-selected, .mn-node-playing {
-          stroke-width: 3.5px;
-          filter: drop-shadow(0 0 9px rgba(31,182,232,0.95));
-        }
-        /* Percorso della playlist: linea azzurra brillante con leggero bagliore. */
-        .mn-route { filter: drop-shadow(0 0 4px rgba(31,182,232,0.7)); }
-        /* Hover di un nodo: il nodo + vicini + archi incidenti ricevono classi
-           (.mn-hl / .mn-hl-n, costo O(grado)); tutto il resto sfuma con queste
-           regole, che sovrascrivono gli attributi di base della scena. */
-        .mn-hover .mn-nodeg circle { opacity: 0.08; pointer-events: none; }
-        .mn-hover .mn-nodeg circle.mn-hl-n { opacity: 0.96; pointer-events: auto; }
-        .mn-hover .mn-nodeg circle.mn-hl {
-          opacity: 1; pointer-events: auto;
-          stroke: #2b2724; stroke-width: 2.4px;
-        }
-        .mn-hover .mn-linkg line { stroke-opacity: 0.02; }
-        .mn-hover .mn-linkg line.mn-hl { stroke-opacity: 0.5; }
-        .mn-hover .mn-labelg text { opacity: 0; }
-        .mn-hover .mn-labelg text.mn-hl-n { opacity: 0.8; }
-        .mn-hover .mn-labelg text.mn-hl { opacity: 1; }
-        .mn-hover .mn-route { display: none; }
-        /* Label halo: a paper-coloured stroke painted UNDER the glyphs makes
-           small labels readable over links and coloured discs. */
-        .mn-labelg text {
-          paint-order: stroke;
-          stroke: ${PAPER};
-          stroke-width: 2.6px;
-          stroke-linejoin: round;
-        }
         @media (max-width: 640px) {
           /* 16px keeps iOS Safari from auto-zooming when an input is focused. */
           .mn-input, .mn-chat input { font-size: 16px !important; }
@@ -1055,12 +903,12 @@ function MusicNetworkInner() {
       {(!isMobile || (!playTracks.length && !chatOpen)) && <Credits isMobile={isMobile} />}
 
       <div ref={wrapRef} style={{ position: "absolute", inset: 0, zIndex: 2 }}>
-        <svg
-          ref={svgRef}
-          width={dims.w}
-          height={dims.h}
+        <canvas
+          ref={canvasRef}
           style={{
             display: "block",
+            width: dims.w,
+            height: dims.h,
             // Let d3-zoom own all touch gestures (pinch to zoom, drag to pan)
             // instead of the browser scrolling/zooming the page.
             touchAction: "none",

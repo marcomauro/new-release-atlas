@@ -56,6 +56,10 @@ npm run preview    # serves dist/ locally for a realistic check
 
 - D3 force-directed graph, one node per track, coloured by **primary genre**;
   a radial force pulls each genre toward its own region, forming clusters.
+- **Drawn on a single `<canvas>`** ([`src/graph/canvasMap.js`](src/graph/canvasMap.js)),
+  at most once per frame: the map computes what is lit, dimmed, selected or
+  playing, the canvas paints it and answers which node is under the pointer.
+  It replaced ~10,000 SVG elements rewritten on every tick (2–4× smoother).
 - **Interactive legend filter** (left), **search**, **zoom / pan / drag**, and a
   **detail panel** on node click (with Spotify link and track metadata).
 - **Framed on load**: while the first layout settles the camera follows it, so
@@ -460,6 +464,7 @@ new-release-atlas/
 │   ├── MusicNetwork.jsx                 # orchestrator: state, D3 simulation, wiring
 │   ├── graph/
 │   │   ├── hydrate.js                   # format-2 graph.json hydration
+│   │   ├── canvasMap.js                 # canvas painter + hit-testing for the map
 │   │   └── layout.js                    # force helpers (anchors, cluster force, jitter, fit, artist thinning)
 │   ├── components/
 │   │   ├── Header.jsx                   # title, subtitle, search / reset toolbar
