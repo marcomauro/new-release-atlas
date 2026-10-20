@@ -58,6 +58,14 @@ npm run preview    # serves dist/ locally for a realistic check
   a radial force pulls each genre toward its own region, forming clusters.
 - **Interactive legend filter** (left), **search**, **zoom / pan / drag**, and a
   **detail panel** on node click (with Spotify link and track metadata).
+- **Framed on load**: while the first layout settles the camera follows it, so
+  the whole map ends up inside the free area (clear of header, legend and the
+  Playlist pill). Any pan, zoom or drag hands the camera back to you; **Reset**
+  returns to the framed overview.
+- **Thinned artist cliques**: an artist with more than 5 tracks is drawn (and
+  pulled together) by a ring with chords instead of a complete clique — about
+  1,200 fewer lines. It is a drawing decision only: playlists walk the full
+  graph, and hovering or selecting a track still shows every real connection.
 - Edges are weighted by relationship type and can be **re-weighted live** without
   rebuilding the graph (see [Route weights](#route-weights--mood)).
 
@@ -440,6 +448,8 @@ new-release-atlas/
 │   └── check_docs.py                    # CI guard: README ↔ graph.json
 ├── docs/
 │   ├── ADDING_PLAYLISTS.md              # step-by-step: adding playlists to the map
+│   ├── GRAPH_OPTIMIZATION_BACKLOG.md    # map & interaction optimizations: done / open
+│   ├── LISTENING_STRATEGIES.md          # how everyone can listen (beyond YouTube)
 │   └── PLATFORM_INDEPENDENCE_PLAN.md    # plan: decoupling Atlas from Spotify
 ├── legacy/                              # frozen: classic pipeline + historical artifacts
 │   ├── README.md                        # what's here and why
@@ -450,7 +460,7 @@ new-release-atlas/
 │   ├── MusicNetwork.jsx                 # orchestrator: state, D3 simulation, wiring
 │   ├── graph/
 │   │   ├── hydrate.js                   # format-2 graph.json hydration
-│   │   └── layout.js                    # force helpers (anchors, cluster force, jitter)
+│   │   └── layout.js                    # force helpers (anchors, cluster force, jitter, fit, artist thinning)
 │   ├── components/
 │   │   ├── Header.jsx                   # title, subtitle, search / reset toolbar
 │   │   ├── Legend.jsx                   # genre legend / filter

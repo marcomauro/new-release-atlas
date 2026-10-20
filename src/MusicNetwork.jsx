@@ -12,7 +12,7 @@ import {
 } from "./export.js";
 import { INK, PAPER, MUTED, ACCENT, gColor } from "./theme.js";
 import { hydrateGraph } from "./graph/hydrate.js";
-import { clusterForce, hashJitter, packGenreAnchors } from "./graph/layout.js";
+import { clusterForce, hashJitter, packGenreAnchors, fitTransform, sparseArtistDrops } from "./graph/layout.js";
 import Header from "./components/Header.jsx";
 import Legend from "./components/Legend.jsx";
 import DetailPanel from "./components/DetailPanel.jsx";
@@ -46,6 +46,11 @@ const MOBILE_ZOOM_EXP = 0.4;
 // boost is smaller — a hub can emphasize 40 neighbours at once.
 const ROUTE_NODE_SPACING = 12;
 const SELECT_NODE_SPACING = 8;
+// Screen margins (px) kept free of map when fitting the WHOLE map: the header
+// and legend column on the left (desktop) or the stacked header on top
+// (mobile), and the Playlist launcher at the bottom.
+const MAP_MARGINS = { l: 230, r: 24, t: 24, b: 56 };
+const MOBILE_MAP_MARGINS = { l: 10, r: 10, t: 112, b: 72 };
 // quota di brani con un video YouTube oltre la quale YouTube è la sorgente di default
 const YOUTUBE_DEFAULT_MIN = 0.8;
 
@@ -57,6 +62,12 @@ function MusicNetworkInner() {
   const labelPxRef = useRef(LABEL_PX); // on-screen label size (emphasis bumps it)
   const routeBoostRef = useRef(null);  // { ids, extra }: nodes getting extra collision room
   const emphRef = useRef(null);        // node datums whose labels get anti-overlap placement
+  // Auto-fit: while the first layout settles the camera follows it so the
+  // whole map ends up framed. Any manual pan/zoom/drag, a route or a
+  // selection hands the camera back to the user (userMovedRef also stops
+  // re-fitting on resize).
+  const autoFitRef = useRef(true);
+  const userMovedRef = useRef(false);
   const [selected, setSelected] = useState(null);
   const [hovered, setHovered] = useState(null);
   const [query, setQuery] = useState("");
@@ -70,6 +81,8 @@ function MusicNetworkInner() {
   // Phone-sized viewport: switch to a single-column, touch-first layout.
   const isMobile = dims.w > 0 && dims.w <= 640;
   const showLegend = !isMobile || legendOpen;
+  const dimsRef = useRef(dims);
+  dimsRef.current = dims;
 
   // --- playlist hub: generated-playlist state ---
   const [playlist, setPlaylist] = useState(null); // ordered ids of the route on the map
@@ -83,6 +96,11 @@ function MusicNetworkInner() {
   const [chatOpen, setChatOpen] = useState(false);
   const routeRef = useRef([]); // node datums of the playlist, used to draw the route
   const playlistSet = useMemo(() => (playlist ? new Set(playlist) : null), [playlist]);
+  // read by the resize effect without re-running it on every change
+  const playlistRef = useRef(null);
+  playlistRef.current = playlist;
+  const selectedRef = useRef(null);
+  selectedRef.current = selected;
 
   // --- pesi dei legami, regolabili a mano (default dalla pipeline) ---
   const [weights, setWeights] = useState(
@@ -213,8 +231,23 @@ function MusicNetworkInner() {
     svg.selectAll("*").remove();
 
     const nodes = GRAPH.nodes.map((d) => ({ ...d }));
-    const links = GRAPH.links.map((d) => ({ ...d }));
+    const allLinks = GRAPH.links.map((d) => ({ ...d }));
     const nodesById = new Map(nodes.map((d) => [d.id, d]));
+    // Prolific artists' cliques are thinned to a ring with chords for the
+    // drawing and the link force (see sparseArtistDrops). The dropped edges
+    // still exist in GRAPH (playlist walk, neighbours) and are drawn on demand
+    // in the focus layer when their node is hovered or selected.
+    const drops = sparseArtistDrops(nodes, allLinks);
+    const links = allLinks.filter((_, i) => !drops.has(i));
+    const hiddenById = new Map();
+    allLinks.forEach((l, i) => {
+      if (!drops.has(i)) return;
+      const h = { source: nodesById.get(l.source), target: nodesById.get(l.target), weight: l.weight };
+      for (const id of [l.source, l.target]) {
+        if (!hiddenById.has(id)) hiddenById.set(id, []);
+        hiddenById.get(id).push(h);
+      }
+    });
     const g = svg.append("g");
 
     // Target ON-SCREEN label size for the current zoom factor. Desktop:
@@ -229,6 +262,10 @@ function MusicNetworkInner() {
     const zoom = d3
       .zoom()
       .scaleExtent([0.12, 6])
+      .on("start", (e) => {
+        // a real gesture (wheel, pan, pinch) — not a programmatic transform
+        if (e.sourceEvent) { userMovedRef.current = true; autoFitRef.current = false; }
+      })
       .on("zoom", (e) => {
         g.attr("transform", e.transform);
         // Node labels keep a controlled screen size: the group's font (in
@@ -261,6 +298,30 @@ function MusicNetworkInner() {
       .data(links)
       .join("line")
       .attr("stroke-width", (d) => Math.min(2, 0.3 + d.weight * 0.1));
+
+    // Focus layer: the thinned-out artist edges of the hovered/selected node,
+    // so the highlight still shows every real connection. O(degree) lines.
+    const focusLinkG = g
+      .append("g")
+      .attr("class", "mn-focuslinkg")
+      .attr("stroke", INK)
+      .attr("stroke-opacity", 0.5)
+      .style("pointer-events", "none");
+    let focusLinks = focusLinkG.selectAll("line");
+    const placeFocusLinks = () =>
+      focusLinks
+        .attr("x1", (d) => d.source.x)
+        .attr("y1", (d) => d.source.y)
+        .attr("x2", (d) => d.target.x)
+        .attr("y2", (d) => d.target.y);
+    const setFocusLinks = (id) => {
+      focusLinks = focusLinkG
+        .selectAll("line")
+        .data((id && hiddenById.get(id)) || [])
+        .join("line")
+        .attr("stroke-width", (d) => Math.min(2, 0.3 + d.weight * 0.1));
+      placeFocusLinks();
+    };
 
     // Percorso della playlist generata: segmenti che collegano i brani
     // nell'ordine d'ascolto. Disegnati sopra i link, sotto i nodi. Si
@@ -309,6 +370,7 @@ function MusicNetworkInner() {
         d3
           .drag()
           .on("start", (e, d) => {
+            autoFitRef.current = false;
             if (!e.active) sim.alphaTarget(0.3).restart();
             d.fx = d.x;
             d.fy = d.y;
@@ -397,6 +459,19 @@ function MusicNetworkInner() {
       hashJitter(d.id) * (isMobile ? 1 : 4) +
       (routeBoostRef.current && routeBoostRef.current.ids.has(d.id) ? routeBoostRef.current.extra : 0);
 
+    // Whole-map fit: all nodes (+ the largest radius) inside the free area.
+    const mapFit = () =>
+      fitTransform(nodes, dimsRef.current, isMobile ? MOBILE_MAP_MARGINS : MAP_MARGINS, { pad: 14 });
+    const toZoom = (t) => d3.zoomIdentity.translate(t.x, t.y).scale(t.k);
+    // Camera follow while the layout settles: ease 12% toward the fit each
+    // tick, so the map is framed without a visible jump at the end.
+    const followFit = () => {
+      const f = mapFit();
+      const c = d3.zoomTransform(svg.node());
+      const a = 0.12;
+      svg.call(zoom.transform, toZoom({ x: c.x + (f.x - c.x) * a, y: c.y + (f.y - c.y) * a, k: c.k + (f.k - c.k) * a }));
+    };
+
     const sim = d3
       .forceSimulation(nodes)
       .force(
@@ -448,7 +523,15 @@ function MusicNetworkInner() {
           .attr("y2", (d) => d.target.y);
         node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
         labels.attr("x", (d) => d.x).attr("y", (d) => d.y);
+        placeFocusLinks();
         drawRoute();
+        if (autoFitRef.current) followFit();
+      })
+      .on("end", () => {
+        // settled: land exactly on the fit, then stop following
+        if (!autoFitRef.current) return;
+        autoFitRef.current = false;
+        svg.transition().duration(400).call(zoom.transform, toZoom(mapFit()));
       });
 
     // Mappa id -> elementi <line> incidenti: l'hover evidenzia solo i ~deg
@@ -533,7 +616,7 @@ function MusicNetworkInner() {
       if (emphRef.current && emphRef.current.length > 1) placeLabels();
     });
 
-    simRef.current = { sim, node, link, labels, g, zoom, svg, anchor, route, nodesById, drawRoute, incident, collideRadius, placeLabels, labelScreenPx };
+    simRef.current = { sim, node, link, labels, g, zoom, svg, anchor, route, nodesById, drawRoute, incident, collideRadius, placeLabels, labelScreenPx, setFocusLinks, mapFit, toZoom };
     return () => sim.stop();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -548,6 +631,9 @@ function MusicNetworkInner() {
     sim
       .force("x", d3.forceX((d) => at(d).x).strength(0.26))
       .force("y", d3.forceY((d) => at(d).y).strength(0.26));
+    // the layout re-settles for the new size: re-frame it, unless the user
+    // has taken the camera or a route/selection owns it
+    if (!userMovedRef.current && !playlistRef.current && !selectedRef.current) autoFitRef.current = true;
     sim.alpha(0.3).restart();
   }, [dims, genreCounts]);
 
@@ -643,7 +729,9 @@ function MusicNetworkInner() {
   // O(grado del nodo) mutazioni DOM invece di ~8k.
   useEffect(() => {
     if (!simRef.current) return;
-    const { g, node, labels, incident } = simRef.current;
+    const { g, node, labels, incident, setFocusLinks } = simRef.current;
+    // thinned-out artist edges of the focused node (selection wins over hover)
+    setFocusLinks(selected ? selected.id : hovered ? hovered.id : null);
     if (hoverElsRef.current) {
       for (const el of hoverElsRef.current) el.classList.remove("mn-hl", "mn-hl-n");
       hoverElsRef.current = null;
@@ -666,16 +754,13 @@ function MusicNetworkInner() {
   // Aggiorna il percorso della playlist e inquadra i suoi nodi (solo al cambio).
   useEffect(() => {
     if (!simRef.current) return;
-    const { nodesById, drawRoute, route, svg, zoom } = simRef.current;
+    const { nodesById, drawRoute, route, svg, zoom, toZoom } = simRef.current;
     const pts = (playlist || []).map((id) => nodesById.get(id)).filter(Boolean);
     routeRef.current = pts;
     drawRoute();
     route.attr("display", pts.length > 1 ? null : "none");
     if (pts.length) {
-      const xs = pts.map((p) => p.x);
-      const ys = pts.map((p) => p.y);
-      const minX = Math.min(...xs), maxX = Math.max(...xs);
-      const minY = Math.min(...ys), maxY = Math.max(...ys);
+      autoFitRef.current = false;
       // Inquadra nell'area utile, lasciando margini per header/legenda (sx, alto)
       // e per il pannello chat (basso): cosi i nodi non finiscono sotto la UI.
       // Su mobile la UI e' impilata in alto/in basso, quindi i margini cambiano.
@@ -683,17 +768,8 @@ function MusicNetworkInner() {
       const Rm = isMobile ? 24 : 56;
       const Tm = isMobile ? 120 : 130;
       const Bm = isMobile ? Math.min(320, dims.h * 0.42) : Math.min(260, dims.h * 0.34);
-      const uw = Math.max(120, dims.w - Lm - Rm);
-      const uh = Math.max(120, dims.h - Tm - Bm);
-      const bw = Math.max(60, maxX - minX);
-      const bh = Math.max(60, maxY - minY);
-      const k = Math.max(0.12, Math.min(2.0, Math.min(uw / (bw + 120), uh / (bh + 120))));
-      const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
-      const t = d3.zoomIdentity
-        .translate(Lm + uw / 2, Tm + uh / 2)
-        .scale(k)
-        .translate(-cx, -cy);
-      svg.transition().duration(750).call(zoom.transform, t);
+      const t = fitTransform(pts, dims, { l: Lm, r: Rm, t: Tm, b: Bm }, { pad: 60, maxK: 2 });
+      svg.transition().duration(750).call(zoom.transform, toZoom(t));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playlist]);
@@ -709,6 +785,7 @@ function MusicNetworkInner() {
     const { sim, collideRadius, placeLabels, labelScreenPx, g, svg, nodesById } = simRef.current;
     let pts = null;
     if (selected) {
+      autoFitRef.current = false;
       const ids = [selected.id, ...(neighbors.get(selected.id) || [])];
       pts = ids.map((id) => nodesById.get(id)).filter(Boolean);
       routeBoostRef.current = { ids: new Set(ids), extra: SELECT_NODE_SPACING };
@@ -738,8 +815,11 @@ function MusicNetworkInner() {
 
   const resetView = useCallback(() => {
     if (!simRef.current) return;
-    const { svg, zoom } = simRef.current;
-    svg.transition().duration(600).call(zoom.transform, d3.zoomIdentity);
+    const { svg, zoom, mapFit, toZoom } = simRef.current;
+    // back to the framed overview (and to re-framing on resize)
+    autoFitRef.current = false;
+    userMovedRef.current = false;
+    svg.transition().duration(600).call(zoom.transform, toZoom(mapFit()));
     setSelected(null);
     setQuery("");
     setActiveGenre(null);
@@ -803,6 +883,7 @@ function MusicNetworkInner() {
     const S = simRef.current;
     const nd = S && S.nodesById.get(id);
     if (nd && nd.x != null) {
+      autoFitRef.current = false;
       const t = d3.zoomIdentity.translate(dims.w / 2, dims.h / 2).scale(1.5).translate(-nd.x, -nd.y);
       S.svg.transition().duration(600).call(S.zoom.transform, t);
     }
