@@ -25,6 +25,14 @@
    "status": "matched",
    "title": "Makaya McCraven - Gnu Blue"
   },
+  "0M1UEWcNQLmuXfyvOvqyAN": {
+   "channel": "purplenumberF",
+   "checked": "2026-10-20",
+   "id": "_4ThTKJu6tE",
+   "score": 0.85,
+   "status": "matched",
+   "title": "Floating Points - Precursor"
+  },
   "0SU1P7VuVWc9BsMv98o7Lf": {
    "channel": "WAYNE SNOW",
    "checked": "2026-10-19",
@@ -32,6 +40,14 @@
    "score": 0.85,
    "status": "matched",
    "title": "WAYNE SNOW - Cold Zone (Visualiser)"
+  },
+  "0T4lcpAprQ7CXjNdYCZ3vp": {
+   "channel": "jackjohnsonmusic",
+   "checked": "2026-10-20",
+   "id": "F9zErDt7MnE",
+   "score": 1.0,
+   "status": "matched",
+   "title": "\"Hold On To The Light\" (Visualizer)  - Jack Johnson & Hermanos Gutiérrez"
   },
   "0buN3nIjGOmj2boRh7zNrz": {
    "channel": "Montell Fish",
@@ -41,30 +57,32 @@
    "status": "matched",
    "title": "Ostentatious ft. John Glacier, dj gummy bear"
   },
+  "0edG7kXOUCRKekOSofl4Un": {
+   "channel": "DJ Harrison",
+   "checked": "2026-10-20",
+   "id": "lsYdp00jIdc",
+   "score": 1.0,
+   "status": "matched",
+   "title": "DJ Harrison - Stay Ready ft. Yaya Bey (Official Visualizer)"
+  },
   "0fDlWQUTVt0zx97asvlFuz": {
-   "checked": "2026-10-19",
-   "status": "none"
+   "channel": "John Zorn - Topic",
+   "checked": "2026-10-20",
+   "id": "y17GkXV0tCo",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Nocturne Nr. 1"
   },
   "0hnUhC0eBCJSbt8qtCnwUA": {
-   "alt": [
-    [
-     "nsTEar1ebYQ",
-     0.013
-    ],
-    [
-     "-JLKZH-IIJY",
-     0.0
-    ]
-   ],
    "channel": "Soul in the Horn",
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "id": "fNqWM1vwTvs",
-   "score": 0.61,
-   "status": "review",
+   "score": 0.76,
+   "status": "matched",
    "title": "Madison McFerrin - Ain't It Nice (Merlin Bobb & Masaki Morii Remix)"
   },
   "0iPRaGu0MkIfLHRjFfWedg": {
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "status": "none"
   },
   "0sJDebr7t0tU7Fo6LspNV9": {
@@ -76,22 +94,12 @@
    "title": "Brian Jackson - New York City (Ft. Cindy Mizelle, Dawn Tallman, Ramona Dunlap)"
   },
   "0ywaVOWdny9onqKFVIGGWW": {
-   "alt": [
-    [
-     "9lVOl25bbYc",
-     0.3
-    ],
-    [
-     "TFUFPObvQa0",
-     0.0
-    ]
-   ],
-   "channel": "LE Groove  Music Blog",
-   "checked": "2026-10-19",
-   "id": "dJs9pQrM88s",
-   "score": 0.55,
-   "status": "review",
-   "title": "Koralle & Yawuh - Mind States (feat. Physical Graffiti)"
+   "channel": "Koralle - Topic",
+   "checked": "2026-10-20",
+   "id": "ebQ1sH37GEk",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Mind States"
   },
   "14Ep3bdoDg3mPdODORkXG8": {
    "channel": "Fred again . .",
@@ -109,6 +117,14 @@
    "status": "matched",
    "title": "Masters At Work, Louie Vega, Kenny Dope - NYC Kickin' With The Masters At Work (2020 Dub)"
   },
+  "14Yo4JdMqhAyqq42WSOkOD": {
+   "channel": "Theo Croker - Topic",
+   "checked": "2026-10-20",
+   "id": "HaOaekGD7uo",
+   "score": 1.0,
+   "status": "matched",
+   "title": "beyond"
+  },
   "15BHVlIASaUOK1dKNDscgt": {
    "channel": "DJ Raziel",
    "checked": "2026-10-19",
@@ -125,6 +141,14 @@
    "status": "matched",
    "title": "Everything Is Recorded - Welcome To The Meadows ft. Roses Gabor, Jack Peńate"
   },
+  "1AvZXYluV7hMnqCXZnWpBH": {
+   "channel": "DJSnakeVEVO",
+   "checked": "2026-10-20",
+   "id": "NXLVnA9nWG4",
+   "score": 1.0,
+   "status": "matched",
+   "title": "DJ Snake - Tsunami (feat. Future & Travis Scott) (Official Visualizer)"
+  },
   "1Iw5iLfAwDvS6frI82gMoV": {
    "channel": "David Dean Burkhart",
    "checked": "2026-10-19",
@@ -132,6 +156,22 @@
    "score": 0.85,
    "status": "matched",
    "title": "Tame Impala - End of Summer"
+  },
+  "1WINXf6hgmC0kwf02scfue": {
+   "channel": "VeryHouseMusic",
+   "checked": "2026-10-20",
+   "id": "TTLz4Y8pVDs",
+   "score": 0.85,
+   "status": "matched",
+   "title": "Louie Vega, Funki Cadets feat. Willy Soul - Feelin' Good Tonight (Shapes Mix)"
+  },
+  "1ZJvpg3yGrmEgLO4RbDu0e": {
+   "channel": "Klangspot Recordings",
+   "checked": "2026-10-20",
+   "id": "I8_Yalel5XI",
+   "score": 0.85,
+   "status": "matched",
+   "title": "De-Phazz, Bugge Wesseltoft - Jeunesse Dorée (Official)"
   },
   "1oB6gO3603t901nqbZGQxN": {
    "channel": "Big Sad 1900",
@@ -141,9 +181,37 @@
    "status": "matched",
    "title": "Big Sad 1900 & Freddie Gibbs - Midnight in Hawaii 2 (Official Visualizer)"
   },
+  "1qVwvsoPI8prmUjoIW6DV2": {
+   "channel": "Moonchild",
+   "checked": "2026-10-20",
+   "id": "gtBlt8qfIh4",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Moonchild - For Yourself ft. Lalah Hathaway & Chris Dave (Official Audio)"
+  },
+  "23081uBi0pYgIOO4FpvXnq": {
+   "channel": "BBE TV",
+   "checked": "2026-10-20",
+   "id": "pJpRviJ5FEM",
+   "score": 0.85,
+   "status": "matched",
+   "title": "Brian Jackson - The Bottle (Masters At Work Dub)"
+  },
   "25w5gn0TiUNWxvkBFyBV3P": {
-   "checked": "2026-10-19",
-   "status": "none"
+   "channel": "Joe Armon Jones - Topic",
+   "checked": "2026-10-20",
+   "id": "AuqzpEebT6A",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Lifetones (Vocal Version feat. Asheber)"
+  },
+  "27ZVgmO00Zv8c3opdLOsM1": {
+   "channel": "Psyché - Topic",
+   "checked": "2026-10-20",
+   "id": "E8mcyc0tlSw",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Sabir"
   },
   "2BfQYkM9o5GXDkI5lWOC2s": {
    "channel": "Jordan Childs",
@@ -161,9 +229,21 @@
    "status": "matched",
    "title": "Cassius - Dance On (Official Visualizer)"
   },
+  "2GzPr0NMECEAViZE3EoAxV": {
+   "channel": "Momoko Gill - Topic",
+   "checked": "2026-10-20",
+   "id": "EmxV_IGjFG0",
+   "score": 1.0,
+   "status": "matched",
+   "title": "2close2farr"
+  },
   "2KRZS3T0XDqxLh1l3K1DzV": {
-   "checked": "2026-10-19",
-   "status": "none"
+   "channel": "Nahokimama - Topic",
+   "checked": "2026-10-20",
+   "id": "HG2P3HPCX2I",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Midnight"
   },
   "2Tj60Mq0IJSFtc2KmPHWza": {
    "channel": "LNDN DRGS",
@@ -173,23 +253,21 @@
    "status": "matched",
    "title": "Jay Worthy & Terrace Martin  - Runnin Outta Time (Official Video)"
   },
+  "2VZ0ncmWdOyrsVKfc8fwa4": {
+   "channel": "Fred again . .",
+   "checked": "2026-10-20",
+   "id": "hyN690O51-I",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Fred again.. & Caribou & Menor Teteu - Facilita (Lyon, Friday 24th October)"
+  },
   "2a1YoHUcoZeQMCDT5jIRMr": {
-   "alt": [
-    [
-     "EXBUoc0W08o",
-     0.4
-    ],
-    [
-     "R25qYkkv_t8",
-     0.37
-    ]
-   ],
-   "channel": "JorjaSmithVEVO",
-   "checked": "2026-10-19",
-   "id": "lbFpxsqjWfs",
-   "score": 0.52,
-   "status": "review",
-   "title": "Jorja Smith - The Way I Love You"
+   "channel": "Jorja Smith - Topic",
+   "checked": "2026-10-20",
+   "id": "ARCiGw3lKkE",
+   "score": 1.0,
+   "status": "matched",
+   "title": "The Way I Love You (Acoustic)"
   },
   "2efKpdGah3AVLf8qjtJ7NE": {
    "channel": "Butcher Brown",
@@ -224,7 +302,7 @@
    "title": "Ben Williams ft. Dead Prez, Kendra Foster, Kamasi Washington - Keep On (Power to the People Remix)"
   },
   "2tCVfd3PR2Dp3bYZRz1v5T": {
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "status": "none"
   },
   "37YlwkZRfsigoFpbd9s79B": {
@@ -235,6 +313,14 @@
    "status": "matched",
    "title": "Tigran Hamasyan - War Time Poem (Official Audio)"
   },
+  "39QDO1CMwXHDPdw8cjJpTi": {
+   "channel": "Fred again . .",
+   "checked": "2026-10-20",
+   "id": "BOtCBy_FSZE",
+   "score": 0.76,
+   "status": "matched",
+   "title": "Fred again.., Ezra Collective, CA7RIEL & Paco Amoroso - Beto’s Horns, Ezra Remix (London, 25th June)"
+  },
   "3HZwpJfz1EJGYsQGZfJvYT": {
    "channel": "Preferably At Night",
    "checked": "2026-10-19",
@@ -244,8 +330,12 @@
    "title": "CARRTOONS x Joanna Teters - Measure Up"
   },
   "3MT1ZI4Np7Fbs5FkpIBmIo": {
-   "checked": "2026-10-19",
-   "status": "none"
+   "channel": "Agosta - Topic",
+   "checked": "2026-10-20",
+   "id": "f5myB5XGxZw",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Shadow Awareness"
   },
   "3Y1aIQRbvcXc7ZxcDC4rvs": {
    "channel": "Trending Now Lyrics",
@@ -254,6 +344,14 @@
    "score": 0.85,
    "status": "matched",
    "title": "Tiana Major9, Yebba - Always (Lyrics)"
+  },
+  "3atiB68n62bmcq0fnlbdmm": {
+   "channel": "Charlotte Day Wilson",
+   "checked": "2026-10-20",
+   "id": "s9j_QgRMFgw",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Charlotte Day Wilson - Selfish"
   },
   "3gURB0TgRppQkfaFgU735h": {
    "channel": "Yazmin Lacey",
@@ -264,8 +362,12 @@
    "title": "Yazmin Lacey - Longest Way Round (Official Visualiser)"
   },
   "3jMEMZMDA5pgjVjcgQxVPg": {
-   "checked": "2026-10-19",
-   "status": "none"
+   "channel": "Koralle - Topic",
+   "checked": "2026-10-20",
+   "id": "tPbbhDUgHG0",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Eclissi"
   },
   "3mXyFrJhW6YtXkb1l6qhAN": {
    "channel": "Joe Armon-Jones",
@@ -275,6 +377,14 @@
    "status": "matched",
    "title": "Joe Armon-Jones - One Way Traffic (Dub)"
   },
+  "3wIMAdnBrA4Mtb6WB2B4YT": {
+   "channel": "Daniel Caesar",
+   "checked": "2026-10-20",
+   "id": "LtEUDHRykEI",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Daniel Caesar - Touching God feat. Yebba & Blood Orange (Official Lyric Video)"
+  },
   "3wR5myTvPqI2492dRLpeUw": {
    "channel": "Eskimo Recordings",
    "checked": "2026-10-19",
@@ -283,9 +393,21 @@
    "status": "matched",
    "title": "Daddy Squad feat. Corine - Galaxie (Austin Ato Remix)"
   },
+  "3xI6Rzk8MVtHuIXeM9TIPD": {
+   "channel": "WeAreDeLaSoul",
+   "checked": "2026-10-20",
+   "id": "qMnVbg61588",
+   "score": 0.85,
+   "status": "matched",
+   "title": "De La Soul - The Package (Official Audio)"
+  },
   "3xuYB0Utwmn2KFxAWrKDe7": {
-   "checked": "2026-10-19",
-   "status": "none"
+   "channel": "Momoko Gill - Topic",
+   "checked": "2026-10-20",
+   "id": "I0favLymjfg",
+   "score": 1.0,
+   "status": "matched",
+   "title": "No Others"
   },
   "3yyq6gczPbC7JHPUozrgWU": {
    "channel": "No Art Music",
@@ -319,13 +441,45 @@
    "status": "matched",
    "title": "dj gummy bear - Devotion (feat Montell Fish)"
   },
+  "4EGilW7VYfTULk4RENDfJp": {
+   "channel": "KhruangbinVEVO",
+   "checked": "2026-10-20",
+   "id": "20cuFhgPLEo",
+   "score": 0.85,
+   "status": "matched",
+   "title": "Khruangbin - White Gloves ii (Official Video)"
+  },
+  "4LqkSEGv7SpGzruiSTkfL5": {
+   "channel": "tameimpalaVEVO",
+   "checked": "2026-10-20",
+   "id": "KaZDR2yomgA",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Tame Impala - Afterthought (Official Audio)"
+  },
+  "4MxzL8jmOxjconLzZGAs9z": {
+   "channel": "Celeste",
+   "checked": "2026-10-20",
+   "id": "Tzt2UNfPL7w",
+   "score": 0.94,
+   "status": "matched",
+   "title": "Celeste - Time Will Tell"
+  },
   "4Y4hh0dIDq0bXT6T8bcwtG": {
-   "checked": "2026-10-19",
-   "status": "none"
+   "channel": "Cinevox Record - Topic",
+   "checked": "2026-10-20",
+   "id": "3cPVjBa1Atk",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Scacco alla torre (sampled from \"Scacco alla regina\")"
   },
   "4fa0QqXb58GwyaNsjRo60O": {
-   "checked": "2026-10-19",
-   "status": "none"
+   "channel": "clipping. - Topic",
+   "checked": "2026-10-20",
+   "id": "UOqjtfJNsEc",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Hard-Eyes"
   },
   "4lhOzoYujY5YD3anyw68hp": {
    "channel": "Exceptional Music",
@@ -351,9 +505,21 @@
    "status": "matched",
    "title": "Tame Impala - My Old Ways"
   },
+  "50pCfgfoF77Wm3ruIsiCp5": {
+   "channel": "Slow Down Sounds",
+   "checked": "2026-10-20",
+   "id": "fAMAem7_rqA",
+   "score": 0.79,
+   "status": "matched",
+   "title": "Chet Baker - Quiet Nights (feat. Hubert Laws) [Vinyl Transfer]"
+  },
   "577Mc4SR4UFtN6dIQG5jx9": {
-   "checked": "2026-10-19",
-   "status": "none"
+   "channel": "Petter Eldh - Topic",
+   "checked": "2026-10-20",
+   "id": "PfuGHUpIdpk",
+   "score": 1.0,
+   "status": "matched",
+   "title": "KON (feat. James Maddren)"
   },
   "58SELDL70hm66Oy4fwzBFM": {
    "channel": "Alfa Mist",
@@ -372,8 +538,12 @@
    "title": "Brian Jackson - Winter in America (Ft. Rich Medina) (12' Version)"
   },
   "59Oe3a1rAO9D2s4QdjN2eR": {
-   "checked": "2026-10-19",
-   "status": "none"
+   "channel": "CORBAAL - Topic",
+   "checked": "2026-10-20",
+   "id": "E61nGnbyKxc",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Paris"
   },
   "5BXO4XaXkDFrcMd4kRt4aM": {
    "channel": "International Anthem",
@@ -384,7 +554,7 @@
    "title": "Tortoise - \"A Title Comes\" (video by Nespy5euro)"
   },
   "5ELfCceY987QoEi4hfS5PI": {
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "status": "none"
   },
   "5JYiABJyzqRedaTMLCr0kP": {
@@ -428,30 +598,32 @@
    "title": "Florence + The Machine - Sympathy Magic (Lyric Video)"
   },
   "5cWutQML1hiTrQPStz2ual": {
-   "alt": [
-    [
-     "s39wsgKvHt0",
-     0.55
-    ],
-    [
-     "V6SDVQKJNbs",
-     0.25
-    ]
-   ],
-   "channel": "Our Mind On Music",
-   "checked": "2026-10-19",
-   "id": "2dM_1wqs9mE",
-   "score": 0.55,
-   "status": "review",
-   "title": "John Scofield & Dave Holland - 1st Duo Album, \"Memories of Home,\" Nov 21 @ECMRecords"
+   "channel": "John Scofield - Topic",
+   "checked": "2026-10-20",
+   "id": "J1_3KxPcs0g",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Memories of Home"
   },
   "5rZurGJlNV0xnIY3whxEKM": {
-   "checked": "2026-10-19",
+   "channel": "Africa Express - Topic",
+   "checked": "2026-10-20",
+   "id": "GLjKXDZiMRg",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Motherland (feat. Bootie Brown, M.anifest & Tom Excell)"
+  },
+  "5ukdNzauRM4kk6woWF2hzW": {
+   "checked": "2026-10-20",
    "status": "none"
   },
   "5uxjfqZz11NgPFX4e7qG7g": {
-   "checked": "2026-10-19",
-   "status": "none"
+   "channel": "IB Kamara - Topic",
+   "checked": "2026-10-20",
+   "id": "rVtmQiyfXbk",
+   "score": 1.0,
+   "status": "matched",
+   "title": "are you there?"
   },
   "5yxAfh6msbG9vWawjJi0gi": {
    "channel": "Nova Lyrics ",
@@ -494,11 +666,15 @@
    "title": "Sunbörn & Clap! Clap! - Saffron Sahara Swing [Audio]"
   },
   "6Mho4z2FAGpMKcpZTeNbdw": {
-   "checked": "2026-10-19",
-   "status": "none"
+   "channel": "Calibro 35 - Topic",
+   "checked": "2026-10-20",
+   "id": "pV9blWG8eGQ",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Harlem Nocturne"
   },
   "6MjGYgTVp8XS3P6rnSyqbe": {
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "status": "none"
   },
   "6TyWbo6XJzcPjo36hGjFrA": {
@@ -517,6 +693,14 @@
    "status": "matched",
    "title": "ROSALIA - Berghain (Audio)"
   },
+  "6cMDoVNZ9qCiDQGUdV3Mbh": {
+   "channel": "GHerboVEVO",
+   "checked": "2026-10-20",
+   "id": "EfnLeTdQEBw",
+   "score": 1.0,
+   "status": "matched",
+   "title": "G Herbo - Thank Me (Lyric Video) ft. Anderson .Paak"
+  },
   "6cdIYHvZ86bVBmboCErJIL": {
    "channel": "International Anthem",
    "checked": "2026-10-19",
@@ -534,8 +718,20 @@
    "title": "corto.alto - 'APRIL (feat. anaiis)' (Lyric Video)"
   },
   "6g2buYVKfDaoFLDmWj808V": {
-   "checked": "2026-10-19",
-   "status": "none"
+   "channel": "Koralle - Topic",
+   "checked": "2026-10-20",
+   "id": "MLs0UXbykqs",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Block Notes"
+  },
+  "6kI8kCr1vgO1Xb6nz2QGiU": {
+   "channel": "The Twilite Tone - Topic",
+   "checked": "2026-10-20",
+   "id": "M9avB_J1PKM",
+   "score": 1.0,
+   "status": "matched",
+   "title": "I Still Need Love 2"
   },
   "6rKXHdjhXExjyvfarhcmwb": {
    "channel": "Sampha",
@@ -544,6 +740,14 @@
    "score": 0.85,
    "status": "matched",
    "title": "Sampha - Cumulus / Memory"
+  },
+  "6sQsSBTReTFvimIeJxvqSo": {
+   "channel": "Kamaal Williams - Topic",
+   "checked": "2026-10-20",
+   "id": "ulDmu0XjH-E",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Save Me (feat. Mach Hommy)"
   },
   "6twIIS0vl9LyMlUIPgt9Jl": {
    "channel": "Trending Now Lyrics",
@@ -554,8 +758,12 @@
    "title": "Celeste - Time Will Tell (Lyrics)"
   },
   "6unIG3hLDknnfaRhSVAztm": {
-   "checked": "2026-10-19",
-   "status": "none"
+   "channel": "Move 78 - Topic",
+   "checked": "2026-10-20",
+   "id": "j3rBBQYAn2U",
+   "score": 1.0,
+   "status": "matched",
+   "title": "In The Age Of Data"
   },
   "7137eRr0vul14FAmO8uCFM": {
    "channel": "Erased Tapes",
@@ -574,8 +782,12 @@
    "title": "Robert Glasper - One For Grew (Audio)"
   },
   "76amMtyRHVVa2mpIuclM9l": {
-   "checked": "2026-10-19",
-   "status": "none"
+   "channel": "Headache - Topic",
+   "checked": "2026-10-20",
+   "id": "2w9HoZno36M",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Wholesale Anthem"
   },
   "777KS3sCp5SkizGM5LmXOA": {
    "channel": "Heavenly Sweetness",
@@ -594,8 +806,12 @@
    "title": "Mobb Deep - Down For You ft. Nas x Jorja Smith [Official Video]"
   },
   "7Eluyq2GYC8RST2byIRvFb": {
-   "checked": "2026-10-19",
-   "status": "none"
+   "channel": "Masters At Work - Topic",
+   "checked": "2026-10-20",
+   "id": "7P73-37kXMQ",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Lean On Me (Downtempo Version)"
   },
   "7FGfYLmnjImVzkfhgJXsBQ": {
    "channel": "Run Logan Run",
@@ -629,6 +845,14 @@
    "status": "matched",
    "title": "Robert Glasper - Look of Love ft  T3 & Bilal (Audio)"
   },
+  "7LVELzFyelYS0Bc4pDogzO": {
+   "channel": "EnnioMorriconeVEVO",
+   "checked": "2026-10-20",
+   "id": "E4_3Cs4i_2I",
+   "score": 0.85,
+   "status": "matched",
+   "title": "Ennio Morricone, Enrico Pieranunzi - The Ecstasy Of Gold"
+  },
   "7jRv7OJwFbws3gLdaojyT7": {
    "channel": "BBE TV",
    "checked": "2026-10-19",
@@ -646,22 +870,12 @@
    "title": "Nubiyan Twist - Chasing Shadows ft. Fatoumata Diawara (Official Music Video)"
   },
   "7xA1LjXxm8a1XJZx4MnAiR": {
-   "alt": [
-    [
-     "UHkn_Rthgmc",
-     0.55
-    ],
-    [
-     "FsBzn7Bbnto",
-     0.55
-    ]
-   ],
-   "channel": "Edition Records",
-   "checked": "2026-10-19",
-   "id": "ni96vxHeD-Q",
-   "score": 0.55,
-   "status": "review",
-   "title": "Petter Eldh - OYSTRI feat. Richard Spaven | Projekt Drums Vol. 2 #experimentaljazz"
+   "channel": "Petter Eldh - Topic",
+   "checked": "2026-10-20",
+   "id": "3O5DcsOH7tg",
+   "score": 1.0,
+   "status": "matched",
+   "title": "OYSTRI (feat. Richard Spaven)"
   },
   "7zptU3OZqdXe6qsRcpNWiS": {
    "channel": "7clouds Indie",
@@ -671,5 +885,89 @@
    "status": "matched",
    "title": "Amber Mark, Anderson .Paak - Don't Remind Me (with Anderson .Paak) (Lyrics)"
   }
+ },
+ "youtube_topic": {
+  "Africa Express": [
+   "UC996I9z-JNM5p1Ngwh6ulZg"
+  ],
+  "Agosta": [
+   "UCQ4pPR9w89B6AbZ4XRNPwww",
+   "UC7NuWoX-4daYq4dLgTAXWEw"
+  ],
+  "CORBAAL": [
+   "UCjDX-ZDmDc4uVM_c0FEiwsg"
+  ],
+  "Calibro 35": [
+   "UC6mM2Gf7gXw6BmTqkXpfapQ"
+  ],
+  "Cinevox Record": [
+   "UCKsxfZiOFbGxh4Yq4-iZ_Ww"
+  ],
+  "Headache": [
+   "UCTBL-bVuta5Sm8CaMzv8rng",
+   "UC0LwdVkxJfDR6o9ZrCGOfjA",
+   "UC9IcmO_PsjmkBLDB6vBZVkw"
+  ],
+  "IB Kamara": [
+   "UCZtLfJRk2h59-yAEdxNdNZQ"
+  ],
+  "Joe Armon-Jones": [
+   "UCCRrPMekimW3qLJ0njM1izQ"
+  ],
+  "John Scofield": [
+   "UC0rFZyc35e4rMpKcJswXwKQ"
+  ],
+  "John Zorn": [
+   "UCvFo485rYVgZOXMDNnMEdcw",
+   "UC3EGLQpGJ82dXncVSfKt2cA"
+  ],
+  "Jorja Smith": [
+   "UC2jJdNE6vzv_lv18QOfjUyQ"
+  ],
+  "Joviale": [
+   "UCmQq19tKS8trROhd4XhGSxg"
+  ],
+  "Kamaal Williams": [
+   "UCVBxVupUwqTLEQ_2oTVzwgQ"
+  ],
+  "Koralle": [
+   "UCgtGrkr69MdWDKCESpawuKw",
+   "UCp2xpnahUPYPvgLqdU3KB_A",
+   "UChakJeumBbYMwSsRglDMlNw"
+  ],
+  "Masters At Work": [
+   "UCg2S9R7aTw0ahApScyBahrg",
+   "UCgvJoiPtP9U61BHgFLDMd4g"
+  ],
+  "Matthew Herbert": [],
+  "Momoko Gill": [
+   "UCMxFnUnZvP9YzlTNxgHSODw"
+  ],
+  "Move 78": [
+   "UCT3e9o2_iyb1hnNrQZBtLZw",
+   "UC27TuEA9caNPDR_JidJ9W5g"
+  ],
+  "Nahokimama": [
+   "UC5S9n44nE5PjpKftbguZ51A"
+  ],
+  "Petter Eldh": [
+   "UC7RUx1VF_Y-2hGGGcSfecog"
+  ],
+  "Psyché": [
+   "UCIzArCuaes43U8EWxX9j2nQ"
+  ],
+  "Standard Music Library": [
+   "UCMdt3_sQ-Rb4ZnwL2SJrJWg"
+  ],
+  "The Twilite Tone": [
+   "UCMGi0Qnv-yvXlyaCLVYP_Mg"
+  ],
+  "Theo Croker": [
+   "UCe3S6JNz5ezBmrTxp5iDiWQ"
+  ],
+  "Yazmin Lacey": [],
+  "clipping.": [
+   "UCIahymQzVz4bXn1DrDB3gtg"
+  ]
  }
 }

@@ -137,6 +137,15 @@ class ScoreTest(unittest.TestCase):
         self.assertGreaterEqual(rs.score(t, official), rs.MATCH_MIN)
 
 
+    def test_session_take_loses_to_studio_version(self):
+        # stesso canale Topic, 2 s di scarto: "session" deve contare come versione
+        t = {"title": "2close2farr", "primary_artist": "Momoko Gill", "duration_sec": 183}
+        session = {"title": "2close2farr (BBC Maida Vale Session)", "channel": "Momoko Gill - Topic",
+                   "duration_sec": 185}
+        studio = {"title": "2close2farr", "channel": "Momoko Gill - Topic", "duration_sec": 183}
+        self.assertGreater(rs.score(t, studio), rs.score(t, session))
+
+
 class HttpTest(unittest.TestCase):
     def _http_error(self, code, reason):
         body = json.dumps({"error": {"errors": [{"reason": reason}]}}).encode()
