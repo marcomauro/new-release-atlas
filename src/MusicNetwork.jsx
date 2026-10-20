@@ -52,6 +52,10 @@ const SELECT_NODE_SPACING = 8;
 // (mobile), and the Playlist launcher at the bottom.
 const MAP_MARGINS = { l: 230, r: 24, t: 24, b: 56 };
 const MOBILE_MAP_MARGINS = { l: 10, r: 10, t: 112, b: 72 };
+// Hover on desktop: the track's name shows at once; its neighbours and
+// edges light up only after the pointer rests this long on it, so sweeping
+// the mouse across the map no longer flashes the whole neighbourhood.
+const HOVER_LINKS_DELAY = 450; // ms
 // quota di brani con un video YouTube oltre la quale YouTube è la sorgente di default
 const YOUTUBE_DEFAULT_MIN = 0.8;
 
@@ -70,6 +74,14 @@ function MusicNetworkInner() {
   const userMovedRef = useRef(false);
   const [selected, setSelected] = useState(null);
   const [hovered, setHovered] = useState(null);
+  // id of the hovered track once the pointer has rested on it (full highlight)
+  const [hoverLinks, setHoverLinks] = useState(null);
+  useEffect(() => {
+    setHoverLinks(null);
+    if (!hovered) return;
+    const t = setTimeout(() => setHoverLinks(hovered.id), HOVER_LINKS_DELAY);
+    return () => clearTimeout(t);
+  }, [hovered]);
   const [query, setQuery] = useState("");
   const [activeGenre, setActiveGenre] = useState(null);
   const [dims, setDims] = useState(() => ({
@@ -619,20 +631,23 @@ function MusicNetworkInner() {
     map.setView(v);
   }, [selected, matchSet, activeGenre, neighbors, playlistSet, playlist, playIndex]);
 
-  // Effetto LEGGERO per l'hover: il canvas sovrappone allo stato strutturale
-  // il nodo, i suoi vicini e i suoi archi incidenti (tutto il resto sfuma),
-  // senza ricalcolare la vista. Su touch l'hover non c'e'.
+  // Effetto LEGGERO per l'hover: il canvas sovrappone allo stato strutturale,
+  // senza ricalcolare la vista. Subito: bordo e nome del brano (hover
+  // "leggero", la mappa non si spegne). Dopo HOVER_LINKS_DELAY fermi sul
+  // pallino: anche vicini e archi incidenti, con il resto che sfuma.
+  // Su touch l'hover non c'e'.
   useEffect(() => {
     if (!simRef.current) return;
     const { map, nodesById, setFocusLinks } = simRef.current;
-    // thinned-out artist edges of the focused node (selection wins over hover)
-    setFocusLinks(selected ? selected.id : hovered ? hovered.id : null);
     const id = !selected && hovered ? hovered.id : null;
+    const deep = !!id && hoverLinks === id;
+    // thinned-out artist edges of the focused node (selection wins over hover)
+    setFocusLinks(selected ? selected.id : deep ? id : null);
     if (!id) { map.setHover(null); return; }
     const nbr = new Set();
-    for (const x of neighbors.get(id) || []) nbr.add(nodesById.get(x).index);
-    map.setHover({ index: nodesById.get(id).index, nbr });
-  }, [hovered, selected, neighbors]);
+    if (deep) for (const x of neighbors.get(id) || []) nbr.add(nodesById.get(x).index);
+    map.setHover({ index: nodesById.get(id).index, nbr, light: !deep });
+  }, [hovered, hoverLinks, selected, neighbors]);
 
   // Aggiorna il percorso della playlist e inquadra i suoi nodi (solo al cambio).
   useEffect(() => {

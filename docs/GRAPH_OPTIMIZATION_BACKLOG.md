@@ -12,18 +12,42 @@ Legenda: ✅ fatto · 🟡 parziale · ⏳ aperto · 🔬 prototipo in valutazio
 
 | # | Punto | Origine | Stato |
 |---|---|---|---|
-| 1 | **Zoom-to-fit iniziale** di tutta la mappa (e Reset che torna alla vista inquadrata) | Distribuzione cluster, Fase 4 (19/06) | ✅ questo ramo — vedi [sotto](#1-zoom-to-fit-iniziale) |
-| 2 | **Meno archi per lo stesso artista** (clique → anello con corde) | Clique d'artista, Fase 2 (12/07) | ✅ questo ramo, **solo disegno + forze**: i percorsi delle playlist non cambiano — vedi [sotto](#2-meno-archi-per-lo-stesso-artista) |
-| 3 | **Rendering canvas** al posto di SVG | Piano 01/07, Fase 5 | ✅ questo ramo, dopo la prova A/B sul telefono — vedi [sotto](#3-rendering-canvas) |
+| 1 | **Zoom-to-fit iniziale** di tutta la mappa (e Reset che torna alla vista inquadrata) | Distribuzione cluster, Fase 4 (19/06) | ✅ PR #107 — vedi [sotto](#1-zoom-to-fit-iniziale) |
+| 2 | **Meno archi per lo stesso artista** (clique → anello con corde) | Clique d'artista, Fase 2 (12/07) | ✅ PR #107, **solo disegno + forze**: i percorsi delle playlist non cambiano — vedi [sotto](#2-meno-archi-per-lo-stesso-artista) |
+| 3 | **Rendering canvas** al posto di SVG | Piano 01/07, Fase 5 | ✅ PR #107, dopo la prova A/B sul telefono — vedi [sotto](#3-rendering-canvas) |
 | 4 | Generazione playlist su **frontiera di candidati** (`buildFromSeed`/`buildPlaylist` da O(N×size) a O(vicini)) | Piano 01/07, Fase 5/D | ⏳ rinviato — riguarda l'algoritmo, non il disegno |
-| 5 | `charge` e scala delle ancore **dedicati al mobile** (la mappa su telefono è più larga che alta: con il fit resta spazio verticale libero) | Distribuzione cluster, Fase 4 (19/06) | 🟡 tarati solo raggi e collisione (PR #64–#69) |
+| 5 | **Mappa più grande su telefono**: cluster disposti in verticale, `charge` e scala delle ancore dedicati al mobile | Distribuzione cluster, Fase 4 (19/06) | ⏳ in attesa — la vista attuale va bene per ora (2026-10-20); dettagli [sotto](#mappa-più-grande-su-telefono-in-attesa) |
 | 6 | Attrazione d'autore via **distanza di link ×1.3** e `artistCohesion` ~0.05 | Distribuzione cluster, Fase 3 (19/06) | 🟡 risolto in gran parte da PR #89 con un altro approccio; i parametri proposti non sono mai stati applicati |
 | 7 | **Hook di stato** estratte da `MusicNetwork.jsx` (è risalito a ~1.100 righe) | Piano 01/07, Fase 3/A | 🟡 split fatto (PR #76) senza hook |
 | 8 | Bozza automatica di `char.json` | Piano 01/07, Fase 4/G | ⏳ rinviato — flusso dati, fuori dal perimetro grafico |
 | 9 | `metadata.history[]` al posto delle chiavi ad-hoc (`extended_at_35`, `renumber_note_extra1`, …) | Piano 01/07, Fase 4/F | ⏳ rinviato — flusso dati |
 | 10 | Ricalibrazione dei pesi dell'algoritmo; codifica visiva mood/bpm o filtro per mood | Proposta di inizio giugno (non scelta) | ⏳ nota solo da un riassunto: testo originale non recuperato |
+| 11 | **Hover a due tempi** su desktop: nome subito, vicini e legami dopo ~0,5 s fermi sul pallino | Richiesta 20/10 | ✅ PR in arrivo — vedi [sotto](#hover-a-due-tempi) |
 
-## Interventi di questo ramo
+## Possibili modifiche in attesa
+
+### Mappa più grande su telefono (in attesa)
+
+Su un telefono (390×844) lo schermo è alto e stretto, ma la mappa uscita
+dalla simulazione è più larga che alta: circa 806×1013 unità di grafo contro
+un'area libera di 370×660 px. Lo zoom-to-fit iniziale deve quindi regolarsi
+sulla larghezza (zoom ≈ 0,45): la mappa occupa ~363×458 px, restano ~200 px
+vuoti sopra e sotto e i pallini hanno raggio di soli 1,4–3,6 px a schermo.
+
+Proposta, **solo su mobile** e solo layout (dati e playlist invariati):
+
+- in `packGenreAnchors` (`src/graph/layout.js`) alzare il limite di
+  deformazione tra gli assi (`RATIO`, oggi 1,7) per i viewport verticali,
+  così i territori dei generi si dispongono in una colonna più alta;
+- valutare `charge` un po' meno negativa e ancore più forti su mobile, per
+  cluster più compatti.
+
+Obiettivo: forma della mappa vicina a quella dello schermo → zoom iniziale
+~0,6, pallini ~30% più grandi, sempre 0 nodi fuori schermo. Da misurare con
+prima/dopo e screenshot del telefono. Stato: l'utente ha confermato che la
+vista attuale sul telefono va bene per ora (2026-10-20).
+
+## Interventi recenti
 
 ### 1. Zoom-to-fit iniziale
 
@@ -104,6 +128,19 @@ Misure nell'app, stessa build prima (SVG) e dopo (canvas), in un browser
 
 Il lavoro JS per frame durante il layout scende da ~23 ms a ~1 ms: prima ogni
 tick riscriveva gli attributi di ~10.000 elementi SVG.
+
+### Hover a due tempi
+
+Su desktop, passando sopra un pallino si accendeva subito tutto il vicinato
+(nome, vicini con le etichette, legami) e il resto della mappa si spegneva:
+muovendo il mouse sulla mappa lampeggiava di continuo. Ora:
+
+- **subito**: bordo scuro ed etichetta del brano, più il riquadro con titolo e
+  artista; la mappa resta com'è (hover "leggero" in `canvasMap.js`);
+- **dopo 450 ms fermi** sul pallino (`HOVER_LINKS_DELAY` in
+  `MusicNetwork.jsx`): vicini, etichette e legami, con il resto che sfuma,
+  come prima;
+- il clic resta immediato; su touch l'hover non c'è.
 
 ## Storico: già fatto
 

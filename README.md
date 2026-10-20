@@ -66,6 +66,9 @@ npm run preview    # serves dist/ locally for a realistic check
   the whole map ends up inside the free area (clear of header, legend and the
   Playlist pill). Any pan, zoom or drag hands the camera back to you; **Reset**
   returns to the framed overview.
+- **Two-step hover** (desktop): the track's name shows at once; its
+  neighbours and edges light up only after the pointer rests ~0.5 s on it,
+  so sweeping the mouse across the map no longer flashes it.
 - **Thinned artist cliques**: an artist with more than 5 tracks is drawn (and
   pulled together) by a ring with chords instead of a complete clique — about
   1,200 fewer lines. It is a drawing decision only: playlists walk the full
