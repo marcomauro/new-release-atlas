@@ -102,7 +102,7 @@ _STOP = {
 }
 # differenze di VERSIONE: presenti da un solo lato -> penalità leggera
 _VERSION = {"live", "remix", "instrumental", "acoustic", "edit", "extended", "dub",
-            "rework", "reprise", "demo", "radio"}
+            "rework", "reprise", "demo", "radio", "session"}
 # contenuti che non sono la registrazione: presenti solo su YouTube -> penalità forte
 _BAD = {"cover", "karaoke", "reaction", "nightcore", "slowed", "sped", "8d",
         "tutorial", "lesson", "piano", "guitar", "drum", "bass", "loop", "hour",
