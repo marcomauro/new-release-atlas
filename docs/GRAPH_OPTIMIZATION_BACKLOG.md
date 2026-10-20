@@ -14,7 +14,7 @@ Legenda: ✅ fatto · 🟡 parziale · ⏳ aperto · 🔬 prototipo in valutazio
 |---|---|---|---|
 | 1 | **Zoom-to-fit iniziale** di tutta la mappa (e Reset che torna alla vista inquadrata) | Distribuzione cluster, Fase 4 (19/06) | ✅ questo ramo — vedi [sotto](#1-zoom-to-fit-iniziale) |
 | 2 | **Meno archi per lo stesso artista** (clique → anello con corde) | Clique d'artista, Fase 2 (12/07) | ✅ questo ramo, **solo disegno + forze**: i percorsi delle playlist non cambiano — vedi [sotto](#2-meno-archi-per-lo-stesso-artista) |
-| 3 | **Rendering canvas** al posto di SVG | Piano 01/07, Fase 5 | 🔬 prima una simulazione, poi si procede solo su conferma |
+| 3 | **Rendering canvas** al posto di SVG | Piano 01/07, Fase 5 | 🔬 simulazione A/B pronta (2026-10-20), si integra nell'app solo dopo conferma — vedi [sotto](#3-rendering-canvas-simulazione) |
 | 4 | Generazione playlist su **frontiera di candidati** (`buildFromSeed`/`buildPlaylist` da O(N×size) a O(vicini)) | Piano 01/07, Fase 5/D | ⏳ rinviato — riguarda l'algoritmo, non il disegno |
 | 5 | `charge` e scala delle ancore **dedicati al mobile** (la mappa su telefono è più larga che alta: con il fit resta spazio verticale libero) | Distribuzione cluster, Fase 4 (19/06) | 🟡 tarati solo raggi e collisione (PR #64–#69) |
 | 6 | Attrazione d'autore via **distanza di link ×1.3** e `artistCohesion` ~0.05 | Distribuzione cluster, Fase 3 (19/06) | 🟡 risolto in gran parte da PR #89 con un altro approccio; i parametri proposti non sono mai stati applicati |
@@ -71,6 +71,29 @@ o playlist in comune).
 
 La variante "in `build_graph.py`" (sparsificare i dati) è stata **scartata**:
 cambierebbe adiacenza e gradi, quindi i percorsi delle playlist.
+
+### 3. Rendering canvas: simulazione
+
+Prototipo A/B fuori dall'app: stessi dati, stesse forze, stesso disegno
+(compresi hover, selezione con etichette, drag e zoom-to-fit), con il motore
+SVG o canvas da un interruttore e due misure integrate (fps durante uno zoom
+animato e durante il layout). Il canvas disegna ogni linea separatamente, come
+SVG, perché le sovrapposizioni dei legami restino visibili.
+
+Prime misure in un browser **senza GPU** (container headless, quindi solo
+indicative):
+
+| | SVG | Canvas |
+|---|---|---|
+| Lavoro JS per frame durante il layout (desktop, ×1) | ~23 ms | ~1 ms |
+| fps durante il layout (desktop ×1 / ×3) | 13 / 3 | 19 / 6 |
+| fps durante lo zoom (desktop ×1 / ×3) | 13 / 4 | 15 / 5 |
+| fps durante lo zoom (telefono 390×844, DPR 2, ×1) | 34 | 6 |
+
+Il canvas toglie quasi tutto il lavoro dal thread principale; senza GPU però
+la rasterizzazione delle ~8.000 linee a ogni frame costa più di quella di SVG,
+soprattutto a DPR 2. Il verdetto va preso **su un dispositivo vero**, dove il
+canvas è accelerato dalla GPU.
 
 ## Storico: già fatto
 
