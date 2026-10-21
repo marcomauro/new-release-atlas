@@ -27,7 +27,10 @@ export function createCanvasMap(canvas, { nodes, links, radius }) {
   let dims = { w: 0, h: 0 }, dpr = 1;
   let t = { x: 0, y: 0, k: 1 };
   let view = null;          // structural state, see setView()
-  let hover = null;         // { index, nbr: Set<index> } — overrides the view
+  // { index, nbr: Set<index>, light } — overrides the view. A light hover
+  // only rings and names the node; a full one also lights its neighbours
+  // and edges and dims everything else.
+  let hover = null;
   let focusLinks = [];      // thinned-out artist edges of the focused node
   let route = [];           // node datums in listening order
   let showRoute = false;
@@ -47,23 +50,26 @@ export function createCanvasMap(canvas, { nodes, links, radius }) {
   };
 
   // ---- effective state (view + hover) ------------------------------------
+  const full = () => hover && !hover.light;
   const nodeAlpha = (i) => {
-    if (hover) return i === hover.index ? 1 : hover.nbr.has(i) ? 0.96 : 0.08;
+    if (hover && i === hover.index) return 1;
+    if (full()) return hover.nbr.has(i) ? 0.96 : 0.08;
     return view ? view.nodeAlpha[i] : 0.96;
   };
   const interactive = (i) => {
-    if (hover) return i === hover.index || hover.nbr.has(i);
+    if (full()) return i === hover.index || hover.nbr.has(i);
     return view ? view.interactive[i] === 1 : true;
   };
   const labelAlpha = (i) => {
-    if (hover) return i === hover.index ? 1 : hover.nbr.has(i) ? 0.8 : 0;
+    if (hover && i === hover.index) return 1;
+    if (full()) return hover.nbr.has(i) ? 0.8 : 0;
     return view ? view.labelAlpha[i] : 0;
   };
 
   function rebuild() {
     resolveIncident();
     // links grouped by (opacity, width): one state change per group
-    const hl = hover ? new Set(incident[hover.index]) : null;
+    const hl = full() ? new Set(incident[hover.index]) : null;
     const b = new Map();
     links.forEach((l, i) => {
       const a = hl ? (hl.has(i) ? 0.5 : 0.02) : view ? view.linkAlpha[i] : 0.1;
@@ -127,7 +133,7 @@ export function createCanvasMap(canvas, { nodes, links, radius }) {
 
     // playlist route: thick and bright at the first track, thin and faded
     // at the last, so its direction reads at a glance
-    if (showRoute && !hover && route.length > 1) {
+    if (showRoute && !full() && route.length > 1) {
       const denom = Math.max(1, route.length - 2);
       ctx.save();
       ctx.strokeStyle = ACCENT;
