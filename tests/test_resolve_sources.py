@@ -239,6 +239,34 @@ class TopicFallbackTest(unittest.TestCase):
         e = rs.resolve_one(eclissi, "KEY", fetch=self.fetch(calls), topic_cache=cache)
         self.assertEqual((e["status"], e["id"]), ("matched", "ECL"))
         self.assertEqual(sum("type=channel" in u for u in calls), 1)
+        # il secondo brano sta nel canale Topic già noto: nessuna ricerca
+        self.assertEqual(sum("/search?" in u for u in calls), 2)
+
+    def test_known_topic_channel_is_searched_first(self):
+        calls, cache = [], {"Koralle": ["UCother", "UCkoralle"]}
+        meter = rs.Meter(self.fetch(calls))
+        e = rs.resolve_one(self.TRACK, "KEY", fetch=meter, topic_cache=cache)
+        self.assertEqual((e["status"], e["id"]), ("matched", "ART"))
+        self.assertFalse([u for u in calls if "/search?" in u])
+        self.assertEqual(meter.units, 3 + 1)                      # 3 pagine di caricamenti + 1 videos
+
+    def test_known_topic_channel_without_the_track_falls_back_to_search(self):
+        calls = []
+        items = self.ITEMS + [video("OFF", "Koralle - Nope (Official Audio)", "Koralle", "PT1M40S")]
+        uploads = {"UUkoralle": [[("ECL", "Eclissi")]]}
+        f = fake_fetch(items, calls, search=["OFF"], channels=self.CHANNELS, uploads=uploads)
+        nope = {"id": "K3", "title": "Nope", "primary_artist": "Koralle", "duration_sec": 100}
+        e = rs.resolve_one(nope, "KEY", fetch=f, topic_cache={"Koralle": ["UCkoralle"]})
+        self.assertEqual((e["status"], e["id"]), ("matched", "OFF"))
+        self.assertEqual(sum("/search?" in u for u in calls), 1)  # solo la ricerca video
+        self.assertFalse([u for u in calls if "type=channel" in u])
+
+    def test_artist_known_without_topic_channel_skips_channel_search(self):
+        calls = []
+        e = rs.resolve_one(self.TRACK, "KEY", fetch=fake_fetch(self.ITEMS[:1], calls, search=["TEASER"]),
+                           topic_cache={"Koralle": []})
+        self.assertEqual(e["status"], "none")
+        self.assertEqual(sum("/search?" in u for u in calls), 1)
 
     def test_artist_without_topic_channel_is_cached_too(self):
         calls, cache = [], {}
