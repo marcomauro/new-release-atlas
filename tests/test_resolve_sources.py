@@ -13,7 +13,8 @@ import tempfile
 import unittest
 import urllib.error
 import urllib.parse
-from io import BytesIO
+from contextlib import redirect_stdout
+from io import BytesIO, StringIO
 from unittest import mock
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -260,6 +261,58 @@ class TopicFallbackTest(unittest.TestCase):
         self.assertEqual((e["status"], e["id"]), ("matched", "OFF"))
         self.assertEqual(sum("/search?" in u for u in calls), 1)  # solo la ricerca video
         self.assertFalse([u for u in calls if "type=channel" in u])
+
+    def test_prefer_topic_looks_for_the_channel_before_searching(self):
+        calls, cache = [], {}
+        e = rs.resolve_one(self.TRACK, "KEY", fetch=self.fetch(calls), topic_cache=cache,
+                           prefer_topic=True)
+        self.assertEqual((e["status"], e["id"]), ("matched", "ART"))
+        searches = [u for u in calls if "/search?" in u]
+        self.assertEqual(len(searches), 1)
+        self.assertIn("type=channel", searches[0])                # nessuna ricerca video
+        self.assertEqual(cache, {"Koralle": ["UCother", "UCkoralle"]})
+
+    def test_prefer_topic_without_topic_channel_falls_back_to_search(self):
+        calls, cache = [], {}
+        f = fake_fetch(self.ITEMS, calls, search=["ART"], channels=[("UCdie", "Die Koralle")])
+        e = rs.resolve_one(self.TRACK, "KEY", fetch=f, topic_cache=cache, prefer_topic=True)
+        self.assertEqual((e["status"], e["id"]), ("matched", "ART"))
+        self.assertEqual(sum("/search?" in u for u in calls), 2)  # canali, poi video
+        self.assertEqual(cache, {"Koralle": []})
+
+    def test_prefer_topic_is_ignored_for_artist_without_topic_channel(self):
+        calls = []
+        f = fake_fetch(self.ITEMS, calls, search=["ART"], channels=self.CHANNELS, uploads=self.UPLOADS)
+        rs.resolve_one(self.TRACK, "KEY", fetch=f, topic_cache={"Koralle": []}, prefer_topic=True)
+        self.assertEqual(sum("/search?" in u for u in calls), 1)
+        self.assertFalse([u for u in calls if "type=channel" in u])
+
+    def test_main_looks_up_topic_channel_first_only_for_artists_with_more_tracks(self):
+        def occ(tid, title, artist, dur):
+            return {"spotify_track_id": tid, "title": title, "primary_artist": artist, "duration_sec": dur}
+        archive = {"tracks_flat": [occ("K1", "Mind States", "Koralle", 174),
+                                   occ("B1", 'Winter in America - 12" Version', "Brian Jackson", 538),
+                                   occ("K2", "Eclissi", "Koralle", 169)]}
+        items = self.ITEMS + [video("GOOD", 'Winter in America (12" Version)', "Brian Jackson - Topic",
+                                    "PT8M58S", "Provided to YouTube by Strut")]
+        calls = []
+        f = fake_fetch(items, calls, search=["GOOD"], channels=self.CHANNELS, uploads=self.UPLOADS)
+        with tempfile.TemporaryDirectory() as d:
+            paths = {n: os.path.join(d, n) for n in ("a.json", "s.json", "o.json")}
+            with open(paths["a.json"], "w") as fh:
+                json.dump(archive, fh)
+            argv = ["resolve_sources.py", "--archive", paths["a.json"], "--sources", paths["s.json"],
+                    "--overrides", paths["o.json"], "--key", "KEY"]
+            with mock.patch.object(rs, "http_get_json", f), mock.patch.object(sys, "argv", argv), \
+                    redirect_stdout(StringIO()):
+                rs.main()
+            with open(paths["s.json"]) as fh:
+                out = json.load(fh)
+        self.assertEqual({k: v["id"] for k, v in out["youtube"].items()}, {"K1": "ART", "B1": "GOOD", "K2": "ECL"})
+        searches = [urllib.parse.parse_qs(urllib.parse.urlsplit(u).query) for u in calls if "/search?" in u]
+        # Koralle (2 brani): solo la ricerca del canale · Brian Jackson (1 brano): ricerca video · Eclissi: nessuna
+        self.assertEqual([(q.get("type", [""])[0], q["q"][0]) for q in searches],
+                         [("channel", "Koralle"), ("video", 'Brian Jackson Winter in America - 12" Version')])
 
     def test_artist_known_without_topic_channel_skips_channel_search(self):
         calls = []
