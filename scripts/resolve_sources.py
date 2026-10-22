@@ -25,7 +25,9 @@ le Art Track ("Artista - Topic", "Provided to YouTube by …"), cioè proprio
 l'audio ufficiale della release. Se la prima ricerca non dà un match sicuro,
 lo script cerca i canali "Artista - Topic" (100 unità, UNA volta per artista:
 gli id restano in data/sources.json -> "youtube_topic") e ne legge i
-caricamenti (1 unità ogni 50). In tutto ~75-90 brani al giorno.
+caricamenti (1 unità ogni 50). Per gli artisti con canali Topic già noti
+cerca prima lì: se il brano c'è, nessuna ricerca (~5 unità). Conta anche il
+numero di ricerche: YouTube ne concede ~80-90 al giorno (rateLimitExceeded).
 
 Punteggio (score): titolo 0.30 · artista 0.25 · durata 0.30 · canale ufficiale
 0.15 ("Topic" o canale dell'artista), meno penalità per versioni diverse e per
@@ -300,14 +302,24 @@ def topic_candidates(track, key, region=None, fetch=http_get_json, cache=None):
 def resolve_one(track, key, region=None, fetch=http_get_json, today=None, topic_cache=None):
     """Esito per un brano: {id?, status, score?, title?, channel?, alt?, checked}.
 
-    Senza un match sicuro dalla ricerca, prova i canali Topic dell'artista
-    (topic_cache: {artista: [channelId]}, condivisa fra i brani)."""
-    cands = youtube_candidates(track, key, region, fetch)
-    ranked = sorted(((score(track, c), c) for c in cands), key=lambda x: -x[0])
-    if not ranked or ranked[0][0] < MATCH_MIN:
+    topic_cache: {artista: [channelId]}, condivisa fra i brani. Se i canali
+    Topic dell'artista sono già noti, cerca PRIMA lì: un match sicuro evita
+    ogni search.list (100 unità, e le ricerche al giorno sono limitate).
+    Altrimenti cerca, e senza un match sicuro prova i canali Topic."""
+    cands = []
+
+    def add(new):
         seen = {c["id"] for c in cands}
-        more = [c for c in topic_candidates(track, key, region, fetch, topic_cache) if c["id"] not in seen]
-        ranked = sorted(ranked + [(score(track, c), c) for c in more], key=lambda x: -x[0])
+        cands.extend(c for c in new if c["id"] not in seen)
+        return max((score(track, c) for c in cands), default=0.0)
+
+    known = bool(topic_cache and topic_cache.get(track.get("primary_artist", "")))
+    best_s = add(topic_candidates(track, key, region, fetch, topic_cache)) if known else 0.0
+    if best_s < MATCH_MIN:
+        best_s = add(youtube_candidates(track, key, region, fetch))
+        if not known and best_s < MATCH_MIN:
+            add(topic_candidates(track, key, region, fetch, topic_cache))
+    ranked = sorted(((score(track, c), c) for c in cands), key=lambda x: -x[0])
     entry = {"checked": today or date.today().isoformat()}
     if not ranked or ranked[0][0] < REVIEW_MIN:
         entry["status"] = "none"
@@ -430,7 +442,8 @@ def main():
     if args.limit is not None:
         queue = queue[:args.limit]
     print(f"{len(queue)} brani da cercare · budget {args.budget} unità "
-          f"(~{COST_PER_TRACK} a brano, ~200 con la seconda ricerca Topic)")
+          f"(~{COST_PER_TRACK} a brano, ~200 con la seconda ricerca Topic, "
+          f"~5 se il brano è nel canale Topic già noto dell'artista)")
 
     meter = Meter(http_get_json)
     done = 0
