@@ -26,8 +26,11 @@ l'audio ufficiale della release. Se la prima ricerca non dà un match sicuro,
 lo script cerca i canali "Artista - Topic" (100 unità, UNA volta per artista:
 gli id restano in data/sources.json -> "youtube_topic") e ne legge i
 caricamenti (1 unità ogni 50). Per gli artisti con canali Topic già noti
-cerca prima lì: se il brano c'è, nessuna ricerca (~5 unità). Conta anche il
-numero di ricerche: YouTube ne concede ~80-90 al giorno (rateLimitExceeded).
+cerca prima lì: se il brano c'è, nessuna ricerca (~5 unità); per gli artisti
+nuovi con almeno 2 brani da cercare cerca SUBITO i canali Topic (1 ricerca
+invece della ricerca video), così gli altri loro brani non ne useranno.
+Il vincolo vero è il numero di ricerche: "Search Queries per day" = 100
+(oltre: rateLimitExceeded), mentre la quota generale resta quasi intatta.
 
 Punteggio (score): titolo 0.30 · artista 0.25 · durata 0.30 · canale ufficiale
 0.15 ("Topic" o canale dell'artista), meno penalità per versioni diverse e per
@@ -59,6 +62,7 @@ import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
+from collections import Counter
 from datetime import date
 
 ARCHIVE = "data/spotify_archive_enriched.json"
@@ -299,13 +303,17 @@ def topic_candidates(track, key, region=None, fetch=http_get_json, cache=None):
     return video_details([vid for _, vid in hits], key, region, fetch)
 
 
-def resolve_one(track, key, region=None, fetch=http_get_json, today=None, topic_cache=None):
+def resolve_one(track, key, region=None, fetch=http_get_json, today=None, topic_cache=None,
+                prefer_topic=False):
     """Esito per un brano: {id?, status, score?, title?, channel?, alt?, checked}.
 
     topic_cache: {artista: [channelId]}, condivisa fra i brani. Se i canali
     Topic dell'artista sono già noti, cerca PRIMA lì: un match sicuro evita
     ogni search.list (100 unità, e le ricerche al giorno sono limitate).
-    Altrimenti cerca, e senza un match sicuro prova i canali Topic."""
+    Altrimenti cerca, e senza un match sicuro prova i canali Topic.
+    prefer_topic: l'artista ha altri brani da cercare -> anche se i suoi canali
+    non sono ancora noti, cercali SUBITO (1 ricerca): i brani successivi
+    potranno poi fare a meno della ricerca."""
     cands = []
 
     def add(new):
@@ -313,11 +321,13 @@ def resolve_one(track, key, region=None, fetch=http_get_json, today=None, topic_
         cands.extend(c for c in new if c["id"] not in seen)
         return max((score(track, c) for c in cands), default=0.0)
 
-    known = bool(topic_cache and topic_cache.get(track.get("primary_artist", "")))
-    best_s = add(topic_candidates(track, key, region, fetch, topic_cache)) if known else 0.0
+    artist = track.get("primary_artist", "")
+    known = bool(topic_cache and topic_cache.get(artist))
+    topic_first = known or (prefer_topic and artist not in (topic_cache or {}))
+    best_s = add(topic_candidates(track, key, region, fetch, topic_cache)) if topic_first else 0.0
     if best_s < MATCH_MIN:
         best_s = add(youtube_candidates(track, key, region, fetch))
-        if not known and best_s < MATCH_MIN:
+        if not topic_first and best_s < MATCH_MIN:
             add(topic_candidates(track, key, region, fetch, topic_cache))
     ranked = sorted(((score(track, c), c) for c in cands), key=lambda x: -x[0])
     entry = {"checked": today or date.today().isoformat()}
@@ -439,11 +449,15 @@ def main():
         sys.exit("ERRORE: serve una chiave YouTube Data API v3 (--key o $YOUTUBE_API_KEY).")
 
     queue = todo(tracks, cache, overrides, args.retry_none, args.refresh, args.retry_review)
+    # brani ancora da cercare per artista (anche oltre il limite o il budget di oggi)
+    left = Counter(t["primary_artist"] for t in queue)
     if args.limit is not None:
         queue = queue[:args.limit]
     print(f"{len(queue)} brani da cercare · budget {args.budget} unità "
           f"(~{COST_PER_TRACK} a brano, ~200 con la seconda ricerca Topic, "
           f"~5 se il brano è nel canale Topic già noto dell'artista)")
+    print(f"artisti con più brani da cercare: {sum(1 for n in left.values() if n >= 2)} "
+          f"(per loro si cerca subito il canale Topic)")
 
     meter = Meter(http_get_json)
     done = 0
@@ -454,11 +468,13 @@ def main():
                 print(f"\nBudget raggiunto ({meter.units} unità): rilancia domani.")
                 break
             try:
-                entry = resolve_one(t, args.key, args.region, fetch=meter, topic_cache=topic_cache)
+                entry = resolve_one(t, args.key, args.region, fetch=meter, topic_cache=topic_cache,
+                                    prefer_topic=left[t["primary_artist"]] >= 2)
             except RuntimeError as e:
                 print(f"  SKIP  {t['id']}  {e}")
                 continue
             cache[t["id"]] = entry
+            left[t["primary_artist"]] -= 1
             done += 1
             mark = {"matched": "✓", "review": "?", "none": "·"}[entry["status"]]
             print(f"  {mark} {entry.get('score', 0):.2f}  {t['primary_artist']} — {t['title']}")
