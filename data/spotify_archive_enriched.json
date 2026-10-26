@@ -28,7 +28,7 @@
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
   "total_tracks_with_duplicates": 1079,
-  "unique_tracks": 1056,
+  "unique_tracks": 1055,
   "unique_artists": 967,
   "top_artists": [
    [
@@ -96,10 +96,6 @@
     8
    ],
    [
-    "Bonobo",
-    8
-   ],
-   [
     "Run Logan Run",
     7
    ],
@@ -109,6 +105,10 @@
    ],
    [
     "Beck",
+    7
+   ],
+   [
+    "Nicholas Payton",
     7
    ]
   ],
@@ -306,6 +306,14 @@
     ]
    },
    {
+    "spotify_track_id": "6jJTpzMquQLVuUkM2vVEIF",
+    "title": "Always on Your Side",
+    "playlists": [
+     43,
+     49
+    ]
+   },
+   {
     "spotify_track_id": "72fSEYOXmccGvk5GjiNtKX",
     "title": "tell me what you want",
     "playlists": [
@@ -424,9 +432,16 @@
     "title": "Let the Music Find You",
     "filled_from_merged": [],
     "at": "2026-09-13T21:28:51Z"
+   },
+   {
+    "kept": "6jJTpzMquQLVuUkM2vVEIF",
+    "merged": "7ub5dcQHBLCQHW3OZRAf9q",
+    "title": "Always on Your Side",
+    "filled_from_merged": [],
+    "at": "2026-10-26T22:27:07Z"
    }
   ],
-  "deduped_at": "2026-09-13T21:28:51Z",
+  "deduped_at": "2026-10-26T22:27:07Z",
   "dedup_note": "dedupe_tracks.py: unificati 1 id Spotify della stessa registrazione (riedizioni); occorrenze preservate"
  },
  "playlists": [
@@ -42390,9 +42405,9 @@
      "primary_artist": "Bonobo",
      "duration": "3:29",
      "duration_sec": 209,
-     "spotify_track_id": "7ub5dcQHBLCQHW3OZRAf9q",
-     "spotify_uri": "spotify:track:7ub5dcQHBLCQHW3OZRAf9q",
-     "spotify_url": "https://open.spotify.com/track/7ub5dcQHBLCQHW3OZRAf9q",
+     "spotify_track_id": "6jJTpzMquQLVuUkM2vVEIF",
+     "spotify_uri": "spotify:track:6jJTpzMquQLVuUkM2vVEIF",
+     "spotify_url": "https://open.spotify.com/track/6jJTpzMquQLVuUkM2vVEIF",
      "genres": [
       "electronic",
       "neo-soul"
@@ -42401,22 +42416,22 @@
      "subgenres": [
       "electronic",
       "downtempo",
-      "electronic soul",
-      "organic house"
+      "organic house",
+      "trip-hop"
      ],
      "mood": [
-      "warm",
-      "hopeful",
-      "tender"
+      "lush",
+      "melancholic",
+      "hypnotic"
      ],
      "mood_parameters": {
       "energy": 0.55,
-      "valence": 0.6,
-      "danceability": 0.65,
+      "valence": 0.45,
+      "danceability": 0.6,
       "acousticness": 0.3,
-      "instrumentalness": 0.15
+      "instrumentalness": 0.2
      },
-     "bpm": 118,
+     "bpm": 110,
      "bpm_source": "estimated"
     }
    ]
@@ -87103,9 +87118,9 @@
    "primary_artist": "Bonobo",
    "duration": "3:29",
    "duration_sec": 209,
-   "spotify_track_id": "7ub5dcQHBLCQHW3OZRAf9q",
-   "spotify_uri": "spotify:track:7ub5dcQHBLCQHW3OZRAf9q",
-   "spotify_url": "https://open.spotify.com/track/7ub5dcQHBLCQHW3OZRAf9q",
+   "spotify_track_id": "6jJTpzMquQLVuUkM2vVEIF",
+   "spotify_uri": "spotify:track:6jJTpzMquQLVuUkM2vVEIF",
+   "spotify_url": "https://open.spotify.com/track/6jJTpzMquQLVuUkM2vVEIF",
    "genres": [
     "electronic",
     "neo-soul"
@@ -87114,22 +87129,22 @@
    "subgenres": [
     "electronic",
     "downtempo",
-    "electronic soul",
-    "organic house"
+    "organic house",
+    "trip-hop"
    ],
    "mood": [
-    "warm",
-    "hopeful",
-    "tender"
+    "lush",
+    "melancholic",
+    "hypnotic"
    ],
    "mood_parameters": {
     "energy": 0.55,
-    "valence": 0.6,
-    "danceability": 0.65,
+    "valence": 0.45,
+    "danceability": 0.6,
     "acousticness": 0.3,
-    "instrumentalness": 0.15
+    "instrumentalness": 0.2
    },
-   "bpm": 118,
+   "bpm": 110,
    "bpm_source": "estimated"
   }
  ]
