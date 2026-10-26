@@ -4,7 +4,7 @@
   "source_account": "Spotify",
   "generated_at": "2026-05-23T12:27:11.266084",
   "description": "Archivio strutturato delle 'New Release Playlist' di Marco Mauro, da consultare via AI per generare playlist tematiche o effettuare analisi.",
-  "playlist_range": "#1 - #48 (48 New Release Playlist consecutive) + 1 extra (#101)",
+  "playlist_range": "#1 - #49 (49 New Release Playlist consecutive) + 1 extra (#101)",
   "note_on_gaps": "Nessuno: il dataset copre integralmente le New Release Playlist da #12 a #36. Le #1-#11 e #13-#17 si chiamano 'New Release Friday #N', dalla #12 e #18 in poi 'New Release Playlist #N'. La '2025 Fav Album Playlist' e' una compilation tematica (extra), spostata fuori dalla sequenza NRP al playlist_number 101.",
   "schema_per_track": {
    "playlist_number": "int (numero progressivo della playlist di origine)",
@@ -27,9 +27,9 @@
    "bpm": "int | null (null = non verificabile, mai inventato)",
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
-  "total_tracks_with_duplicates": 1063,
-  "unique_tracks": 1040,
-  "unique_artists": 956,
+  "total_tracks_with_duplicates": 1079,
+  "unique_tracks": 1056,
+  "unique_artists": 967,
   "top_artists": [
    [
     "Brian Jackson",
@@ -96,6 +96,10 @@
     8
    ],
    [
+    "Bonobo",
+    8
+   ],
+   [
     "Run Logan Run",
     7
    ],
@@ -105,10 +109,6 @@
    ],
    [
     "Beck",
-    7
-   ],
-   [
-    "Nicholas Payton",
     7
    ]
   ],
@@ -166,8 +166,8 @@
   "enrichment_note": "Caratterizzazione musicale esperta aggiunta da Claude (giugno 2026): subgenres granulari, mood, mood_parameters (energy/valence/danceability/acousticness/instrumentalness, scala 0-1, stime qualitative da esperto), bpm (int o null) e bpm_source. bpm_source='verified' = confermato da fonti web DJ-pool (Beatsource, BPM Supreme, SongBPM, Tunebat); 'estimated' = stima fondata sul tempo tipico del brano/genere (presente solo dove molto affidabile, es. house 120-126); bpm=null dove non verificabile, mai inventato. I campi 'genres' e 'genre_primary' preesistenti (tassonomia a 12 macro-generi della pipeline new-release-atlas) sono INTOCCATI e restano la classificazione di riferimento.",
   "extended_at": "2026-06-11T09:12:01.887032",
   "extension_note": "Playlist #33 e #34 aggiunte a giugno 2026 con caratterizzazione esperta completa. Per queste 2 playlist anche genres/genre_primary sono assegnati dall'AI (coerenti con la tassonomia a 12 macro-generi della pipeline). Nota: 'Fainted Light' (Indra Lesmana) in #34 è un duplicato cross-playlist di #32 (stesso track ID).",
-  "merged_at": "2026-10-26T22:10:34Z",
-  "merge_note": "add_playlist.py: aggiunte ['#48'] (18 occorrenze, 18 brani nuovi)",
+  "merged_at": "2026-10-26T22:25:58Z",
+  "merge_note": "add_playlist.py: aggiunte ['#49'] (16 occorrenze, 16 brani nuovi)",
   "cross_playlist_duplicates": [
    {
     "spotify_track_id": "0ACrjHByr2GzPVTxKbDBix",
@@ -41782,6 +41782,641 @@
       "instrumentalness": 0.05
      },
      "bpm": 120,
+     "bpm_source": "estimated"
+    }
+   ]
+  },
+  {
+   "playlist_number": 49,
+   "playlist_name": "New Release Playlist #49",
+   "playlist_id": "6CrP73pUXZrea3St6qVafL",
+   "spotify_url": "https://open.spotify.com/playlist/6CrP73pUXZrea3St6qVafL",
+   "description": "",
+   "date": null,
+   "track_count": 16,
+   "tracks": [
+    {
+     "position_in_playlist": 1,
+     "title": "Setting Sun",
+     "artists": [
+      "Dragonflies",
+      "Dhani Harrison",
+      "Nigel Godrich"
+     ],
+     "primary_artist": "Dragonflies",
+     "duration": "3:49",
+     "duration_sec": 229,
+     "spotify_track_id": "52D39pYs2ZkLCJabq8zJhe",
+     "spotify_uri": "spotify:track:52D39pYs2ZkLCJabq8zJhe",
+     "spotify_url": "https://open.spotify.com/track/52D39pYs2ZkLCJabq8zJhe",
+     "genres": [
+      "alt",
+      "electronic"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "alternative",
+      "psychedelic rock",
+      "art rock",
+      "dream pop"
+     ],
+     "mood": [
+      "dreamy",
+      "melancholic",
+      "hazy"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.4,
+      "danceability": 0.45,
+      "acousticness": 0.4,
+      "instrumentalness": 0.3
+     },
+     "bpm": 98,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 2,
+     "title": "DJB",
+     "artists": [
+      "Seun Kuti",
+      "Egypt 80"
+     ],
+     "primary_artist": "Seun Kuti",
+     "duration": "7:15",
+     "duration_sec": 435,
+     "spotify_track_id": "6ujv65CBBV0flkunZxbsnP",
+     "spotify_uri": "spotify:track:6ujv65CBBV0flkunZxbsnP",
+     "spotify_url": "https://open.spotify.com/track/6ujv65CBBV0flkunZxbsnP",
+     "genres": [
+      "world",
+      "soul-funk"
+     ],
+     "genre_primary": "world",
+     "subgenres": [
+      "afrobeat",
+      "afro-funk",
+      "political afrobeat"
+     ],
+     "mood": [
+      "fiery",
+      "defiant",
+      "hypnotic"
+     ],
+     "mood_parameters": {
+      "energy": 0.85,
+      "valence": 0.6,
+      "danceability": 0.8,
+      "acousticness": 0.5,
+      "instrumentalness": 0.35
+     },
+     "bpm": 112,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 3,
+     "title": "Change",
+     "artists": [
+      "Romare"
+     ],
+     "primary_artist": "Romare",
+     "duration": "5:31",
+     "duration_sec": 331,
+     "spotify_track_id": "1FyAWkI6CF713552oKdvxb",
+     "spotify_uri": "spotify:track:1FyAWkI6CF713552oKdvxb",
+     "spotify_url": "https://open.spotify.com/track/1FyAWkI6CF713552oKdvxb",
+     "genres": [
+      "electronic",
+      "soulful-house"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "deep house",
+      "sample collage",
+      "afro house"
+     ],
+     "mood": [
+      "warm",
+      "hypnotic",
+      "soulful"
+     ],
+     "mood_parameters": {
+      "energy": 0.65,
+      "valence": 0.55,
+      "danceability": 0.75,
+      "acousticness": 0.25,
+      "instrumentalness": 0.65
+     },
+     "bpm": 120,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 4,
+     "title": "A Good Day",
+     "artists": [
+      "Anderson .Paak",
+      "Cordae"
+     ],
+     "primary_artist": "Anderson .Paak",
+     "duration": "2:31",
+     "duration_sec": 151,
+     "spotify_track_id": "0KDgGJf3DYJNzXDIlmRtxJ",
+     "spotify_uri": "spotify:track:0KDgGJf3DYJNzXDIlmRtxJ",
+     "spotify_url": "https://open.spotify.com/track/0KDgGJf3DYJNzXDIlmRtxJ",
+     "genres": [
+      "hip-hop",
+      "soul-funk"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "soul rap",
+      "boom bap",
+      "funk rap"
+     ],
+     "mood": [
+      "upbeat",
+      "optimistic",
+      "laid-back"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.8,
+      "danceability": 0.75,
+      "acousticness": 0.3,
+      "instrumentalness": 0.0
+     },
+     "bpm": 95,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 5,
+     "title": "Compass (with Robert Glasper)",
+     "artists": [
+      "Daley",
+      "Robert Glasper"
+     ],
+     "primary_artist": "Daley",
+     "duration": "4:20",
+     "duration_sec": 260,
+     "spotify_track_id": "47AVP0yIzlKd2rkP9ZcsH1",
+     "spotify_uri": "spotify:track:47AVP0yIzlKd2rkP9ZcsH1",
+     "spotify_url": "https://open.spotify.com/track/47AVP0yIzlKd2rkP9ZcsH1",
+     "genres": [
+      "neo-soul",
+      "jazz"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "neo-soul",
+      "contemporary r&b",
+      "jazz-soul"
+     ],
+     "mood": [
+      "romantic",
+      "smooth",
+      "yearning"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.5,
+      "danceability": 0.55,
+      "acousticness": 0.45,
+      "instrumentalness": 0.05
+     },
+     "bpm": 82,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 6,
+     "title": "Who The Cap Fit - Salaam Remi Remix",
+     "artists": [
+      "Bob Marley & The Wailers",
+      "Salaam Remi"
+     ],
+     "primary_artist": "Bob Marley & The Wailers",
+     "duration": "4:38",
+     "duration_sec": 278,
+     "spotify_track_id": "50oa8fpOHwZQ3usLSh3DUO",
+     "spotify_uri": "spotify:track:50oa8fpOHwZQ3usLSh3DUO",
+     "spotify_url": "https://open.spotify.com/track/50oa8fpOHwZQ3usLSh3DUO",
+     "genres": [
+      "world",
+      "hip-hop"
+     ],
+     "genre_primary": "world",
+     "subgenres": [
+      "reggae",
+      "roots reggae",
+      "reggae remix",
+      "hip-hop production"
+     ],
+     "mood": [
+      "defiant",
+      "groovy",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.6,
+      "danceability": 0.75,
+      "acousticness": 0.4,
+      "instrumentalness": 0.05
+     },
+     "bpm": 76,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 7,
+     "title": "With God on Our Side (with Bill Callahan, Chris Thile)",
+     "artists": [
+      "Meshell Ndegeocello",
+      "Bill Callahan",
+      "Chris Thile"
+     ],
+     "primary_artist": "Meshell Ndegeocello",
+     "duration": "5:38",
+     "duration_sec": 338,
+     "spotify_track_id": "2myCD20NCsbiVhGs9hyRhb",
+     "spotify_uri": "spotify:track:2myCD20NCsbiVhGs9hyRhb",
+     "spotify_url": "https://open.spotify.com/track/2myCD20NCsbiVhGs9hyRhb",
+     "genres": [
+      "alt",
+      "neo-soul"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "folk",
+      "americana",
+      "protest song"
+     ],
+     "mood": [
+      "solemn",
+      "contemplative",
+      "sober"
+     ],
+     "mood_parameters": {
+      "energy": 0.3,
+      "valence": 0.3,
+      "danceability": 0.3,
+      "acousticness": 0.8,
+      "instrumentalness": 0.05
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 8,
+     "title": "Conversation 1",
+     "artists": [
+      "Alva Noto",
+      "Ryuichi Sakamoto"
+     ],
+     "primary_artist": "Alva Noto",
+     "duration": "6:50",
+     "duration_sec": 410,
+     "spotify_track_id": "0bMixpUhrbM5gLI1QBwBDm",
+     "spotify_uri": "spotify:track:0bMixpUhrbM5gLI1QBwBDm",
+     "spotify_url": "https://open.spotify.com/track/0bMixpUhrbM5gLI1QBwBDm",
+     "genres": [
+      "electronic",
+      "classical"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "ambient",
+      "minimalism",
+      "glitch",
+      "ambient piano"
+     ],
+     "mood": [
+      "meditative",
+      "austere",
+      "ethereal"
+     ],
+     "mood_parameters": {
+      "energy": 0.1,
+      "valence": 0.3,
+      "danceability": 0.1,
+      "acousticness": 0.7,
+      "instrumentalness": 0.98
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 9,
+     "title": "Cool You Down - feat. Sia",
+     "artists": [
+      "Chaka Khan",
+      "Sia"
+     ],
+     "primary_artist": "Chaka Khan",
+     "duration": "3:30",
+     "duration_sec": 210,
+     "spotify_track_id": "1zXyCObXWABxy8cBY0NQvV",
+     "spotify_uri": "spotify:track:1zXyCObXWABxy8cBY0NQvV",
+     "spotify_url": "https://open.spotify.com/track/1zXyCObXWABxy8cBY0NQvV",
+     "genres": [
+      "soul-funk",
+      "neo-soul"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "r&b",
+      "funk-pop",
+      "contemporary r&b",
+      "disco-soul"
+     ],
+     "mood": [
+      "sassy",
+      "uplifting",
+      "sensual"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.7,
+      "danceability": 0.7,
+      "acousticness": 0.15,
+      "instrumentalness": 0.0
+     },
+     "bpm": 110,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 10,
+     "title": "RHYNO (from GTAVI: The Album)",
+     "artists": [
+      "Travis Scott",
+      "Grand Theft Auto VI"
+     ],
+     "primary_artist": "Travis Scott",
+     "duration": "3:00",
+     "duration_sec": 180,
+     "spotify_track_id": "2QrLrUqdSg5njDVEqq5QFp",
+     "spotify_uri": "spotify:track:2QrLrUqdSg5njDVEqq5QFp",
+     "spotify_url": "https://open.spotify.com/track/2QrLrUqdSg5njDVEqq5QFp",
+     "genres": [
+      "hip-hop"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "trap",
+      "psychedelic trap",
+      "rage"
+     ],
+     "mood": [
+      "aggressive",
+      "dark",
+      "swaggering"
+     ],
+     "mood_parameters": {
+      "energy": 0.8,
+      "valence": 0.3,
+      "danceability": 0.7,
+      "acousticness": 0.05,
+      "instrumentalness": 0.0
+     },
+     "bpm": 145,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 11,
+     "title": "Breath Meditation",
+     "artists": [
+      "Benjamin Adamson",
+      "Kamasi Washington",
+      "Miles Shrewsbery"
+     ],
+     "primary_artist": "Benjamin Adamson",
+     "duration": "13:24",
+     "duration_sec": 804,
+     "spotify_track_id": "6bYTPxDT8DT9zVfccG0B2d",
+     "spotify_uri": "spotify:track:6bYTPxDT8DT9zVfccG0B2d",
+     "spotify_url": "https://open.spotify.com/track/6bYTPxDT8DT9zVfccG0B2d",
+     "genres": [
+      "jazz",
+      "downtempo"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "spiritual jazz",
+      "ambient jazz",
+      "meditative jazz"
+     ],
+     "mood": [
+      "meditative",
+      "expansive",
+      "serene"
+     ],
+     "mood_parameters": {
+      "energy": 0.25,
+      "valence": 0.45,
+      "danceability": 0.2,
+      "acousticness": 0.7,
+      "instrumentalness": 0.95
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 12,
+     "title": "Joined (with Butcher Brown)",
+     "artists": [
+      "Marie Dahlstrom",
+      "Butcher Brown"
+     ],
+     "primary_artist": "Marie Dahlstrom",
+     "duration": "3:20",
+     "duration_sec": 200,
+     "spotify_track_id": "0oqEdpC6d2GOxeADSHGnH4",
+     "spotify_uri": "spotify:track:0oqEdpC6d2GOxeADSHGnH4",
+     "spotify_url": "https://open.spotify.com/track/0oqEdpC6d2GOxeADSHGnH4",
+     "genres": [
+      "neo-soul",
+      "soul-funk"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "neo-soul",
+      "jazz-funk",
+      "alt-r&b"
+     ],
+     "mood": [
+      "warm",
+      "intimate",
+      "groovy"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.6,
+      "danceability": 0.65,
+      "acousticness": 0.45,
+      "instrumentalness": 0.1
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 13,
+     "title": "The Slot",
+     "artists": [
+      "Andrew Toombs",
+      "Makaya McCraven",
+      "Junius Paul",
+      "Marquis Hill"
+     ],
+     "primary_artist": "Andrew Toombs",
+     "duration": "3:38",
+     "duration_sec": 218,
+     "spotify_track_id": "7sYPUVcG1Cap1II0S7RolH",
+     "spotify_uri": "spotify:track:7sYPUVcG1Cap1II0S7RolH",
+     "spotify_url": "https://open.spotify.com/track/7sYPUVcG1Cap1II0S7RolH",
+     "genres": [
+      "jazz"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "chicago jazz",
+      "groove jazz",
+      "post-bop"
+     ],
+     "mood": [
+      "groovy",
+      "loose",
+      "cool"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.55,
+      "danceability": 0.6,
+      "acousticness": 0.6,
+      "instrumentalness": 0.9
+     },
+     "bpm": 100,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 14,
+     "title": "Sonder (feat. Takuya Kuroda & Eden Bareket)",
+     "artists": [
+      "Chris McCarthy",
+      "Takuya Kuroda",
+      "Eden Bareket"
+     ],
+     "primary_artist": "Chris McCarthy",
+     "duration": "4:04",
+     "duration_sec": 244,
+     "spotify_track_id": "0e3XJi8ZxHRvoWEMSwhmzs",
+     "spotify_uri": "spotify:track:0e3XJi8ZxHRvoWEMSwhmzs",
+     "spotify_url": "https://open.spotify.com/track/0e3XJi8ZxHRvoWEMSwhmzs",
+     "genres": [
+      "jazz"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "contemporary jazz",
+      "modern jazz",
+      "post-bop"
+     ],
+     "mood": [
+      "lyrical",
+      "reflective",
+      "flowing"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.5,
+      "danceability": 0.45,
+      "acousticness": 0.7,
+      "instrumentalness": 0.9
+     },
+     "bpm": 104,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 15,
+     "title": "SLOWDIVE: SHABAKA VERSION",
+     "artists": [
+      "Turnstile",
+      "Shabaka"
+     ],
+     "primary_artist": "Turnstile",
+     "duration": "3:50",
+     "duration_sec": 230,
+     "spotify_track_id": "2BirJGs99wTecyKwEwkQff",
+     "spotify_uri": "spotify:track:2BirJGs99wTecyKwEwkQff",
+     "spotify_url": "https://open.spotify.com/track/2BirJGs99wTecyKwEwkQff",
+     "genres": [
+      "alt",
+      "jazz"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "alternative",
+      "post-hardcore",
+      "dream pop",
+      "spiritual jazz"
+     ],
+     "mood": [
+      "ethereal",
+      "yearning",
+      "expansive"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.45,
+      "danceability": 0.4,
+      "acousticness": 0.4,
+      "instrumentalness": 0.4
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 16,
+     "title": "Always on Your Side",
+     "artists": [
+      "Bonobo",
+      "Joy Crookes"
+     ],
+     "primary_artist": "Bonobo",
+     "duration": "3:29",
+     "duration_sec": 209,
+     "spotify_track_id": "7ub5dcQHBLCQHW3OZRAf9q",
+     "spotify_uri": "spotify:track:7ub5dcQHBLCQHW3OZRAf9q",
+     "spotify_url": "https://open.spotify.com/track/7ub5dcQHBLCQHW3OZRAf9q",
+     "genres": [
+      "electronic",
+      "neo-soul"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "downtempo",
+      "electronic soul",
+      "organic house"
+     ],
+     "mood": [
+      "warm",
+      "hopeful",
+      "tender"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.6,
+      "danceability": 0.65,
+      "acousticness": 0.3,
+      "instrumentalness": 0.15
+     },
+     "bpm": 118,
      "bpm_source": "estimated"
     }
    ]
@@ -85823,6 +86458,678 @@
     "instrumentalness": 0.05
    },
    "bpm": 120,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 49,
+   "playlist_name": "New Release Playlist #49",
+   "playlist_id": "6CrP73pUXZrea3St6qVafL",
+   "position_in_playlist": 1,
+   "title": "Setting Sun",
+   "artists": [
+    "Dragonflies",
+    "Dhani Harrison",
+    "Nigel Godrich"
+   ],
+   "primary_artist": "Dragonflies",
+   "duration": "3:49",
+   "duration_sec": 229,
+   "spotify_track_id": "52D39pYs2ZkLCJabq8zJhe",
+   "spotify_uri": "spotify:track:52D39pYs2ZkLCJabq8zJhe",
+   "spotify_url": "https://open.spotify.com/track/52D39pYs2ZkLCJabq8zJhe",
+   "genres": [
+    "alt",
+    "electronic"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "alternative",
+    "psychedelic rock",
+    "art rock",
+    "dream pop"
+   ],
+   "mood": [
+    "dreamy",
+    "melancholic",
+    "hazy"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.4,
+    "danceability": 0.45,
+    "acousticness": 0.4,
+    "instrumentalness": 0.3
+   },
+   "bpm": 98,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 49,
+   "playlist_name": "New Release Playlist #49",
+   "playlist_id": "6CrP73pUXZrea3St6qVafL",
+   "position_in_playlist": 2,
+   "title": "DJB",
+   "artists": [
+    "Seun Kuti",
+    "Egypt 80"
+   ],
+   "primary_artist": "Seun Kuti",
+   "duration": "7:15",
+   "duration_sec": 435,
+   "spotify_track_id": "6ujv65CBBV0flkunZxbsnP",
+   "spotify_uri": "spotify:track:6ujv65CBBV0flkunZxbsnP",
+   "spotify_url": "https://open.spotify.com/track/6ujv65CBBV0flkunZxbsnP",
+   "genres": [
+    "world",
+    "soul-funk"
+   ],
+   "genre_primary": "world",
+   "subgenres": [
+    "afrobeat",
+    "afro-funk",
+    "political afrobeat"
+   ],
+   "mood": [
+    "fiery",
+    "defiant",
+    "hypnotic"
+   ],
+   "mood_parameters": {
+    "energy": 0.85,
+    "valence": 0.6,
+    "danceability": 0.8,
+    "acousticness": 0.5,
+    "instrumentalness": 0.35
+   },
+   "bpm": 112,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 49,
+   "playlist_name": "New Release Playlist #49",
+   "playlist_id": "6CrP73pUXZrea3St6qVafL",
+   "position_in_playlist": 3,
+   "title": "Change",
+   "artists": [
+    "Romare"
+   ],
+   "primary_artist": "Romare",
+   "duration": "5:31",
+   "duration_sec": 331,
+   "spotify_track_id": "1FyAWkI6CF713552oKdvxb",
+   "spotify_uri": "spotify:track:1FyAWkI6CF713552oKdvxb",
+   "spotify_url": "https://open.spotify.com/track/1FyAWkI6CF713552oKdvxb",
+   "genres": [
+    "electronic",
+    "soulful-house"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "deep house",
+    "sample collage",
+    "afro house"
+   ],
+   "mood": [
+    "warm",
+    "hypnotic",
+    "soulful"
+   ],
+   "mood_parameters": {
+    "energy": 0.65,
+    "valence": 0.55,
+    "danceability": 0.75,
+    "acousticness": 0.25,
+    "instrumentalness": 0.65
+   },
+   "bpm": 120,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 49,
+   "playlist_name": "New Release Playlist #49",
+   "playlist_id": "6CrP73pUXZrea3St6qVafL",
+   "position_in_playlist": 4,
+   "title": "A Good Day",
+   "artists": [
+    "Anderson .Paak",
+    "Cordae"
+   ],
+   "primary_artist": "Anderson .Paak",
+   "duration": "2:31",
+   "duration_sec": 151,
+   "spotify_track_id": "0KDgGJf3DYJNzXDIlmRtxJ",
+   "spotify_uri": "spotify:track:0KDgGJf3DYJNzXDIlmRtxJ",
+   "spotify_url": "https://open.spotify.com/track/0KDgGJf3DYJNzXDIlmRtxJ",
+   "genres": [
+    "hip-hop",
+    "soul-funk"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "soul rap",
+    "boom bap",
+    "funk rap"
+   ],
+   "mood": [
+    "upbeat",
+    "optimistic",
+    "laid-back"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.8,
+    "danceability": 0.75,
+    "acousticness": 0.3,
+    "instrumentalness": 0.0
+   },
+   "bpm": 95,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 49,
+   "playlist_name": "New Release Playlist #49",
+   "playlist_id": "6CrP73pUXZrea3St6qVafL",
+   "position_in_playlist": 5,
+   "title": "Compass (with Robert Glasper)",
+   "artists": [
+    "Daley",
+    "Robert Glasper"
+   ],
+   "primary_artist": "Daley",
+   "duration": "4:20",
+   "duration_sec": 260,
+   "spotify_track_id": "47AVP0yIzlKd2rkP9ZcsH1",
+   "spotify_uri": "spotify:track:47AVP0yIzlKd2rkP9ZcsH1",
+   "spotify_url": "https://open.spotify.com/track/47AVP0yIzlKd2rkP9ZcsH1",
+   "genres": [
+    "neo-soul",
+    "jazz"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "neo-soul",
+    "contemporary r&b",
+    "jazz-soul"
+   ],
+   "mood": [
+    "romantic",
+    "smooth",
+    "yearning"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.5,
+    "danceability": 0.55,
+    "acousticness": 0.45,
+    "instrumentalness": 0.05
+   },
+   "bpm": 82,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 49,
+   "playlist_name": "New Release Playlist #49",
+   "playlist_id": "6CrP73pUXZrea3St6qVafL",
+   "position_in_playlist": 6,
+   "title": "Who The Cap Fit - Salaam Remi Remix",
+   "artists": [
+    "Bob Marley & The Wailers",
+    "Salaam Remi"
+   ],
+   "primary_artist": "Bob Marley & The Wailers",
+   "duration": "4:38",
+   "duration_sec": 278,
+   "spotify_track_id": "50oa8fpOHwZQ3usLSh3DUO",
+   "spotify_uri": "spotify:track:50oa8fpOHwZQ3usLSh3DUO",
+   "spotify_url": "https://open.spotify.com/track/50oa8fpOHwZQ3usLSh3DUO",
+   "genres": [
+    "world",
+    "hip-hop"
+   ],
+   "genre_primary": "world",
+   "subgenres": [
+    "reggae",
+    "roots reggae",
+    "reggae remix",
+    "hip-hop production"
+   ],
+   "mood": [
+    "defiant",
+    "groovy",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.6,
+    "danceability": 0.75,
+    "acousticness": 0.4,
+    "instrumentalness": 0.05
+   },
+   "bpm": 76,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 49,
+   "playlist_name": "New Release Playlist #49",
+   "playlist_id": "6CrP73pUXZrea3St6qVafL",
+   "position_in_playlist": 7,
+   "title": "With God on Our Side (with Bill Callahan, Chris Thile)",
+   "artists": [
+    "Meshell Ndegeocello",
+    "Bill Callahan",
+    "Chris Thile"
+   ],
+   "primary_artist": "Meshell Ndegeocello",
+   "duration": "5:38",
+   "duration_sec": 338,
+   "spotify_track_id": "2myCD20NCsbiVhGs9hyRhb",
+   "spotify_uri": "spotify:track:2myCD20NCsbiVhGs9hyRhb",
+   "spotify_url": "https://open.spotify.com/track/2myCD20NCsbiVhGs9hyRhb",
+   "genres": [
+    "alt",
+    "neo-soul"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "folk",
+    "americana",
+    "protest song"
+   ],
+   "mood": [
+    "solemn",
+    "contemplative",
+    "sober"
+   ],
+   "mood_parameters": {
+    "energy": 0.3,
+    "valence": 0.3,
+    "danceability": 0.3,
+    "acousticness": 0.8,
+    "instrumentalness": 0.05
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 49,
+   "playlist_name": "New Release Playlist #49",
+   "playlist_id": "6CrP73pUXZrea3St6qVafL",
+   "position_in_playlist": 8,
+   "title": "Conversation 1",
+   "artists": [
+    "Alva Noto",
+    "Ryuichi Sakamoto"
+   ],
+   "primary_artist": "Alva Noto",
+   "duration": "6:50",
+   "duration_sec": 410,
+   "spotify_track_id": "0bMixpUhrbM5gLI1QBwBDm",
+   "spotify_uri": "spotify:track:0bMixpUhrbM5gLI1QBwBDm",
+   "spotify_url": "https://open.spotify.com/track/0bMixpUhrbM5gLI1QBwBDm",
+   "genres": [
+    "electronic",
+    "classical"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "ambient",
+    "minimalism",
+    "glitch",
+    "ambient piano"
+   ],
+   "mood": [
+    "meditative",
+    "austere",
+    "ethereal"
+   ],
+   "mood_parameters": {
+    "energy": 0.1,
+    "valence": 0.3,
+    "danceability": 0.1,
+    "acousticness": 0.7,
+    "instrumentalness": 0.98
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 49,
+   "playlist_name": "New Release Playlist #49",
+   "playlist_id": "6CrP73pUXZrea3St6qVafL",
+   "position_in_playlist": 9,
+   "title": "Cool You Down - feat. Sia",
+   "artists": [
+    "Chaka Khan",
+    "Sia"
+   ],
+   "primary_artist": "Chaka Khan",
+   "duration": "3:30",
+   "duration_sec": 210,
+   "spotify_track_id": "1zXyCObXWABxy8cBY0NQvV",
+   "spotify_uri": "spotify:track:1zXyCObXWABxy8cBY0NQvV",
+   "spotify_url": "https://open.spotify.com/track/1zXyCObXWABxy8cBY0NQvV",
+   "genres": [
+    "soul-funk",
+    "neo-soul"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "r&b",
+    "funk-pop",
+    "contemporary r&b",
+    "disco-soul"
+   ],
+   "mood": [
+    "sassy",
+    "uplifting",
+    "sensual"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.7,
+    "danceability": 0.7,
+    "acousticness": 0.15,
+    "instrumentalness": 0.0
+   },
+   "bpm": 110,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 49,
+   "playlist_name": "New Release Playlist #49",
+   "playlist_id": "6CrP73pUXZrea3St6qVafL",
+   "position_in_playlist": 10,
+   "title": "RHYNO (from GTAVI: The Album)",
+   "artists": [
+    "Travis Scott",
+    "Grand Theft Auto VI"
+   ],
+   "primary_artist": "Travis Scott",
+   "duration": "3:00",
+   "duration_sec": 180,
+   "spotify_track_id": "2QrLrUqdSg5njDVEqq5QFp",
+   "spotify_uri": "spotify:track:2QrLrUqdSg5njDVEqq5QFp",
+   "spotify_url": "https://open.spotify.com/track/2QrLrUqdSg5njDVEqq5QFp",
+   "genres": [
+    "hip-hop"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "trap",
+    "psychedelic trap",
+    "rage"
+   ],
+   "mood": [
+    "aggressive",
+    "dark",
+    "swaggering"
+   ],
+   "mood_parameters": {
+    "energy": 0.8,
+    "valence": 0.3,
+    "danceability": 0.7,
+    "acousticness": 0.05,
+    "instrumentalness": 0.0
+   },
+   "bpm": 145,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 49,
+   "playlist_name": "New Release Playlist #49",
+   "playlist_id": "6CrP73pUXZrea3St6qVafL",
+   "position_in_playlist": 11,
+   "title": "Breath Meditation",
+   "artists": [
+    "Benjamin Adamson",
+    "Kamasi Washington",
+    "Miles Shrewsbery"
+   ],
+   "primary_artist": "Benjamin Adamson",
+   "duration": "13:24",
+   "duration_sec": 804,
+   "spotify_track_id": "6bYTPxDT8DT9zVfccG0B2d",
+   "spotify_uri": "spotify:track:6bYTPxDT8DT9zVfccG0B2d",
+   "spotify_url": "https://open.spotify.com/track/6bYTPxDT8DT9zVfccG0B2d",
+   "genres": [
+    "jazz",
+    "downtempo"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "spiritual jazz",
+    "ambient jazz",
+    "meditative jazz"
+   ],
+   "mood": [
+    "meditative",
+    "expansive",
+    "serene"
+   ],
+   "mood_parameters": {
+    "energy": 0.25,
+    "valence": 0.45,
+    "danceability": 0.2,
+    "acousticness": 0.7,
+    "instrumentalness": 0.95
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 49,
+   "playlist_name": "New Release Playlist #49",
+   "playlist_id": "6CrP73pUXZrea3St6qVafL",
+   "position_in_playlist": 12,
+   "title": "Joined (with Butcher Brown)",
+   "artists": [
+    "Marie Dahlstrom",
+    "Butcher Brown"
+   ],
+   "primary_artist": "Marie Dahlstrom",
+   "duration": "3:20",
+   "duration_sec": 200,
+   "spotify_track_id": "0oqEdpC6d2GOxeADSHGnH4",
+   "spotify_uri": "spotify:track:0oqEdpC6d2GOxeADSHGnH4",
+   "spotify_url": "https://open.spotify.com/track/0oqEdpC6d2GOxeADSHGnH4",
+   "genres": [
+    "neo-soul",
+    "soul-funk"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "neo-soul",
+    "jazz-funk",
+    "alt-r&b"
+   ],
+   "mood": [
+    "warm",
+    "intimate",
+    "groovy"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.6,
+    "danceability": 0.65,
+    "acousticness": 0.45,
+    "instrumentalness": 0.1
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 49,
+   "playlist_name": "New Release Playlist #49",
+   "playlist_id": "6CrP73pUXZrea3St6qVafL",
+   "position_in_playlist": 13,
+   "title": "The Slot",
+   "artists": [
+    "Andrew Toombs",
+    "Makaya McCraven",
+    "Junius Paul",
+    "Marquis Hill"
+   ],
+   "primary_artist": "Andrew Toombs",
+   "duration": "3:38",
+   "duration_sec": 218,
+   "spotify_track_id": "7sYPUVcG1Cap1II0S7RolH",
+   "spotify_uri": "spotify:track:7sYPUVcG1Cap1II0S7RolH",
+   "spotify_url": "https://open.spotify.com/track/7sYPUVcG1Cap1II0S7RolH",
+   "genres": [
+    "jazz"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "chicago jazz",
+    "groove jazz",
+    "post-bop"
+   ],
+   "mood": [
+    "groovy",
+    "loose",
+    "cool"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.55,
+    "danceability": 0.6,
+    "acousticness": 0.6,
+    "instrumentalness": 0.9
+   },
+   "bpm": 100,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 49,
+   "playlist_name": "New Release Playlist #49",
+   "playlist_id": "6CrP73pUXZrea3St6qVafL",
+   "position_in_playlist": 14,
+   "title": "Sonder (feat. Takuya Kuroda & Eden Bareket)",
+   "artists": [
+    "Chris McCarthy",
+    "Takuya Kuroda",
+    "Eden Bareket"
+   ],
+   "primary_artist": "Chris McCarthy",
+   "duration": "4:04",
+   "duration_sec": 244,
+   "spotify_track_id": "0e3XJi8ZxHRvoWEMSwhmzs",
+   "spotify_uri": "spotify:track:0e3XJi8ZxHRvoWEMSwhmzs",
+   "spotify_url": "https://open.spotify.com/track/0e3XJi8ZxHRvoWEMSwhmzs",
+   "genres": [
+    "jazz"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "contemporary jazz",
+    "modern jazz",
+    "post-bop"
+   ],
+   "mood": [
+    "lyrical",
+    "reflective",
+    "flowing"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.5,
+    "danceability": 0.45,
+    "acousticness": 0.7,
+    "instrumentalness": 0.9
+   },
+   "bpm": 104,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 49,
+   "playlist_name": "New Release Playlist #49",
+   "playlist_id": "6CrP73pUXZrea3St6qVafL",
+   "position_in_playlist": 15,
+   "title": "SLOWDIVE: SHABAKA VERSION",
+   "artists": [
+    "Turnstile",
+    "Shabaka"
+   ],
+   "primary_artist": "Turnstile",
+   "duration": "3:50",
+   "duration_sec": 230,
+   "spotify_track_id": "2BirJGs99wTecyKwEwkQff",
+   "spotify_uri": "spotify:track:2BirJGs99wTecyKwEwkQff",
+   "spotify_url": "https://open.spotify.com/track/2BirJGs99wTecyKwEwkQff",
+   "genres": [
+    "alt",
+    "jazz"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "alternative",
+    "post-hardcore",
+    "dream pop",
+    "spiritual jazz"
+   ],
+   "mood": [
+    "ethereal",
+    "yearning",
+    "expansive"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.45,
+    "danceability": 0.4,
+    "acousticness": 0.4,
+    "instrumentalness": 0.4
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 49,
+   "playlist_name": "New Release Playlist #49",
+   "playlist_id": "6CrP73pUXZrea3St6qVafL",
+   "position_in_playlist": 16,
+   "title": "Always on Your Side",
+   "artists": [
+    "Bonobo",
+    "Joy Crookes"
+   ],
+   "primary_artist": "Bonobo",
+   "duration": "3:29",
+   "duration_sec": 209,
+   "spotify_track_id": "7ub5dcQHBLCQHW3OZRAf9q",
+   "spotify_uri": "spotify:track:7ub5dcQHBLCQHW3OZRAf9q",
+   "spotify_url": "https://open.spotify.com/track/7ub5dcQHBLCQHW3OZRAf9q",
+   "genres": [
+    "electronic",
+    "neo-soul"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "downtempo",
+    "electronic soul",
+    "organic house"
+   ],
+   "mood": [
+    "warm",
+    "hopeful",
+    "tender"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.6,
+    "danceability": 0.65,
+    "acousticness": 0.3,
+    "instrumentalness": 0.15
+   },
+   "bpm": 118,
    "bpm_source": "estimated"
   }
  ]
