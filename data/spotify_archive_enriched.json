@@ -4,7 +4,7 @@
   "source_account": "Spotify",
   "generated_at": "2026-05-23T12:27:11.266084",
   "description": "Archivio strutturato delle 'New Release Playlist' di Marco Mauro, da consultare via AI per generare playlist tematiche o effettuare analisi.",
-  "playlist_range": "#1 - #47 (47 New Release Playlist consecutive) + 1 extra (#101)",
+  "playlist_range": "#1 - #48 (48 New Release Playlist consecutive) + 1 extra (#101)",
   "note_on_gaps": "Nessuno: il dataset copre integralmente le New Release Playlist da #12 a #36. Le #1-#11 e #13-#17 si chiamano 'New Release Friday #N', dalla #12 e #18 in poi 'New Release Playlist #N'. La '2025 Fav Album Playlist' e' una compilation tematica (extra), spostata fuori dalla sequenza NRP al playlist_number 101.",
   "schema_per_track": {
    "playlist_number": "int (numero progressivo della playlist di origine)",
@@ -27,9 +27,9 @@
    "bpm": "int | null (null = non verificabile, mai inventato)",
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
-  "total_tracks_with_duplicates": 1045,
-  "unique_tracks": 1022,
-  "unique_artists": 942,
+  "total_tracks_with_duplicates": 1063,
+  "unique_tracks": 1040,
+  "unique_artists": 956,
   "top_artists": [
    [
     "Brian Jackson",
@@ -104,12 +104,12 @@
     7
    ],
    [
-    "Nicholas Payton",
+    "Beck",
     7
    ],
    [
-    "Alfa Mist",
-    6
+    "Nicholas Payton",
+    7
    ]
   ],
   "genre_inference": {
@@ -166,8 +166,8 @@
   "enrichment_note": "Caratterizzazione musicale esperta aggiunta da Claude (giugno 2026): subgenres granulari, mood, mood_parameters (energy/valence/danceability/acousticness/instrumentalness, scala 0-1, stime qualitative da esperto), bpm (int o null) e bpm_source. bpm_source='verified' = confermato da fonti web DJ-pool (Beatsource, BPM Supreme, SongBPM, Tunebat); 'estimated' = stima fondata sul tempo tipico del brano/genere (presente solo dove molto affidabile, es. house 120-126); bpm=null dove non verificabile, mai inventato. I campi 'genres' e 'genre_primary' preesistenti (tassonomia a 12 macro-generi della pipeline new-release-atlas) sono INTOCCATI e restano la classificazione di riferimento.",
   "extended_at": "2026-06-11T09:12:01.887032",
   "extension_note": "Playlist #33 e #34 aggiunte a giugno 2026 con caratterizzazione esperta completa. Per queste 2 playlist anche genres/genre_primary sono assegnati dall'AI (coerenti con la tassonomia a 12 macro-generi della pipeline). Nota: 'Fainted Light' (Indra Lesmana) in #34 è un duplicato cross-playlist di #32 (stesso track ID).",
-  "merged_at": "2026-10-04T21:51:11Z",
-  "merge_note": "add_playlist.py: aggiunte ['#47'] (18 occorrenze, 18 brani nuovi)",
+  "merged_at": "2026-10-26T22:10:34Z",
+  "merge_note": "add_playlist.py: aggiunte ['#48'] (18 occorrenze, 18 brani nuovi)",
   "cross_playlist_duplicates": [
    {
     "spotify_track_id": "0ACrjHByr2GzPVTxKbDBix",
@@ -41081,6 +41081,707 @@
       "instrumentalness": 0.6
      },
      "bpm": 88,
+     "bpm_source": "estimated"
+    }
+   ]
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "spotify_url": "https://open.spotify.com/playlist/0nGeqONVvYz2WYuv0KZT3C",
+   "description": "",
+   "date": null,
+   "track_count": 18,
+   "tracks": [
+    {
+     "position_in_playlist": 1,
+     "title": "Can We Stay Here Please",
+     "artists": [
+      "Quinn Oulton"
+     ],
+     "primary_artist": "Quinn Oulton",
+     "duration": "2:59",
+     "duration_sec": 179,
+     "spotify_track_id": "0UVPmm1SeMtPoPI1JO0e51",
+     "spotify_uri": "spotify:track:0UVPmm1SeMtPoPI1JO0e51",
+     "spotify_url": "https://open.spotify.com/track/0UVPmm1SeMtPoPI1JO0e51",
+     "genres": [
+      "neo-soul",
+      "alt"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "alt-r&b",
+      "bedroom soul",
+      "indie soul"
+     ],
+     "mood": [
+      "intimate",
+      "wistful",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.5,
+      "danceability": 0.55,
+      "acousticness": 0.5,
+      "instrumentalness": 0.05
+     },
+     "bpm": 88,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 2,
+     "title": "Run The Track",
+     "artists": [
+      "Marla Kether",
+      "Reek0"
+     ],
+     "primary_artist": "Marla Kether",
+     "duration": "2:47",
+     "duration_sec": 167,
+     "spotify_track_id": "5TqqJZBmIVIUxdBNn0UoWC",
+     "spotify_uri": "spotify:track:5TqqJZBmIVIUxdBNn0UoWC",
+     "spotify_url": "https://open.spotify.com/track/5TqqJZBmIVIUxdBNn0UoWC",
+     "genres": [
+      "broken-beat",
+      "uk-jazz"
+     ],
+     "genre_primary": "broken-beat",
+     "subgenres": [
+      "broken beat",
+      "uk jazz",
+      "jazz-funk"
+     ],
+     "mood": [
+      "groovy",
+      "energetic",
+      "confident"
+     ],
+     "mood_parameters": {
+      "energy": 0.75,
+      "valence": 0.65,
+      "danceability": 0.75,
+      "acousticness": 0.3,
+      "instrumentalness": 0.6
+     },
+     "bpm": 118,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 3,
+     "title": "I Don't Care",
+     "artists": [
+      "Your Old Droog",
+      "Flying Lotus",
+      "Georgia Anne Muldrow"
+     ],
+     "primary_artist": "Your Old Droog",
+     "duration": "3:42",
+     "duration_sec": 222,
+     "spotify_track_id": "3jq169T6RQ4PPgSysnPpMv",
+     "spotify_uri": "spotify:track:3jq169T6RQ4PPgSysnPpMv",
+     "spotify_url": "https://open.spotify.com/track/3jq169T6RQ4PPgSysnPpMv",
+     "genres": [
+      "hip-hop",
+      "electronic"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "abstract hip-hop",
+      "experimental hip-hop",
+      "beat music"
+     ],
+     "mood": [
+      "hazy",
+      "defiant",
+      "psychedelic"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.45,
+      "danceability": 0.65,
+      "acousticness": 0.2,
+      "instrumentalness": 0.1
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 4,
+     "title": "Ndiaga Niaw",
+     "artists": [
+      "Orchestra Baobab"
+     ],
+     "primary_artist": "Orchestra Baobab",
+     "duration": "6:48",
+     "duration_sec": 408,
+     "spotify_track_id": "4VHbG3PPxLKbuGBm9kW4I8",
+     "spotify_uri": "spotify:track:4VHbG3PPxLKbuGBm9kW4I8",
+     "spotify_url": "https://open.spotify.com/track/4VHbG3PPxLKbuGBm9kW4I8",
+     "genres": [
+      "world"
+     ],
+     "genre_primary": "world",
+     "subgenres": [
+      "african",
+      "senegalese",
+      "afro-cuban",
+      "mbalax"
+     ],
+     "mood": [
+      "joyful",
+      "warm",
+      "nostalgic"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.75,
+      "danceability": 0.7,
+      "acousticness": 0.65,
+      "instrumentalness": 0.3
+     },
+     "bpm": 110,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 5,
+     "title": "Uncasually",
+     "artists": [
+      "Bonobo"
+     ],
+     "primary_artist": "Bonobo",
+     "duration": "4:22",
+     "duration_sec": 262,
+     "spotify_track_id": "23XvXxNvhca5O77qJoVmew",
+     "spotify_uri": "spotify:track:23XvXxNvhca5O77qJoVmew",
+     "spotify_url": "https://open.spotify.com/track/23XvXxNvhca5O77qJoVmew",
+     "genres": [
+      "electronic",
+      "downtempo"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "downtempo",
+      "organic house",
+      "breaks"
+     ],
+     "mood": [
+      "hypnotic",
+      "uplifting",
+      "textured"
+     ],
+     "mood_parameters": {
+      "energy": 0.65,
+      "valence": 0.55,
+      "danceability": 0.7,
+      "acousticness": 0.25,
+      "instrumentalness": 0.75
+     },
+     "bpm": 122,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 6,
+     "title": "Face in the Evening",
+     "artists": [
+      "ALA.NI",
+      "Adrian Younge"
+     ],
+     "primary_artist": "ALA.NI",
+     "duration": "2:50",
+     "duration_sec": 170,
+     "spotify_track_id": "4A1DxyOznTkzLt93mXYUY1",
+     "spotify_uri": "spotify:track:4A1DxyOznTkzLt93mXYUY1",
+     "spotify_url": "https://open.spotify.com/track/4A1DxyOznTkzLt93mXYUY1",
+     "genres": [
+      "neo-soul",
+      "soul-funk"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "soul",
+      "vintage soul",
+      "cinematic soul",
+      "orchestral soul"
+     ],
+     "mood": [
+      "melancholic",
+      "romantic",
+      "elegant"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.4,
+      "danceability": 0.45,
+      "acousticness": 0.7,
+      "instrumentalness": 0.1
+     },
+     "bpm": 76,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 7,
+     "title": "Aorta",
+     "artists": [
+      "Modeselektor"
+     ],
+     "primary_artist": "Modeselektor",
+     "duration": "3:39",
+     "duration_sec": 219,
+     "spotify_track_id": "1u2WDPiNzPJfL15PvBTAj2",
+     "spotify_uri": "spotify:track:1u2WDPiNzPJfL15PvBTAj2",
+     "spotify_url": "https://open.spotify.com/track/1u2WDPiNzPJfL15PvBTAj2",
+     "genres": [
+      "electronic"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "techno",
+      "bass music",
+      "idm"
+     ],
+     "mood": [
+      "dark",
+      "driving",
+      "intense"
+     ],
+     "mood_parameters": {
+      "energy": 0.85,
+      "valence": 0.3,
+      "danceability": 0.75,
+      "acousticness": 0.05,
+      "instrumentalness": 0.85
+     },
+     "bpm": 130,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 8,
+     "title": "Burst",
+     "artists": [
+      "FKJ",
+      "Baby Rose"
+     ],
+     "primary_artist": "FKJ",
+     "duration": "3:06",
+     "duration_sec": 186,
+     "spotify_track_id": "1D9VPv98LjVbPr2wb058Ae",
+     "spotify_uri": "spotify:track:1D9VPv98LjVbPr2wb058Ae",
+     "spotify_url": "https://open.spotify.com/track/1D9VPv98LjVbPr2wb058Ae",
+     "genres": [
+      "neo-soul",
+      "electronic"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "electronic soul",
+      "alt-r&b",
+      "french touch"
+     ],
+     "mood": [
+      "sultry",
+      "dreamy",
+      "smooth"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.5,
+      "danceability": 0.6,
+      "acousticness": 0.35,
+      "instrumentalness": 0.2
+     },
+     "bpm": 95,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 9,
+     "title": "Simon Says",
+     "artists": [
+      "Sampa the Great"
+     ],
+     "primary_artist": "Sampa the Great",
+     "duration": "2:01",
+     "duration_sec": 121,
+     "spotify_track_id": "5zFEpchBYlRZKehXXez3O6",
+     "spotify_uri": "spotify:track:5zFEpchBYlRZKehXXez3O6",
+     "spotify_url": "https://open.spotify.com/track/5zFEpchBYlRZKehXXez3O6",
+     "genres": [
+      "hip-hop",
+      "world"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "african hip-hop",
+      "conscious rap",
+      "afro-rap"
+     ],
+     "mood": [
+      "confident",
+      "playful",
+      "assertive"
+     ],
+     "mood_parameters": {
+      "energy": 0.75,
+      "valence": 0.6,
+      "danceability": 0.8,
+      "acousticness": 0.15,
+      "instrumentalness": 0.05
+     },
+     "bpm": 100,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 10,
+     "title": "The Beachcomber",
+     "artists": [
+      "Vulfpeck"
+     ],
+     "primary_artist": "Vulfpeck",
+     "duration": "5:22",
+     "duration_sec": 322,
+     "spotify_track_id": "7wQzFfhwqe6zGs8SKcn3Q8",
+     "spotify_uri": "spotify:track:7wQzFfhwqe6zGs8SKcn3Q8",
+     "spotify_url": "https://open.spotify.com/track/7wQzFfhwqe6zGs8SKcn3Q8",
+     "genres": [
+      "soul-funk"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "funk",
+      "minimalist funk",
+      "jazz-funk",
+      "instrumental soul"
+     ],
+     "mood": [
+      "sunny",
+      "laid-back",
+      "groovy"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.8,
+      "danceability": 0.7,
+      "acousticness": 0.5,
+      "instrumentalness": 0.5
+     },
+     "bpm": 100,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 11,
+     "title": "Vann du livet?",
+     "artists": [
+      "Yukimi",
+      "Dina Ögon",
+      "Little Dragon"
+     ],
+     "primary_artist": "Yukimi",
+     "duration": "3:31",
+     "duration_sec": 211,
+     "spotify_track_id": "7Aba1eJrqLrAP4NlMAvwK0",
+     "spotify_uri": "spotify:track:7Aba1eJrqLrAP4NlMAvwK0",
+     "spotify_url": "https://open.spotify.com/track/7Aba1eJrqLrAP4NlMAvwK0",
+     "genres": [
+      "alt",
+      "neo-soul"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "indie soul",
+      "psychedelic soul",
+      "swedish pop",
+      "dream pop"
+     ],
+     "mood": [
+      "dreamy",
+      "bittersweet",
+      "airy"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.5,
+      "danceability": 0.55,
+      "acousticness": 0.4,
+      "instrumentalness": 0.1
+     },
+     "bpm": 96,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 12,
+     "title": "Far Away (feat. John Glacier & Khadija Al Hanafi)",
+     "artists": [
+      "The Avalanches",
+      "John Glacier",
+      "Khadija Al Hanafi"
+     ],
+     "primary_artist": "The Avalanches",
+     "duration": "2:40",
+     "duration_sec": 160,
+     "spotify_track_id": "1gOgRxo3J8iURwbGf5tfBg",
+     "spotify_uri": "spotify:track:1gOgRxo3J8iURwbGf5tfBg",
+     "spotify_url": "https://open.spotify.com/track/1gOgRxo3J8iURwbGf5tfBg",
+     "genres": [
+      "electronic",
+      "alt"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "plunderphonics",
+      "sample-based",
+      "art pop"
+     ],
+     "mood": [
+      "nostalgic",
+      "hazy",
+      "euphoric"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.6,
+      "danceability": 0.6,
+      "acousticness": 0.3,
+      "instrumentalness": 0.2
+     },
+     "bpm": 105,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 13,
+     "title": "Red Violet Light",
+     "artists": [
+      "Mirra Maze",
+      "Duval Timothy",
+      "CJ Mirra"
+     ],
+     "primary_artist": "Mirra Maze",
+     "duration": "2:38",
+     "duration_sec": 158,
+     "spotify_track_id": "3BQYENfpOlhn4A7qIYW7v5",
+     "spotify_uri": "spotify:track:3BQYENfpOlhn4A7qIYW7v5",
+     "spotify_url": "https://open.spotify.com/track/3BQYENfpOlhn4A7qIYW7v5",
+     "genres": [
+      "downtempo",
+      "classical"
+     ],
+     "genre_primary": "downtempo",
+     "subgenres": [
+      "ambient",
+      "modern classical",
+      "experimental"
+     ],
+     "mood": [
+      "introspective",
+      "ethereal",
+      "tender"
+     ],
+     "mood_parameters": {
+      "energy": 0.2,
+      "valence": 0.35,
+      "danceability": 0.25,
+      "acousticness": 0.75,
+      "instrumentalness": 0.6
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 14,
+     "title": "Aeroplane",
+     "artists": [
+      "Kjell B. Larsen",
+      "Bugge Wesseltoft"
+     ],
+     "primary_artist": "Kjell B. Larsen",
+     "duration": "5:44",
+     "duration_sec": 344,
+     "spotify_track_id": "6SU9AFmblj6sXSSOFCQfqe",
+     "spotify_uri": "spotify:track:6SU9AFmblj6sXSSOFCQfqe",
+     "spotify_url": "https://open.spotify.com/track/6SU9AFmblj6sXSSOFCQfqe",
+     "genres": [
+      "jazz",
+      "electronic"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "nordic jazz",
+      "future jazz",
+      "ambient jazz"
+     ],
+     "mood": [
+      "spacious",
+      "contemplative",
+      "floating"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.45,
+      "danceability": 0.4,
+      "acousticness": 0.6,
+      "instrumentalness": 0.85
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 15,
+     "title": "Fourteen Reveries: 1",
+     "artists": [
+      "Brad Mehldau"
+     ],
+     "primary_artist": "Brad Mehldau",
+     "duration": "1:41",
+     "duration_sec": 101,
+     "spotify_track_id": "6KlvDepAitRmvY96pHapce",
+     "spotify_uri": "spotify:track:6KlvDepAitRmvY96pHapce",
+     "spotify_url": "https://open.spotify.com/track/6KlvDepAitRmvY96pHapce",
+     "genres": [
+      "jazz",
+      "classical"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "solo piano",
+      "chamber jazz",
+      "modern classical"
+     ],
+     "mood": [
+      "reflective",
+      "delicate",
+      "melancholic"
+     ],
+     "mood_parameters": {
+      "energy": 0.15,
+      "valence": 0.35,
+      "danceability": 0.15,
+      "acousticness": 0.95,
+      "instrumentalness": 0.98
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 16,
+     "title": "A Case of You (Arr. Osborne for Piano)",
+     "artists": [
+      "Joni Mitchell",
+      "Steven Osborne"
+     ],
+     "primary_artist": "Joni Mitchell",
+     "duration": "3:23",
+     "duration_sec": 203,
+     "spotify_track_id": "0epa1JlvGlpKXFMG1A828N",
+     "spotify_uri": "spotify:track:0epa1JlvGlpKXFMG1A828N",
+     "spotify_url": "https://open.spotify.com/track/0epa1JlvGlpKXFMG1A828N",
+     "genres": [
+      "classical"
+     ],
+     "genre_primary": "classical",
+     "subgenres": [
+      "classical",
+      "solo piano",
+      "piano arrangement",
+      "folk transcription"
+     ],
+     "mood": [
+      "tender",
+      "nostalgic",
+      "intimate"
+     ],
+     "mood_parameters": {
+      "energy": 0.15,
+      "valence": 0.35,
+      "danceability": 0.15,
+      "acousticness": 0.98,
+      "instrumentalness": 0.98
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 17,
+     "title": "Chimera",
+     "artists": [
+      "Piero Piccioni"
+     ],
+     "primary_artist": "Piero Piccioni",
+     "duration": "4:38",
+     "duration_sec": 278,
+     "spotify_track_id": "2N240xtYJvDYL4NP5l1pID",
+     "spotify_uri": "spotify:track:2N240xtYJvDYL4NP5l1pID",
+     "spotify_url": "https://open.spotify.com/track/2N240xtYJvDYL4NP5l1pID",
+     "genres": [
+      "jazz",
+      "downtempo"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "soundtrack",
+      "italian film score",
+      "library music",
+      "lounge jazz"
+     ],
+     "mood": [
+      "cinematic",
+      "sensual",
+      "mysterious"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.5,
+      "danceability": 0.45,
+      "acousticness": 0.6,
+      "instrumentalness": 0.8
+     },
+     "bpm": 100,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 18,
+     "title": "Run Away",
+     "artists": [
+      "Beck"
+     ],
+     "primary_artist": "Beck",
+     "duration": "3:39",
+     "duration_sec": 219,
+     "spotify_track_id": "4djHuoHnH3bEKf5tbviToI",
+     "spotify_uri": "spotify:track:4djHuoHnH3bEKf5tbviToI",
+     "spotify_url": "https://open.spotify.com/track/4djHuoHnH3bEKf5tbviToI",
+     "genres": [
+      "alt"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "alternative",
+      "indie rock",
+      "alt-pop",
+      "folk-rock"
+     ],
+     "mood": [
+      "restless",
+      "melancholic",
+      "driving"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.45,
+      "danceability": 0.55,
+      "acousticness": 0.35,
+      "instrumentalness": 0.05
+     },
+     "bpm": 120,
      "bpm_source": "estimated"
     }
    ]
@@ -84378,6 +85079,750 @@
     "instrumentalness": 0.6
    },
    "bpm": 88,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "position_in_playlist": 1,
+   "title": "Can We Stay Here Please",
+   "artists": [
+    "Quinn Oulton"
+   ],
+   "primary_artist": "Quinn Oulton",
+   "duration": "2:59",
+   "duration_sec": 179,
+   "spotify_track_id": "0UVPmm1SeMtPoPI1JO0e51",
+   "spotify_uri": "spotify:track:0UVPmm1SeMtPoPI1JO0e51",
+   "spotify_url": "https://open.spotify.com/track/0UVPmm1SeMtPoPI1JO0e51",
+   "genres": [
+    "neo-soul",
+    "alt"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "alt-r&b",
+    "bedroom soul",
+    "indie soul"
+   ],
+   "mood": [
+    "intimate",
+    "wistful",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.5,
+    "danceability": 0.55,
+    "acousticness": 0.5,
+    "instrumentalness": 0.05
+   },
+   "bpm": 88,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "position_in_playlist": 2,
+   "title": "Run The Track",
+   "artists": [
+    "Marla Kether",
+    "Reek0"
+   ],
+   "primary_artist": "Marla Kether",
+   "duration": "2:47",
+   "duration_sec": 167,
+   "spotify_track_id": "5TqqJZBmIVIUxdBNn0UoWC",
+   "spotify_uri": "spotify:track:5TqqJZBmIVIUxdBNn0UoWC",
+   "spotify_url": "https://open.spotify.com/track/5TqqJZBmIVIUxdBNn0UoWC",
+   "genres": [
+    "broken-beat",
+    "uk-jazz"
+   ],
+   "genre_primary": "broken-beat",
+   "subgenres": [
+    "broken beat",
+    "uk jazz",
+    "jazz-funk"
+   ],
+   "mood": [
+    "groovy",
+    "energetic",
+    "confident"
+   ],
+   "mood_parameters": {
+    "energy": 0.75,
+    "valence": 0.65,
+    "danceability": 0.75,
+    "acousticness": 0.3,
+    "instrumentalness": 0.6
+   },
+   "bpm": 118,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "position_in_playlist": 3,
+   "title": "I Don't Care",
+   "artists": [
+    "Your Old Droog",
+    "Flying Lotus",
+    "Georgia Anne Muldrow"
+   ],
+   "primary_artist": "Your Old Droog",
+   "duration": "3:42",
+   "duration_sec": 222,
+   "spotify_track_id": "3jq169T6RQ4PPgSysnPpMv",
+   "spotify_uri": "spotify:track:3jq169T6RQ4PPgSysnPpMv",
+   "spotify_url": "https://open.spotify.com/track/3jq169T6RQ4PPgSysnPpMv",
+   "genres": [
+    "hip-hop",
+    "electronic"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "abstract hip-hop",
+    "experimental hip-hop",
+    "beat music"
+   ],
+   "mood": [
+    "hazy",
+    "defiant",
+    "psychedelic"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.45,
+    "danceability": 0.65,
+    "acousticness": 0.2,
+    "instrumentalness": 0.1
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "position_in_playlist": 4,
+   "title": "Ndiaga Niaw",
+   "artists": [
+    "Orchestra Baobab"
+   ],
+   "primary_artist": "Orchestra Baobab",
+   "duration": "6:48",
+   "duration_sec": 408,
+   "spotify_track_id": "4VHbG3PPxLKbuGBm9kW4I8",
+   "spotify_uri": "spotify:track:4VHbG3PPxLKbuGBm9kW4I8",
+   "spotify_url": "https://open.spotify.com/track/4VHbG3PPxLKbuGBm9kW4I8",
+   "genres": [
+    "world"
+   ],
+   "genre_primary": "world",
+   "subgenres": [
+    "african",
+    "senegalese",
+    "afro-cuban",
+    "mbalax"
+   ],
+   "mood": [
+    "joyful",
+    "warm",
+    "nostalgic"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.75,
+    "danceability": 0.7,
+    "acousticness": 0.65,
+    "instrumentalness": 0.3
+   },
+   "bpm": 110,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "position_in_playlist": 5,
+   "title": "Uncasually",
+   "artists": [
+    "Bonobo"
+   ],
+   "primary_artist": "Bonobo",
+   "duration": "4:22",
+   "duration_sec": 262,
+   "spotify_track_id": "23XvXxNvhca5O77qJoVmew",
+   "spotify_uri": "spotify:track:23XvXxNvhca5O77qJoVmew",
+   "spotify_url": "https://open.spotify.com/track/23XvXxNvhca5O77qJoVmew",
+   "genres": [
+    "electronic",
+    "downtempo"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "downtempo",
+    "organic house",
+    "breaks"
+   ],
+   "mood": [
+    "hypnotic",
+    "uplifting",
+    "textured"
+   ],
+   "mood_parameters": {
+    "energy": 0.65,
+    "valence": 0.55,
+    "danceability": 0.7,
+    "acousticness": 0.25,
+    "instrumentalness": 0.75
+   },
+   "bpm": 122,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "position_in_playlist": 6,
+   "title": "Face in the Evening",
+   "artists": [
+    "ALA.NI",
+    "Adrian Younge"
+   ],
+   "primary_artist": "ALA.NI",
+   "duration": "2:50",
+   "duration_sec": 170,
+   "spotify_track_id": "4A1DxyOznTkzLt93mXYUY1",
+   "spotify_uri": "spotify:track:4A1DxyOznTkzLt93mXYUY1",
+   "spotify_url": "https://open.spotify.com/track/4A1DxyOznTkzLt93mXYUY1",
+   "genres": [
+    "neo-soul",
+    "soul-funk"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "soul",
+    "vintage soul",
+    "cinematic soul",
+    "orchestral soul"
+   ],
+   "mood": [
+    "melancholic",
+    "romantic",
+    "elegant"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.4,
+    "danceability": 0.45,
+    "acousticness": 0.7,
+    "instrumentalness": 0.1
+   },
+   "bpm": 76,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "position_in_playlist": 7,
+   "title": "Aorta",
+   "artists": [
+    "Modeselektor"
+   ],
+   "primary_artist": "Modeselektor",
+   "duration": "3:39",
+   "duration_sec": 219,
+   "spotify_track_id": "1u2WDPiNzPJfL15PvBTAj2",
+   "spotify_uri": "spotify:track:1u2WDPiNzPJfL15PvBTAj2",
+   "spotify_url": "https://open.spotify.com/track/1u2WDPiNzPJfL15PvBTAj2",
+   "genres": [
+    "electronic"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "techno",
+    "bass music",
+    "idm"
+   ],
+   "mood": [
+    "dark",
+    "driving",
+    "intense"
+   ],
+   "mood_parameters": {
+    "energy": 0.85,
+    "valence": 0.3,
+    "danceability": 0.75,
+    "acousticness": 0.05,
+    "instrumentalness": 0.85
+   },
+   "bpm": 130,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "position_in_playlist": 8,
+   "title": "Burst",
+   "artists": [
+    "FKJ",
+    "Baby Rose"
+   ],
+   "primary_artist": "FKJ",
+   "duration": "3:06",
+   "duration_sec": 186,
+   "spotify_track_id": "1D9VPv98LjVbPr2wb058Ae",
+   "spotify_uri": "spotify:track:1D9VPv98LjVbPr2wb058Ae",
+   "spotify_url": "https://open.spotify.com/track/1D9VPv98LjVbPr2wb058Ae",
+   "genres": [
+    "neo-soul",
+    "electronic"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "electronic soul",
+    "alt-r&b",
+    "french touch"
+   ],
+   "mood": [
+    "sultry",
+    "dreamy",
+    "smooth"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.5,
+    "danceability": 0.6,
+    "acousticness": 0.35,
+    "instrumentalness": 0.2
+   },
+   "bpm": 95,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "position_in_playlist": 9,
+   "title": "Simon Says",
+   "artists": [
+    "Sampa the Great"
+   ],
+   "primary_artist": "Sampa the Great",
+   "duration": "2:01",
+   "duration_sec": 121,
+   "spotify_track_id": "5zFEpchBYlRZKehXXez3O6",
+   "spotify_uri": "spotify:track:5zFEpchBYlRZKehXXez3O6",
+   "spotify_url": "https://open.spotify.com/track/5zFEpchBYlRZKehXXez3O6",
+   "genres": [
+    "hip-hop",
+    "world"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "african hip-hop",
+    "conscious rap",
+    "afro-rap"
+   ],
+   "mood": [
+    "confident",
+    "playful",
+    "assertive"
+   ],
+   "mood_parameters": {
+    "energy": 0.75,
+    "valence": 0.6,
+    "danceability": 0.8,
+    "acousticness": 0.15,
+    "instrumentalness": 0.05
+   },
+   "bpm": 100,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "position_in_playlist": 10,
+   "title": "The Beachcomber",
+   "artists": [
+    "Vulfpeck"
+   ],
+   "primary_artist": "Vulfpeck",
+   "duration": "5:22",
+   "duration_sec": 322,
+   "spotify_track_id": "7wQzFfhwqe6zGs8SKcn3Q8",
+   "spotify_uri": "spotify:track:7wQzFfhwqe6zGs8SKcn3Q8",
+   "spotify_url": "https://open.spotify.com/track/7wQzFfhwqe6zGs8SKcn3Q8",
+   "genres": [
+    "soul-funk"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "funk",
+    "minimalist funk",
+    "jazz-funk",
+    "instrumental soul"
+   ],
+   "mood": [
+    "sunny",
+    "laid-back",
+    "groovy"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.8,
+    "danceability": 0.7,
+    "acousticness": 0.5,
+    "instrumentalness": 0.5
+   },
+   "bpm": 100,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "position_in_playlist": 11,
+   "title": "Vann du livet?",
+   "artists": [
+    "Yukimi",
+    "Dina Ögon",
+    "Little Dragon"
+   ],
+   "primary_artist": "Yukimi",
+   "duration": "3:31",
+   "duration_sec": 211,
+   "spotify_track_id": "7Aba1eJrqLrAP4NlMAvwK0",
+   "spotify_uri": "spotify:track:7Aba1eJrqLrAP4NlMAvwK0",
+   "spotify_url": "https://open.spotify.com/track/7Aba1eJrqLrAP4NlMAvwK0",
+   "genres": [
+    "alt",
+    "neo-soul"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "indie soul",
+    "psychedelic soul",
+    "swedish pop",
+    "dream pop"
+   ],
+   "mood": [
+    "dreamy",
+    "bittersweet",
+    "airy"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.5,
+    "danceability": 0.55,
+    "acousticness": 0.4,
+    "instrumentalness": 0.1
+   },
+   "bpm": 96,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "position_in_playlist": 12,
+   "title": "Far Away (feat. John Glacier & Khadija Al Hanafi)",
+   "artists": [
+    "The Avalanches",
+    "John Glacier",
+    "Khadija Al Hanafi"
+   ],
+   "primary_artist": "The Avalanches",
+   "duration": "2:40",
+   "duration_sec": 160,
+   "spotify_track_id": "1gOgRxo3J8iURwbGf5tfBg",
+   "spotify_uri": "spotify:track:1gOgRxo3J8iURwbGf5tfBg",
+   "spotify_url": "https://open.spotify.com/track/1gOgRxo3J8iURwbGf5tfBg",
+   "genres": [
+    "electronic",
+    "alt"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "plunderphonics",
+    "sample-based",
+    "art pop"
+   ],
+   "mood": [
+    "nostalgic",
+    "hazy",
+    "euphoric"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.6,
+    "danceability": 0.6,
+    "acousticness": 0.3,
+    "instrumentalness": 0.2
+   },
+   "bpm": 105,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "position_in_playlist": 13,
+   "title": "Red Violet Light",
+   "artists": [
+    "Mirra Maze",
+    "Duval Timothy",
+    "CJ Mirra"
+   ],
+   "primary_artist": "Mirra Maze",
+   "duration": "2:38",
+   "duration_sec": 158,
+   "spotify_track_id": "3BQYENfpOlhn4A7qIYW7v5",
+   "spotify_uri": "spotify:track:3BQYENfpOlhn4A7qIYW7v5",
+   "spotify_url": "https://open.spotify.com/track/3BQYENfpOlhn4A7qIYW7v5",
+   "genres": [
+    "downtempo",
+    "classical"
+   ],
+   "genre_primary": "downtempo",
+   "subgenres": [
+    "ambient",
+    "modern classical",
+    "experimental"
+   ],
+   "mood": [
+    "introspective",
+    "ethereal",
+    "tender"
+   ],
+   "mood_parameters": {
+    "energy": 0.2,
+    "valence": 0.35,
+    "danceability": 0.25,
+    "acousticness": 0.75,
+    "instrumentalness": 0.6
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "position_in_playlist": 14,
+   "title": "Aeroplane",
+   "artists": [
+    "Kjell B. Larsen",
+    "Bugge Wesseltoft"
+   ],
+   "primary_artist": "Kjell B. Larsen",
+   "duration": "5:44",
+   "duration_sec": 344,
+   "spotify_track_id": "6SU9AFmblj6sXSSOFCQfqe",
+   "spotify_uri": "spotify:track:6SU9AFmblj6sXSSOFCQfqe",
+   "spotify_url": "https://open.spotify.com/track/6SU9AFmblj6sXSSOFCQfqe",
+   "genres": [
+    "jazz",
+    "electronic"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "nordic jazz",
+    "future jazz",
+    "ambient jazz"
+   ],
+   "mood": [
+    "spacious",
+    "contemplative",
+    "floating"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.45,
+    "danceability": 0.4,
+    "acousticness": 0.6,
+    "instrumentalness": 0.85
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "position_in_playlist": 15,
+   "title": "Fourteen Reveries: 1",
+   "artists": [
+    "Brad Mehldau"
+   ],
+   "primary_artist": "Brad Mehldau",
+   "duration": "1:41",
+   "duration_sec": 101,
+   "spotify_track_id": "6KlvDepAitRmvY96pHapce",
+   "spotify_uri": "spotify:track:6KlvDepAitRmvY96pHapce",
+   "spotify_url": "https://open.spotify.com/track/6KlvDepAitRmvY96pHapce",
+   "genres": [
+    "jazz",
+    "classical"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "solo piano",
+    "chamber jazz",
+    "modern classical"
+   ],
+   "mood": [
+    "reflective",
+    "delicate",
+    "melancholic"
+   ],
+   "mood_parameters": {
+    "energy": 0.15,
+    "valence": 0.35,
+    "danceability": 0.15,
+    "acousticness": 0.95,
+    "instrumentalness": 0.98
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "position_in_playlist": 16,
+   "title": "A Case of You (Arr. Osborne for Piano)",
+   "artists": [
+    "Joni Mitchell",
+    "Steven Osborne"
+   ],
+   "primary_artist": "Joni Mitchell",
+   "duration": "3:23",
+   "duration_sec": 203,
+   "spotify_track_id": "0epa1JlvGlpKXFMG1A828N",
+   "spotify_uri": "spotify:track:0epa1JlvGlpKXFMG1A828N",
+   "spotify_url": "https://open.spotify.com/track/0epa1JlvGlpKXFMG1A828N",
+   "genres": [
+    "classical"
+   ],
+   "genre_primary": "classical",
+   "subgenres": [
+    "classical",
+    "solo piano",
+    "piano arrangement",
+    "folk transcription"
+   ],
+   "mood": [
+    "tender",
+    "nostalgic",
+    "intimate"
+   ],
+   "mood_parameters": {
+    "energy": 0.15,
+    "valence": 0.35,
+    "danceability": 0.15,
+    "acousticness": 0.98,
+    "instrumentalness": 0.98
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "position_in_playlist": 17,
+   "title": "Chimera",
+   "artists": [
+    "Piero Piccioni"
+   ],
+   "primary_artist": "Piero Piccioni",
+   "duration": "4:38",
+   "duration_sec": 278,
+   "spotify_track_id": "2N240xtYJvDYL4NP5l1pID",
+   "spotify_uri": "spotify:track:2N240xtYJvDYL4NP5l1pID",
+   "spotify_url": "https://open.spotify.com/track/2N240xtYJvDYL4NP5l1pID",
+   "genres": [
+    "jazz",
+    "downtempo"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "soundtrack",
+    "italian film score",
+    "library music",
+    "lounge jazz"
+   ],
+   "mood": [
+    "cinematic",
+    "sensual",
+    "mysterious"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.5,
+    "danceability": 0.45,
+    "acousticness": 0.6,
+    "instrumentalness": 0.8
+   },
+   "bpm": 100,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 48,
+   "playlist_name": "New Release Playlist #48",
+   "playlist_id": "0nGeqONVvYz2WYuv0KZT3C",
+   "position_in_playlist": 18,
+   "title": "Run Away",
+   "artists": [
+    "Beck"
+   ],
+   "primary_artist": "Beck",
+   "duration": "3:39",
+   "duration_sec": 219,
+   "spotify_track_id": "4djHuoHnH3bEKf5tbviToI",
+   "spotify_uri": "spotify:track:4djHuoHnH3bEKf5tbviToI",
+   "spotify_url": "https://open.spotify.com/track/4djHuoHnH3bEKf5tbviToI",
+   "genres": [
+    "alt"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "alternative",
+    "indie rock",
+    "alt-pop",
+    "folk-rock"
+   ],
+   "mood": [
+    "restless",
+    "melancholic",
+    "driving"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.45,
+    "danceability": 0.55,
+    "acousticness": 0.35,
+    "instrumentalness": 0.05
+   },
+   "bpm": 120,
    "bpm_source": "estimated"
   }
  ]
