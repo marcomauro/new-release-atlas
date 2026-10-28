@@ -159,7 +159,13 @@ The **Spotify** source works in two modes:
   and a route starts with a **wake-then-play** sequence — transfer *without*
   autoplay, wait until the device reports active, then play with an explicit
   `device_id` — because firing play straight at an inactive desktop client
-  freezes it (macOS). Request-by-request trace in the browser console:
+  freezes it (macOS). The route is played from **one private playlist,
+  “Atlas · now playing”**, that the app rewrites on every start
+  ([`src/routePlaylist.js`](src/routePlaylist.js)): a play with a bare list
+  of track `uris` is acked by the Web API but the clients (desktop and phone)
+  no longer load it — they go silent with no track. A login from before this
+  change lacks the playlist scope; the player then asks to **Reconnect** once.
+  Request-by-request trace in the browser console:
   `localStorage.nra_debug = "1"`, then reload.
 - **Embed mode** (not logged in): the official Spotify embed plays a **~30s
   preview** and auto-advances along the route, with an opt-in
