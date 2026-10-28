@@ -7,9 +7,15 @@ import {
   fetchWithTimeout, withRetry, createQueue, waitFor, sleep,
   REQUEST_TIMEOUT_MS, COMMAND_TIMEOUT_MS,
 } from "./connectTransport.js";
+import {
+  ROUTE_PLAYLIST_NAME, ROUTE_PLAYLIST_DESCRIPTION, ROUTE_PLAYLIST_SCOPE,
+  hasScope, chunk, findRoutePlaylist,
+} from "./routePlaylist.js";
 
 const CLIENT_ID = "90be0fb998cf44b3b3b6560cfd52c5d5";
-const SCOPES = "user-modify-playback-state user-read-playback-state";
+// playlist-*: the route plays from a private playlist the app keeps up to
+// date ("Atlas · now playing", see routePlaylist.js for why).
+const SCOPES = `user-modify-playback-state user-read-playback-state ${ROUTE_PLAYLIST_SCOPE} playlist-read-private`;
 const REDIRECT_URI =
   typeof window !== "undefined" ? window.location.origin + import.meta.env.BASE_URL : "";
 const TOKEN_URL = "https://accounts.spotify.com/api/token";
@@ -20,6 +26,7 @@ const LS_TOKENS = "sp_tokens";
 const LS_VERIFIER = "sp_pkce_verifier";
 const LS_STATE = "sp_oauth_state";
 const LS_PENDING = "sp_pending_play"; // percorso da riprendere dopo il redirect
+const LS_ROUTE_PLAYLIST = "sp_route_playlist"; // id della playlist del percorso
 
 // ---- util PKCE ----
 function randomString(bytes) {
@@ -244,33 +251,81 @@ export async function spotifyState() {
 const queue = createQueue();
 export const connectBusy = () => queue.busy;
 
+// ---- route playlist ----
+// The playlist id is remembered per browser; a browser that has none finds
+// the one this account already owns (the phone and the Mac share it) and
+// only creates it when there is none.
+async function routePlaylistId() {
+  try {
+    const id = localStorage.getItem(LS_ROUTE_PLAYLIST);
+    if (id) return id;
+  } catch (e) { /* noop */ }
+  const me = await apiCall("/me");
+  let found = null;
+  let path = "/me/playlists?limit=50";
+  for (let page = 0; path && !found && page < 20; page++) {
+    const d = await apiCall(path);
+    found = findRoutePlaylist(d && d.items, me && me.id);
+    path = d && d.next ? d.next.replace(API, "") : null;
+  }
+  const pl = found || await apiCall("/me/playlists", "POST",
+    { name: ROUTE_PLAYLIST_NAME, description: ROUTE_PLAYLIST_DESCRIPTION, public: false });
+  try { localStorage.setItem(LS_ROUTE_PLAYLIST, pl.id); } catch (e) { /* noop */ }
+  return pl.id;
+}
+
+// Rewrites the route playlist with `uris` (in order) and returns its id.
+// Always written, never cached: another device may have put its own route
+// in it since. A remembered playlist that is gone or no longer writable is
+// forgotten and replaced, once.
+async function writeRoutePlaylist(uris) {
+  const t = readTokens();
+  // A login from before the route playlist cannot write it: the player asks
+  // for a reconnect (one click while the Spotify session is alive).
+  if (!hasScope(t && t.scope, ROUTE_PLAYLIST_SCOPE)) throw { status: 403, reason: "PLAYLIST_SCOPE" };
+  for (let attempt = 0; ; attempt++) {
+    const id = await routePlaylistId();
+    try {
+      const [first = [], ...rest] = chunk(uris);
+      await apiCall(`/playlists/${id}/items`, "PUT", { uris: first });
+      for (const part of rest) await apiCall(`/playlists/${id}/items`, "POST", { uris: part });
+      return id;
+    } catch (e) {
+      if (attempt > 0 || (e.status !== 403 && e.status !== 404)) throw e;
+      try { localStorage.removeItem(LS_ROUTE_PLAYLIST); } catch (err) { /* noop */ }
+    }
+  }
+}
+
 // Raw (unqueued) commands, composed by spotifyStartOn below.
 const putTransfer = (deviceId, play) =>
   apiCall("/me/player", "PUT", { device_ids: [deviceId], play }, { timeoutMs: COMMAND_TIMEOUT_MS });
-const putPlay = (uris, offset, deviceId) =>
+const putPlayContext = (contextUri, trackUri, deviceId) =>
   apiCall("/me/player/play" + (deviceId ? `?device_id=${deviceId}` : ""), "PUT",
-    { uris, offset: { position: offset } }, { timeoutMs: COMMAND_TIMEOUT_MS });
+    { context_uri: contextUri, offset: { uri: trackUri } }, { timeoutMs: COMMAND_TIMEOUT_MS });
 
 export function spotifyTransfer(deviceId, play = true) {
   return queue.run(() => putTransfer(deviceId, play));
 }
 
-// Plays the URI list from `offset` (full tracks, continuous) on `deviceId`.
-export function spotifyPlay(uris, offset = 0, deviceId) {
-  return queue.run(() => putPlay(uris, offset, deviceId));
-}
-
 // Start a route on `device` the way the clients tolerate it:
+//   0. write the route into the route playlist — a play with a bare `uris`
+//      list is acked but no longer loaded by the clients (routePlaylist.js);
 //   1. if the device is not the active one, make it active with a transfer
 //      WITHOUT autoplay and wait until /me/player actually reports it (the
 //      backend acks the transfer before the client has finished switching);
-//   2. only then send play with the explicit device_id.
+//   2. only then play the playlist from track `offset`, with the explicit
+//      device_id. Sent once: the client may swap a track for an equivalent
+//      release with another id, so "is the requested uri playing?" is not a
+//      reliable check, and a second play at a client still switching is
+//      what freezes it.
 // Firing play?device_id straight at an inactive client asks it to wake up,
 // switch and load a whole queue in one shot — the sequence that hangs the
 // desktop app on macOS. An already-active device (the phone in your hand)
 // skips step 1: no added latency there.
 export function spotifyStartOn(device, uris, offset = 0) {
   return queue.run(async () => {
+    const playlistId = await writeRoutePlaylist(uris);
     if (!device.is_active) {
       await putTransfer(device.id, false);
       const seen = await waitFor(async () => {
@@ -282,7 +337,7 @@ export function spotifyStartOn(device, uris, offset = 0) {
       // still try the explicit play — it is the best remaining shot.
       if (seen) await sleep(300);
     }
-    await putPlay(uris, offset, device.id);
+    await putPlayContext(`spotify:playlist:${playlistId}`, uris[offset] || uris[0], device.id);
   });
 }
 

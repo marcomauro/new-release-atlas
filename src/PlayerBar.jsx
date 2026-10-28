@@ -81,7 +81,9 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
   const [devices, setDevices] = useState([]);
   const [deviceId, setDeviceId] = useState(null);
   const [devicesOpen, setDevicesOpen] = useState(false); // device row hidden until asked
-  const [authErr, setAuthErr] = useState(false); // token died mid-session -> reconnect CTA
+  // reconnect CTA: "expired" = token died mid-session; "scope" = token from
+  // before the route playlist, it cannot write it
+  const [authErr, setAuthErr] = useState(null);
   const [cover, setCover] = useState(null);
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState("off"); // off | all | one
@@ -137,6 +139,7 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
       if (gen === startGenRef.current) setPaused(false);
     } catch (e) {
       if (gen !== startGenRef.current) return;
+      if (e.reason === "PLAYLIST_SCOPE") { setAuthErr("scope"); return; }
       setMsg(describeError(e, dev, "start"));
       if (e.status === 404 || e.reason === "NO_ACTIVE_DEVICE") { refreshDevices(); setDevicesOpen(true); }
     }
@@ -167,7 +170,7 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
         const c = await spotifyState();
         if (stop || !c) return;
         auth401Ref.current = 0;
-        setAuthErr(false);
+        setAuthErr((a) => (a === "expired" ? null : a));
         if (c.item) {
           const i = uris.indexOf(c.item.uri);
           if (i >= 0) { setLiveIdx(i); setIndex(i); } // follow real progress (display + map)
@@ -186,7 +189,7 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
         // If the token dies mid-session the poll would fail forever in
         // silence: after 2 consecutive 401s surface the reconnect CTA.
         if (e && e.status === 401) {
-          if (++auth401Ref.current >= 2) setAuthErr(true);
+          if (++auth401Ref.current >= 2) setAuthErr("expired");
         }
       }
     };
@@ -337,7 +340,11 @@ function ConnectPlayer({ tracks, index, setIndex, onClose, bottomGap, isMobile, 
 
       {authErr ? (
         <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px 10px", fontSize: 11, color: "#9a5b3a" }}>
-          <span style={{ flex: 1 }}>Spotify session expired.</span>
+          <span style={{ flex: 1 }}>
+            {authErr === "scope"
+              ? "Atlas now plays routes from its own private playlist on your Spotify — reconnect once to allow it."
+              : "Spotify session expired."}
+          </span>
           {onLogin && (
             <button onClick={onLogin} title="Reconnect to Spotify" style={{ ...navBtn, fontSize: 11, color: PAPER, background: GREEN, borderColor: GREEN }}>
               Reconnect
