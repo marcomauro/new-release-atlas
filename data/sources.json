@@ -489,6 +489,14 @@
    "status": "matched",
    "title": "The Life of a Bee"
   },
+  "0bMixpUhrbM5gLI1QBwBDm": {
+   "channel": "Alva Noto",
+   "checked": "2026-10-29",
+   "id": "CWZix9mgWeg",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Ryuichi Sakamoto & Alva Noto - Conversation 1"
+  },
   "0bZBy6PhyISxjpIGfKSaBs": {
    "checked": "2026-10-26",
    "status": "none"
@@ -532,6 +540,14 @@
    "score": 1.0,
    "status": "matched",
    "title": "Booster"
+  },
+  "0e3XJi8ZxHRvoWEMSwhmzs": {
+   "channel": "Chris McCarthy - Topic",
+   "checked": "2026-10-29",
+   "id": "RWasjR_P8DI",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Sonder (feat. Takuya Kuroda & Eden Bareket)"
   },
   "0eaRmkFg80ZLP5zZhhHUiO": {
    "checked": "2026-10-22",
@@ -744,6 +760,14 @@
    "score": 1.0,
    "status": "matched",
    "title": "Loyle Carner, Benjamin Zephaniah - hopefully (Audio)"
+  },
+  "0oqEdpC6d2GOxeADSHGnH4": {
+   "channel": "Marie Dahlstrom - Topic",
+   "checked": "2026-10-29",
+   "id": "A67IpERemlY",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Joined (with Butcher Brown)"
   },
   "0p8112XhSS7yS1tPxg0SwO": {
    "channel": "Snoop Dogg - Topic",
@@ -1838,6 +1862,14 @@
    "checked": "2026-10-22",
    "status": "none"
   },
+  "1zXyCObXWABxy8cBY0NQvV": {
+   "channel": "Chaka Khan - Topic",
+   "checked": "2026-10-29",
+   "id": "-hb32LZMkh4",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Cool You Down (feat. Sia)"
+  },
   "206C76r5reCLqy0cP2heL3": {
    "channel": "Multiplicity FM",
    "checked": "2026-10-22",
@@ -2093,6 +2125,14 @@
    "score": 0.85,
    "status": "matched",
    "title": "Jordan Childs, The Pocket Queen, Cherone - Here (Remix)"
+  },
+  "2BirJGs99wTecyKwEwkQff": {
+   "channel": "Turnstile - Topic",
+   "checked": "2026-10-29",
+   "id": "686nVnZFq6M",
+   "score": 1.0,
+   "status": "matched",
+   "title": "SLOWDIVE: SHABAKA VERSION"
   },
   "2CoPrCsrXK0IvYJdapcz7W": {
    "checked": "2026-10-24",
@@ -2391,6 +2431,14 @@
    "score": 1.0,
    "status": "matched",
    "title": "Everybody's Gotta Learn Sometime"
+  },
+  "2QrLrUqdSg5njDVEqq5QFp": {
+   "channel": "Harmony Lyrics",
+   "checked": "2026-10-29",
+   "id": "TtpeBSvddiE",
+   "score": 0.85,
+   "status": "matched",
+   "title": "Travis Scott - RHYNO (from GTAVI: The Album) (Lyrics)"
   },
   "2RQMFM55u8M21CQa3M0OzW": {
    "channel": "Squarepusher - Topic",
@@ -6930,6 +6978,14 @@
    "status": "matched",
    "title": "Well Organised"
   },
+  "6bYTPxDT8DT9zVfccG0B2d": {
+   "channel": "Benjamin Adamson - Topic",
+   "checked": "2026-10-29",
+   "id": "ykN6997GC5o",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Breath Meditation (feat. Kamasi Washington)"
+  },
   "6c2o3AnQoZaNCG2hasVTc5": {
    "channel": "Nate Smith - Topic",
    "checked": "2026-10-27",
@@ -8100,6 +8156,14 @@
    "status": "matched",
    "title": "Shemesh"
   },
+  "7sYPUVcG1Cap1II0S7RolH": {
+   "channel": "Andrew Toombs - Topic",
+   "checked": "2026-10-29",
+   "id": "wxExsuqqKDM",
+   "score": 1.0,
+   "status": "matched",
+   "title": "The Slot"
+  },
   "7ubvJ2uA8J03MzGyeRtIpB": {
    "channel": "Nubiyan Twist",
    "checked": "2026-10-19",
@@ -8261,6 +8325,9 @@
   "Amy Gadiaga": [
    "UCc8jyfqXyq0zaLtoDdlCFWg"
   ],
+  "Andrew Toombs": [
+   "UCCO7e-egDWGHteXA-hxXR3Q"
+  ],
   "Andy James": [
    "UCxpotETWMuwoi8Te_zw-VMQ",
    "UC_PkxfrhSEQeC0OxoUhy9dQ",
@@ -8310,6 +8377,9 @@
   ],
   "Beck": [
    "UC8fxkahdLdfHk8pF1fRYD-w"
+  ],
+  "Benjamin Adamson": [
+   "UCIsIKQdVAWR7u_gUoVrSimA"
   ],
   "Benjamin Clementine": [
    "UCaaQRBJJTcxUqUz4nwwurYg"
@@ -8753,6 +8823,9 @@
   "Mandy": [],
   "Marco Castello": [
    "UCBGDzJe0uHbhIRHIoc306FA"
+  ],
+  "Marie Dahlstrom": [
+   "UCEx27Q5tW3JLmRzjDIWv7nw"
   ],
   "Mark Guiliana": [
    "UC2qoRi7qYMP7cfZpHzy3Ufg",
