@@ -4,7 +4,7 @@
   "source_account": "Spotify",
   "generated_at": "2026-05-23T12:27:11.266084",
   "description": "Archivio strutturato delle 'New Release Playlist' di Marco Mauro, da consultare via AI per generare playlist tematiche o effettuare analisi.",
-  "playlist_range": "#1 - #49 (49 New Release Playlist consecutive) + 1 extra (#101)",
+  "playlist_range": "#1 - #50 (50 New Release Playlist consecutive) + 1 extra (#101)",
   "note_on_gaps": "Nessuno: il dataset copre integralmente le New Release Playlist da #12 a #36. Le #1-#11 e #13-#17 si chiamano 'New Release Friday #N', dalla #12 e #18 in poi 'New Release Playlist #N'. La '2025 Fav Album Playlist' e' una compilation tematica (extra), spostata fuori dalla sequenza NRP al playlist_number 101.",
   "schema_per_track": {
    "playlist_number": "int (numero progressivo della playlist di origine)",
@@ -27,9 +27,9 @@
    "bpm": "int | null (null = non verificabile, mai inventato)",
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
-  "total_tracks_with_duplicates": 1079,
-  "unique_tracks": 1055,
-  "unique_artists": 967,
+  "total_tracks_with_duplicates": 1093,
+  "unique_tracks": 1069,
+  "unique_artists": 979,
   "top_artists": [
    [
     "Brian Jackson",
@@ -37,18 +37,18 @@
    ],
    [
     "Nightmares On Wax",
-    11
+    12
    ],
    [
     "Momoko Gill",
     11
    ],
    [
-    "Tame Impala",
-    10
+    "Peter Gabriel",
+    11
    ],
    [
-    "Peter Gabriel",
+    "Tame Impala",
     10
    ],
    [
@@ -96,19 +96,19 @@
     8
    ],
    [
+    "Alfa Mist",
+    7
+   ],
+   [
     "Run Logan Run",
     7
    ],
    [
+    "Puma Blue",
+    7
+   ],
+   [
     "Ezra Collective",
-    7
-   ],
-   [
-    "Beck",
-    7
-   ],
-   [
-    "Nicholas Payton",
     7
    ]
   ],
@@ -166,8 +166,8 @@
   "enrichment_note": "Caratterizzazione musicale esperta aggiunta da Claude (giugno 2026): subgenres granulari, mood, mood_parameters (energy/valence/danceability/acousticness/instrumentalness, scala 0-1, stime qualitative da esperto), bpm (int o null) e bpm_source. bpm_source='verified' = confermato da fonti web DJ-pool (Beatsource, BPM Supreme, SongBPM, Tunebat); 'estimated' = stima fondata sul tempo tipico del brano/genere (presente solo dove molto affidabile, es. house 120-126); bpm=null dove non verificabile, mai inventato. I campi 'genres' e 'genre_primary' preesistenti (tassonomia a 12 macro-generi della pipeline new-release-atlas) sono INTOCCATI e restano la classificazione di riferimento.",
   "extended_at": "2026-06-11T09:12:01.887032",
   "extension_note": "Playlist #33 e #34 aggiunte a giugno 2026 con caratterizzazione esperta completa. Per queste 2 playlist anche genres/genre_primary sono assegnati dall'AI (coerenti con la tassonomia a 12 macro-generi della pipeline). Nota: 'Fainted Light' (Indra Lesmana) in #34 è un duplicato cross-playlist di #32 (stesso track ID).",
-  "merged_at": "2026-10-26T22:25:58Z",
-  "merge_note": "add_playlist.py: aggiunte ['#49'] (16 occorrenze, 16 brani nuovi)",
+  "merged_at": "2026-11-09T08:55:33Z",
+  "merge_note": "add_playlist.py: aggiunte ['#50'] (14 occorrenze, 14 brani nuovi)",
   "cross_playlist_duplicates": [
    {
     "spotify_track_id": "0ACrjHByr2GzPVTxKbDBix",
@@ -42432,6 +42432,554 @@
       "instrumentalness": 0.2
      },
      "bpm": 110,
+     "bpm_source": "estimated"
+    }
+   ]
+  },
+  {
+   "playlist_number": 50,
+   "playlist_name": "New Release Playlist #50",
+   "playlist_id": "3IR3vQvxNVqesb5l7oUcsL",
+   "spotify_url": "https://open.spotify.com/playlist/3IR3vQvxNVqesb5l7oUcsL",
+   "description": "",
+   "date": null,
+   "track_count": 14,
+   "tracks": [
+    {
+     "position_in_playlist": 1,
+     "title": "believe",
+     "artists": [
+      "JGrrey"
+     ],
+     "primary_artist": "JGrrey",
+     "duration": "2:26",
+     "duration_sec": 146,
+     "spotify_track_id": "3Ni3bVQHd9z8S7I3Fji8Wa",
+     "spotify_uri": "spotify:track:3Ni3bVQHd9z8S7I3Fji8Wa",
+     "spotify_url": "https://open.spotify.com/track/3Ni3bVQHd9z8S7I3Fji8Wa",
+     "genres": [
+      "neo-soul",
+      "alt"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "alt r&b",
+      "uk soul",
+      "bedroom soul"
+     ],
+     "mood": [
+      "intimate",
+      "hopeful",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.55,
+      "danceability": 0.5,
+      "acousticness": 0.6,
+      "instrumentalness": 0.05
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 2,
+     "title": "Dersen Cafe (Live at Real World Studios)",
+     "artists": [
+      "Alfa Mist"
+     ],
+     "primary_artist": "Alfa Mist",
+     "duration": "4:16",
+     "duration_sec": 256,
+     "spotify_track_id": "4h1k2w76dIkyO7ZAOZnD0y",
+     "spotify_uri": "spotify:track:4h1k2w76dIkyO7ZAOZnD0y",
+     "spotify_url": "https://open.spotify.com/track/4h1k2w76dIkyO7ZAOZnD0y",
+     "genres": [
+      "uk-jazz",
+      "jazz"
+     ],
+     "genre_primary": "uk-jazz",
+     "subgenres": [
+      "jazz",
+      "uk jazz",
+      "jazz-hop",
+      "live session"
+     ],
+     "mood": [
+      "contemplative",
+      "mellow",
+      "sophisticated"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.45,
+      "danceability": 0.45,
+      "acousticness": 0.75,
+      "instrumentalness": 0.9
+     },
+     "bpm": 85,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 3,
+     "title": "Shouldn't Be",
+     "artists": [
+      "Goya Gumbani",
+      "Joe Armon-Jones"
+     ],
+     "primary_artist": "Goya Gumbani",
+     "duration": "3:13",
+     "duration_sec": 193,
+     "spotify_track_id": "673zvhm886bDNuqeDr4IDP",
+     "spotify_uri": "spotify:track:673zvhm886bDNuqeDr4IDP",
+     "spotify_url": "https://open.spotify.com/track/673zvhm886bDNuqeDr4IDP",
+     "genres": [
+      "hip-hop",
+      "uk-jazz"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "jazz rap",
+      "uk hip-hop",
+      "boom bap"
+     ],
+     "mood": [
+      "laid-back",
+      "smoky",
+      "reflective"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.45,
+      "danceability": 0.6,
+      "acousticness": 0.5,
+      "instrumentalness": 0.2
+     },
+     "bpm": 88,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 4,
+     "title": "Swollen",
+     "artists": [
+      "Audrey Powne"
+     ],
+     "primary_artist": "Audrey Powne",
+     "duration": "5:52",
+     "duration_sec": 352,
+     "spotify_track_id": "2QsVOhOpbmQrFKsZXTDl0S",
+     "spotify_uri": "spotify:track:2QsVOhOpbmQrFKsZXTDl0S",
+     "spotify_url": "https://open.spotify.com/track/2QsVOhOpbmQrFKsZXTDl0S",
+     "genres": [
+      "jazz",
+      "neo-soul"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "spiritual jazz",
+      "vocal jazz",
+      "jazz-soul"
+     ],
+     "mood": [
+      "soulful",
+      "yearning",
+      "expansive"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.45,
+      "danceability": 0.4,
+      "acousticness": 0.7,
+      "instrumentalness": 0.4
+     },
+     "bpm": 76,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 5,
+     "title": "Die On This Hill (Live) | Presented by Spotify",
+     "artists": [
+      "SIENNA SPIRO"
+     ],
+     "primary_artist": "SIENNA SPIRO",
+     "duration": "3:54",
+     "duration_sec": 234,
+     "spotify_track_id": "4kHwhIGe7Olzqu1ejo0xHg",
+     "spotify_uri": "spotify:track:4kHwhIGe7Olzqu1ejo0xHg",
+     "spotify_url": "https://open.spotify.com/track/4kHwhIGe7Olzqu1ejo0xHg",
+     "genres": [
+      "neo-soul"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "soul",
+      "soul ballad",
+      "uk soul",
+      "live session"
+     ],
+     "mood": [
+      "powerful",
+      "heartfelt",
+      "defiant"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.3,
+      "danceability": 0.35,
+      "acousticness": 0.6,
+      "instrumentalness": 0.0
+     },
+     "bpm": 70,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 6,
+     "title": "Damn - Abbey Road Gospel Version",
+     "artists": [
+      "Nightmares On Wax",
+      "Chyna B"
+     ],
+     "primary_artist": "Nightmares On Wax",
+     "duration": "4:41",
+     "duration_sec": 281,
+     "spotify_track_id": "3LFNBzGnbKQBTlWgOjThKj",
+     "spotify_uri": "spotify:track:3LFNBzGnbKQBTlWgOjThKj",
+     "spotify_url": "https://open.spotify.com/track/3LFNBzGnbKQBTlWgOjThKj",
+     "genres": [
+      "downtempo",
+      "soul-funk"
+     ],
+     "genre_primary": "downtempo",
+     "subgenres": [
+      "downtempo",
+      "gospel soul",
+      "trip-hop",
+      "orchestral soul"
+     ],
+     "mood": [
+      "uplifting",
+      "spiritual",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.65,
+      "danceability": 0.5,
+      "acousticness": 0.6,
+      "instrumentalness": 0.1
+     },
+     "bpm": 92,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 7,
+     "title": "Get A Little Down",
+     "artists": [
+      "Melé",
+      "Reek0",
+      "Marla Kether"
+     ],
+     "primary_artist": "Melé",
+     "duration": "4:42",
+     "duration_sec": 282,
+     "spotify_track_id": "5UwczBnC2HJT36jt3Bt7M5",
+     "spotify_uri": "spotify:track:5UwczBnC2HJT36jt3Bt7M5",
+     "spotify_url": "https://open.spotify.com/track/5UwczBnC2HJT36jt3Bt7M5",
+     "genres": [
+      "soulful-house",
+      "electronic"
+     ],
+     "genre_primary": "soulful-house",
+     "subgenres": [
+      "house",
+      "deep house",
+      "funky house",
+      "jazz house"
+     ],
+     "mood": [
+      "groovy",
+      "sunny",
+      "sensual"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.65,
+      "danceability": 0.8,
+      "acousticness": 0.2,
+      "instrumentalness": 0.4
+     },
+     "bpm": 122,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 8,
+     "title": "Overture (feat. Nate Smith, Shibo)",
+     "artists": [
+      "Kiefer",
+      "Nate Smith",
+      "Shibo"
+     ],
+     "primary_artist": "Kiefer",
+     "duration": "2:48",
+     "duration_sec": 168,
+     "spotify_track_id": "2NvLivoGmNiAxKdI6ylzPk",
+     "spotify_uri": "spotify:track:2NvLivoGmNiAxKdI6ylzPk",
+     "spotify_url": "https://open.spotify.com/track/2NvLivoGmNiAxKdI6ylzPk",
+     "genres": [
+      "jazz",
+      "hip-hop"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "jazz-hop",
+      "beat music",
+      "fusion"
+     ],
+     "mood": [
+      "playful",
+      "bright",
+      "intricate"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.6,
+      "danceability": 0.55,
+      "acousticness": 0.55,
+      "instrumentalness": 0.9
+     },
+     "bpm": 92,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 9,
+     "title": "Be Careful II",
+     "artists": [
+      "Dawuna"
+     ],
+     "primary_artist": "Dawuna",
+     "duration": "4:43",
+     "duration_sec": 283,
+     "spotify_track_id": "5XjiozytXOWnBQFXrvy16G",
+     "spotify_uri": "spotify:track:5XjiozytXOWnBQFXrvy16G",
+     "spotify_url": "https://open.spotify.com/track/5XjiozytXOWnBQFXrvy16G",
+     "genres": [
+      "neo-soul",
+      "alt"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "experimental soul",
+      "psychedelic soul",
+      "lo-fi r&b"
+     ],
+     "mood": [
+      "hazy",
+      "introspective",
+      "melancholic"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.3,
+      "danceability": 0.45,
+      "acousticness": 0.4,
+      "instrumentalness": 0.15
+     },
+     "bpm": 80,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 10,
+     "title": "Rare Heir",
+     "artists": [
+      "Talib Kweli",
+      "Large Professor",
+      "Bun B"
+     ],
+     "primary_artist": "Talib Kweli",
+     "duration": "2:16",
+     "duration_sec": 136,
+     "spotify_track_id": "1q5EOELOsOL1csuY70GUnJ",
+     "spotify_uri": "spotify:track:1q5EOELOsOL1csuY70GUnJ",
+     "spotify_url": "https://open.spotify.com/track/1q5EOELOsOL1csuY70GUnJ",
+     "genres": [
+      "hip-hop"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "boom bap",
+      "conscious rap",
+      "east coast hip-hop"
+     ],
+     "mood": [
+      "assertive",
+      "gritty",
+      "confident"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.55,
+      "danceability": 0.75,
+      "acousticness": 0.15,
+      "instrumentalness": 0.0
+     },
+     "bpm": 93,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 11,
+     "title": "Croak Dream - Live",
+     "artists": [
+      "Puma Blue"
+     ],
+     "primary_artist": "Puma Blue",
+     "duration": "6:04",
+     "duration_sec": 364,
+     "spotify_track_id": "4R5tLsPUPccachucgZyagX",
+     "spotify_uri": "spotify:track:4R5tLsPUPccachucgZyagX",
+     "spotify_url": "https://open.spotify.com/track/4R5tLsPUPccachucgZyagX",
+     "genres": [
+      "alt",
+      "neo-soul"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "alternative",
+      "dream pop",
+      "jazz-soul",
+      "slowcore"
+     ],
+     "mood": [
+      "dreamy",
+      "melancholic",
+      "nocturnal"
+     ],
+     "mood_parameters": {
+      "energy": 0.3,
+      "valence": 0.25,
+      "danceability": 0.35,
+      "acousticness": 0.55,
+      "instrumentalness": 0.3
+     },
+     "bpm": 72,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 12,
+     "title": "Air",
+     "artists": [
+      "BICEP",
+      "SOARR"
+     ],
+     "primary_artist": "BICEP",
+     "duration": "4:23",
+     "duration_sec": 263,
+     "spotify_track_id": "2infXICqVSUM3bbGSOgFOY",
+     "spotify_uri": "spotify:track:2infXICqVSUM3bbGSOgFOY",
+     "spotify_url": "https://open.spotify.com/track/2infXICqVSUM3bbGSOgFOY",
+     "genres": [
+      "electronic"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "breakbeat",
+      "melodic house",
+      "uk bass"
+     ],
+     "mood": [
+      "euphoric",
+      "driving",
+      "nostalgic"
+     ],
+     "mood_parameters": {
+      "energy": 0.8,
+      "valence": 0.55,
+      "danceability": 0.75,
+      "acousticness": 0.05,
+      "instrumentalness": 0.6
+     },
+     "bpm": 130,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 13,
+     "title": "Face the Wall - Dark-Side Mix",
+     "artists": [
+      "Peter Gabriel"
+     ],
+     "primary_artist": "Peter Gabriel",
+     "duration": "4:47",
+     "duration_sec": 287,
+     "spotify_track_id": "1g8rsnKJGTQmtUGArw9bZa",
+     "spotify_uri": "spotify:track:1g8rsnKJGTQmtUGArw9bZa",
+     "spotify_url": "https://open.spotify.com/track/1g8rsnKJGTQmtUGArw9bZa",
+     "genres": [
+      "alt"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "art rock",
+      "art pop",
+      "progressive pop"
+     ],
+     "mood": [
+      "brooding",
+      "atmospheric",
+      "introspective"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.35,
+      "danceability": 0.45,
+      "acousticness": 0.3,
+      "instrumentalness": 0.1
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 14,
+     "title": "BATTISTA",
+     "artists": [
+      "BATTISTA"
+     ],
+     "primary_artist": "BATTISTA",
+     "duration": "2:38",
+     "duration_sec": 158,
+     "spotify_track_id": "6fxrkrFagp3S5IK1mxRJxZ",
+     "spotify_uri": "spotify:track:6fxrkrFagp3S5IK1mxRJxZ",
+     "spotify_url": "https://open.spotify.com/track/6fxrkrFagp3S5IK1mxRJxZ",
+     "genres": [
+      "hip-hop",
+      "world"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "italian rap",
+      "neapolitan rap",
+      "spoken word",
+      "folk sampling"
+     ],
+     "mood": [
+      "intense",
+      "mystical",
+      "raw"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.35,
+      "danceability": 0.3,
+      "acousticness": 0.45,
+      "instrumentalness": 0.0
+     },
+     "bpm": null,
      "bpm_source": "estimated"
     }
    ]
@@ -87145,6 +87693,585 @@
     "instrumentalness": 0.2
    },
    "bpm": 110,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 50,
+   "playlist_name": "New Release Playlist #50",
+   "playlist_id": "3IR3vQvxNVqesb5l7oUcsL",
+   "position_in_playlist": 1,
+   "title": "believe",
+   "artists": [
+    "JGrrey"
+   ],
+   "primary_artist": "JGrrey",
+   "duration": "2:26",
+   "duration_sec": 146,
+   "spotify_track_id": "3Ni3bVQHd9z8S7I3Fji8Wa",
+   "spotify_uri": "spotify:track:3Ni3bVQHd9z8S7I3Fji8Wa",
+   "spotify_url": "https://open.spotify.com/track/3Ni3bVQHd9z8S7I3Fji8Wa",
+   "genres": [
+    "neo-soul",
+    "alt"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "alt r&b",
+    "uk soul",
+    "bedroom soul"
+   ],
+   "mood": [
+    "intimate",
+    "hopeful",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.55,
+    "danceability": 0.5,
+    "acousticness": 0.6,
+    "instrumentalness": 0.05
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 50,
+   "playlist_name": "New Release Playlist #50",
+   "playlist_id": "3IR3vQvxNVqesb5l7oUcsL",
+   "position_in_playlist": 2,
+   "title": "Dersen Cafe (Live at Real World Studios)",
+   "artists": [
+    "Alfa Mist"
+   ],
+   "primary_artist": "Alfa Mist",
+   "duration": "4:16",
+   "duration_sec": 256,
+   "spotify_track_id": "4h1k2w76dIkyO7ZAOZnD0y",
+   "spotify_uri": "spotify:track:4h1k2w76dIkyO7ZAOZnD0y",
+   "spotify_url": "https://open.spotify.com/track/4h1k2w76dIkyO7ZAOZnD0y",
+   "genres": [
+    "uk-jazz",
+    "jazz"
+   ],
+   "genre_primary": "uk-jazz",
+   "subgenres": [
+    "jazz",
+    "uk jazz",
+    "jazz-hop",
+    "live session"
+   ],
+   "mood": [
+    "contemplative",
+    "mellow",
+    "sophisticated"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.45,
+    "danceability": 0.45,
+    "acousticness": 0.75,
+    "instrumentalness": 0.9
+   },
+   "bpm": 85,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 50,
+   "playlist_name": "New Release Playlist #50",
+   "playlist_id": "3IR3vQvxNVqesb5l7oUcsL",
+   "position_in_playlist": 3,
+   "title": "Shouldn't Be",
+   "artists": [
+    "Goya Gumbani",
+    "Joe Armon-Jones"
+   ],
+   "primary_artist": "Goya Gumbani",
+   "duration": "3:13",
+   "duration_sec": 193,
+   "spotify_track_id": "673zvhm886bDNuqeDr4IDP",
+   "spotify_uri": "spotify:track:673zvhm886bDNuqeDr4IDP",
+   "spotify_url": "https://open.spotify.com/track/673zvhm886bDNuqeDr4IDP",
+   "genres": [
+    "hip-hop",
+    "uk-jazz"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "jazz rap",
+    "uk hip-hop",
+    "boom bap"
+   ],
+   "mood": [
+    "laid-back",
+    "smoky",
+    "reflective"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.45,
+    "danceability": 0.6,
+    "acousticness": 0.5,
+    "instrumentalness": 0.2
+   },
+   "bpm": 88,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 50,
+   "playlist_name": "New Release Playlist #50",
+   "playlist_id": "3IR3vQvxNVqesb5l7oUcsL",
+   "position_in_playlist": 4,
+   "title": "Swollen",
+   "artists": [
+    "Audrey Powne"
+   ],
+   "primary_artist": "Audrey Powne",
+   "duration": "5:52",
+   "duration_sec": 352,
+   "spotify_track_id": "2QsVOhOpbmQrFKsZXTDl0S",
+   "spotify_uri": "spotify:track:2QsVOhOpbmQrFKsZXTDl0S",
+   "spotify_url": "https://open.spotify.com/track/2QsVOhOpbmQrFKsZXTDl0S",
+   "genres": [
+    "jazz",
+    "neo-soul"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "spiritual jazz",
+    "vocal jazz",
+    "jazz-soul"
+   ],
+   "mood": [
+    "soulful",
+    "yearning",
+    "expansive"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.45,
+    "danceability": 0.4,
+    "acousticness": 0.7,
+    "instrumentalness": 0.4
+   },
+   "bpm": 76,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 50,
+   "playlist_name": "New Release Playlist #50",
+   "playlist_id": "3IR3vQvxNVqesb5l7oUcsL",
+   "position_in_playlist": 5,
+   "title": "Die On This Hill (Live) | Presented by Spotify",
+   "artists": [
+    "SIENNA SPIRO"
+   ],
+   "primary_artist": "SIENNA SPIRO",
+   "duration": "3:54",
+   "duration_sec": 234,
+   "spotify_track_id": "4kHwhIGe7Olzqu1ejo0xHg",
+   "spotify_uri": "spotify:track:4kHwhIGe7Olzqu1ejo0xHg",
+   "spotify_url": "https://open.spotify.com/track/4kHwhIGe7Olzqu1ejo0xHg",
+   "genres": [
+    "neo-soul"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "soul",
+    "soul ballad",
+    "uk soul",
+    "live session"
+   ],
+   "mood": [
+    "powerful",
+    "heartfelt",
+    "defiant"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.3,
+    "danceability": 0.35,
+    "acousticness": 0.6,
+    "instrumentalness": 0.0
+   },
+   "bpm": 70,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 50,
+   "playlist_name": "New Release Playlist #50",
+   "playlist_id": "3IR3vQvxNVqesb5l7oUcsL",
+   "position_in_playlist": 6,
+   "title": "Damn - Abbey Road Gospel Version",
+   "artists": [
+    "Nightmares On Wax",
+    "Chyna B"
+   ],
+   "primary_artist": "Nightmares On Wax",
+   "duration": "4:41",
+   "duration_sec": 281,
+   "spotify_track_id": "3LFNBzGnbKQBTlWgOjThKj",
+   "spotify_uri": "spotify:track:3LFNBzGnbKQBTlWgOjThKj",
+   "spotify_url": "https://open.spotify.com/track/3LFNBzGnbKQBTlWgOjThKj",
+   "genres": [
+    "downtempo",
+    "soul-funk"
+   ],
+   "genre_primary": "downtempo",
+   "subgenres": [
+    "downtempo",
+    "gospel soul",
+    "trip-hop",
+    "orchestral soul"
+   ],
+   "mood": [
+    "uplifting",
+    "spiritual",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.65,
+    "danceability": 0.5,
+    "acousticness": 0.6,
+    "instrumentalness": 0.1
+   },
+   "bpm": 92,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 50,
+   "playlist_name": "New Release Playlist #50",
+   "playlist_id": "3IR3vQvxNVqesb5l7oUcsL",
+   "position_in_playlist": 7,
+   "title": "Get A Little Down",
+   "artists": [
+    "Melé",
+    "Reek0",
+    "Marla Kether"
+   ],
+   "primary_artist": "Melé",
+   "duration": "4:42",
+   "duration_sec": 282,
+   "spotify_track_id": "5UwczBnC2HJT36jt3Bt7M5",
+   "spotify_uri": "spotify:track:5UwczBnC2HJT36jt3Bt7M5",
+   "spotify_url": "https://open.spotify.com/track/5UwczBnC2HJT36jt3Bt7M5",
+   "genres": [
+    "soulful-house",
+    "electronic"
+   ],
+   "genre_primary": "soulful-house",
+   "subgenres": [
+    "house",
+    "deep house",
+    "funky house",
+    "jazz house"
+   ],
+   "mood": [
+    "groovy",
+    "sunny",
+    "sensual"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.65,
+    "danceability": 0.8,
+    "acousticness": 0.2,
+    "instrumentalness": 0.4
+   },
+   "bpm": 122,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 50,
+   "playlist_name": "New Release Playlist #50",
+   "playlist_id": "3IR3vQvxNVqesb5l7oUcsL",
+   "position_in_playlist": 8,
+   "title": "Overture (feat. Nate Smith, Shibo)",
+   "artists": [
+    "Kiefer",
+    "Nate Smith",
+    "Shibo"
+   ],
+   "primary_artist": "Kiefer",
+   "duration": "2:48",
+   "duration_sec": 168,
+   "spotify_track_id": "2NvLivoGmNiAxKdI6ylzPk",
+   "spotify_uri": "spotify:track:2NvLivoGmNiAxKdI6ylzPk",
+   "spotify_url": "https://open.spotify.com/track/2NvLivoGmNiAxKdI6ylzPk",
+   "genres": [
+    "jazz",
+    "hip-hop"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "jazz-hop",
+    "beat music",
+    "fusion"
+   ],
+   "mood": [
+    "playful",
+    "bright",
+    "intricate"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.6,
+    "danceability": 0.55,
+    "acousticness": 0.55,
+    "instrumentalness": 0.9
+   },
+   "bpm": 92,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 50,
+   "playlist_name": "New Release Playlist #50",
+   "playlist_id": "3IR3vQvxNVqesb5l7oUcsL",
+   "position_in_playlist": 9,
+   "title": "Be Careful II",
+   "artists": [
+    "Dawuna"
+   ],
+   "primary_artist": "Dawuna",
+   "duration": "4:43",
+   "duration_sec": 283,
+   "spotify_track_id": "5XjiozytXOWnBQFXrvy16G",
+   "spotify_uri": "spotify:track:5XjiozytXOWnBQFXrvy16G",
+   "spotify_url": "https://open.spotify.com/track/5XjiozytXOWnBQFXrvy16G",
+   "genres": [
+    "neo-soul",
+    "alt"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "experimental soul",
+    "psychedelic soul",
+    "lo-fi r&b"
+   ],
+   "mood": [
+    "hazy",
+    "introspective",
+    "melancholic"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.3,
+    "danceability": 0.45,
+    "acousticness": 0.4,
+    "instrumentalness": 0.15
+   },
+   "bpm": 80,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 50,
+   "playlist_name": "New Release Playlist #50",
+   "playlist_id": "3IR3vQvxNVqesb5l7oUcsL",
+   "position_in_playlist": 10,
+   "title": "Rare Heir",
+   "artists": [
+    "Talib Kweli",
+    "Large Professor",
+    "Bun B"
+   ],
+   "primary_artist": "Talib Kweli",
+   "duration": "2:16",
+   "duration_sec": 136,
+   "spotify_track_id": "1q5EOELOsOL1csuY70GUnJ",
+   "spotify_uri": "spotify:track:1q5EOELOsOL1csuY70GUnJ",
+   "spotify_url": "https://open.spotify.com/track/1q5EOELOsOL1csuY70GUnJ",
+   "genres": [
+    "hip-hop"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "boom bap",
+    "conscious rap",
+    "east coast hip-hop"
+   ],
+   "mood": [
+    "assertive",
+    "gritty",
+    "confident"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.55,
+    "danceability": 0.75,
+    "acousticness": 0.15,
+    "instrumentalness": 0.0
+   },
+   "bpm": 93,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 50,
+   "playlist_name": "New Release Playlist #50",
+   "playlist_id": "3IR3vQvxNVqesb5l7oUcsL",
+   "position_in_playlist": 11,
+   "title": "Croak Dream - Live",
+   "artists": [
+    "Puma Blue"
+   ],
+   "primary_artist": "Puma Blue",
+   "duration": "6:04",
+   "duration_sec": 364,
+   "spotify_track_id": "4R5tLsPUPccachucgZyagX",
+   "spotify_uri": "spotify:track:4R5tLsPUPccachucgZyagX",
+   "spotify_url": "https://open.spotify.com/track/4R5tLsPUPccachucgZyagX",
+   "genres": [
+    "alt",
+    "neo-soul"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "alternative",
+    "dream pop",
+    "jazz-soul",
+    "slowcore"
+   ],
+   "mood": [
+    "dreamy",
+    "melancholic",
+    "nocturnal"
+   ],
+   "mood_parameters": {
+    "energy": 0.3,
+    "valence": 0.25,
+    "danceability": 0.35,
+    "acousticness": 0.55,
+    "instrumentalness": 0.3
+   },
+   "bpm": 72,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 50,
+   "playlist_name": "New Release Playlist #50",
+   "playlist_id": "3IR3vQvxNVqesb5l7oUcsL",
+   "position_in_playlist": 12,
+   "title": "Air",
+   "artists": [
+    "BICEP",
+    "SOARR"
+   ],
+   "primary_artist": "BICEP",
+   "duration": "4:23",
+   "duration_sec": 263,
+   "spotify_track_id": "2infXICqVSUM3bbGSOgFOY",
+   "spotify_uri": "spotify:track:2infXICqVSUM3bbGSOgFOY",
+   "spotify_url": "https://open.spotify.com/track/2infXICqVSUM3bbGSOgFOY",
+   "genres": [
+    "electronic"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "breakbeat",
+    "melodic house",
+    "uk bass"
+   ],
+   "mood": [
+    "euphoric",
+    "driving",
+    "nostalgic"
+   ],
+   "mood_parameters": {
+    "energy": 0.8,
+    "valence": 0.55,
+    "danceability": 0.75,
+    "acousticness": 0.05,
+    "instrumentalness": 0.6
+   },
+   "bpm": 130,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 50,
+   "playlist_name": "New Release Playlist #50",
+   "playlist_id": "3IR3vQvxNVqesb5l7oUcsL",
+   "position_in_playlist": 13,
+   "title": "Face the Wall - Dark-Side Mix",
+   "artists": [
+    "Peter Gabriel"
+   ],
+   "primary_artist": "Peter Gabriel",
+   "duration": "4:47",
+   "duration_sec": 287,
+   "spotify_track_id": "1g8rsnKJGTQmtUGArw9bZa",
+   "spotify_uri": "spotify:track:1g8rsnKJGTQmtUGArw9bZa",
+   "spotify_url": "https://open.spotify.com/track/1g8rsnKJGTQmtUGArw9bZa",
+   "genres": [
+    "alt"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "art rock",
+    "art pop",
+    "progressive pop"
+   ],
+   "mood": [
+    "brooding",
+    "atmospheric",
+    "introspective"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.35,
+    "danceability": 0.45,
+    "acousticness": 0.3,
+    "instrumentalness": 0.1
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 50,
+   "playlist_name": "New Release Playlist #50",
+   "playlist_id": "3IR3vQvxNVqesb5l7oUcsL",
+   "position_in_playlist": 14,
+   "title": "BATTISTA",
+   "artists": [
+    "BATTISTA"
+   ],
+   "primary_artist": "BATTISTA",
+   "duration": "2:38",
+   "duration_sec": 158,
+   "spotify_track_id": "6fxrkrFagp3S5IK1mxRJxZ",
+   "spotify_uri": "spotify:track:6fxrkrFagp3S5IK1mxRJxZ",
+   "spotify_url": "https://open.spotify.com/track/6fxrkrFagp3S5IK1mxRJxZ",
+   "genres": [
+    "hip-hop",
+    "world"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "italian rap",
+    "neapolitan rap",
+    "spoken word",
+    "folk sampling"
+   ],
+   "mood": [
+    "intense",
+    "mystical",
+    "raw"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.35,
+    "danceability": 0.3,
+    "acousticness": 0.45,
+    "instrumentalness": 0.0
+   },
+   "bpm": null,
    "bpm_source": "estimated"
   }
  ]
