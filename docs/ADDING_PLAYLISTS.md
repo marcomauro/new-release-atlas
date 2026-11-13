@@ -21,7 +21,7 @@ the live map.
 | Archive | Content | Role |
 |---|---|---|
 | `legacy/data/spotify_archive(.json\|_genres\|_features)` | #12–#32 (frozen) | legacy / extreme fallback — **not** the live source |
-| **`data/spotify_archive_enriched.json`** | #1–#36 + extra | **live source** (what `build_graph` picks) |
+| **`data/spotify_archive_enriched.json`** | #1–#50 + extra | **live source** (what `build_graph` picks) |
 
 ---
 
