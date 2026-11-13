@@ -58,6 +58,43 @@ export function ProgressRow({ pos, dur, onSeek }) {
   );
 }
 
+// Mute toggle · volume slider · level, on the same 30px side columns as the
+// progress row. `volume` is 0–100; `onVolume(v)` and `onMute()` are optional.
+export function VolumeRow({ volume, muted, onVolume, onMute }) {
+  const silent = muted || volume === 0;
+  const shown = silent ? 0 : volume;
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+      <button
+        onClick={onMute}
+        title={silent ? "Unmute" : "Mute"}
+        aria-label={silent ? "Unmute" : "Mute"}
+        aria-pressed={silent}
+        style={{ width: 30, height: 22, padding: 0, display: "flex", alignItems: "center", justifyContent: "flex-end", background: "transparent", border: "none", color: silent ? MUTED : INK, cursor: "pointer" }}
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M2 6h2.5L8 3v10L4.5 10H2z" fill="currentColor" />
+          {silent ? (
+            <path d="M10.5 6l4 4M14.5 6l-4 4" />
+          ) : (
+            <>
+              <path d="M10.5 6a3 3 0 0 1 0 4" />
+              {volume > 50 && <path d="M12.3 4a5.6 5.6 0 0 1 0 8" />}
+            </>
+          )}
+        </svg>
+      </button>
+      <input
+        type="range" min="0" max="100" step="1" value={shown}
+        onChange={(e) => onVolume && onVolume(Number(e.target.value))}
+        aria-label="Volume" title={`Volume ${shown}%`}
+        style={{ flex: 1, minWidth: 0, height: 20, margin: 0, accentColor: INK, cursor: "pointer" }}
+      />
+      <span style={{ fontSize: 10, color: MUTED, width: 30 }}>{shown}</span>
+    </div>
+  );
+}
+
 // Shuffle · previous · play/pause · next · repeat, spread along the width.
 export function TransportRow({ shuffle, onShuffle, many, onPrev, onNext, paused, onToggle, repeat, onRepeat }) {
   return (

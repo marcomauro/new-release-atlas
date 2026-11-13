@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { MUTED } from "./theme.js";
-import { Shell, Marquee, ProgressRow, TransportRow, SourceSwitch, navBtn } from "./playerChrome.jsx";
+import { Shell, Marquee, ProgressRow, TransportRow, VolumeRow, SourceSwitch, navBtn } from "./playerChrome.jsx";
 import { step, firstPlayable, afterEnd, shuffledOrder } from "./playbackRoute.js";
 
 // Carica una sola volta l'IFrame Player API di YouTube.
@@ -31,6 +31,18 @@ function loadYouTubeApi() {
 
 export function preloadYouTubeApi() {
   if (typeof window !== "undefined") loadYouTubeApi().catch(() => {});
+}
+
+// The chosen volume (0–100) is remembered across sessions.
+const VOLUME_KEY = "mn-yt-volume";
+function storedVolume() {
+  try {
+    const raw = localStorage.getItem(VOLUME_KEY);
+    const v = raw === null ? NaN : Number(raw);
+    return Number.isFinite(v) ? Math.min(100, Math.max(0, Math.round(v))) : 100;
+  } catch (e) {
+    return 100;
+  }
 }
 
 // YT.PlayerState values used here.
@@ -69,6 +81,9 @@ export default function YouTubePlayer({ tracks, index, setIndex, onClose, bottom
   const [shuffle, setShuffle] = useState(false);
   const [order, setOrder] = useState(null);
   const [repeat, setRepeat] = useState("off");       // off | all | one
+  const [volume, setVolume] = useState(storedVolume); // 0–100
+  const [muted, setMuted] = useState(false);
+  const volTouch = useRef(0);                        // last time the app set the volume
 
   // Latest values for the player's event callbacks, which are bound once.
   const live = useRef({});
@@ -111,7 +126,12 @@ export default function YouTubePlayer({ tracks, index, setIndex, onClose, bottom
         height: "100%",
         playerVars: { playsinline: 1, rel: 0, autoplay: 1, origin: window.location.origin },
         events: {
-          onReady: () => { if (!cancelled) setReady(true); },
+          onReady: (e) => {
+            if (cancelled) return;
+            volTouch.current = Date.now();
+            e.target.setVolume(storedVolume());
+            setReady(true);
+          },
           onStateChange: (e) => {
             if (e.data === PLAYING) {
               setPaused(false);
@@ -185,6 +205,13 @@ export default function YouTubePlayer({ tracks, index, setIndex, onClose, bottom
       const p = playerRef.current;
       if (document.hidden || !p || !p.getCurrentTime) return;
       setProg({ pos: (p.getCurrentTime() || 0) * 1000, dur: (p.getDuration() || 0) * 1000 });
+      // Follow changes made with the video's own volume control — but not
+      // right after ours, while the player still reports the old value.
+      if (Date.now() - volTouch.current > 1000 && p.getVolume) {
+        const v = p.getVolume();
+        if (typeof v === "number") setVolume(Math.round(v));
+        setMuted(!!p.isMuted());
+      }
     }, 500);
     return () => clearInterval(id);
   }, [ready]);
@@ -217,6 +244,26 @@ export default function YouTubePlayer({ tracks, index, setIndex, onClose, bottom
     if (!pl) return;
     setProg((x) => ({ ...x, pos: ms }));
     pl.seekTo(ms / 1000, true);
+  };
+  const changeVolume = (v) => {
+    setVolume(v);
+    setMuted(false);
+    try { localStorage.setItem(VOLUME_KEY, String(v)); } catch (e) { /* noop */ }
+    const pl = p();
+    if (!pl) return;
+    volTouch.current = Date.now();
+    pl.setVolume(v);
+    pl.unMute();
+  };
+  const toggleMute = () => {
+    // Unmuting from a zero volume would stay silent: bring it back up.
+    if (!muted && volume === 0) { changeVolume(50); return; }
+    const next = !muted;
+    setMuted(next);
+    const pl = p();
+    if (!pl) return;
+    volTouch.current = Date.now();
+    if (next) pl.mute(); else pl.unMute();
   };
   const toggleShuffle = () => {
     const next = !shuffle;
@@ -263,6 +310,9 @@ export default function YouTubePlayer({ tracks, index, setIndex, onClose, bottom
             shuffle={shuffle} onShuffle={toggleShuffle} many={many} onPrev={goPrev} onNext={goNext}
             paused={paused} onToggle={toggle} repeat={repeat} onRepeat={cycleRepeat}
           />
+
+          {/* row 4: volume */}
+          <VolumeRow volume={volume} muted={muted} onVolume={changeVolume} onMute={toggleMute} />
         </div>
       </div>
 
