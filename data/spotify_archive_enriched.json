@@ -4,7 +4,7 @@
   "source_account": "Spotify",
   "generated_at": "2026-05-23T12:27:11.266084",
   "description": "Archivio strutturato delle 'New Release Playlist' di Marco Mauro, da consultare via AI per generare playlist tematiche o effettuare analisi.",
-  "playlist_range": "#1 - #51 (51 New Release Playlist consecutive) + 1 extra (#101)",
+  "playlist_range": "#1 - #52 (52 New Release Playlist consecutive) + 1 extra (#101)",
   "note_on_gaps": "Nessuno: il dataset copre integralmente le New Release Playlist da #12 a #36. Le #1-#11 e #13-#17 si chiamano 'New Release Friday #N', dalla #12 e #18 in poi 'New Release Playlist #N'. La '2025 Fav Album Playlist' e' una compilation tematica (extra), spostata fuori dalla sequenza NRP al playlist_number 101.",
   "schema_per_track": {
    "playlist_number": "int (numero progressivo della playlist di origine)",
@@ -27,9 +27,9 @@
    "bpm": "int | null (null = non verificabile, mai inventato)",
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
-  "total_tracks_with_duplicates": 1107,
-  "unique_tracks": 1082,
-  "unique_artists": 987,
+  "total_tracks_with_duplicates": 1128,
+  "unique_tracks": 1103,
+  "unique_artists": 999,
   "top_artists": [
    [
     "Brian Jackson",
@@ -166,8 +166,8 @@
   "enrichment_note": "Caratterizzazione musicale esperta aggiunta da Claude (giugno 2026): subgenres granulari, mood, mood_parameters (energy/valence/danceability/acousticness/instrumentalness, scala 0-1, stime qualitative da esperto), bpm (int o null) e bpm_source. bpm_source='verified' = confermato da fonti web DJ-pool (Beatsource, BPM Supreme, SongBPM, Tunebat); 'estimated' = stima fondata sul tempo tipico del brano/genere (presente solo dove molto affidabile, es. house 120-126); bpm=null dove non verificabile, mai inventato. I campi 'genres' e 'genre_primary' preesistenti (tassonomia a 12 macro-generi della pipeline new-release-atlas) sono INTOCCATI e restano la classificazione di riferimento.",
   "extended_at": "2026-06-11T09:12:01.887032",
   "extension_note": "Playlist #33 e #34 aggiunte a giugno 2026 con caratterizzazione esperta completa. Per queste 2 playlist anche genres/genre_primary sono assegnati dall'AI (coerenti con la tassonomia a 12 macro-generi della pipeline). Nota: 'Fainted Light' (Indra Lesmana) in #34 è un duplicato cross-playlist di #32 (stesso track ID).",
-  "merged_at": "2026-11-23T23:25:55Z",
-  "merge_note": "add_playlist.py: aggiunte ['#51'] (14 occorrenze, 14 brani nuovi)",
+  "merged_at": "2026-11-23T23:33:09Z",
+  "merge_note": "add_playlist.py: aggiunte ['#52'] (21 occorrenze, 21 brani nuovi)",
   "cross_playlist_duplicates": [
    {
     "spotify_track_id": "0ACrjHByr2GzPVTxKbDBix",
@@ -43545,6 +43545,831 @@
       "danceability": 0.35,
       "acousticness": 0.6,
       "instrumentalness": 0.85
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    }
+   ]
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "spotify_url": "https://open.spotify.com/playlist/1lkzIDRfPiq53YZ6xKAaz4",
+   "description": "",
+   "date": null,
+   "track_count": 21,
+   "tracks": [
+    {
+     "position_in_playlist": 1,
+     "title": "Carnage (feat. Little Simz)",
+     "artists": [
+      "Chase & Status",
+      "Little Simz"
+     ],
+     "primary_artist": "Chase & Status",
+     "duration": "3:09",
+     "duration_sec": 189,
+     "spotify_track_id": "2DNHy7NQNQO40EkGlrgtkY",
+     "spotify_uri": "spotify:track:2DNHy7NQNQO40EkGlrgtkY",
+     "spotify_url": "https://open.spotify.com/track/2DNHy7NQNQO40EkGlrgtkY",
+     "genres": [
+      "electronic",
+      "hip-hop"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "drum & bass",
+      "drum and bass",
+      "uk rap",
+      "jungle"
+     ],
+     "mood": [
+      "aggressive",
+      "high-octane",
+      "dark"
+     ],
+     "mood_parameters": {
+      "energy": 0.92,
+      "valence": 0.4,
+      "danceability": 0.65,
+      "acousticness": 0.05,
+      "instrumentalness": 0.2
+     },
+     "bpm": 174,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 2,
+     "title": "Moving at Light Speed",
+     "artists": [
+      "Thundercat",
+      "Button Masher"
+     ],
+     "primary_artist": "Thundercat",
+     "duration": "1:47",
+     "duration_sec": 107,
+     "spotify_track_id": "6jEO5RmiesaiY7zlQDoHq4",
+     "spotify_uri": "spotify:track:6jEO5RmiesaiY7zlQDoHq4",
+     "spotify_url": "https://open.spotify.com/track/6jEO5RmiesaiY7zlQDoHq4",
+     "genres": [
+      "soul-funk",
+      "electronic"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "funk",
+      "jazz-funk",
+      "video game funk",
+      "bass fusion"
+     ],
+     "mood": [
+      "playful",
+      "frenetic",
+      "quirky"
+     ],
+     "mood_parameters": {
+      "energy": 0.75,
+      "valence": 0.7,
+      "danceability": 0.62,
+      "acousticness": 0.2,
+      "instrumentalness": 0.6
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 3,
+     "title": "Fallin’ Dreams (feat. Michael Kiwanuka)",
+     "artists": [
+      "Daniele Luppi",
+      "Michael Kiwanuka"
+     ],
+     "primary_artist": "Daniele Luppi",
+     "duration": "3:32",
+     "duration_sec": 212,
+     "spotify_track_id": "12JmISVrUvfwoZzt0oW2Xu",
+     "spotify_uri": "spotify:track:12JmISVrUvfwoZzt0oW2Xu",
+     "spotify_url": "https://open.spotify.com/track/12JmISVrUvfwoZzt0oW2Xu",
+     "genres": [
+      "soul-funk",
+      "alt"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "soul",
+      "cinematic soul",
+      "psychedelic soul",
+      "orchestral pop"
+     ],
+     "mood": [
+      "dreamy",
+      "melancholic",
+      "cinematic"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.4,
+      "danceability": 0.42,
+      "acousticness": 0.55,
+      "instrumentalness": 0.1
+     },
+     "bpm": 86,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 4,
+     "title": "Overload",
+     "artists": [
+      "Quinn Oulton"
+     ],
+     "primary_artist": "Quinn Oulton",
+     "duration": "3:08",
+     "duration_sec": 188,
+     "spotify_track_id": "7fS5w1KmDQov0ifAl7VyIs",
+     "spotify_uri": "spotify:track:7fS5w1KmDQov0ifAl7VyIs",
+     "spotify_url": "https://open.spotify.com/track/7fS5w1KmDQov0ifAl7VyIs",
+     "genres": [
+      "neo-soul",
+      "alt"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "alt r&b",
+      "uk soul",
+      "psychedelic soul"
+     ],
+     "mood": [
+      "restless",
+      "introspective",
+      "hazy"
+     ],
+     "mood_parameters": {
+      "energy": 0.5,
+      "valence": 0.4,
+      "danceability": 0.55,
+      "acousticness": 0.35,
+      "instrumentalness": 0.05
+     },
+     "bpm": 98,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 5,
+     "title": "Hard To Say Goodbye",
+     "artists": [
+      "MorMor"
+     ],
+     "primary_artist": "MorMor",
+     "duration": "5:23",
+     "duration_sec": 323,
+     "spotify_track_id": "6xwDnWa6x43tcbpQDeBIQp",
+     "spotify_uri": "spotify:track:6xwDnWa6x43tcbpQDeBIQp",
+     "spotify_url": "https://open.spotify.com/track/6xwDnWa6x43tcbpQDeBIQp",
+     "genres": [
+      "alt",
+      "neo-soul"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "alternative",
+      "psychedelic pop",
+      "bedroom soul",
+      "dream pop"
+     ],
+     "mood": [
+      "melancholic",
+      "hazy",
+      "bittersweet"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.35,
+      "danceability": 0.5,
+      "acousticness": 0.4,
+      "instrumentalness": 0.15
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 6,
+     "title": "More",
+     "artists": [
+      "Fink",
+      "Jan Blomqvist"
+     ],
+     "primary_artist": "Fink",
+     "duration": "9:17",
+     "duration_sec": 557,
+     "spotify_track_id": "0wNr3LhIQxyTYyT9ljSELV",
+     "spotify_uri": "spotify:track:0wNr3LhIQxyTYyT9ljSELV",
+     "spotify_url": "https://open.spotify.com/track/0wNr3LhIQxyTYyT9ljSELV",
+     "genres": [
+      "electronic",
+      "downtempo"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "melodic house",
+      "deep house",
+      "folktronica"
+     ],
+     "mood": [
+      "hypnotic",
+      "melancholic",
+      "expansive"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.35,
+      "danceability": 0.7,
+      "acousticness": 0.2,
+      "instrumentalness": 0.4
+     },
+     "bpm": 120,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 7,
+     "title": "Location",
+     "artists": [
+      "Sampa the Great"
+     ],
+     "primary_artist": "Sampa the Great",
+     "duration": "2:34",
+     "duration_sec": 154,
+     "spotify_track_id": "6k15cYdLOjmEMSWHHCArUj",
+     "spotify_uri": "spotify:track:6k15cYdLOjmEMSWHHCArUj",
+     "spotify_url": "https://open.spotify.com/track/6k15cYdLOjmEMSWHHCArUj",
+     "genres": [
+      "hip-hop",
+      "world"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "afro rap",
+      "conscious rap",
+      "alt hip-hop"
+     ],
+     "mood": [
+      "confident",
+      "defiant",
+      "groovy"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.6,
+      "danceability": 0.72,
+      "acousticness": 0.15,
+      "instrumentalness": 0.0
+     },
+     "bpm": 95,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 8,
+     "title": "Ci vuole culo",
+     "artists": [
+      "Lina Simons"
+     ],
+     "primary_artist": "Lina Simons",
+     "duration": "2:55",
+     "duration_sec": 175,
+     "spotify_track_id": "6Q5cTVPqDsECnv5dOOdmEO",
+     "spotify_uri": "spotify:track:6Q5cTVPqDsECnv5dOOdmEO",
+     "spotify_url": "https://open.spotify.com/track/6Q5cTVPqDsECnv5dOOdmEO",
+     "genres": [
+      "hip-hop",
+      "world"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "afro trap",
+      "italian rap",
+      "neapolitan rap"
+     ],
+     "mood": [
+      "ironic",
+      "swaggering",
+      "bouncy"
+     ],
+     "mood_parameters": {
+      "energy": 0.68,
+      "valence": 0.6,
+      "danceability": 0.75,
+      "acousticness": 0.15,
+      "instrumentalness": 0.0
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 9,
+     "title": "Nguyen Nguyen Lose Lose",
+     "artists": [
+      "THAO",
+      "Adrian Quesada"
+     ],
+     "primary_artist": "THAO",
+     "duration": "2:52",
+     "duration_sec": 172,
+     "spotify_track_id": "7dN3K4HLHG08627AGzMc6B",
+     "spotify_uri": "spotify:track:7dN3K4HLHG08627AGzMc6B",
+     "spotify_url": "https://open.spotify.com/track/7dN3K4HLHG08627AGzMc6B",
+     "genres": [
+      "alt",
+      "soul-funk"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "indie",
+      "indie rock",
+      "psychedelic soul",
+      "latin funk"
+     ],
+     "mood": [
+      "wry",
+      "bittersweet",
+      "groovy"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.5,
+      "danceability": 0.6,
+      "acousticness": 0.35,
+      "instrumentalness": 0.05
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 10,
+     "title": "Zero",
+     "artists": [
+      "ALA.NI",
+      "Adrian Younge"
+     ],
+     "primary_artist": "ALA.NI",
+     "duration": "3:41",
+     "duration_sec": 221,
+     "spotify_track_id": "2sPefHIIJ80pDUbBHviOVh",
+     "spotify_uri": "spotify:track:2sPefHIIJ80pDUbBHviOVh",
+     "spotify_url": "https://open.spotify.com/track/2sPefHIIJ80pDUbBHviOVh",
+     "genres": [
+      "soul-funk",
+      "jazz"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "soul",
+      "vintage soul",
+      "cinematic soul",
+      "jazz-soul"
+     ],
+     "mood": [
+      "yearning",
+      "intimate",
+      "cinematic"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.35,
+      "danceability": 0.45,
+      "acousticness": 0.7,
+      "instrumentalness": 0.05
+     },
+     "bpm": 78,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 11,
+     "title": "How Does It Feel ?",
+     "artists": [
+      "Selah Sue",
+      "The Gallands",
+      "Stéphane Galland",
+      "Elvin Galland"
+     ],
+     "primary_artist": "Selah Sue",
+     "duration": "2:41",
+     "duration_sec": 161,
+     "spotify_track_id": "1MK5pRGoWNlexPyzvFscRq",
+     "spotify_uri": "spotify:track:1MK5pRGoWNlexPyzvFscRq",
+     "spotify_url": "https://open.spotify.com/track/1MK5pRGoWNlexPyzvFscRq",
+     "genres": [
+      "neo-soul",
+      "jazz"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "neo-soul",
+      "jazz-soul",
+      "acoustic soul"
+     ],
+     "mood": [
+      "raw",
+      "soulful",
+      "intimate"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.5,
+      "danceability": 0.5,
+      "acousticness": 0.6,
+      "instrumentalness": 0.05
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 12,
+     "title": "Memphis In June",
+     "artists": [
+      "Nina Simone"
+     ],
+     "primary_artist": "Nina Simone",
+     "duration": "2:40",
+     "duration_sec": 160,
+     "spotify_track_id": "16bBYGMdCG9yLjgqYZeKsF",
+     "spotify_uri": "spotify:track:16bBYGMdCG9yLjgqYZeKsF",
+     "spotify_url": "https://open.spotify.com/track/16bBYGMdCG9yLjgqYZeKsF",
+     "genres": [
+      "jazz",
+      "soul-funk"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "vocal jazz",
+      "blues",
+      "soul jazz"
+     ],
+     "mood": [
+      "languid",
+      "nostalgic",
+      "elegant"
+     ],
+     "mood_parameters": {
+      "energy": 0.3,
+      "valence": 0.55,
+      "danceability": 0.45,
+      "acousticness": 0.8,
+      "instrumentalness": 0.05
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 13,
+     "title": "Giga",
+     "artists": [
+      "Renato Grieco"
+     ],
+     "primary_artist": "Renato Grieco",
+     "duration": "3:21",
+     "duration_sec": 201,
+     "spotify_track_id": "5sj3yzjsd2e2RDjqtDanFW",
+     "spotify_uri": "spotify:track:5sj3yzjsd2e2RDjqtDanFW",
+     "spotify_url": "https://open.spotify.com/track/5sj3yzjsd2e2RDjqtDanFW",
+     "genres": [
+      "electronic",
+      "classical"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "experimental",
+      "musique concrète",
+      "electroacoustic",
+      "sound art"
+     ],
+     "mood": [
+      "abstract",
+      "tense",
+      "exploratory"
+     ],
+     "mood_parameters": {
+      "energy": 0.3,
+      "valence": 0.25,
+      "danceability": 0.15,
+      "acousticness": 0.4,
+      "instrumentalness": 0.95
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 14,
+     "title": "Mr Right",
+     "artists": [
+      "Nia Smith"
+     ],
+     "primary_artist": "Nia Smith",
+     "duration": "3:17",
+     "duration_sec": 197,
+     "spotify_track_id": "3rZj4LoO1tK4NsmlVAVe8e",
+     "spotify_uri": "spotify:track:3rZj4LoO1tK4NsmlVAVe8e",
+     "spotify_url": "https://open.spotify.com/track/3rZj4LoO1tK4NsmlVAVe8e",
+     "genres": [
+      "neo-soul",
+      "soul-funk"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "uk soul",
+      "acoustic soul",
+      "alt-soul"
+     ],
+     "mood": [
+      "lonely",
+      "longing",
+      "tender"
+     ],
+     "mood_parameters": {
+      "energy": 0.35,
+      "valence": 0.35,
+      "danceability": 0.5,
+      "acousticness": 0.6,
+      "instrumentalness": 0.0
+     },
+     "bpm": 84,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 15,
+     "title": "LSD on Sunset Blvd",
+     "artists": [
+      "Calibro 35"
+     ],
+     "primary_artist": "Calibro 35",
+     "duration": "3:37",
+     "duration_sec": 217,
+     "spotify_track_id": "3ZmMxr1U0Os7ZCD3aGFU0N",
+     "spotify_uri": "spotify:track:3ZmMxr1U0Os7ZCD3aGFU0N",
+     "spotify_url": "https://open.spotify.com/track/3ZmMxr1U0Os7ZCD3aGFU0N",
+     "genres": [
+      "soul-funk",
+      "jazz"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "funk",
+      "cinematic funk",
+      "library music",
+      "psychedelic jazz-funk"
+     ],
+     "mood": [
+      "cinematic",
+      "groovy",
+      "trippy"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.5,
+      "danceability": 0.62,
+      "acousticness": 0.35,
+      "instrumentalness": 0.85
+     },
+     "bpm": 100,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 16,
+     "title": "Another Night (It's Just) ft. Theo Croker, Daru Jones, Oli Rockberger",
+     "artists": [
+      "China Moses",
+      "Daru Jones",
+      "Theo Croker"
+     ],
+     "primary_artist": "China Moses",
+     "duration": "3:51",
+     "duration_sec": 231,
+     "spotify_track_id": "0dWT5IDit0SKvC50eKNn1w",
+     "spotify_uri": "spotify:track:0dWT5IDit0SKvC50eKNn1w",
+     "spotify_url": "https://open.spotify.com/track/0dWT5IDit0SKvC50eKNn1w",
+     "genres": [
+      "jazz",
+      "neo-soul"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "vocal jazz",
+      "soul jazz",
+      "jazz-hop"
+     ],
+     "mood": [
+      "nocturnal",
+      "sultry",
+      "smoky"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.45,
+      "danceability": 0.55,
+      "acousticness": 0.5,
+      "instrumentalness": 0.1
+     },
+     "bpm": 88,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 17,
+     "title": "NI MAL NI BIEN",
+     "artists": [
+      "La Rumeur",
+      "Chilly Gonzales"
+     ],
+     "primary_artist": "La Rumeur",
+     "duration": "2:39",
+     "duration_sec": 159,
+     "spotify_track_id": "6MfymVGtV28MhHVB82Jz5F",
+     "spotify_uri": "spotify:track:6MfymVGtV28MhHVB82Jz5F",
+     "spotify_url": "https://open.spotify.com/track/6MfymVGtV28MhHVB82Jz5F",
+     "genres": [
+      "hip-hop",
+      "classical"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "french rap",
+      "piano rap",
+      "conscious rap"
+     ],
+     "mood": [
+      "somber",
+      "assertive",
+      "dramatic"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.35,
+      "danceability": 0.55,
+      "acousticness": 0.5,
+      "instrumentalness": 0.0
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 18,
+     "title": "Short Stories",
+     "artists": [
+      "Finn Carter",
+      "Kaidi Akinnibi"
+     ],
+     "primary_artist": "Finn Carter",
+     "duration": "4:37",
+     "duration_sec": 277,
+     "spotify_track_id": "7Lc73uHFNSm75AfxopICDp",
+     "spotify_uri": "spotify:track:7Lc73uHFNSm75AfxopICDp",
+     "spotify_url": "https://open.spotify.com/track/7Lc73uHFNSm75AfxopICDp",
+     "genres": [
+      "uk-jazz",
+      "jazz"
+     ],
+     "genre_primary": "uk-jazz",
+     "subgenres": [
+      "jazz",
+      "uk jazz",
+      "acoustic jazz",
+      "post-bop"
+     ],
+     "mood": [
+      "contemplative",
+      "lyrical",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.5,
+      "danceability": 0.35,
+      "acousticness": 0.85,
+      "instrumentalness": 0.9
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 19,
+     "title": "Wall Street - Remix",
+     "artists": [
+      "Yellow Shoots",
+      "CARRTOONS",
+      "The Musalini"
+     ],
+     "primary_artist": "Yellow Shoots",
+     "duration": "2:39",
+     "duration_sec": 159,
+     "spotify_track_id": "0lgt21Vw3M9oRk9H9gWi0v",
+     "spotify_uri": "spotify:track:0lgt21Vw3M9oRk9H9gWi0v",
+     "spotify_url": "https://open.spotify.com/track/0lgt21Vw3M9oRk9H9gWi0v",
+     "genres": [
+      "hip-hop",
+      "neo-soul"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "uk hip-hop",
+      "jazz rap",
+      "soulful rap"
+     ],
+     "mood": [
+      "laid-back",
+      "confident",
+      "smooth"
+     ],
+     "mood_parameters": {
+      "energy": 0.6,
+      "valence": 0.55,
+      "danceability": 0.7,
+      "acousticness": 0.25,
+      "instrumentalness": 0.05
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 20,
+     "title": "yellow ochre",
+     "artists": [
+      "Greg Spero",
+      "Keyon Harrold"
+     ],
+     "primary_artist": "Greg Spero",
+     "duration": "3:32",
+     "duration_sec": 212,
+     "spotify_track_id": "6kCEimMn0WThczfCTOYCxs",
+     "spotify_uri": "spotify:track:6kCEimMn0WThczfCTOYCxs",
+     "spotify_url": "https://open.spotify.com/track/6kCEimMn0WThczfCTOYCxs",
+     "genres": [
+      "jazz",
+      "electronic"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "nu jazz",
+      "jazz fusion",
+      "ambient jazz"
+     ],
+     "mood": [
+      "meditative",
+      "warm",
+      "dreamy"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.5,
+      "danceability": 0.45,
+      "acousticness": 0.5,
+      "instrumentalness": 0.9
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 21,
+     "title": "MMFSG",
+     "artists": [
+      "Tanerélle"
+     ],
+     "primary_artist": "Tanerélle",
+     "duration": "2:37",
+     "duration_sec": 157,
+     "spotify_track_id": "1tXvMdoaLUV5jCvl3kd1VK",
+     "spotify_uri": "spotify:track:1tXvMdoaLUV5jCvl3kd1VK",
+     "spotify_url": "https://open.spotify.com/track/1tXvMdoaLUV5jCvl3kd1VK",
+     "genres": [
+      "neo-soul",
+      "alt"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "psychedelic soul",
+      "alt r&b",
+      "neo-soul"
+     ],
+     "mood": [
+      "sensual",
+      "dreamy",
+      "hypnotic"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.5,
+      "danceability": 0.55,
+      "acousticness": 0.35,
+      "instrumentalness": 0.05
      },
      "bpm": null,
      "bpm_source": "estimated"
@@ -89420,6 +90245,883 @@
     "danceability": 0.35,
     "acousticness": 0.6,
     "instrumentalness": 0.85
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 1,
+   "title": "Carnage (feat. Little Simz)",
+   "artists": [
+    "Chase & Status",
+    "Little Simz"
+   ],
+   "primary_artist": "Chase & Status",
+   "duration": "3:09",
+   "duration_sec": 189,
+   "spotify_track_id": "2DNHy7NQNQO40EkGlrgtkY",
+   "spotify_uri": "spotify:track:2DNHy7NQNQO40EkGlrgtkY",
+   "spotify_url": "https://open.spotify.com/track/2DNHy7NQNQO40EkGlrgtkY",
+   "genres": [
+    "electronic",
+    "hip-hop"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "drum & bass",
+    "drum and bass",
+    "uk rap",
+    "jungle"
+   ],
+   "mood": [
+    "aggressive",
+    "high-octane",
+    "dark"
+   ],
+   "mood_parameters": {
+    "energy": 0.92,
+    "valence": 0.4,
+    "danceability": 0.65,
+    "acousticness": 0.05,
+    "instrumentalness": 0.2
+   },
+   "bpm": 174,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 2,
+   "title": "Moving at Light Speed",
+   "artists": [
+    "Thundercat",
+    "Button Masher"
+   ],
+   "primary_artist": "Thundercat",
+   "duration": "1:47",
+   "duration_sec": 107,
+   "spotify_track_id": "6jEO5RmiesaiY7zlQDoHq4",
+   "spotify_uri": "spotify:track:6jEO5RmiesaiY7zlQDoHq4",
+   "spotify_url": "https://open.spotify.com/track/6jEO5RmiesaiY7zlQDoHq4",
+   "genres": [
+    "soul-funk",
+    "electronic"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "funk",
+    "jazz-funk",
+    "video game funk",
+    "bass fusion"
+   ],
+   "mood": [
+    "playful",
+    "frenetic",
+    "quirky"
+   ],
+   "mood_parameters": {
+    "energy": 0.75,
+    "valence": 0.7,
+    "danceability": 0.62,
+    "acousticness": 0.2,
+    "instrumentalness": 0.6
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 3,
+   "title": "Fallin’ Dreams (feat. Michael Kiwanuka)",
+   "artists": [
+    "Daniele Luppi",
+    "Michael Kiwanuka"
+   ],
+   "primary_artist": "Daniele Luppi",
+   "duration": "3:32",
+   "duration_sec": 212,
+   "spotify_track_id": "12JmISVrUvfwoZzt0oW2Xu",
+   "spotify_uri": "spotify:track:12JmISVrUvfwoZzt0oW2Xu",
+   "spotify_url": "https://open.spotify.com/track/12JmISVrUvfwoZzt0oW2Xu",
+   "genres": [
+    "soul-funk",
+    "alt"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "soul",
+    "cinematic soul",
+    "psychedelic soul",
+    "orchestral pop"
+   ],
+   "mood": [
+    "dreamy",
+    "melancholic",
+    "cinematic"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.4,
+    "danceability": 0.42,
+    "acousticness": 0.55,
+    "instrumentalness": 0.1
+   },
+   "bpm": 86,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 4,
+   "title": "Overload",
+   "artists": [
+    "Quinn Oulton"
+   ],
+   "primary_artist": "Quinn Oulton",
+   "duration": "3:08",
+   "duration_sec": 188,
+   "spotify_track_id": "7fS5w1KmDQov0ifAl7VyIs",
+   "spotify_uri": "spotify:track:7fS5w1KmDQov0ifAl7VyIs",
+   "spotify_url": "https://open.spotify.com/track/7fS5w1KmDQov0ifAl7VyIs",
+   "genres": [
+    "neo-soul",
+    "alt"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "alt r&b",
+    "uk soul",
+    "psychedelic soul"
+   ],
+   "mood": [
+    "restless",
+    "introspective",
+    "hazy"
+   ],
+   "mood_parameters": {
+    "energy": 0.5,
+    "valence": 0.4,
+    "danceability": 0.55,
+    "acousticness": 0.35,
+    "instrumentalness": 0.05
+   },
+   "bpm": 98,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 5,
+   "title": "Hard To Say Goodbye",
+   "artists": [
+    "MorMor"
+   ],
+   "primary_artist": "MorMor",
+   "duration": "5:23",
+   "duration_sec": 323,
+   "spotify_track_id": "6xwDnWa6x43tcbpQDeBIQp",
+   "spotify_uri": "spotify:track:6xwDnWa6x43tcbpQDeBIQp",
+   "spotify_url": "https://open.spotify.com/track/6xwDnWa6x43tcbpQDeBIQp",
+   "genres": [
+    "alt",
+    "neo-soul"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "alternative",
+    "psychedelic pop",
+    "bedroom soul",
+    "dream pop"
+   ],
+   "mood": [
+    "melancholic",
+    "hazy",
+    "bittersweet"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.35,
+    "danceability": 0.5,
+    "acousticness": 0.4,
+    "instrumentalness": 0.15
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 6,
+   "title": "More",
+   "artists": [
+    "Fink",
+    "Jan Blomqvist"
+   ],
+   "primary_artist": "Fink",
+   "duration": "9:17",
+   "duration_sec": 557,
+   "spotify_track_id": "0wNr3LhIQxyTYyT9ljSELV",
+   "spotify_uri": "spotify:track:0wNr3LhIQxyTYyT9ljSELV",
+   "spotify_url": "https://open.spotify.com/track/0wNr3LhIQxyTYyT9ljSELV",
+   "genres": [
+    "electronic",
+    "downtempo"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "melodic house",
+    "deep house",
+    "folktronica"
+   ],
+   "mood": [
+    "hypnotic",
+    "melancholic",
+    "expansive"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.35,
+    "danceability": 0.7,
+    "acousticness": 0.2,
+    "instrumentalness": 0.4
+   },
+   "bpm": 120,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 7,
+   "title": "Location",
+   "artists": [
+    "Sampa the Great"
+   ],
+   "primary_artist": "Sampa the Great",
+   "duration": "2:34",
+   "duration_sec": 154,
+   "spotify_track_id": "6k15cYdLOjmEMSWHHCArUj",
+   "spotify_uri": "spotify:track:6k15cYdLOjmEMSWHHCArUj",
+   "spotify_url": "https://open.spotify.com/track/6k15cYdLOjmEMSWHHCArUj",
+   "genres": [
+    "hip-hop",
+    "world"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "afro rap",
+    "conscious rap",
+    "alt hip-hop"
+   ],
+   "mood": [
+    "confident",
+    "defiant",
+    "groovy"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.6,
+    "danceability": 0.72,
+    "acousticness": 0.15,
+    "instrumentalness": 0.0
+   },
+   "bpm": 95,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 8,
+   "title": "Ci vuole culo",
+   "artists": [
+    "Lina Simons"
+   ],
+   "primary_artist": "Lina Simons",
+   "duration": "2:55",
+   "duration_sec": 175,
+   "spotify_track_id": "6Q5cTVPqDsECnv5dOOdmEO",
+   "spotify_uri": "spotify:track:6Q5cTVPqDsECnv5dOOdmEO",
+   "spotify_url": "https://open.spotify.com/track/6Q5cTVPqDsECnv5dOOdmEO",
+   "genres": [
+    "hip-hop",
+    "world"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "afro trap",
+    "italian rap",
+    "neapolitan rap"
+   ],
+   "mood": [
+    "ironic",
+    "swaggering",
+    "bouncy"
+   ],
+   "mood_parameters": {
+    "energy": 0.68,
+    "valence": 0.6,
+    "danceability": 0.75,
+    "acousticness": 0.15,
+    "instrumentalness": 0.0
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 9,
+   "title": "Nguyen Nguyen Lose Lose",
+   "artists": [
+    "THAO",
+    "Adrian Quesada"
+   ],
+   "primary_artist": "THAO",
+   "duration": "2:52",
+   "duration_sec": 172,
+   "spotify_track_id": "7dN3K4HLHG08627AGzMc6B",
+   "spotify_uri": "spotify:track:7dN3K4HLHG08627AGzMc6B",
+   "spotify_url": "https://open.spotify.com/track/7dN3K4HLHG08627AGzMc6B",
+   "genres": [
+    "alt",
+    "soul-funk"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "indie",
+    "indie rock",
+    "psychedelic soul",
+    "latin funk"
+   ],
+   "mood": [
+    "wry",
+    "bittersweet",
+    "groovy"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.5,
+    "danceability": 0.6,
+    "acousticness": 0.35,
+    "instrumentalness": 0.05
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 10,
+   "title": "Zero",
+   "artists": [
+    "ALA.NI",
+    "Adrian Younge"
+   ],
+   "primary_artist": "ALA.NI",
+   "duration": "3:41",
+   "duration_sec": 221,
+   "spotify_track_id": "2sPefHIIJ80pDUbBHviOVh",
+   "spotify_uri": "spotify:track:2sPefHIIJ80pDUbBHviOVh",
+   "spotify_url": "https://open.spotify.com/track/2sPefHIIJ80pDUbBHviOVh",
+   "genres": [
+    "soul-funk",
+    "jazz"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "soul",
+    "vintage soul",
+    "cinematic soul",
+    "jazz-soul"
+   ],
+   "mood": [
+    "yearning",
+    "intimate",
+    "cinematic"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.35,
+    "danceability": 0.45,
+    "acousticness": 0.7,
+    "instrumentalness": 0.05
+   },
+   "bpm": 78,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 11,
+   "title": "How Does It Feel ?",
+   "artists": [
+    "Selah Sue",
+    "The Gallands",
+    "Stéphane Galland",
+    "Elvin Galland"
+   ],
+   "primary_artist": "Selah Sue",
+   "duration": "2:41",
+   "duration_sec": 161,
+   "spotify_track_id": "1MK5pRGoWNlexPyzvFscRq",
+   "spotify_uri": "spotify:track:1MK5pRGoWNlexPyzvFscRq",
+   "spotify_url": "https://open.spotify.com/track/1MK5pRGoWNlexPyzvFscRq",
+   "genres": [
+    "neo-soul",
+    "jazz"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "neo-soul",
+    "jazz-soul",
+    "acoustic soul"
+   ],
+   "mood": [
+    "raw",
+    "soulful",
+    "intimate"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.5,
+    "danceability": 0.5,
+    "acousticness": 0.6,
+    "instrumentalness": 0.05
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 12,
+   "title": "Memphis In June",
+   "artists": [
+    "Nina Simone"
+   ],
+   "primary_artist": "Nina Simone",
+   "duration": "2:40",
+   "duration_sec": 160,
+   "spotify_track_id": "16bBYGMdCG9yLjgqYZeKsF",
+   "spotify_uri": "spotify:track:16bBYGMdCG9yLjgqYZeKsF",
+   "spotify_url": "https://open.spotify.com/track/16bBYGMdCG9yLjgqYZeKsF",
+   "genres": [
+    "jazz",
+    "soul-funk"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "vocal jazz",
+    "blues",
+    "soul jazz"
+   ],
+   "mood": [
+    "languid",
+    "nostalgic",
+    "elegant"
+   ],
+   "mood_parameters": {
+    "energy": 0.3,
+    "valence": 0.55,
+    "danceability": 0.45,
+    "acousticness": 0.8,
+    "instrumentalness": 0.05
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 13,
+   "title": "Giga",
+   "artists": [
+    "Renato Grieco"
+   ],
+   "primary_artist": "Renato Grieco",
+   "duration": "3:21",
+   "duration_sec": 201,
+   "spotify_track_id": "5sj3yzjsd2e2RDjqtDanFW",
+   "spotify_uri": "spotify:track:5sj3yzjsd2e2RDjqtDanFW",
+   "spotify_url": "https://open.spotify.com/track/5sj3yzjsd2e2RDjqtDanFW",
+   "genres": [
+    "electronic",
+    "classical"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "experimental",
+    "musique concrète",
+    "electroacoustic",
+    "sound art"
+   ],
+   "mood": [
+    "abstract",
+    "tense",
+    "exploratory"
+   ],
+   "mood_parameters": {
+    "energy": 0.3,
+    "valence": 0.25,
+    "danceability": 0.15,
+    "acousticness": 0.4,
+    "instrumentalness": 0.95
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 14,
+   "title": "Mr Right",
+   "artists": [
+    "Nia Smith"
+   ],
+   "primary_artist": "Nia Smith",
+   "duration": "3:17",
+   "duration_sec": 197,
+   "spotify_track_id": "3rZj4LoO1tK4NsmlVAVe8e",
+   "spotify_uri": "spotify:track:3rZj4LoO1tK4NsmlVAVe8e",
+   "spotify_url": "https://open.spotify.com/track/3rZj4LoO1tK4NsmlVAVe8e",
+   "genres": [
+    "neo-soul",
+    "soul-funk"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "uk soul",
+    "acoustic soul",
+    "alt-soul"
+   ],
+   "mood": [
+    "lonely",
+    "longing",
+    "tender"
+   ],
+   "mood_parameters": {
+    "energy": 0.35,
+    "valence": 0.35,
+    "danceability": 0.5,
+    "acousticness": 0.6,
+    "instrumentalness": 0.0
+   },
+   "bpm": 84,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 15,
+   "title": "LSD on Sunset Blvd",
+   "artists": [
+    "Calibro 35"
+   ],
+   "primary_artist": "Calibro 35",
+   "duration": "3:37",
+   "duration_sec": 217,
+   "spotify_track_id": "3ZmMxr1U0Os7ZCD3aGFU0N",
+   "spotify_uri": "spotify:track:3ZmMxr1U0Os7ZCD3aGFU0N",
+   "spotify_url": "https://open.spotify.com/track/3ZmMxr1U0Os7ZCD3aGFU0N",
+   "genres": [
+    "soul-funk",
+    "jazz"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "funk",
+    "cinematic funk",
+    "library music",
+    "psychedelic jazz-funk"
+   ],
+   "mood": [
+    "cinematic",
+    "groovy",
+    "trippy"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.5,
+    "danceability": 0.62,
+    "acousticness": 0.35,
+    "instrumentalness": 0.85
+   },
+   "bpm": 100,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 16,
+   "title": "Another Night (It's Just) ft. Theo Croker, Daru Jones, Oli Rockberger",
+   "artists": [
+    "China Moses",
+    "Daru Jones",
+    "Theo Croker"
+   ],
+   "primary_artist": "China Moses",
+   "duration": "3:51",
+   "duration_sec": 231,
+   "spotify_track_id": "0dWT5IDit0SKvC50eKNn1w",
+   "spotify_uri": "spotify:track:0dWT5IDit0SKvC50eKNn1w",
+   "spotify_url": "https://open.spotify.com/track/0dWT5IDit0SKvC50eKNn1w",
+   "genres": [
+    "jazz",
+    "neo-soul"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "vocal jazz",
+    "soul jazz",
+    "jazz-hop"
+   ],
+   "mood": [
+    "nocturnal",
+    "sultry",
+    "smoky"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.45,
+    "danceability": 0.55,
+    "acousticness": 0.5,
+    "instrumentalness": 0.1
+   },
+   "bpm": 88,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 17,
+   "title": "NI MAL NI BIEN",
+   "artists": [
+    "La Rumeur",
+    "Chilly Gonzales"
+   ],
+   "primary_artist": "La Rumeur",
+   "duration": "2:39",
+   "duration_sec": 159,
+   "spotify_track_id": "6MfymVGtV28MhHVB82Jz5F",
+   "spotify_uri": "spotify:track:6MfymVGtV28MhHVB82Jz5F",
+   "spotify_url": "https://open.spotify.com/track/6MfymVGtV28MhHVB82Jz5F",
+   "genres": [
+    "hip-hop",
+    "classical"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "french rap",
+    "piano rap",
+    "conscious rap"
+   ],
+   "mood": [
+    "somber",
+    "assertive",
+    "dramatic"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.35,
+    "danceability": 0.55,
+    "acousticness": 0.5,
+    "instrumentalness": 0.0
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 18,
+   "title": "Short Stories",
+   "artists": [
+    "Finn Carter",
+    "Kaidi Akinnibi"
+   ],
+   "primary_artist": "Finn Carter",
+   "duration": "4:37",
+   "duration_sec": 277,
+   "spotify_track_id": "7Lc73uHFNSm75AfxopICDp",
+   "spotify_uri": "spotify:track:7Lc73uHFNSm75AfxopICDp",
+   "spotify_url": "https://open.spotify.com/track/7Lc73uHFNSm75AfxopICDp",
+   "genres": [
+    "uk-jazz",
+    "jazz"
+   ],
+   "genre_primary": "uk-jazz",
+   "subgenres": [
+    "jazz",
+    "uk jazz",
+    "acoustic jazz",
+    "post-bop"
+   ],
+   "mood": [
+    "contemplative",
+    "lyrical",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.5,
+    "danceability": 0.35,
+    "acousticness": 0.85,
+    "instrumentalness": 0.9
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 19,
+   "title": "Wall Street - Remix",
+   "artists": [
+    "Yellow Shoots",
+    "CARRTOONS",
+    "The Musalini"
+   ],
+   "primary_artist": "Yellow Shoots",
+   "duration": "2:39",
+   "duration_sec": 159,
+   "spotify_track_id": "0lgt21Vw3M9oRk9H9gWi0v",
+   "spotify_uri": "spotify:track:0lgt21Vw3M9oRk9H9gWi0v",
+   "spotify_url": "https://open.spotify.com/track/0lgt21Vw3M9oRk9H9gWi0v",
+   "genres": [
+    "hip-hop",
+    "neo-soul"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "uk hip-hop",
+    "jazz rap",
+    "soulful rap"
+   ],
+   "mood": [
+    "laid-back",
+    "confident",
+    "smooth"
+   ],
+   "mood_parameters": {
+    "energy": 0.6,
+    "valence": 0.55,
+    "danceability": 0.7,
+    "acousticness": 0.25,
+    "instrumentalness": 0.05
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 20,
+   "title": "yellow ochre",
+   "artists": [
+    "Greg Spero",
+    "Keyon Harrold"
+   ],
+   "primary_artist": "Greg Spero",
+   "duration": "3:32",
+   "duration_sec": 212,
+   "spotify_track_id": "6kCEimMn0WThczfCTOYCxs",
+   "spotify_uri": "spotify:track:6kCEimMn0WThczfCTOYCxs",
+   "spotify_url": "https://open.spotify.com/track/6kCEimMn0WThczfCTOYCxs",
+   "genres": [
+    "jazz",
+    "electronic"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "nu jazz",
+    "jazz fusion",
+    "ambient jazz"
+   ],
+   "mood": [
+    "meditative",
+    "warm",
+    "dreamy"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.5,
+    "danceability": 0.45,
+    "acousticness": 0.5,
+    "instrumentalness": 0.9
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 52,
+   "playlist_name": "New Release Playlist #52",
+   "playlist_id": "1lkzIDRfPiq53YZ6xKAaz4",
+   "position_in_playlist": 21,
+   "title": "MMFSG",
+   "artists": [
+    "Tanerélle"
+   ],
+   "primary_artist": "Tanerélle",
+   "duration": "2:37",
+   "duration_sec": 157,
+   "spotify_track_id": "1tXvMdoaLUV5jCvl3kd1VK",
+   "spotify_uri": "spotify:track:1tXvMdoaLUV5jCvl3kd1VK",
+   "spotify_url": "https://open.spotify.com/track/1tXvMdoaLUV5jCvl3kd1VK",
+   "genres": [
+    "neo-soul",
+    "alt"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "psychedelic soul",
+    "alt r&b",
+    "neo-soul"
+   ],
+   "mood": [
+    "sensual",
+    "dreamy",
+    "hypnotic"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.5,
+    "danceability": 0.55,
+    "acousticness": 0.35,
+    "instrumentalness": 0.05
    },
    "bpm": null,
    "bpm_source": "estimated"
