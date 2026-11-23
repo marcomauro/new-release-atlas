@@ -4,7 +4,7 @@
   "source_account": "Spotify",
   "generated_at": "2026-05-23T12:27:11.266084",
   "description": "Archivio strutturato delle 'New Release Playlist' di Marco Mauro, da consultare via AI per generare playlist tematiche o effettuare analisi.",
-  "playlist_range": "#1 - #50 (50 New Release Playlist consecutive) + 1 extra (#101)",
+  "playlist_range": "#1 - #51 (51 New Release Playlist consecutive) + 1 extra (#101)",
   "note_on_gaps": "Nessuno: il dataset copre integralmente le New Release Playlist da #12 a #36. Le #1-#11 e #13-#17 si chiamano 'New Release Friday #N', dalla #12 e #18 in poi 'New Release Playlist #N'. La '2025 Fav Album Playlist' e' una compilation tematica (extra), spostata fuori dalla sequenza NRP al playlist_number 101.",
   "schema_per_track": {
    "playlist_number": "int (numero progressivo della playlist di origine)",
@@ -27,9 +27,9 @@
    "bpm": "int | null (null = non verificabile, mai inventato)",
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
-  "total_tracks_with_duplicates": 1093,
-  "unique_tracks": 1069,
-  "unique_artists": 979,
+  "total_tracks_with_duplicates": 1107,
+  "unique_tracks": 1083,
+  "unique_artists": 987,
   "top_artists": [
    [
     "Brian Jackson",
@@ -52,11 +52,11 @@
     10
    ],
    [
-    "Masters At Work",
-    9
+    "Jordan Rakei",
+    10
    ],
    [
-    "Jordan Rakei",
+    "Masters At Work",
     9
    ],
    [
@@ -104,11 +104,11 @@
     7
    ],
    [
-    "Puma Blue",
+    "Nubiyan Twist",
     7
    ],
    [
-    "Ezra Collective",
+    "Puma Blue",
     7
    ]
   ],
@@ -166,8 +166,8 @@
   "enrichment_note": "Caratterizzazione musicale esperta aggiunta da Claude (giugno 2026): subgenres granulari, mood, mood_parameters (energy/valence/danceability/acousticness/instrumentalness, scala 0-1, stime qualitative da esperto), bpm (int o null) e bpm_source. bpm_source='verified' = confermato da fonti web DJ-pool (Beatsource, BPM Supreme, SongBPM, Tunebat); 'estimated' = stima fondata sul tempo tipico del brano/genere (presente solo dove molto affidabile, es. house 120-126); bpm=null dove non verificabile, mai inventato. I campi 'genres' e 'genre_primary' preesistenti (tassonomia a 12 macro-generi della pipeline new-release-atlas) sono INTOCCATI e restano la classificazione di riferimento.",
   "extended_at": "2026-06-11T09:12:01.887032",
   "extension_note": "Playlist #33 e #34 aggiunte a giugno 2026 con caratterizzazione esperta completa. Per queste 2 playlist anche genres/genre_primary sono assegnati dall'AI (coerenti con la tassonomia a 12 macro-generi della pipeline). Nota: 'Fainted Light' (Indra Lesmana) in #34 è un duplicato cross-playlist di #32 (stesso track ID).",
-  "merged_at": "2026-11-09T08:55:33Z",
-  "merge_note": "add_playlist.py: aggiunte ['#50'] (14 occorrenze, 14 brani nuovi)",
+  "merged_at": "2026-11-23T23:25:55Z",
+  "merge_note": "add_playlist.py: aggiunte ['#51'] (14 occorrenze, 14 brani nuovi)",
   "cross_playlist_duplicates": [
    {
     "spotify_track_id": "0ACrjHByr2GzPVTxKbDBix",
@@ -42978,6 +42978,558 @@
       "danceability": 0.3,
       "acousticness": 0.45,
       "instrumentalness": 0.0
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    }
+   ]
+  },
+  {
+   "playlist_number": 51,
+   "playlist_name": "New Release Playlist #51",
+   "playlist_id": "3MhUWKbDC6xu4R2CJJRmp8",
+   "spotify_url": "https://open.spotify.com/playlist/3MhUWKbDC6xu4R2CJJRmp8",
+   "description": "",
+   "date": null,
+   "track_count": 14,
+   "tracks": [
+    {
+     "position_in_playlist": 1,
+     "title": "Summer Clothes",
+     "artists": [
+      "Michael Kiwanuka"
+     ],
+     "primary_artist": "Michael Kiwanuka",
+     "duration": "4:26",
+     "duration_sec": 266,
+     "spotify_track_id": "1bOnbXldcr1DnseZ7getJp",
+     "spotify_uri": "spotify:track:1bOnbXldcr1DnseZ7getJp",
+     "spotify_url": "https://open.spotify.com/track/1bOnbXldcr1DnseZ7getJp",
+     "genres": [
+      "soul-funk",
+      "neo-soul"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "soul",
+      "psychedelic soul",
+      "folk soul",
+      "retro soul"
+     ],
+     "mood": [
+      "warm",
+      "nostalgic",
+      "reflective"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.55,
+      "danceability": 0.5,
+      "acousticness": 0.6,
+      "instrumentalness": 0.1
+     },
+     "bpm": 92,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 2,
+     "title": "Dusty Road",
+     "artists": [
+      "ALA.NI",
+      "Adrian Younge"
+     ],
+     "primary_artist": "ALA.NI",
+     "duration": "2:43",
+     "duration_sec": 163,
+     "spotify_track_id": "55iVsZNIycQCCJUE4IbI4X",
+     "spotify_uri": "spotify:track:55iVsZNIycQCCJUE4IbI4X",
+     "spotify_url": "https://open.spotify.com/track/55iVsZNIycQCCJUE4IbI4X",
+     "genres": [
+      "soul-funk",
+      "jazz"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "soul",
+      "vintage soul",
+      "cinematic soul",
+      "jazz-soul"
+     ],
+     "mood": [
+      "wistful",
+      "intimate",
+      "cinematic"
+     ],
+     "mood_parameters": {
+      "energy": 0.3,
+      "valence": 0.4,
+      "danceability": 0.4,
+      "acousticness": 0.75,
+      "instrumentalness": 0.1
+     },
+     "bpm": 80,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 3,
+     "title": "Paradise",
+     "artists": [
+      "Jordan Rakei"
+     ],
+     "primary_artist": "Jordan Rakei",
+     "duration": "3:01",
+     "duration_sec": 181,
+     "spotify_track_id": "5xH2hp2X3Pi7bDGz35KNNX",
+     "spotify_uri": "spotify:track:5xH2hp2X3Pi7bDGz35KNNX",
+     "spotify_url": "https://open.spotify.com/track/5xH2hp2X3Pi7bDGz35KNNX",
+     "genres": [
+      "neo-soul",
+      "uk-jazz"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "neo-soul",
+      "alt r&b",
+      "jazz-soul"
+     ],
+     "mood": [
+      "dreamy",
+      "hopeful",
+      "mellow"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.6,
+      "danceability": 0.55,
+      "acousticness": 0.45,
+      "instrumentalness": 0.15
+     },
+     "bpm": 96,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 4,
+     "title": "Hunger Strike (with WILLOW)",
+     "artists": [
+      "Meshell Ndegeocello",
+      "WILLOW"
+     ],
+     "primary_artist": "Meshell Ndegeocello",
+     "duration": "3:03",
+     "duration_sec": 183,
+     "spotify_track_id": "5HwrbDNLysLnwIgOIDxZvx",
+     "spotify_uri": "spotify:track:5HwrbDNLysLnwIgOIDxZvx",
+     "spotify_url": "https://open.spotify.com/track/5HwrbDNLysLnwIgOIDxZvx",
+     "genres": [
+      "alt",
+      "neo-soul"
+     ],
+     "genre_primary": "alt",
+     "subgenres": [
+      "alternative",
+      "alt soul",
+      "grunge cover",
+      "art rock"
+     ],
+     "mood": [
+      "intense",
+      "brooding",
+      "cathartic"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.3,
+      "danceability": 0.4,
+      "acousticness": 0.4,
+      "instrumentalness": 0.05
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 5,
+     "title": "Homecoming",
+     "artists": [
+      "Nubiyan Twist",
+      "eniola"
+     ],
+     "primary_artist": "Nubiyan Twist",
+     "duration": "4:08",
+     "duration_sec": 248,
+     "spotify_track_id": "2TjZA5tBaK0JBQyL0cZcDb",
+     "spotify_uri": "spotify:track:2TjZA5tBaK0JBQyL0cZcDb",
+     "spotify_url": "https://open.spotify.com/track/2TjZA5tBaK0JBQyL0cZcDb",
+     "genres": [
+      "uk-jazz",
+      "world"
+     ],
+     "genre_primary": "uk-jazz",
+     "subgenres": [
+      "jazz",
+      "uk jazz",
+      "afrobeat",
+      "jazz-funk"
+     ],
+     "mood": [
+      "uplifting",
+      "warm",
+      "groovy"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.75,
+      "danceability": 0.72,
+      "acousticness": 0.35,
+      "instrumentalness": 0.3
+     },
+     "bpm": 110,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 6,
+     "title": "Rainbo",
+     "artists": [
+      "Lalah Hathaway"
+     ],
+     "primary_artist": "Lalah Hathaway",
+     "duration": "4:07",
+     "duration_sec": 247,
+     "spotify_track_id": "3Y40lQSB39ifAtnKGKkNxD",
+     "spotify_uri": "spotify:track:3Y40lQSB39ifAtnKGKkNxD",
+     "spotify_url": "https://open.spotify.com/track/3Y40lQSB39ifAtnKGKkNxD",
+     "genres": [
+      "neo-soul",
+      "soul-funk"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "contemporary r&b",
+      "neo-soul",
+      "jazz-soul"
+     ],
+     "mood": [
+      "smooth",
+      "soulful",
+      "tender"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.55,
+      "danceability": 0.55,
+      "acousticness": 0.4,
+      "instrumentalness": 0.05
+     },
+     "bpm": 88,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 7,
+     "title": "Tadpoles",
+     "artists": [
+      "Surprise Chef"
+     ],
+     "primary_artist": "Surprise Chef",
+     "duration": "2:07",
+     "duration_sec": 127,
+     "spotify_track_id": "3P5oeGtFMpPq3SGivEZoL7",
+     "spotify_uri": "spotify:track:3P5oeGtFMpPq3SGivEZoL7",
+     "spotify_url": "https://open.spotify.com/track/3P5oeGtFMpPq3SGivEZoL7",
+     "genres": [
+      "soul-funk",
+      "jazz"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "funk",
+      "instrumental soul",
+      "cinematic funk",
+      "library funk"
+     ],
+     "mood": [
+      "laid-back",
+      "cinematic",
+      "groovy"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.55,
+      "danceability": 0.6,
+      "acousticness": 0.55,
+      "instrumentalness": 0.9
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 8,
+     "title": "Baby Breath (feat. Pharrell Williams, Tyler, The Creator & A$AP Rocky",
+     "artists": [
+      "Quavo",
+      "Pharrell Williams",
+      "Tyler, The Creator",
+      "A$AP Rocky"
+     ],
+     "primary_artist": "Quavo",
+     "duration": "3:48",
+     "duration_sec": 228,
+     "spotify_track_id": "61HMDdpW0nGvX7IZtBetaz",
+     "spotify_uri": "spotify:track:61HMDdpW0nGvX7IZtBetaz",
+     "spotify_url": "https://open.spotify.com/track/61HMDdpW0nGvX7IZtBetaz",
+     "genres": [
+      "hip-hop"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "trap",
+      "pop rap",
+      "minimal rap"
+     ],
+     "mood": [
+      "swaggering",
+      "playful",
+      "bouncy"
+     ],
+     "mood_parameters": {
+      "energy": 0.7,
+      "valence": 0.6,
+      "danceability": 0.78,
+      "acousticness": 0.1,
+      "instrumentalness": 0.0
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 9,
+     "title": "33 Degrees",
+     "artists": [
+      "Adrian Quesada"
+     ],
+     "primary_artist": "Adrian Quesada",
+     "duration": "2:24",
+     "duration_sec": 144,
+     "spotify_track_id": "7oH8Wl2QvUquqDHEwhQCoc",
+     "spotify_uri": "spotify:track:7oH8Wl2QvUquqDHEwhQCoc",
+     "spotify_url": "https://open.spotify.com/track/7oH8Wl2QvUquqDHEwhQCoc",
+     "genres": [
+      "soul-funk",
+      "world"
+     ],
+     "genre_primary": "soul-funk",
+     "subgenres": [
+      "soul",
+      "latin soul",
+      "psychedelic funk",
+      "instrumental soul"
+     ],
+     "mood": [
+      "sultry",
+      "cinematic",
+      "warm"
+     ],
+     "mood_parameters": {
+      "energy": 0.45,
+      "valence": 0.6,
+      "danceability": 0.6,
+      "acousticness": 0.5,
+      "instrumentalness": 0.85
+     },
+     "bpm": 95,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 10,
+     "title": "Mad",
+     "artists": [
+      "Pip Millett"
+     ],
+     "primary_artist": "Pip Millett",
+     "duration": "2:44",
+     "duration_sec": 164,
+     "spotify_track_id": "4KH6aPuYg0SqbBnEjt2wgg",
+     "spotify_uri": "spotify:track:4KH6aPuYg0SqbBnEjt2wgg",
+     "spotify_url": "https://open.spotify.com/track/4KH6aPuYg0SqbBnEjt2wgg",
+     "genres": [
+      "neo-soul"
+     ],
+     "genre_primary": "neo-soul",
+     "subgenres": [
+      "r&b",
+      "uk soul",
+      "neo-soul",
+      "alt r&b"
+     ],
+     "mood": [
+      "frustrated",
+      "intimate",
+      "raw"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.35,
+      "danceability": 0.55,
+      "acousticness": 0.45,
+      "instrumentalness": 0.05
+     },
+     "bpm": 85,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 11,
+     "title": "Dayvan Cowboy - Mixed",
+     "artists": [
+      "Boards of Canada"
+     ],
+     "primary_artist": "Boards of Canada",
+     "duration": "4:26",
+     "duration_sec": 266,
+     "spotify_track_id": "0Slp4vNp2ZSIDEfJafmEF3",
+     "spotify_uri": "spotify:track:0Slp4vNp2ZSIDEfJafmEF3",
+     "spotify_url": "https://open.spotify.com/track/0Slp4vNp2ZSIDEfJafmEF3",
+     "genres": [
+      "electronic",
+      "downtempo"
+     ],
+     "genre_primary": "electronic",
+     "subgenres": [
+      "electronic",
+      "idm",
+      "ambient",
+      "post-rock"
+     ],
+     "mood": [
+      "nostalgic",
+      "expansive",
+      "euphoric"
+     ],
+     "mood_parameters": {
+      "energy": 0.55,
+      "valence": 0.45,
+      "danceability": 0.3,
+      "acousticness": 0.3,
+      "instrumentalness": 0.95
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 12,
+     "title": "Break The Chain",
+     "artists": [
+      "Essa",
+      "J-Felix",
+      "Avijé",
+      "Richard Spaven",
+      "The Fifth Foundation"
+     ],
+     "primary_artist": "Essa",
+     "duration": "3:53",
+     "duration_sec": 233,
+     "spotify_track_id": "6XcaP1m5J41k5ydNINUK5q",
+     "spotify_uri": "spotify:track:6XcaP1m5J41k5ydNINUK5q",
+     "spotify_url": "https://open.spotify.com/track/6XcaP1m5J41k5ydNINUK5q",
+     "genres": [
+      "broken-beat",
+      "hip-hop"
+     ],
+     "genre_primary": "broken-beat",
+     "subgenres": [
+      "broken beat",
+      "uk hip-hop",
+      "jazz-hop"
+     ],
+     "mood": [
+      "conscious",
+      "driving",
+      "soulful"
+     ],
+     "mood_parameters": {
+      "energy": 0.65,
+      "valence": 0.55,
+      "danceability": 0.7,
+      "acousticness": 0.3,
+      "instrumentalness": 0.1
+     },
+     "bpm": null,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 13,
+     "title": "Trust",
+     "artists": [
+      "Psych Montana",
+      "KRS-One"
+     ],
+     "primary_artist": "Psych Montana",
+     "duration": "1:59",
+     "duration_sec": 119,
+     "spotify_track_id": "4bX4KK6ewJcboQKSdCP8wM",
+     "spotify_uri": "spotify:track:4bX4KK6ewJcboQKSdCP8wM",
+     "spotify_url": "https://open.spotify.com/track/4bX4KK6ewJcboQKSdCP8wM",
+     "genres": [
+      "hip-hop"
+     ],
+     "genre_primary": "hip-hop",
+     "subgenres": [
+      "hip-hop",
+      "boom bap",
+      "conscious rap",
+      "east coast hip-hop"
+     ],
+     "mood": [
+      "gritty",
+      "assertive",
+      "raw"
+     ],
+     "mood_parameters": {
+      "energy": 0.65,
+      "valence": 0.45,
+      "danceability": 0.7,
+      "acousticness": 0.15,
+      "instrumentalness": 0.0
+     },
+     "bpm": 90,
+     "bpm_source": "estimated"
+    },
+    {
+     "position_in_playlist": 14,
+     "title": "The Center Eye",
+     "artists": [
+      "Telemakus",
+      "Flying Lotus",
+      "Miguel Atwood-Ferguson"
+     ],
+     "primary_artist": "Telemakus",
+     "duration": "2:55",
+     "duration_sec": 175,
+     "spotify_track_id": "2G5oWiVywnXs4UxSxp17Qf",
+     "spotify_uri": "spotify:track:2G5oWiVywnXs4UxSxp17Qf",
+     "spotify_url": "https://open.spotify.com/track/2G5oWiVywnXs4UxSxp17Qf",
+     "genres": [
+      "jazz",
+      "electronic"
+     ],
+     "genre_primary": "jazz",
+     "subgenres": [
+      "jazz",
+      "spiritual jazz",
+      "cosmic jazz",
+      "beat music"
+     ],
+     "mood": [
+      "mystical",
+      "meditative",
+      "cinematic"
+     ],
+     "mood_parameters": {
+      "energy": 0.4,
+      "valence": 0.45,
+      "danceability": 0.35,
+      "acousticness": 0.6,
+      "instrumentalness": 0.85
      },
      "bpm": null,
      "bpm_source": "estimated"
@@ -88270,6 +88822,589 @@
     "danceability": 0.3,
     "acousticness": 0.45,
     "instrumentalness": 0.0
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 51,
+   "playlist_name": "New Release Playlist #51",
+   "playlist_id": "3MhUWKbDC6xu4R2CJJRmp8",
+   "position_in_playlist": 1,
+   "title": "Summer Clothes",
+   "artists": [
+    "Michael Kiwanuka"
+   ],
+   "primary_artist": "Michael Kiwanuka",
+   "duration": "4:26",
+   "duration_sec": 266,
+   "spotify_track_id": "1bOnbXldcr1DnseZ7getJp",
+   "spotify_uri": "spotify:track:1bOnbXldcr1DnseZ7getJp",
+   "spotify_url": "https://open.spotify.com/track/1bOnbXldcr1DnseZ7getJp",
+   "genres": [
+    "soul-funk",
+    "neo-soul"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "soul",
+    "psychedelic soul",
+    "folk soul",
+    "retro soul"
+   ],
+   "mood": [
+    "warm",
+    "nostalgic",
+    "reflective"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.55,
+    "danceability": 0.5,
+    "acousticness": 0.6,
+    "instrumentalness": 0.1
+   },
+   "bpm": 92,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 51,
+   "playlist_name": "New Release Playlist #51",
+   "playlist_id": "3MhUWKbDC6xu4R2CJJRmp8",
+   "position_in_playlist": 2,
+   "title": "Dusty Road",
+   "artists": [
+    "ALA.NI",
+    "Adrian Younge"
+   ],
+   "primary_artist": "ALA.NI",
+   "duration": "2:43",
+   "duration_sec": 163,
+   "spotify_track_id": "55iVsZNIycQCCJUE4IbI4X",
+   "spotify_uri": "spotify:track:55iVsZNIycQCCJUE4IbI4X",
+   "spotify_url": "https://open.spotify.com/track/55iVsZNIycQCCJUE4IbI4X",
+   "genres": [
+    "soul-funk",
+    "jazz"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "soul",
+    "vintage soul",
+    "cinematic soul",
+    "jazz-soul"
+   ],
+   "mood": [
+    "wistful",
+    "intimate",
+    "cinematic"
+   ],
+   "mood_parameters": {
+    "energy": 0.3,
+    "valence": 0.4,
+    "danceability": 0.4,
+    "acousticness": 0.75,
+    "instrumentalness": 0.1
+   },
+   "bpm": 80,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 51,
+   "playlist_name": "New Release Playlist #51",
+   "playlist_id": "3MhUWKbDC6xu4R2CJJRmp8",
+   "position_in_playlist": 3,
+   "title": "Paradise",
+   "artists": [
+    "Jordan Rakei"
+   ],
+   "primary_artist": "Jordan Rakei",
+   "duration": "3:01",
+   "duration_sec": 181,
+   "spotify_track_id": "5xH2hp2X3Pi7bDGz35KNNX",
+   "spotify_uri": "spotify:track:5xH2hp2X3Pi7bDGz35KNNX",
+   "spotify_url": "https://open.spotify.com/track/5xH2hp2X3Pi7bDGz35KNNX",
+   "genres": [
+    "neo-soul",
+    "uk-jazz"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "neo-soul",
+    "alt r&b",
+    "jazz-soul"
+   ],
+   "mood": [
+    "dreamy",
+    "hopeful",
+    "mellow"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.6,
+    "danceability": 0.55,
+    "acousticness": 0.45,
+    "instrumentalness": 0.15
+   },
+   "bpm": 96,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 51,
+   "playlist_name": "New Release Playlist #51",
+   "playlist_id": "3MhUWKbDC6xu4R2CJJRmp8",
+   "position_in_playlist": 4,
+   "title": "Hunger Strike (with WILLOW)",
+   "artists": [
+    "Meshell Ndegeocello",
+    "WILLOW"
+   ],
+   "primary_artist": "Meshell Ndegeocello",
+   "duration": "3:03",
+   "duration_sec": 183,
+   "spotify_track_id": "5HwrbDNLysLnwIgOIDxZvx",
+   "spotify_uri": "spotify:track:5HwrbDNLysLnwIgOIDxZvx",
+   "spotify_url": "https://open.spotify.com/track/5HwrbDNLysLnwIgOIDxZvx",
+   "genres": [
+    "alt",
+    "neo-soul"
+   ],
+   "genre_primary": "alt",
+   "subgenres": [
+    "alternative",
+    "alt soul",
+    "grunge cover",
+    "art rock"
+   ],
+   "mood": [
+    "intense",
+    "brooding",
+    "cathartic"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.3,
+    "danceability": 0.4,
+    "acousticness": 0.4,
+    "instrumentalness": 0.05
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 51,
+   "playlist_name": "New Release Playlist #51",
+   "playlist_id": "3MhUWKbDC6xu4R2CJJRmp8",
+   "position_in_playlist": 5,
+   "title": "Homecoming",
+   "artists": [
+    "Nubiyan Twist",
+    "eniola"
+   ],
+   "primary_artist": "Nubiyan Twist",
+   "duration": "4:08",
+   "duration_sec": 248,
+   "spotify_track_id": "2TjZA5tBaK0JBQyL0cZcDb",
+   "spotify_uri": "spotify:track:2TjZA5tBaK0JBQyL0cZcDb",
+   "spotify_url": "https://open.spotify.com/track/2TjZA5tBaK0JBQyL0cZcDb",
+   "genres": [
+    "uk-jazz",
+    "world"
+   ],
+   "genre_primary": "uk-jazz",
+   "subgenres": [
+    "jazz",
+    "uk jazz",
+    "afrobeat",
+    "jazz-funk"
+   ],
+   "mood": [
+    "uplifting",
+    "warm",
+    "groovy"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.75,
+    "danceability": 0.72,
+    "acousticness": 0.35,
+    "instrumentalness": 0.3
+   },
+   "bpm": 110,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 51,
+   "playlist_name": "New Release Playlist #51",
+   "playlist_id": "3MhUWKbDC6xu4R2CJJRmp8",
+   "position_in_playlist": 6,
+   "title": "Rainbo",
+   "artists": [
+    "Lalah Hathaway"
+   ],
+   "primary_artist": "Lalah Hathaway",
+   "duration": "4:07",
+   "duration_sec": 247,
+   "spotify_track_id": "3Y40lQSB39ifAtnKGKkNxD",
+   "spotify_uri": "spotify:track:3Y40lQSB39ifAtnKGKkNxD",
+   "spotify_url": "https://open.spotify.com/track/3Y40lQSB39ifAtnKGKkNxD",
+   "genres": [
+    "neo-soul",
+    "soul-funk"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "contemporary r&b",
+    "neo-soul",
+    "jazz-soul"
+   ],
+   "mood": [
+    "smooth",
+    "soulful",
+    "tender"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.55,
+    "danceability": 0.55,
+    "acousticness": 0.4,
+    "instrumentalness": 0.05
+   },
+   "bpm": 88,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 51,
+   "playlist_name": "New Release Playlist #51",
+   "playlist_id": "3MhUWKbDC6xu4R2CJJRmp8",
+   "position_in_playlist": 7,
+   "title": "Tadpoles",
+   "artists": [
+    "Surprise Chef"
+   ],
+   "primary_artist": "Surprise Chef",
+   "duration": "2:07",
+   "duration_sec": 127,
+   "spotify_track_id": "3P5oeGtFMpPq3SGivEZoL7",
+   "spotify_uri": "spotify:track:3P5oeGtFMpPq3SGivEZoL7",
+   "spotify_url": "https://open.spotify.com/track/3P5oeGtFMpPq3SGivEZoL7",
+   "genres": [
+    "soul-funk",
+    "jazz"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "funk",
+    "instrumental soul",
+    "cinematic funk",
+    "library funk"
+   ],
+   "mood": [
+    "laid-back",
+    "cinematic",
+    "groovy"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.55,
+    "danceability": 0.6,
+    "acousticness": 0.55,
+    "instrumentalness": 0.9
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 51,
+   "playlist_name": "New Release Playlist #51",
+   "playlist_id": "3MhUWKbDC6xu4R2CJJRmp8",
+   "position_in_playlist": 8,
+   "title": "Baby Breath (feat. Pharrell Williams, Tyler, The Creator & A$AP Rocky",
+   "artists": [
+    "Quavo",
+    "Pharrell Williams",
+    "Tyler, The Creator",
+    "A$AP Rocky"
+   ],
+   "primary_artist": "Quavo",
+   "duration": "3:48",
+   "duration_sec": 228,
+   "spotify_track_id": "61HMDdpW0nGvX7IZtBetaz",
+   "spotify_uri": "spotify:track:61HMDdpW0nGvX7IZtBetaz",
+   "spotify_url": "https://open.spotify.com/track/61HMDdpW0nGvX7IZtBetaz",
+   "genres": [
+    "hip-hop"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "trap",
+    "pop rap",
+    "minimal rap"
+   ],
+   "mood": [
+    "swaggering",
+    "playful",
+    "bouncy"
+   ],
+   "mood_parameters": {
+    "energy": 0.7,
+    "valence": 0.6,
+    "danceability": 0.78,
+    "acousticness": 0.1,
+    "instrumentalness": 0.0
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 51,
+   "playlist_name": "New Release Playlist #51",
+   "playlist_id": "3MhUWKbDC6xu4R2CJJRmp8",
+   "position_in_playlist": 9,
+   "title": "33 Degrees",
+   "artists": [
+    "Adrian Quesada"
+   ],
+   "primary_artist": "Adrian Quesada",
+   "duration": "2:24",
+   "duration_sec": 144,
+   "spotify_track_id": "7oH8Wl2QvUquqDHEwhQCoc",
+   "spotify_uri": "spotify:track:7oH8Wl2QvUquqDHEwhQCoc",
+   "spotify_url": "https://open.spotify.com/track/7oH8Wl2QvUquqDHEwhQCoc",
+   "genres": [
+    "soul-funk",
+    "world"
+   ],
+   "genre_primary": "soul-funk",
+   "subgenres": [
+    "soul",
+    "latin soul",
+    "psychedelic funk",
+    "instrumental soul"
+   ],
+   "mood": [
+    "sultry",
+    "cinematic",
+    "warm"
+   ],
+   "mood_parameters": {
+    "energy": 0.45,
+    "valence": 0.6,
+    "danceability": 0.6,
+    "acousticness": 0.5,
+    "instrumentalness": 0.85
+   },
+   "bpm": 95,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 51,
+   "playlist_name": "New Release Playlist #51",
+   "playlist_id": "3MhUWKbDC6xu4R2CJJRmp8",
+   "position_in_playlist": 10,
+   "title": "Mad",
+   "artists": [
+    "Pip Millett"
+   ],
+   "primary_artist": "Pip Millett",
+   "duration": "2:44",
+   "duration_sec": 164,
+   "spotify_track_id": "4KH6aPuYg0SqbBnEjt2wgg",
+   "spotify_uri": "spotify:track:4KH6aPuYg0SqbBnEjt2wgg",
+   "spotify_url": "https://open.spotify.com/track/4KH6aPuYg0SqbBnEjt2wgg",
+   "genres": [
+    "neo-soul"
+   ],
+   "genre_primary": "neo-soul",
+   "subgenres": [
+    "r&b",
+    "uk soul",
+    "neo-soul",
+    "alt r&b"
+   ],
+   "mood": [
+    "frustrated",
+    "intimate",
+    "raw"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.35,
+    "danceability": 0.55,
+    "acousticness": 0.45,
+    "instrumentalness": 0.05
+   },
+   "bpm": 85,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 51,
+   "playlist_name": "New Release Playlist #51",
+   "playlist_id": "3MhUWKbDC6xu4R2CJJRmp8",
+   "position_in_playlist": 11,
+   "title": "Dayvan Cowboy - Mixed",
+   "artists": [
+    "Boards of Canada"
+   ],
+   "primary_artist": "Boards of Canada",
+   "duration": "4:26",
+   "duration_sec": 266,
+   "spotify_track_id": "0Slp4vNp2ZSIDEfJafmEF3",
+   "spotify_uri": "spotify:track:0Slp4vNp2ZSIDEfJafmEF3",
+   "spotify_url": "https://open.spotify.com/track/0Slp4vNp2ZSIDEfJafmEF3",
+   "genres": [
+    "electronic",
+    "downtempo"
+   ],
+   "genre_primary": "electronic",
+   "subgenres": [
+    "electronic",
+    "idm",
+    "ambient",
+    "post-rock"
+   ],
+   "mood": [
+    "nostalgic",
+    "expansive",
+    "euphoric"
+   ],
+   "mood_parameters": {
+    "energy": 0.55,
+    "valence": 0.45,
+    "danceability": 0.3,
+    "acousticness": 0.3,
+    "instrumentalness": 0.95
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 51,
+   "playlist_name": "New Release Playlist #51",
+   "playlist_id": "3MhUWKbDC6xu4R2CJJRmp8",
+   "position_in_playlist": 12,
+   "title": "Break The Chain",
+   "artists": [
+    "Essa",
+    "J-Felix",
+    "Avijé",
+    "Richard Spaven",
+    "The Fifth Foundation"
+   ],
+   "primary_artist": "Essa",
+   "duration": "3:53",
+   "duration_sec": 233,
+   "spotify_track_id": "6XcaP1m5J41k5ydNINUK5q",
+   "spotify_uri": "spotify:track:6XcaP1m5J41k5ydNINUK5q",
+   "spotify_url": "https://open.spotify.com/track/6XcaP1m5J41k5ydNINUK5q",
+   "genres": [
+    "broken-beat",
+    "hip-hop"
+   ],
+   "genre_primary": "broken-beat",
+   "subgenres": [
+    "broken beat",
+    "uk hip-hop",
+    "jazz-hop"
+   ],
+   "mood": [
+    "conscious",
+    "driving",
+    "soulful"
+   ],
+   "mood_parameters": {
+    "energy": 0.65,
+    "valence": 0.55,
+    "danceability": 0.7,
+    "acousticness": 0.3,
+    "instrumentalness": 0.1
+   },
+   "bpm": null,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 51,
+   "playlist_name": "New Release Playlist #51",
+   "playlist_id": "3MhUWKbDC6xu4R2CJJRmp8",
+   "position_in_playlist": 13,
+   "title": "Trust",
+   "artists": [
+    "Psych Montana",
+    "KRS-One"
+   ],
+   "primary_artist": "Psych Montana",
+   "duration": "1:59",
+   "duration_sec": 119,
+   "spotify_track_id": "4bX4KK6ewJcboQKSdCP8wM",
+   "spotify_uri": "spotify:track:4bX4KK6ewJcboQKSdCP8wM",
+   "spotify_url": "https://open.spotify.com/track/4bX4KK6ewJcboQKSdCP8wM",
+   "genres": [
+    "hip-hop"
+   ],
+   "genre_primary": "hip-hop",
+   "subgenres": [
+    "hip-hop",
+    "boom bap",
+    "conscious rap",
+    "east coast hip-hop"
+   ],
+   "mood": [
+    "gritty",
+    "assertive",
+    "raw"
+   ],
+   "mood_parameters": {
+    "energy": 0.65,
+    "valence": 0.45,
+    "danceability": 0.7,
+    "acousticness": 0.15,
+    "instrumentalness": 0.0
+   },
+   "bpm": 90,
+   "bpm_source": "estimated"
+  },
+  {
+   "playlist_number": 51,
+   "playlist_name": "New Release Playlist #51",
+   "playlist_id": "3MhUWKbDC6xu4R2CJJRmp8",
+   "position_in_playlist": 14,
+   "title": "The Center Eye",
+   "artists": [
+    "Telemakus",
+    "Flying Lotus",
+    "Miguel Atwood-Ferguson"
+   ],
+   "primary_artist": "Telemakus",
+   "duration": "2:55",
+   "duration_sec": 175,
+   "spotify_track_id": "2G5oWiVywnXs4UxSxp17Qf",
+   "spotify_uri": "spotify:track:2G5oWiVywnXs4UxSxp17Qf",
+   "spotify_url": "https://open.spotify.com/track/2G5oWiVywnXs4UxSxp17Qf",
+   "genres": [
+    "jazz",
+    "electronic"
+   ],
+   "genre_primary": "jazz",
+   "subgenres": [
+    "jazz",
+    "spiritual jazz",
+    "cosmic jazz",
+    "beat music"
+   ],
+   "mood": [
+    "mystical",
+    "meditative",
+    "cinematic"
+   ],
+   "mood_parameters": {
+    "energy": 0.4,
+    "valence": 0.45,
+    "danceability": 0.35,
+    "acousticness": 0.6,
+    "instrumentalness": 0.85
    },
    "bpm": null,
    "bpm_source": "estimated"
