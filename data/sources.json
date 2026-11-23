@@ -541,6 +541,24 @@
    "status": "matched",
    "title": "Fire on the Water"
   },
+  "0dWT5IDit0SKvC50eKNn1w": {
+   "alt": [
+    [
+     "3eMJFuvfaEM",
+     0.46
+    ],
+    [
+     "hkkjgVIGqp0",
+     0.25
+    ]
+   ],
+   "channel": "China Moses",
+   "checked": "2026-11-23",
+   "id": "CC2NBUFUEYg",
+   "score": 0.55,
+   "status": "review",
+   "title": "China Moses - Running (Official Audio)"
+  },
   "0dqYsynkt4mtb2TGhOUyaa": {
    "channel": "Hiro Ama - Topic",
    "checked": "2026-10-24",
@@ -721,6 +739,10 @@
    "status": "matched",
    "title": "MF AF"
   },
+  "0lgt21Vw3M9oRk9H9gWi0v": {
+   "checked": "2026-11-23",
+   "status": "none"
+  },
   "0mLrJsaUVhW5iPq59L4otG": {
    "channel": "Sleaford Mods",
    "checked": "2026-10-25",
@@ -865,6 +887,14 @@
    "status": "matched",
    "title": "Bond Girl"
   },
+  "0wNr3LhIQxyTYyT9ljSELV": {
+   "channel": "Armada Music TV",
+   "checked": "2026-11-23",
+   "id": "uxkFJM2t6sM",
+   "score": 0.85,
+   "status": "matched",
+   "title": "Fink & Jan Blomqvist - More (Official Visualizer)"
+  },
   "0wfPnXPDYfSOMKhY2n3D6j": {
    "channel": "Chaka Khan - Topic",
    "checked": "2026-10-27",
@@ -936,6 +966,14 @@
    "score": 1.0,
    "status": "matched",
    "title": "Garden"
+  },
+  "12JmISVrUvfwoZzt0oW2Xu": {
+   "channel": "DanieleLuppiVEVO",
+   "checked": "2026-11-23",
+   "id": "EKT_X-V07UI",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Daniele Luppi - Fallin’ Dreams (Audio) ft. Michael Kiwanuka"
   },
   "12VAjFWo2mG1XayU6Fs21P": {
    "channel": "Nightmares On Wax - Topic",
@@ -1048,6 +1086,14 @@
    "score": 1.0,
    "status": "matched",
    "title": "I Like It Hot (Hot Like Fire Remix)"
+  },
+  "16bBYGMdCG9yLjgqYZeKsF": {
+   "channel": "Classic Mood Experience",
+   "checked": "2026-11-23",
+   "id": "dNhPIJX7N9k",
+   "score": 0.85,
+   "status": "matched",
+   "title": "Nina Simone - Memphis In June (1961)"
   },
   "176bQUssDwpBa04K1FqNGQ": {
    "channel": "Marla Kether - Topic",
@@ -1317,6 +1363,10 @@
    "score": 0.85,
    "status": "matched",
    "title": "Fink-Atmosphere from The LowSwing Sessions vol 2"
+  },
+  "1MK5pRGoWNlexPyzvFscRq": {
+   "checked": "2026-11-23",
+   "status": "none"
   },
   "1MpGVhL4EIS577wERZIi6y": {
    "channel": "Vittorio de Angelis - Topic",
@@ -1806,6 +1856,14 @@
    "status": "matched",
    "title": "Eclipse"
   },
+  "1tXvMdoaLUV5jCvl3kd1VK": {
+   "channel": "Tanerélle",
+   "checked": "2026-11-23",
+   "id": "dnvP4pHgug4",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Tanerélle - MMFSG // vslzr"
+  },
   "1u2WDPiNzPJfL15PvBTAj2": {
    "channel": "Modeselektor - Topic",
    "checked": "2026-10-28",
@@ -2193,6 +2251,14 @@
    "score": 1.0,
    "status": "matched",
    "title": "Lady Havana (feat. Theo Croker, Yiyi Sanchez and Axel Tosca)"
+  },
+  "2DNHy7NQNQO40EkGlrgtkY": {
+   "channel": "Chase & Status",
+   "checked": "2026-11-23",
+   "id": "Omtq4Qsk0uY",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Chase & Status - Carnage (ft. Little Simz)"
   },
   "2Ew4CFRFzNzakE83tOu0Zl": {
    "channel": "Jordan Rakei - Topic",
@@ -3082,6 +3148,14 @@
    "status": "matched",
    "title": "Green Banana"
   },
+  "2sPefHIIJ80pDUbBHviOVh": {
+   "channel": "Linear Labs",
+   "checked": "2026-11-23",
+   "id": "eXiaDTPZMPg",
+   "score": 0.85,
+   "status": "matched",
+   "title": "BACK TO ZERO - ALA.NI & ADRIAN YOUNGE (OFFICIAL VISUALIZER)"
+  },
   "2tCVfd3PR2Dp3bYZRz1v5T": {
    "checked": "2026-10-20",
    "status": "none"
@@ -3640,6 +3714,14 @@
    "status": "matched",
    "title": "Jesceallàh (2026 Remastered)"
   },
+  "3ZmMxr1U0Os7ZCD3aGFU0N": {
+   "channel": "Record Kicks",
+   "checked": "2026-11-23",
+   "id": "jmp8Rq43D8I",
+   "score": 0.85,
+   "status": "matched",
+   "title": "Calibro 35 - LSD on Sunset Blvd (Audio)"
+  },
   "3aVlSW4D6iH8o3PmqvfQrp": {
    "channel": "SA-RA Creative Partners - Topic",
    "checked": "2026-10-23",
@@ -3991,6 +4073,14 @@
    "score": 1.0,
    "status": "matched",
    "title": "CAPTAIN KERNEL"
+  },
+  "3rZj4LoO1tK4NsmlVAVe8e": {
+   "channel": "Nia Smith",
+   "checked": "2026-11-23",
+   "id": "Jvq7M_9s5pY",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Nia Smith - Mr Right (Official Lyric Video)"
   },
   "3tjzbNEAfwTjnVj9AFUGGS": {
    "channel": "Jalen Ngonda - Topic",
@@ -6318,6 +6408,24 @@
    "status": "matched",
    "title": "Jacob Collier – Something Heavy (Sleep Version)"
   },
+  "5sj3yzjsd2e2RDjqtDanFW": {
+   "alt": [
+    [
+     "UlTAENi8r1k",
+     0.25
+    ],
+    [
+     "3L7CaWPnwQk",
+     0.25
+    ]
+   ],
+   "channel": "Wiesław Fingerholc - wifi",
+   "checked": "2026-11-23",
+   "id": "XRO9Uus_U9o",
+   "score": 0.6,
+   "status": "review",
+   "title": "Giga"
+  },
   "5syUleS2MMDwXWypIgK50M": {
    "channel": "Adrian Younge - Topic",
    "checked": "2026-10-26",
@@ -6786,6 +6894,10 @@
    "status": "matched",
    "title": "Sunbörn & Clap! Clap! - Saffron Sahara Swing [Audio]"
   },
+  "6MfymVGtV28MhHVB82Jz5F": {
+   "checked": "2026-11-23",
+   "status": "none"
+  },
   "6Mho4z2FAGpMKcpZTeNbdw": {
    "channel": "Calibro 35 - Topic",
    "checked": "2026-10-20",
@@ -6887,6 +6999,10 @@
    "score": 1.0,
    "status": "matched",
    "title": "Soulwax - Perfect We Are Not (Official Audio)"
+  },
+  "6Q5cTVPqDsECnv5dOOdmEO": {
+   "checked": "2026-11-23",
+   "status": "none"
   },
   "6QALVDW1IdwKF2bAPKf0Wi": {
    "channel": "In Between Music",
@@ -7292,6 +7408,14 @@
    "status": "matched",
    "title": "EBONY ROSE - Iffy (Official Music Video)"
   },
+  "6jEO5RmiesaiY7zlQDoHq4": {
+   "channel": "Thundercat",
+   "checked": "2026-11-23",
+   "id": "Qh0J_qytizk",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Thundercat, @_buttonmasher  - 'Moving at Light Speed' (Official Visualiser)"
+  },
   "6jJTpzMquQLVuUkM2vVEIF": {
    "channel": "Bonobo - Topic",
    "checked": "2026-10-28",
@@ -7307,6 +7431,32 @@
    "score": 1.0,
    "status": "matched",
    "title": "Shake Down"
+  },
+  "6k15cYdLOjmEMSWHHCArUj": {
+   "channel": "Sampa The Great",
+   "checked": "2026-11-23",
+   "id": "e9vOk0-FNAk",
+   "score": 1.0,
+   "status": "matched",
+   "title": "LOCATION - SAMPA THE GREAT (OFFICIAL VISUALIZER)"
+  },
+  "6kCEimMn0WThczfCTOYCxs": {
+   "alt": [
+    [
+     "v_RDAXWsHlQ",
+     0.0
+    ],
+    [
+     "Myrawzwp__Y",
+     0.0
+    ]
+   ],
+   "channel": "Greg Spero",
+   "checked": "2026-11-23",
+   "id": "mP4hUnaeCj0",
+   "score": 0.64,
+   "status": "review",
+   "title": "penumbra - Greg Spero, Keyon Harrold"
   },
   "6kHEt71Eu8qLn0XT4zOiRz": {
    "channel": "G Jones - Topic",
@@ -7519,6 +7669,14 @@
    "score": 1.0,
    "status": "matched",
    "title": "Yellow Eyes"
+  },
+  "6xwDnWa6x43tcbpQDeBIQp": {
+   "channel": "Radar Weekly Instrumentals — October 2026",
+   "checked": "2026-11-23",
+   "id": "I5eNSxo7Dq0",
+   "score": 0.73,
+   "status": "matched",
+   "title": "Mormor - Hard To Say Goodbye (Instrumental)"
   },
   "6y2LXbaSSKpgJahshoiJM5": {
    "channel": "Vittorio de Angelis - Topic",
@@ -8042,6 +8200,10 @@
    "status": "matched",
    "title": "Raekwon - \"The Omerta - Original\" feat. Nas"
   },
+  "7Lc73uHFNSm75AfxopICDp": {
+   "checked": "2026-11-23",
+   "status": "none"
+  },
   "7LwR08L58CiifSFw7tqdOl": {
    "channel": "WesleyJosephVEVO",
    "checked": "2026-10-25",
@@ -8122,6 +8284,14 @@
    "status": "matched",
    "title": "Benjamin Clementine - Pizza Mind"
   },
+  "7dN3K4HLHG08627AGzMc6B": {
+   "channel": "Thao",
+   "checked": "2026-11-23",
+   "id": "MwO7V8Ptja0",
+   "score": 1.0,
+   "status": "matched",
+   "title": "THAO - 'Nguyen Nguyen Lose Lose' ft. Adrian Quesada (Official Lyric Video)"
+  },
   "7daDgtNZ7bziHoj8izxqAh": {
    "channel": "Momoko Gill - Topic",
    "checked": "2026-10-22",
@@ -8145,6 +8315,14 @@
    "score": 1.0,
    "status": "matched",
    "title": "Para"
+  },
+  "7fS5w1KmDQov0ifAl7VyIs": {
+   "channel": "Quinn Oulton",
+   "checked": "2026-11-23",
+   "id": "HWmdiaWkrz4",
+   "score": 1.0,
+   "status": "matched",
+   "title": "Overload"
   },
   "7fkWpK1YcIMtM7PdMawgfY": {
    "channel": "Flea",
@@ -8665,6 +8843,9 @@
   "Chilly Gonzales": [
    "UC1PdnEfLOJfqTCIe1l2aOJA"
   ],
+  "China Moses": [
+   "UCise0Jgt_LnELKk90c-eV1Q"
+  ],
   "Chri$tian": [
    "UCyrucR1wFYmmSqpjJdNY6sg"
   ],
@@ -8793,6 +8974,10 @@
   ],
   "Fink": [
    "UCtLPNVgupwHTf6f-5h0Kz1Q"
+  ],
+  "Finn Carter": [
+   "UCSAS0N4OjJT0ykpiV5s7k7g",
+   "UCb_Gom2o3mPNI4ykvbBU-4g"
   ],
   "Flea": [
    "UCRAsPaHJNDoKE93bv8gseoQ"
@@ -8991,6 +9176,9 @@
   "LILJA": [
    "UCvqVhiQpnDHZN4UPBUtRWYA"
   ],
+  "La Rumeur": [
+   "UC_YOjMkQ03SJZ4-yuU4uFrg"
+  ],
   "Lakecia Benjamin": [
    "UCW81r9E8wibi9mN1AD9H_Nw"
   ],
@@ -9003,6 +9191,9 @@
   "Leif Kaner-Lidström": [
    "UCBj3iBLbU-HtpSN3sAWzA9g",
    "UCv1-i3MpcMB7c-FKECaBEgA"
+  ],
+  "Lina Simons": [
+   "UCH5hVgWFc_4JfJXvIzqyb7g"
   ],
   "Little Simz": [
    "UCWMArai9zjUOTgtAF0oyoIA"
@@ -9225,6 +9416,11 @@
   "Remy Van Kesteren": [
    "UC4Xt19e23ZXhIe5EL0B68oQ"
   ],
+  "Renato Grieco": [
+   "UCXGTR6rscvf1uCF_oPbjaLQ",
+   "UCl9_YoRS3_KtGdaJu17A3vQ",
+   "UCIMeFSsfkuoOrX3swU6Vaxw"
+  ],
   "Richard Spaven": [
    "UCHusVr_43zjVYFfyTxw-8gQ"
   ],
@@ -9401,6 +9597,9 @@
   "Yazmin Lacey": [],
   "Yebba": [
    "UCX6UGbNg_12TLfp7ysREBVg"
+  ],
+  "Yellow Shoots": [
+   "UCHfLmkAGp8VgMbgG4xCo-ww"
   ],
   "Yin Yin": [
    "UCu_LKKpSQ9PX2E0FkzutruA"
