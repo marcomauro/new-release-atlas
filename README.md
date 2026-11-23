@@ -9,7 +9,7 @@ Static app: **Vite + React + D3**, with automatic deploy to **GitHub Pages**.
 Data is loaded **at runtime** via `fetch` from `graph.json` (not inlined in the
 bundle).
 
-Current state: **1083 tracks · 10027 edges · 12 genres** (playlists #1–#51 + 1 extra, updated 2026-11-23).
+Current state: **1082 tracks · 10029 edges · 12 genres** (playlists #1–#51 + 1 extra, updated 2026-11-23).
 
 Live: https://marcomauro.github.io/new-release-atlas/
 
