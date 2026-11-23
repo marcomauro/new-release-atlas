@@ -28,7 +28,7 @@
    "bpm_source": "string: 'verified' (fonti web) | 'estimated' (stima fondata) | 'unavailable'"
   },
   "total_tracks_with_duplicates": 1107,
-  "unique_tracks": 1083,
+  "unique_tracks": 1082,
   "unique_artists": 987,
   "top_artists": [
    [
@@ -96,10 +96,6 @@
     8
    ],
    [
-    "Alfa Mist",
-    7
-   ],
-   [
     "Run Logan Run",
     7
    ],
@@ -109,6 +105,10 @@
    ],
    [
     "Puma Blue",
+    7
+   ],
+   [
+    "Ezra Collective",
     7
    ]
   ],
@@ -271,6 +271,14 @@
     "playlists": [
      5,
      101
+    ]
+   },
+   {
+    "spotify_track_id": "4mGhOFJdeIcMpiBVHOmpTu",
+    "title": "Dersen Cafe - Live at Real World Studios",
+    "playlists": [
+     44,
+     50
     ]
    },
    {
@@ -439,9 +447,16 @@
     "title": "Always on Your Side",
     "filled_from_merged": [],
     "at": "2026-10-26T22:27:07Z"
+   },
+   {
+    "kept": "4mGhOFJdeIcMpiBVHOmpTu",
+    "merged": "4h1k2w76dIkyO7ZAOZnD0y",
+    "title": "Dersen Cafe - Live at Real World Studios",
+    "filled_from_merged": [],
+    "at": "2026-11-23T23:30:23Z"
    }
   ],
-  "deduped_at": "2026-10-26T22:27:07Z",
+  "deduped_at": "2026-11-23T23:30:23Z",
   "dedup_note": "dedupe_tracks.py: unificati 1 id Spotify della stessa registrazione (riedizioni); occorrenze preservate"
  },
  "playlists": [
@@ -42492,9 +42507,9 @@
      "primary_artist": "Alfa Mist",
      "duration": "4:16",
      "duration_sec": 256,
-     "spotify_track_id": "4h1k2w76dIkyO7ZAOZnD0y",
-     "spotify_uri": "spotify:track:4h1k2w76dIkyO7ZAOZnD0y",
-     "spotify_url": "https://open.spotify.com/track/4h1k2w76dIkyO7ZAOZnD0y",
+     "spotify_track_id": "4mGhOFJdeIcMpiBVHOmpTu",
+     "spotify_uri": "spotify:track:4mGhOFJdeIcMpiBVHOmpTu",
+     "spotify_url": "https://open.spotify.com/track/4mGhOFJdeIcMpiBVHOmpTu",
      "genres": [
       "uk-jazz",
       "jazz"
@@ -42502,23 +42517,23 @@
      "genre_primary": "uk-jazz",
      "subgenres": [
       "jazz",
-      "uk jazz",
-      "jazz-hop",
-      "live session"
+      "london jazz",
+      "live session",
+      "jazz-hip-hop"
      ],
      "mood": [
-      "contemplative",
       "mellow",
-      "sophisticated"
+      "introspective",
+      "melancholic"
      ],
      "mood_parameters": {
       "energy": 0.4,
-      "valence": 0.45,
-      "danceability": 0.45,
-      "acousticness": 0.75,
+      "valence": 0.42,
+      "danceability": 0.5,
+      "acousticness": 0.7,
       "instrumentalness": 0.9
      },
-     "bpm": 85,
+     "bpm": 88,
      "bpm_source": "estimated"
     },
     {
@@ -88300,9 +88315,9 @@
    "primary_artist": "Alfa Mist",
    "duration": "4:16",
    "duration_sec": 256,
-   "spotify_track_id": "4h1k2w76dIkyO7ZAOZnD0y",
-   "spotify_uri": "spotify:track:4h1k2w76dIkyO7ZAOZnD0y",
-   "spotify_url": "https://open.spotify.com/track/4h1k2w76dIkyO7ZAOZnD0y",
+   "spotify_track_id": "4mGhOFJdeIcMpiBVHOmpTu",
+   "spotify_uri": "spotify:track:4mGhOFJdeIcMpiBVHOmpTu",
+   "spotify_url": "https://open.spotify.com/track/4mGhOFJdeIcMpiBVHOmpTu",
    "genres": [
     "uk-jazz",
     "jazz"
@@ -88310,23 +88325,23 @@
    "genre_primary": "uk-jazz",
    "subgenres": [
     "jazz",
-    "uk jazz",
-    "jazz-hop",
-    "live session"
+    "london jazz",
+    "live session",
+    "jazz-hip-hop"
    ],
    "mood": [
-    "contemplative",
     "mellow",
-    "sophisticated"
+    "introspective",
+    "melancholic"
    ],
    "mood_parameters": {
     "energy": 0.4,
-    "valence": 0.45,
-    "danceability": 0.45,
-    "acousticness": 0.75,
+    "valence": 0.42,
+    "danceability": 0.5,
+    "acousticness": 0.7,
     "instrumentalness": 0.9
    },
-   "bpm": 85,
+   "bpm": 88,
    "bpm_source": "estimated"
   },
   {
